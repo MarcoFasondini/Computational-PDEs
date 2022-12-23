@@ -1,0 +1,443 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[a4paper,text={16.5cm,25.2cm},centering]{geometry}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage{microtype}
+\usepackage{hyperref}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1.2ex}
+
+\hypersetup
+       {   pdfauthor = {  },
+           pdftitle={  },
+           colorlinks=TRUE,
+           linkcolor=black,
+           citecolor=blue,
+           urlcolor=blue
+       }
+
+
+
+
+\usepackage{upquote}
+\usepackage{listings}
+\usepackage{xcolor}
+\lstset{
+    basicstyle=\ttfamily\footnotesize,
+    upquote=true,
+    breaklines=true,
+    breakindent=0pt,
+    keepspaces=true,
+    showspaces=false,
+    columns=fullflexible,
+    showtabs=false,
+    showstringspaces=false,
+    escapeinside={(*@}{@*)},
+    extendedchars=true,
+}
+\newcommand{\HLJLt}[1]{#1}
+\newcommand{\HLJLw}[1]{#1}
+\newcommand{\HLJLe}[1]{#1}
+\newcommand{\HLJLeB}[1]{#1}
+\newcommand{\HLJLo}[1]{#1}
+\newcommand{\HLJLk}[1]{\textcolor[RGB]{148,91,176}{\textbf{#1}}}
+\newcommand{\HLJLkc}[1]{\textcolor[RGB]{59,151,46}{\textit{#1}}}
+\newcommand{\HLJLkd}[1]{\textcolor[RGB]{214,102,97}{\textit{#1}}}
+\newcommand{\HLJLkn}[1]{\textcolor[RGB]{148,91,176}{\textbf{#1}}}
+\newcommand{\HLJLkp}[1]{\textcolor[RGB]{148,91,176}{\textbf{#1}}}
+\newcommand{\HLJLkr}[1]{\textcolor[RGB]{148,91,176}{\textbf{#1}}}
+\newcommand{\HLJLkt}[1]{\textcolor[RGB]{148,91,176}{\textbf{#1}}}
+\newcommand{\HLJLn}[1]{#1}
+\newcommand{\HLJLna}[1]{#1}
+\newcommand{\HLJLnb}[1]{#1}
+\newcommand{\HLJLnbp}[1]{#1}
+\newcommand{\HLJLnc}[1]{#1}
+\newcommand{\HLJLncB}[1]{#1}
+\newcommand{\HLJLnd}[1]{\textcolor[RGB]{214,102,97}{#1}}
+\newcommand{\HLJLne}[1]{#1}
+\newcommand{\HLJLneB}[1]{#1}
+\newcommand{\HLJLnf}[1]{\textcolor[RGB]{66,102,213}{#1}}
+\newcommand{\HLJLnfm}[1]{\textcolor[RGB]{66,102,213}{#1}}
+\newcommand{\HLJLnp}[1]{#1}
+\newcommand{\HLJLnl}[1]{#1}
+\newcommand{\HLJLnn}[1]{#1}
+\newcommand{\HLJLno}[1]{#1}
+\newcommand{\HLJLnt}[1]{#1}
+\newcommand{\HLJLnv}[1]{#1}
+\newcommand{\HLJLnvc}[1]{#1}
+\newcommand{\HLJLnvg}[1]{#1}
+\newcommand{\HLJLnvi}[1]{#1}
+\newcommand{\HLJLnvm}[1]{#1}
+\newcommand{\HLJLl}[1]{#1}
+\newcommand{\HLJLld}[1]{\textcolor[RGB]{148,91,176}{\textit{#1}}}
+\newcommand{\HLJLs}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsa}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsb}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsc}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsd}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsdB}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsdC}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLse}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLsh}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsi}[1]{#1}
+\newcommand{\HLJLso}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsr}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLss}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLssB}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLnB}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLnbB}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLnfB}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLnh}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLni}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLnil}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLnoB}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLoB}[1]{\textcolor[RGB]{102,102,102}{\textbf{#1}}}
+\newcommand{\HLJLow}[1]{\textcolor[RGB]{102,102,102}{\textbf{#1}}}
+\newcommand{\HLJLp}[1]{#1}
+\newcommand{\HLJLc}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLch}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLcm}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLcp}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLcpB}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLcs}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLcsB}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLg}[1]{#1}
+\newcommand{\HLJLgd}[1]{#1}
+\newcommand{\HLJLge}[1]{#1}
+\newcommand{\HLJLgeB}[1]{#1}
+\newcommand{\HLJLgh}[1]{#1}
+\newcommand{\HLJLgi}[1]{#1}
+\newcommand{\HLJLgo}[1]{#1}
+\newcommand{\HLJLgp}[1]{#1}
+\newcommand{\HLJLgs}[1]{#1}
+\newcommand{\HLJLgsB}[1]{#1}
+\newcommand{\HLJLgt}[1]{#1}
+
+
+\begin{document}
+
+
+
+\textbf{Computational methods for PDEs (2023)}
+
+\section{Lecture 1: Approximations to the derivative of a periodic function}
+Consider a function $f(x)$ that is $2\pi$-periodic, i.e., $f(x+2\pi) = f(x)$ for $x \in \mathbb{R}$.  Suppose we have function values at equally spaced points on the interval $[-\pi, \pi)$, i.e., we have $f(x_j)$, where
+
+\[
+x_j = -\pi + jh, \qquad h = \frac{2\pi}{N}, \qquad j = 0, \ldots, N-1.
+\]
+How can we approximate $f'(x_j)$?
+
+Recall that
+
+\[
+f'(x_j) = \lim_{\epsilon \to 0} \frac{f(x_j +\epsilon) - f(x_j)}{\epsilon},
+\]
+this suggests that for small $h$,
+
+\[
+f'(x_j) \approx \frac{f(x_j+h)-f(x_j)}{h} = \frac{f(x_{j+1})-f(x_j)}{h},  
+\]
+or abbreviating $f(x_j)$ with $f_j$,
+
+\[
+f'(x_j) \approx \frac{f_{j+1}-f_j}{h}.
+\]
+This is an example of a \textbf{finite difference} approximation to a derivative of a function.  This particular approximation is known as a \emph{forward difference} approximation (or formula).  Replacing $h$ with $-h$, we obtain a \emph{backward difference} formula
+
+\[
+f'(x_j) \approx \frac{f_{j}-f_{j-1}}{h}.
+\]
+Finite difference formulae are used to design finite difference methods for PDEs, as we'll see later in this module.
+
+Here is the \emph{central difference} formula
+
+\[
+f'(x_j) \approx \frac{f_{j+1}-f_{j-1}}{2h}.
+\]
+To analyse the accuracy of finite difference formulae, we recall Taylor's Theorem:
+
+\textbf{Theorem (Taylor's Theorem)}  Let $a<b$, $n$ a positive integer, $x\in[a,b]$ and $f: [a,b]\to\mathbb{R}$ be a continuous function such that the derivatives up to order $n+1$ (inclusive) exist at every point in $[a,b]$. Then, for every $x\in[a,b]$, there exists a $\xi$ between $x$ and $x+h$ with $x+h\in[a,b]$, such that
+
+\[
+f(x+h)=\sum_{k=0}^{n}\frac{h^k}{k!}f^{(k)}(x)+\frac{h^{n+1}}{(n+1)!}f^{(n+1)}(\xi).
+\]
+\textbf{Corollary (central difference is 2nd order accurate)} Suppose $f \in C^3[x_{j-1},x_{j+1}]$ (i.e., the derivatives of orders $0, 1, 2, 3$ are continuous on $[x_{j-1},x_{j+1}]$), then 
+
+\[
+\left\vert\frac{f_{j+1}-f_{j-1}}{2h} - f'(x_j) \right\vert \leq \frac{M}{6}h^2, 
+\]
+where $M = \sup_{x \in [x_{j-1}, x_{j+1}]} \vert f'''(x) \vert$.
+
+\textbf{Proof}
+
+It follows from Taylor's theorem that there exists an $\xi_1 \in [x_{j}, x_{j+1}]$ such that 
+
+\[
+f_{j+ 1} = f(x_{j + 1}) = f(x_j + h) = f(x_j) + h f'(x_j) + \frac{h^2}{2}f''(x_j) + \frac{h^3}{6}f'''(\xi_1).
+\]
+Similarly, there exists an $\xi_2 \in [x_{j-1}, x_{j}]$ such that 
+
+\[
+f_{j- 1} = f(x_j) - h f'(x_j) + \frac{h}{2}f''(x_j) - \frac{h^3}{6}f'''(\xi_2).
+\]
+Therefore,
+
+\[
+\frac{f_{j+1}-f_{j-1}}{2h} = f'(x_j) + \frac{h^2}{12}\left( f'''(\xi_1) + f'''(\xi_2)   \right),
+\]
+from which the result follows.
+
+\ensuremath{\blacksquare}
+
+Recalling the definition of big O notation, we can write
+
+\[
+f'(x_j) = \frac{f_{j+1}-f_{j-1}}{2h} + \mathcal{O}(h^2), \qquad h \to 0,
+\]
+and we say that the central difference approximation is second order accurate.  Similarly, we can show that the forward and backward difference approximations are first order approximations of the derivative.
+
+How can we construct finite difference approximations?  One approach is via interpolating polynomials (aka polynomial interpolants). 
+
+\textbf{Definition (Lagrange interpolating polynomial)} Let $x_0, \ldots, x_{N-1}$ be a set of $N$ distinct nodes in an interval $[a, b]$ ($x_j \in [a, b]$, $j = 0, \ldots, N-1$) and let
+
+\[
+\ell_{j}(x) = \frac{(x-x_0)}{(x_j - x_0)}\frac{(x-x_1)}{(x_j - x_1)}\cdots \frac{(x-x_{j-1})}{(x_j - x_{j-1})}\frac{(x-x_{j+1})}{(x_j - x_{j+1})}\cdots\frac{(x-x_{N-1})}{(x_j - x_{N-1})}.
+\]
+The \emph{Lagrange interpolating polynomial} of the function $f(x)$ is defined as 
+
+\[
+p_N(x) = \sum_{j=0}^{N-1} \ell_j(x) f(x_j).
+\]
+It is important to note that $p_N(x)$ is a polynomial of degree $\leq N-1$ and it interpolates $f$ at the nodes $x_0, \ldots, x_{N-1}$, meaning
+
+\[
+p_N(x_j) = f(x_j), \qquad j = 0, \ldots, N-1.
+\]
+The interpolation property follows from the fact 
+
+\[
+\ell_j(x_k) = \begin{cases}
+1 & \text{if } k = j \\
+0 & \text{if } k \neq j
+\end{cases}.
+\]
+In fact, $p_N(x)$ is the unique polynomial of degree $\leq N-1$ that interpolates $f$ at $x_0, \ldots, x_{N-1}$.
+
+Here is an example of a Lagrange interpolating polynomial:
+
+
+\begin{lstlisting}
+(*@\HLJLk{using}@*) (*@\HLJLn{ApproxFun}@*)(*@\HLJLp{,}@*) (*@\HLJLn{Plots}@*)(*@\HLJLp{,}@*) (*@\HLJLn{LinearAlgebra}@*)(*@\HLJLp{,}@*) (*@\HLJLn{SparseArrays}@*)(*@\HLJLp{,}@*) (*@\HLJLn{ToeplitzMatrices}@*)
+(*@\HLJLcs{{\#}}@*) (*@\HLJLcs{plot}@*) (*@\HLJLcs{a}@*) (*@\HLJLcs{2\ensuremath{\pi}-periodic}@*) (*@\HLJLcs{function}@*) (*@\HLJLcs{f}@*)
+(*@\HLJLn{f}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{Fun}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*) (*@\HLJLoB{->}@*) (*@\HLJLni{1}@*)(*@\HLJLoB{/}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{cos}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{)}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{2}@*)(*@\HLJLp{),}@*)(*@\HLJLoB{-}@*)(*@\HLJLn{\ensuremath{\pi}}@*)(*@\HLJLoB{..}@*)(*@\HLJLn{\ensuremath{\pi}}@*)(*@\HLJLp{)}@*)
+(*@\HLJLnf{plot}@*)(*@\HLJLp{(}@*)(*@\HLJLn{f}@*)(*@\HLJLp{,}@*)(*@\HLJLn{lw}@*)(*@\HLJLoB{=}@*)(*@\HLJLni{3}@*)(*@\HLJLp{,}@*)(*@\HLJLn{label}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}f(x)"{}}@*)(*@\HLJLp{)}@*)
+(*@\HLJLcs{{\#}}@*) (*@\HLJLcs{construct}@*) (*@\HLJLcs{the}@*) (*@\HLJLcs{Lagrange}@*) (*@\HLJLcs{interpolating}@*) (*@\HLJLcs{polynomial}@*) (*@\HLJLcs{through}@*) (*@\HLJLcs{N}@*) (*@\HLJLcs{equally}@*) (*@\HLJLcs{spaced}@*) (*@\HLJLcs{points}@*) (*@\HLJLcs{and}@*) (*@\HLJLcs{plot}@*) (*@\HLJLcs{it}@*)
+(*@\HLJLn{N}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{5}@*)
+(*@\HLJLn{p}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{Fun}@*)(*@\HLJLp{(}@*)(*@\HLJLn{f}@*)(*@\HLJLp{,}@*)(*@\HLJLnf{Fourier}@*)(*@\HLJLp{(}@*)(*@\HLJLoB{-}@*)(*@\HLJLn{\ensuremath{\pi}}@*)(*@\HLJLoB{..}@*)(*@\HLJLn{\ensuremath{\pi}}@*)(*@\HLJLp{),}@*)(*@\HLJLn{N}@*)(*@\HLJLp{)}@*) (*@\HLJLcs{{\#}}@*) (*@\HLJLcs{interpolant}@*)
+(*@\HLJLnf{plot!}@*)(*@\HLJLp{(}@*)(*@\HLJLn{p}@*)(*@\HLJLp{,}@*)(*@\HLJLn{lw}@*)(*@\HLJLoB{=}@*)(*@\HLJLni{2}@*)(*@\HLJLp{,}@*)(*@\HLJLn{label}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}interpolant}@*) (*@\HLJLs{p(x)"{}}@*)(*@\HLJLp{)}@*)
+(*@\HLJLcs{{\#}}@*) (*@\HLJLcs{show}@*) (*@\HLJLcs{the}@*) (*@\HLJLcs{interpolant}@*) (*@\HLJLcs{interpolates}@*) (*@\HLJLcs{f(x)}@*) (*@\HLJLcs{at}@*) (*@\HLJLcs{the}@*) (*@\HLJLcs{interpolation}@*) (*@\HLJLcs{nodes}@*)
+(*@\HLJLn{h}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{2}@*)(*@\HLJLn{\ensuremath{\pi}}@*)(*@\HLJLoB{/}@*)(*@\HLJLn{N}@*)(*@\HLJLp{;}@*)
+(*@\HLJLn{xn}@*) (*@\HLJLoB{=}@*) (*@\HLJLoB{-}@*)(*@\HLJLn{\ensuremath{\pi}}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{h}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{\ensuremath{\pi}}@*)(*@\HLJLoB{-}@*)(*@\HLJLn{h}@*) (*@\HLJLcs{{\#}}@*) (*@\HLJLcs{the}@*) (*@\HLJLcs{interpolation}@*) (*@\HLJLcs{nodes}@*)
+(*@\HLJLnf{scatter!}@*)(*@\HLJLp{(}@*)(*@\HLJLn{xn}@*)(*@\HLJLp{,}@*)(*@\HLJLn{p}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{xn}@*)(*@\HLJLp{);}@*)(*@\HLJLn{label}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}f(x\ensuremath{\_j})}@*) (*@\HLJLs{=}@*) (*@\HLJLs{p(x\ensuremath{\_j})"{}}@*)(*@\HLJLp{)}@*)
+\end{lstlisting}
+
+\includegraphics[width=\linewidth]{jl_5cCdvi/Lecture1_1_1.pdf}
+
+\textbf{Example} Construct the central difference approximation as follows: (i) construct the polynomial $p(x)$ that interpolates $f(x)$  at the three equally spaced points $x_{j-1}, x_j, x_{j+1}$; (ii) use $p(x)$ to approximate  $f'$ at $x_j$.
+
+Using the formula for the Lagrange interpolating polynomial given above, it follows that (verify!)
+
+\[
+p(x) = \frac{(x-x_{j})(x-x_{j+1})}{2h^2}f(x_{j-1}) - \frac{(x-x_{j-1})(x-x_{j+1})}{h^2}f(x_{j}) + \frac{(x-x_{j-1})(x-x_{j})}{2h^2}f(x_{j+1})
+\]
+and
+
+\[
+p'(x_j) = \frac{f(x_{j+1}) - f(x_{j-1})}{2h}  \approx f'(x_j),
+\]
+which is the central difference approximation we've seen before.
+
+Collecting the approximations $p'(x_j) = \frac{f(x_{j+1}) - f(x_{j-1})}{2h}  \approx f'(x_j)$ for $j = 0, \ldots, N-1$ in a vector and using the fact that $f(x_{j+N}) = f_{j+N} = f_j$, we obtain
+
+\[
+\left(
+\begin{array}{c c c c c}
+f'(x_0) \\
+  \\
+\vdots  \\
+  \\
+f'(x_{N-1})
+\end{array}
+\right) \approx 
+\left(
+\begin{array}{c c c c c}
+p'(x_0) \\
+  \\
+\vdots  \\
+  \\
+p'(x_{N-1})
+\end{array}
+\right) = \frac{1}{h}
+\left(
+\begin{array}{c c c c c}
+0 & \frac{1}{2} &   &   &  -\frac{1}{2} \\
+-\frac{1}{2} & 0 & \ddots &  &  \\
+   &   & \ddots &  &   \\
+   &   & \ddots & 0 &  \frac{1}{2} \\
+ \frac{1}{2}  &   &   & -\frac{1}{2} & 0
+\end{array}
+\right)
+\left(
+\begin{array}{c c c c c}
+f_0 \\
+  \\
+\vdots  \\
+  \\
+f_{N-1}
+\end{array}
+\right).
+\]
+Note that omitted entries of the matrix are zero.
+
+The above matrix is an example of a \textbf{differentiation matrix}.  This differentiation matrix is a skew-symmetric ($A^{\top} = -A$), Toeplitz matrix (a matrix that is constant along its diagonals) and it is also a \href{https://en.wikipedia.org/wiki/Circulant_matrix}{circulant matrix}.  
+
+We can use the following command in Julia to create sparse versions of the differentiation matrices
+
+
+\begin{lstlisting}
+(*@\HLJLn{N}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{10}@*)
+(*@\HLJLnf{spdiagm}@*)(*@\HLJLp{(}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{=>}@*)(*@\HLJLnf{fill}@*)(*@\HLJLp{(}@*)(*@\HLJLnfB{0.5}@*)(*@\HLJLp{,}@*)(*@\HLJLn{N}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)(*@\HLJLp{),}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{=>}@*)(*@\HLJLnf{fill}@*)(*@\HLJLp{(}@*)(*@\HLJLoB{-}@*)(*@\HLJLnfB{0.5}@*)(*@\HLJLp{,}@*)(*@\HLJLn{N}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)(*@\HLJLp{),}@*)(*@\HLJLn{N}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{=>}@*)(*@\HLJLnf{fill}@*)(*@\HLJLp{(}@*)(*@\HLJLoB{-}@*)(*@\HLJLnfB{0.5}@*)(*@\HLJLp{,}@*)(*@\HLJLni{1}@*)(*@\HLJLp{),}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{-}@*)(*@\HLJLn{N}@*)(*@\HLJLoB{=>}@*)(*@\HLJLnf{fill}@*)(*@\HLJLp{(}@*)(*@\HLJLnfB{0.5}@*)(*@\HLJLp{,}@*)(*@\HLJLni{1}@*)(*@\HLJLp{))}@*)
+\end{lstlisting}
+
+\begin{lstlisting}
+10(*@\ensuremath{\times}@*)10 SparseMatrixCSC(*@{{\{}}@*)Float64, Int64(*@{{\}}}@*) with 20 stored entries:
+   (*@\ensuremath{\cdot}@*)    0.5    (*@\ensuremath{\cdot}@*)     (*@\ensuremath{\cdot}@*)     (*@\ensuremath{\cdot}@*)     (*@\ensuremath{\cdot}@*)     (*@\ensuremath{\cdot}@*)     (*@\ensuremath{\cdot}@*)     (*@\ensuremath{\cdot}@*)   -0.5
+ -0.5    (*@\ensuremath{\cdot}@*)    0.5    (*@\ensuremath{\cdot}@*)     (*@\ensuremath{\cdot}@*)     (*@\ensuremath{\cdot}@*)     (*@\ensuremath{\cdot}@*)     (*@\ensuremath{\cdot}@*)     (*@\ensuremath{\cdot}@*)     (*@\ensuremath{\cdot}@*) 
+   (*@\ensuremath{\cdot}@*)   -0.5    (*@\ensuremath{\cdot}@*)    0.5    (*@\ensuremath{\cdot}@*)     (*@\ensuremath{\cdot}@*)     (*@\ensuremath{\cdot}@*)     (*@\ensuremath{\cdot}@*)     (*@\ensuremath{\cdot}@*)     (*@\ensuremath{\cdot}@*) 
+   (*@\ensuremath{\cdot}@*)     (*@\ensuremath{\cdot}@*)   -0.5    (*@\ensuremath{\cdot}@*)    0.5    (*@\ensuremath{\cdot}@*)     (*@\ensuremath{\cdot}@*)     (*@\ensuremath{\cdot}@*)     (*@\ensuremath{\cdot}@*)     (*@\ensuremath{\cdot}@*) 
+   (*@\ensuremath{\cdot}@*)     (*@\ensuremath{\cdot}@*)     (*@\ensuremath{\cdot}@*)   -0.5    (*@\ensuremath{\cdot}@*)    0.5    (*@\ensuremath{\cdot}@*)     (*@\ensuremath{\cdot}@*)     (*@\ensuremath{\cdot}@*)     (*@\ensuremath{\cdot}@*) 
+   (*@\ensuremath{\cdot}@*)     (*@\ensuremath{\cdot}@*)     (*@\ensuremath{\cdot}@*)     (*@\ensuremath{\cdot}@*)   -0.5    (*@\ensuremath{\cdot}@*)    0.5    (*@\ensuremath{\cdot}@*)     (*@\ensuremath{\cdot}@*)     (*@\ensuremath{\cdot}@*) 
+   (*@\ensuremath{\cdot}@*)     (*@\ensuremath{\cdot}@*)     (*@\ensuremath{\cdot}@*)     (*@\ensuremath{\cdot}@*)     (*@\ensuremath{\cdot}@*)   -0.5    (*@\ensuremath{\cdot}@*)    0.5    (*@\ensuremath{\cdot}@*)     (*@\ensuremath{\cdot}@*) 
+   (*@\ensuremath{\cdot}@*)     (*@\ensuremath{\cdot}@*)     (*@\ensuremath{\cdot}@*)     (*@\ensuremath{\cdot}@*)     (*@\ensuremath{\cdot}@*)     (*@\ensuremath{\cdot}@*)   -0.5    (*@\ensuremath{\cdot}@*)    0.5    (*@\ensuremath{\cdot}@*) 
+   (*@\ensuremath{\cdot}@*)     (*@\ensuremath{\cdot}@*)     (*@\ensuremath{\cdot}@*)     (*@\ensuremath{\cdot}@*)     (*@\ensuremath{\cdot}@*)     (*@\ensuremath{\cdot}@*)     (*@\ensuremath{\cdot}@*)   -0.5    (*@\ensuremath{\cdot}@*)    0.5
+  0.5    (*@\ensuremath{\cdot}@*)     (*@\ensuremath{\cdot}@*)     (*@\ensuremath{\cdot}@*)     (*@\ensuremath{\cdot}@*)     (*@\ensuremath{\cdot}@*)     (*@\ensuremath{\cdot}@*)     (*@\ensuremath{\cdot}@*)   -0.5    (*@\ensuremath{\cdot}@*)
+\end{lstlisting}
+
+
+For various values of $N$, let's compute the maximum error of the central difference approximation to the derivative at the points $x_j = -\pi + jh$ with $j = 0, \ldots, N-1$ and $h = 2\pi/N$ for the function $f(x) = 1/(2 + \cos(x))$:
+
+
+\begin{lstlisting}
+(*@\HLJLn{f}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{x}@*) (*@\HLJLoB{->}@*) (*@\HLJLni{1}@*)(*@\HLJLoB{/}@*)(*@\HLJLp{(}@*)(*@\HLJLni{2}@*) (*@\HLJLoB{+}@*) (*@\HLJLnf{cos}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{))}@*)
+(*@\HLJLn{Df}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{x}@*) (*@\HLJLoB{->}@*) (*@\HLJLnf{sin}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{)}@*)(*@\HLJLoB{/}@*)(*@\HLJLp{(}@*)(*@\HLJLni{2}@*) (*@\HLJLoB{+}@*) (*@\HLJLnf{cos}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{))}@*)(*@\HLJLoB{{\textasciicircum}}@*)(*@\HLJLni{2}@*)  (*@\HLJLcs{{\#}}@*) (*@\HLJLcs{derivative}@*)
+(*@\HLJLcs{{\#}}@*) (*@\HLJLcs{compute}@*) (*@\HLJLcs{the}@*) (*@\HLJLcs{errors}@*)
+(*@\HLJLnd{@time}@*) (*@\HLJLk{begin}@*)
+(*@\HLJLn{errs}@*) (*@\HLJLoB{=}@*) 
+(*@\HLJLp{[(}@*) (*@\HLJLn{h}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{2}@*)(*@\HLJLn{\ensuremath{\pi}}@*)(*@\HLJLoB{/}@*)(*@\HLJLn{N}@*)(*@\HLJLp{;}@*)
+   (*@\HLJLcs{{\#}}@*) (*@\HLJLcs{differentiation}@*) (*@\HLJLcs{matrix:}@*)
+   (*@\HLJLn{D\ensuremath{\_m}}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{1}@*)(*@\HLJLoB{/}@*)(*@\HLJLn{h}@*)(*@\HLJLoB{*}@*)(*@\HLJLnf{spdiagm}@*)(*@\HLJLp{(}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{=>}@*)(*@\HLJLnf{fill}@*)(*@\HLJLp{(}@*)(*@\HLJLnfB{0.5}@*)(*@\HLJLp{,}@*)(*@\HLJLn{N}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)(*@\HLJLp{),}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{=>}@*)(*@\HLJLnf{fill}@*)(*@\HLJLp{(}@*)(*@\HLJLoB{-}@*)(*@\HLJLnfB{0.5}@*)(*@\HLJLp{,}@*)(*@\HLJLn{N}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)(*@\HLJLp{),}@*)(*@\HLJLn{N}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{=>}@*)(*@\HLJLnf{fill}@*)(*@\HLJLp{(}@*)(*@\HLJLoB{-}@*)(*@\HLJLnfB{0.5}@*)(*@\HLJLp{,}@*)(*@\HLJLni{1}@*)(*@\HLJLp{),}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{-}@*)(*@\HLJLn{N}@*)(*@\HLJLoB{=>}@*)(*@\HLJLnf{fill}@*)(*@\HLJLp{(}@*)(*@\HLJLnfB{0.5}@*)(*@\HLJLp{,}@*)(*@\HLJLni{1}@*)(*@\HLJLp{));}@*)
+   (*@\HLJLn{x}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{points}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{Fourier}@*)(*@\HLJLp{(}@*)(*@\HLJLoB{-}@*)(*@\HLJLn{\ensuremath{\pi}}@*)(*@\HLJLoB{..}@*)(*@\HLJLn{\ensuremath{\pi}}@*)(*@\HLJLp{),}@*)(*@\HLJLn{N}@*)(*@\HLJLp{);}@*) (*@\HLJLcs{{\#}}@*) (*@\HLJLcs{the}@*) (*@\HLJLcs{nodes}@*) (*@\HLJLcs{x\ensuremath{\_j},}@*) (*@\HLJLcs{j}@*) (*@\HLJLcs{=}@*) (*@\HLJLcs{0,}@*) (*@\HLJLcs{...,}@*) (*@\HLJLcs{N-1}@*)
+   (*@\HLJLcs{{\#}}@*) (*@\HLJLcs{compute}@*) (*@\HLJLcs{the}@*) (*@\HLJLcs{maximum}@*) (*@\HLJLcs{error}@*) (*@\HLJLcs{at}@*) (*@\HLJLcs{the}@*) (*@\HLJLcs{nodes}@*)
+   (*@\HLJLnf{norm}@*)(*@\HLJLp{(}@*)(*@\HLJLn{D\ensuremath{\_m}}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{f}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{)}@*) (*@\HLJLoB{-}@*) (*@\HLJLn{Df}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{),}@*)(*@\HLJLn{Inf}@*)(*@\HLJLp{)}@*) (*@\HLJLp{)}@*) (*@\HLJLk{for}@*) (*@\HLJLn{N}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{2}@*) (*@\HLJLoB{.{\textasciicircum}}@*)(*@\HLJLp{(}@*)(*@\HLJLni{4}@*)(*@\HLJLoB{:}@*)(*@\HLJLni{21}@*)(*@\HLJLp{)]}@*)
+(*@\HLJLk{end}@*)(*@\HLJLp{;}@*)
+(*@\HLJLcs{{\#}}@*) (*@\HLJLcs{plot}@*) (*@\HLJLcs{the}@*) (*@\HLJLcs{errors}@*) (*@\HLJLcs{on}@*) (*@\HLJLcs{a}@*) (*@\HLJLcs{log-log}@*) (*@\HLJLcs{scale}@*)
+(*@\HLJLn{D\ensuremath{\^3}f}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{x}@*) (*@\HLJLoB{->}@*) (*@\HLJLp{(}@*)(*@\HLJLni{16}@*)(*@\HLJLoB{*}@*)(*@\HLJLnf{sin}@*)(*@\HLJLp{(}@*)(*@\HLJLni{2}@*)(*@\HLJLn{x}@*)(*@\HLJLp{)}@*) (*@\HLJLoB{+}@*) (*@\HLJLni{7}@*)(*@\HLJLoB{*}@*)(*@\HLJLnf{sin}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{)}@*) (*@\HLJLoB{-}@*) (*@\HLJLnf{sin}@*)(*@\HLJLp{(}@*)(*@\HLJLni{3}@*)(*@\HLJLn{x}@*)(*@\HLJLp{))}@*)(*@\HLJLoB{/}@*)(*@\HLJLp{(}@*)(*@\HLJLni{4}@*)(*@\HLJLoB{*}@*)(*@\HLJLp{(}@*)(*@\HLJLni{2}@*) (*@\HLJLoB{+}@*) (*@\HLJLnf{cos}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{))}@*)(*@\HLJLoB{{\textasciicircum}}@*)(*@\HLJLni{4}@*)(*@\HLJLp{)}@*) (*@\HLJLcs{{\#}}@*) (*@\HLJLcs{third}@*) (*@\HLJLcs{derivative}@*)
+(*@\HLJLcs{{\#}}@*) (*@\HLJLcs{estimate}@*) (*@\HLJLcs{the}@*) (*@\HLJLcs{maximum}@*) (*@\HLJLcs{absolute}@*) (*@\HLJLcs{value}@*) (*@\HLJLcs{of}@*) (*@\HLJLcs{the}@*) (*@\HLJLcs{third}@*) (*@\HLJLcs{derivative}@*) (*@\HLJLcs{on}@*) (*@\HLJLcs{[-\ensuremath{\pi},}@*) (*@\HLJLcs{\ensuremath{\pi}]}@*)
+(*@\HLJLn{xx}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{range}@*)(*@\HLJLp{(}@*)(*@\HLJLoB{-}@*)(*@\HLJLn{\ensuremath{\pi}}@*)(*@\HLJLp{,}@*)(*@\HLJLn{\ensuremath{\pi}}@*)(*@\HLJLp{,}@*)(*@\HLJLni{1001}@*)(*@\HLJLp{)}@*)
+(*@\HLJLn{M}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{norm}@*)(*@\HLJLp{(}@*)(*@\HLJLn{D\ensuremath{\^3}f}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{xx}@*)(*@\HLJLp{),}@*)(*@\HLJLn{Inf}@*)(*@\HLJLp{)}@*)
+(*@\HLJLn{N}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{2}@*) (*@\HLJLoB{.{\textasciicircum}}@*)(*@\HLJLp{(}@*)(*@\HLJLni{4}@*)(*@\HLJLoB{:}@*)(*@\HLJLni{21}@*)(*@\HLJLp{)}@*)
+(*@\HLJLnf{scatter}@*)(*@\HLJLp{(}@*)(*@\HLJLn{N}@*)(*@\HLJLp{,}@*)(*@\HLJLn{errs}@*)(*@\HLJLp{;}@*)(*@\HLJLn{xscale}@*)(*@\HLJLoB{=:}@*)(*@\HLJLn{log10}@*)(*@\HLJLp{,}@*)(*@\HLJLn{yscale}@*)(*@\HLJLoB{=:}@*)(*@\HLJLn{log10}@*)(*@\HLJLp{,}@*)(*@\HLJLn{label}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}Error"{}}@*)(*@\HLJLp{)}@*)
+(*@\HLJLnf{plot!}@*)(*@\HLJLp{(}@*)(*@\HLJLn{N}@*)(*@\HLJLp{,}@*)(*@\HLJLn{M}@*)(*@\HLJLoB{*}@*)(*@\HLJLp{(}@*)(*@\HLJLni{2}@*)(*@\HLJLn{\ensuremath{\pi}}@*)(*@\HLJLp{)}@*)(*@\HLJLoB{{\textasciicircum}}@*)(*@\HLJLni{2}@*)(*@\HLJLoB{/}@*)(*@\HLJLni{6}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{N}@*)(*@\HLJLoB{.{\textasciicircum}}@*)(*@\HLJLp{(}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{2}@*)(*@\HLJLp{);}@*)(*@\HLJLn{label}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}upper}@*) (*@\HLJLs{bound}@*) (*@\HLJLs{on}@*) (*@\HLJLs{error"{}}@*)(*@\HLJLp{)}@*)
+\end{lstlisting}
+
+\begin{lstlisting}
+1.809624 seconds (505.91 k allocations: 1.028 GiB, 43.88(*@{{\%}}@*) gc time, 17.94(*@{{\%}}@*)
+ compilation time)
+\end{lstlisting}
+
+\includegraphics[width=\linewidth]{jl_5cCdvi/Lecture1_3_1.pdf}
+
+The plot shows that the error decays as $\mathcal{O}(N^{-2})$, $N \to \infty$.
+
+To derive a higher order approximation to the derivative, we can use a higher degree interpolating polynomial.  For example, let $m$ be even, then we can derive an $m$-th order central difference approximation to the derivative by (i) constructing an interpolating polynomial $p(x)$ such that $p$ interpolates $f$ at $x_j$, $x_{j\pm 1}$, $x_{j\pm 2}$, $\ldots$,  $x_{j\pm m/2}$ and (ii) making the approximation $f'(x_j) \approx p'(x_j)$. Notice that $p$ has degree $\leq m$. For example, if we take $m = 4$, then we would obtain the following fourth-order central difference approximation to the derivative:
+
+\[
+f'(x_j) \approx p'(x_j) = \frac{f(x_{j-2}) -8 f(x_{j-1}) + 8 f(x_{j+1}) - f(x_{j-2})}{12h}.
+\]
+What happens if we let $m \to \infty$? We won't prove this (see \emph{A Practical Guide to Pseudospectral Methods} by B. Fornberg or \emph{Spectral Methods in Matlab} by L.N. Trefethen if you're interested in the details) but using the fact that $f$ is $2\pi$-periodic, as $m \to \infty$, the $N \times N$ differentiation matrix for even $N$ is 
+
+\[
+\left(
+\begin{array}{c c c c c}
+f'(x_0) \\
+  \\
+\vdots  \\
+  \\
+f'(x_{N-1})
+\end{array}
+\right) \approx 
+\left(
+\begin{array}{c c c c c}
+p'(x_0) \\
+  \\
+\vdots  \\
+  \\
+p'(x_{N-1})
+\end{array}
+\right) = \frac{1}{h}
+\left(
+\begin{array}{c c c c c c c}
+  &       &       & \vdots  &   &   & \\
+  &\ddots &       & \frac{1}{2}\cot \frac{3h}{2}   &   &    &  \\
+   &\ddots &      &-\frac{1}{2}\cot \frac{2h}{2}   &   &    &  \\ 
+   &\ddots &      & \frac{1}{2}\cot \frac{1h}{2}   &   &    &   \\
+  &        &      & 0                              &   &    &   \\
+&      &      & -\frac{1}{2}\cot \frac{1h}{2}   &   &   \ddots &  \\
+&      &      & \frac{1}{2}\cot \frac{2h}{2}   &   &   \ddots &  \\
+&      &      & -\frac{1}{2}\cot \frac{3h}{2}   &   &   \ddots &  \\
+&      &      & \ensuremath{\vdots}  &   &    &  \\
+
+\end{array}
+\right)
+\left(
+\begin{array}{c c c c c}
+f_0 \\
+  \\
+\vdots  \\
+  \\
+f_{N-1}
+\end{array}
+\right).
+\]
+where $h = 2\pi/N$.   Since this differentiation matrix is derived by letting $m \to \infty$, we expect the error to decay faster than $\mathcal(O)(N^{-m})$ for all $m > 0$, provided $f \in C^{\infty}[-\pi, \pi]$.  Let's check this numerically:
+
+
+\begin{lstlisting}
+(*@\HLJLn{Nv}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{4}@*)(*@\HLJLoB{:}@*)(*@\HLJLni{2}@*)(*@\HLJLoB{:}@*)(*@\HLJLni{70}@*)(*@\HLJLp{;}@*)
+(*@\HLJLn{errs}@*) (*@\HLJLoB{=}@*) 
+(*@\HLJLp{[(}@*) (*@\HLJLn{h}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{2}@*)(*@\HLJLn{\ensuremath{\pi}}@*)(*@\HLJLoB{/}@*)(*@\HLJLn{N}@*)(*@\HLJLp{;}@*)
+    (*@\HLJLn{column}@*) (*@\HLJLoB{=}@*) (*@\HLJLp{[}@*)(*@\HLJLni{0}@*)(*@\HLJLp{;}@*) (*@\HLJLnfB{0.5}@*)(*@\HLJLoB{*}@*)(*@\HLJLp{(}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)(*@\HLJLp{)}@*)(*@\HLJLoB{.{\textasciicircum}}@*)(*@\HLJLp{(}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{N}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)(*@\HLJLp{)}@*)(*@\HLJLoB{.*}@*)(*@\HLJLn{cot}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{((}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{N}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)(*@\HLJLp{)}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{h}@*)(*@\HLJLoB{/}@*)(*@\HLJLni{2}@*)(*@\HLJLp{)];}@*)
+    (*@\HLJLcs{{\#}}@*) (*@\HLJLcs{Differentiation}@*) (*@\HLJLcs{matrix:}@*)
+    (*@\HLJLn{D\ensuremath{\_m}}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{Toeplitz}@*)(*@\HLJLp{(}@*)(*@\HLJLn{column}@*)(*@\HLJLp{,[}@*)(*@\HLJLn{column}@*)(*@\HLJLp{[}@*)(*@\HLJLni{1}@*)(*@\HLJLp{];}@*) (*@\HLJLn{column}@*)(*@\HLJLp{[}@*)(*@\HLJLn{N}@*)(*@\HLJLoB{:-}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLni{2}@*)(*@\HLJLp{]]);}@*)
+    (*@\HLJLcs{{\#}}@*) (*@\HLJLcs{N}@*) (*@\HLJLcs{equally}@*) (*@\HLJLcs{spaced}@*) (*@\HLJLcs{points}@*) (*@\HLJLcs{on}@*) (*@\HLJLcs{[-\ensuremath{\pi},}@*) (*@\HLJLcs{\ensuremath{\pi})}@*)
+    (*@\HLJLn{x}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{points}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{Fourier}@*)(*@\HLJLp{(}@*)(*@\HLJLoB{-}@*)(*@\HLJLn{\ensuremath{\pi}}@*)(*@\HLJLoB{..}@*)(*@\HLJLn{\ensuremath{\pi}}@*)(*@\HLJLp{),}@*)(*@\HLJLn{N}@*)(*@\HLJLp{);}@*)
+    (*@\HLJLcs{{\#}}@*) (*@\HLJLcs{maximum}@*) (*@\HLJLcs{error}@*) (*@\HLJLcs{at}@*) (*@\HLJLcs{the}@*) (*@\HLJLcs{set}@*) (*@\HLJLcs{of}@*) (*@\HLJLcs{N}@*) (*@\HLJLcs{points}@*)
+    (*@\HLJLnf{norm}@*)(*@\HLJLp{(}@*)(*@\HLJLn{D\ensuremath{\_m}}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{f}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{)}@*) (*@\HLJLoB{-}@*) (*@\HLJLn{Df}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{),}@*)(*@\HLJLn{Inf}@*)(*@\HLJLp{)}@*) (*@\HLJLp{)}@*) (*@\HLJLk{for}@*) (*@\HLJLn{N}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{Nv}@*)(*@\HLJLp{]}@*)
+(*@\HLJLcs{{\#}}@*) (*@\HLJLcs{plot}@*) (*@\HLJLcs{the}@*) (*@\HLJLcs{error}@*) (*@\HLJLcs{on}@*) (*@\HLJLcs{a}@*) (*@\HLJLcs{semi-log}@*) (*@\HLJLcs{(log-linear)}@*) (*@\HLJLcs{scale}@*)
+(*@\HLJLnf{scatter}@*)(*@\HLJLp{(}@*)(*@\HLJLn{Nv}@*)(*@\HLJLp{,}@*)(*@\HLJLn{errs}@*)(*@\HLJLp{;}@*)(*@\HLJLn{yscale}@*)(*@\HLJLoB{=:}@*)(*@\HLJLn{log10}@*)(*@\HLJLp{,}@*)(*@\HLJLn{label}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}Error"{}}@*)(*@\HLJLp{)}@*)
+(*@\HLJLnf{plot!}@*)(*@\HLJLp{(}@*)(*@\HLJLn{Nv}@*)(*@\HLJLp{,(}@*)(*@\HLJLnfB{1.85}@*)(*@\HLJLp{)}@*)(*@\HLJLoB{.{\textasciicircum}}@*)(*@\HLJLp{(}@*)(*@\HLJLoB{-}@*)(*@\HLJLn{Nv}@*)(*@\HLJLp{))}@*)
+\end{lstlisting}
+
+\includegraphics[width=\linewidth]{jl_5cCdvi/Lecture1_4_1.pdf}
+
+Note that the error decays linearly on a semi-logarithimc plot (or log-linear plot).  This means that the error decays \emph{exponentially fast} with $N$ (we say that the approximation converges exponentially fast).  That is, the error decays as $\mathcal{O}(c^{-N})$ for $N \to \infty$ with $c > 1$.  Recall that the error of the second-order central difference formula decayed as $\mathcal{O}(N^{-2})$.  This type of converge is  called algebraic convergence.  Note how much faster exponential convergence is compared to algebraic convergence.
+
+To derive finite difference approximations to the derivative, we used low degree polynomials to approximate $f'$ locally.  The idea behind \emph{spectral methods} for differential equations (including PDEs) is to use high degree polynomials (or high accuracy interpolants) to approximate solutions to differential equations.
+
+
+
+\end{document}
