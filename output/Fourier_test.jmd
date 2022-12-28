@@ -1,0 +1,277 @@
+# Fourier methods for periodic functions
+
+We assume that $f$ is $2\pi$-periodic and its Fourier series converges on $x \in [0, 2\pi)$, i.e.,
+$$
+f(x) = \sum_{k=-\infty}^{\infty} c_k \mathrm{e}^{\mathrm{i} k x}
+$$
+where the Fourier coeffients are defined as
+$$
+%c_k = \frac{1}{2\pi}\int_{-\pi}^{\pi} f(x) \mathrm{e}^{-\mathrm{i}k x} \mathrm{d} x.
+c_k = \frac{1}{2\pi}\int_{0}^{2\pi} f(x) \mathrm{e}^{-\mathrm{i}k x} \mathrm{d} x.
+$$
+Suppose we only know the values of $f(x)$ at the $n$ equally spaced points $x_{j} = jh = \frac{2\pi j}{n}$ for $j = 0, \ldots, n-1$, can we somehow use Fourier series to approximate $f$ and its derivatives?
+
+The idea is to use a truncated Fourier series and approximate Fourier coefficients $\widetilde{c}_k$ to approximate $f$ with
+$$
+f(x) \approx \sum_{k=-(n-1)/2}^{(n-1)/2} \widetilde{c}_k \mathrm{e}^{\mathrm{i} k x},
+$$
+assuming $n$ is odd.
+
+## Trapezoidal rule
+
+We are going to approximate the Fourier coefficients $c_k$ by using the *trapezoidal rule*.
+
+**Trapezoidal rule:** Let $x_{j}$, $j = 0, \ldots, n$ be $n+1$ equally spaced points on the interval $[a, b]$. Hence, $x_j = a + jh$ with $h = (b-a)/n$. The $n+1$-point trapezoidal rule for approximating the integral 
+$$
+I[g] = \int_{a}^{b} g(x) \mathrm{d} x 
+$$
+is denoted by $I_n[g]$ and defined as
+$$
+I_n[g] := \frac{h}{2}\left(g(x_0) + 2g(x_1) + 2g(x_2) + \cdots + 2g(x_{n-1}) + g(x_{n})    \right)
+$$
+The trapezoidal rule is an example of a quadrature method, which are methods to approximate integrals by weighted sums.
+
+Let's use the trapezoidal rule to approximate the Fourier coefficients.  Setting $a = 0$, $b = 2\pi$, $h = 2\pi/n$ and using the fact that $g(x) = f(x)\mathrm{e}^{-\mathrm{i}k x}$ is a $2\pi$-periodic function (since $f(x)$ is assumed to be $2\pi$-periodic), it follows that $g(x_0) = g(x_0 + 2\pi) = g(x_n)$ and we obtain the approximation
+$$
+\begin{eqnarray}
+c_k &=& \frac{1}{2\pi}\int_{0}^{2\pi} f(x) \mathrm{e}^{-\mathrm{i}k x} \mathrm{d} x \\
+    &\approx & \frac{1}{2\pi}I_{n}\left[f\mathrm{e}^{-\mathrm{i}k x}\right]  \\
+    &=& \frac{1}{n}\sum_{j = 0}^{n-1} f(x_j)\mathrm{e}^{-\mathrm{i}kx_j} \\
+    &:=& \widetilde{c}_k
+\end{eqnarray}
+$$
+
+Later we'll see that the trapezoidal rule gives spectacularly accurate approximations to the Fourier coefficients of smooth periodic functions (the approximations $\widetilde{c}_k$ converge exponentially fast to $c_k$ with $n$ for sufficiently smooth functions $f$).  The first step in analysing the accuracy of the approximations $\widetilde{c}_k$ is the following result:
+
+**Lemma (discrete orthogonality)** For $x_j = jh = \frac{2\pi j}{n}$, we have
+$$
+I_n\left[\mathrm{e}^{\mathrm{i}kx}\right] = \frac{1}{n}\sum_{j = 0}^{n-1} \mathrm{e}^{\mathrm{i}kx_j} = \begin{cases}
+1 & \text{if } k = \ldots, -2n, -n, 0, n, 2n, \ldots \\
+0 & \text{otherwise}
+\end{cases},
+$$
+therefore
+$$
+I_n\left[\mathrm{e}^{\mathrm{i}(k-\ell)x}\right] = \frac{1}{n}\sum_{j = 0}^{n-1} \mathrm{e}^{\mathrm{i}(k-\ell)x_j} = \begin{cases}
+1 & \text{if } k-\ell = \ldots, -2n, -n, 0, n, 2n, \ldots \\
+0 & \text{otherwise}
+\end{cases}.
+$$
+**Proof** Case 1: $k = np$, $p \in \mathbb{Z}$, then
+$$
+\sum_{j = 0}^{n-1} \mathrm{e}^{\mathrm{i}kx_j} = \sum_{j = 0}^{n-1} \mathrm{e}^{2\pi\mathrm{i}kj/n} = \sum_{j = 0}^{n-1} \mathrm{e}^{2\pi\mathrm{i}pj} = \sum_{j = 0}^{n-1} 1 = n.
+$$
+Case 2: $k \neq np$, $p \in \mathbb{Z}$, then
+$$
+\sum_{j = 0}^{n-1} \mathrm{e}^{\mathrm{i}kx_j} = \sum_{j = 0}^{n-1} \left(\mathrm{e}^{2\pi\mathrm{i}k/n}\right)^{j} = \frac{1-\left(\mathrm{e}^{2\pi\mathrm{i}k/n}\right)^{n}}{1-\mathrm{e}^{2\pi\mathrm{i}k/n}} = 0,
+$$
+where we have used the formula
+$$
+\sum_{j = 0}^{n-1} z^{j} = \frac{1-z^n}{1-z},\qquad z \neq 1,
+$$
+and the fact that $\mathrm{e}^{2\pi\mathrm{i}k/n} \neq 1$ since $k \neq np$.
+
+**Corollary** The approximate Fourier coefficients $\widetilde{c}_k$ and the exact Fourier coefficients $c_k$ are related as follows,
+$$
+\widetilde{c}_k = \cdots + c_{k-2n} + c_{k-n} +  c_k +  c_{k+n} + c_{k+2n} + \cdots
+$$
+**Proof**  We have
+$$
+\begin{eqnarray}
+  \widetilde{c}_k   &=&\frac{1}{n}\sum_{j = 0}^{n-1} f(x_j)\mathrm{e}^{-\mathrm{i}kx_j}   \\
+    & = & \frac{1}{n}\sum_{j = 0}^{n-1} \sum_{\ell=-\infty}^{\infty} c_{\ell}\mathrm{e}^{\mathrm{i}\ell x_j} \mathrm{e}^{-\mathrm{i}kx_j}  \\
+    &=& \sum_{\ell=-\infty}^{\infty}c_{\ell}\left(\frac{1}{n}\sum_{j = 0}^{n-1} \mathrm{e}^{\mathrm{i}(\ell-k) x_j}   \right)
+\end{eqnarray}
+$$
+from which the result follows.
+
+Note from the definition of $\widetilde{c}_{k}$ that we have
+$$
+\widetilde{c}_{k+pn} = \widetilde{c}_{k}, \qquad p \in \mathbb{Z}.  
+$$
+We can express the approximate Fourier coefficients $\widetilde{c}_k$ as the following matrix vector product:
+$$
+\underbrace{\left(
+\begin{array}{c}
+\widetilde{c}_0 \\
+\widetilde{c}_1 \\
+\vdots \\
+\widetilde{c}_{n-2} \\
+\widetilde{c}_{n-1}
+\end{array}
+\right)}_{\widetilde{\mathbf{c}}} = 
+{1 \over n} \begin{bmatrix} 1 & 1 & 1&  ⋯ & 1 \\
+                                    1 & {\rm e}^{-{\rm i} x_1} & {\rm e}^{-{\rm i} x_2} & ⋯ & {\rm e}^{-{\rm i} x_{n-1}} \\
+                                    1 & {\rm e}^{-{\rm i} 2 x_1} & {\rm e}^{-{\rm i} 2 x_2} & ⋯ & {\rm e}^{-{\rm i} 2x_{n-1}} \\
+                                    ⋮ & ⋮ & ⋮ & ⋱ & ⋮ \\
+                                    1 & {\rm e}^{-{\rm i} (n-1) x_1} & {\rm e}^{-{\rm i} (n-1) x_2} & ⋯ & {\rm e}^{-{\rm i} (n-1) x_{n-1}}
+\end{bmatrix} 
+\underbrace{\left(
+\begin{array}{c}
+f(x_0) \\
+f(x_1) \\
+\vdots \\
+f(x_{n-2}) \\
+f(x_{n-1})
+\end{array}
+\right)}_{\mathbf{f}}.
+$$
+We express this as
+$$
+\widetilde{\mathbf{c}} = \frac{1}{\sqrt{n}}Q_{n}\mathbf{f}
+$$
+where $Q_n$ is the *Discrete Fourier Transform* (DFT) matrix.
+
+**Definition (DFT)**
+The _Discrete Fourier Transform (DFT)_ matrix is defined as:
+$$
+\begin{align*}
+Q_n &:= {1 \over \sqrt{n}} \begin{bmatrix} 1 & 1 & 1&  ⋯ & 1 \\
+                                    1 & {\rm e}^{-{\rm i} x_1} & {\rm e}^{-{\rm i} x_2} & ⋯ & {\rm e}^{-{\rm i} x_{n-1}} \\
+                                    1 & {\rm e}^{-{\rm i} 2 x_1} & {\rm e}^{-{\rm i} 2 x_2} & ⋯ & {\rm e}^{-{\rm i} 2x_{n-1}} \\
+                                    ⋮ & ⋮ & ⋮ & ⋱ & ⋮ \\
+                                    1 & {\rm e}^{-{\rm i} (n-1) x_1} & {\rm e}^{-{\rm i} (n-1) x_2} & ⋯ & {\rm e}^{-{\rm i} (n-1) x_{n-1}}
+\end{bmatrix} 
+\end{align*}
+$$
+Note that
+$$
+\begin{align*}
+Q_n^⋆ &= {1 \over \sqrt{n}} \begin{bmatrix}
+1 & 1 & 1&  ⋯ & 1 \\
+1 & {\rm e}^{{\rm i} x_1} & {\rm e}^{{\rm i} 2 x_1} & ⋯ & {\rm e}^{{\rm i} (n-1) x_1} \\
+1 &  {\rm e}^{{\rm i} x_2}  & {\rm e}^{{\rm i} 2 x_2} & ⋯ & {\rm e}^{{\rm i} (n-1)x_2} \\
+⋮ & ⋮ & ⋮ & ⋱ & ⋮ \\
+1 & {\rm e}^{{\rm i} x_{n-1}} & {\rm e}^{{\rm i} 2 x_{n-1}} & ⋯ & {\rm e}^{{\rm i} (n-1) x_{n-1}}
+\end{bmatrix} 
+\end{align*}
+$$
+**Proposition (DFT is Unitary)** $Q_n$ is unitary: $Q_n^⋆ Q_n = Q_n Q_n^⋆ = I$.
+
+**Proof**
+$$
+Q_n Q_n^⋆  = \begin{bmatrix} I_n[1] & I_n[{\rm e}^{{\rm i} x}] & ⋯ & I_n[{\rm e}^{{\rm i} (n-1) x}] \\
+                            I_n[{\rm e}^{-{\rm i} x}] & I_n[1] & ⋯ & I_n[{\rm e}^{{\rm i} (n-2) x}] \\
+                            ⋮ & ⋮ & ⋱ & ⋮ \\
+                            I_n[{\rm e}^{-{\rm i}(n-1) x}] & I_n[{\rm e}^{-{\rm i}(n-2) x}] & ⋯ & I_n[1]
+                            \end{bmatrix} = I
+$$
+∎
+
+**Proposition (trigonometric interpolant)** Suppose $n$ is odd with $n = 2m+1$, then 
+$$
+p(x) = \sum_{k=-m}^{m}\widetilde{c}_{k}{\rm e}^{{\rm i}kx}
+$$
+interpolates $f$ at $x_j$, $j = 0, \ldots, n-1$, i.e., $p(x_j) = f(x_j)$ for $j = 0, \ldots, n-1$.
+
+**Proof**  We want to show that $\mathbf{p} = \mathbf{f}$, where 
+$$
+\mathbf{p} = \left(
+\begin{array}{c}
+p(x_0) \\
+p(x_1) \\
+\vdots \\
+p(x_{n-2}) \\
+p(x_{n-1})
+\end{array}
+\right) \qquad \text{and} \qquad 
+\mathbf{f} = \left(
+\begin{array}{c}
+f(x_0) \\
+f(x_1) \\
+\vdots \\
+f(x_{n-2}) \\
+f(x_{n-1})
+\end{array}
+\right)
+$$
+We have that
+$$
+\mathbf{p} = \left(
+\begin{array}{c}
+p(x_0) \\
+p(x_1) \\
+\vdots \\
+p(x_{n-2}) \\
+p(x_{n-1})
+\end{array}
+\right)
+=
+\underbrace{\begin{bmatrix}
+1 & 1 & 1&  ⋯ & 1 \\
+{\rm e}^{-{\rm i}m x_1} & {\rm e}^{-{\rm i}(m-1) x_1} &  {\rm e}^{-{\rm i}(m-2) x_1} & ⋯ & {\rm e}^{{\rm i} m x_1} \\
+{\rm e}^{-{\rm i}m x_2} & {\rm e}^{-{\rm i}(m-1) x_2} &  {\rm e}^{-{\rm i}(m-2) x_2} & ⋯ & {\rm e}^{{\rm i} m x_2} \\
+⋮ & ⋮ & ⋮ & ⋱ & ⋮ \\
+{\rm e}^{-{\rm i}m x_{n-1}}& {\rm e}^{-{\rm i}(m-1)x_{n-1}}& {\rm e}^{-{\rm i}(m-2)x_{n-1}}& \cdots & {\rm e}^{{\rm i}m x_{n-1}}
+\end{bmatrix}}_{V} 
+\left(
+\begin{array}{l}
+\widetilde{c}_{-m} \\
+\widetilde{c}_{-m+1} \\
+\vdots \\
+\widetilde{c}_{m-1} \\
+\widetilde{c}_{m}
+\end{array}
+\right)
+$$
+where $V$ is known as the Vandermonde matrix.
+
+Since $\widetilde{c}_{-1} = \widetilde{c}_{n-1}$, $\widetilde{c}_{-2} = \widetilde{c}_{n-2}$, $\ldots$, $\widetilde{c}_{-m} = \widetilde{c}_{n-m} = \widetilde{c}_{m+1}$
+$$
+\left(
+\begin{array}{l}
+\widetilde{c}_{-m} \\
+\vdots \\
+\widetilde{c}_{m}
+\end{array}
+\right) = 
+\underbrace{\left(
+\begin{array}{c c}
+   & I_{m} \\
+I_{m+1} & 
+\end{array}
+\right)}_{P}
+\left(
+\begin{array}{l}
+\widetilde{c}_{0} \\
+\vdots \\
+\widetilde{c}_{n-1}
+\end{array}
+\right) = P\: \widetilde{\mathbf{c}} = \frac{P}{\sqrt{n}}Q_{n}\mathbf{f}
+$$
+where $P$ is a permutation matrix.
+
+Let $\mathbf{x} = \left(\begin{array}{c c c} x_0 & \cdots & x_{n-1}  \end{array}\right)^{\top}$, then we can express the Vandermonde matrix as
+$$
+V = 
+\left(
+\begin{array}{c c c c c c c}
+{\rm e}^{-{\rm i}m\mathbf{x}}  & \cdots & {\rm e}^{-{\rm i}\mathbf{x}} &\mathbf{1}  & {\rm e}^{{\rm i}\mathbf{x}} & \cdots & {\rm e}^{{\rm i}m\mathbf{x}}
+\end{array}
+\right)
+$$
+and
+$$
+\sqrt{n}\,Q_n^* = \left(
+\begin{array}{c c c c c}
+\mathbf{1}  & {\rm e}^{{\rm i}\mathbf{x}} & {\rm e}^{2{\rm i}\mathbf{x}} & \ldots & {\rm e}^{(n-1){\rm i}\mathbf{x}}
+\end{array}
+\right)
+$$
+Since ${\rm e}^{-{\rm i}\mathbf{x}} = {\rm e}^{{\rm i}(n-1)\mathbf{x}}$, ${\rm e}^{-2{\rm i}\mathbf{x}} = {\rm e}^{{\rm i}(n-2)\mathbf{x}}$, $\dots$, ${\rm e}^{-m{\rm i}\mathbf{x}} = {\rm e}^{{\rm i}(n-m)\mathbf{x}} = {\rm e}^{{\rm i}(m+1)\mathbf{x}}$, we have that
+$$
+V = \sqrt{n}\,Q_n^*\left(
+\begin{array}{c c}
+ & I_{m+1} \\
+I_m &
+\end{array}
+\right) =  \sqrt{n}\,Q_n^* P^{\top}
+$$
+
+Putting everything together, we have
+$$
+\mathbf{p} = \sqrt{n}Q_n^* P^{T} P \frac{Q_n}{\sqrt{n}}\mathbf{f} = \mathbf{f}
+$$
+∎
+
+Let's check the formula $V = \sqrt{n}\,Q_n^* P^{\top}$ in code
