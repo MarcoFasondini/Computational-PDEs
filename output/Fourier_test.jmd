@@ -1,3 +1,4 @@
+
 # Fourier methods for periodic functions
 
 We assume that $f$ is $2\pi$-periodic and its Fourier series converges on $x \in [0, 2\pi)$, i.e.,
@@ -33,12 +34,12 @@ The trapezoidal rule is an example of a quadrature method, which are methods to 
 
 Let's use the trapezoidal rule to approximate the Fourier coefficients.  Setting $a = 0$, $b = 2\pi$, $h = 2\pi/n$ and using the fact that $g(x) = f(x)\mathrm{e}^{-\mathrm{i}k x}$ is a $2\pi$-periodic function (since $f(x)$ is assumed to be $2\pi$-periodic), it follows that $g(x_0) = g(x_0 + 2\pi) = g(x_n)$ and we obtain the approximation
 $$
-\begin{eqnarray}
+\begin{eqnarray*}
 c_k &=& \frac{1}{2\pi}\int_{0}^{2\pi} f(x) \mathrm{e}^{-\mathrm{i}k x} \mathrm{d} x \\
     &\approx & \frac{1}{2\pi}I_{n}\left[f\mathrm{e}^{-\mathrm{i}k x}\right]  \\
     &=& \frac{1}{n}\sum_{j = 0}^{n-1} f(x_j)\mathrm{e}^{-\mathrm{i}kx_j} \\
     &:=& \widetilde{c}_k
-\end{eqnarray}
+\end{eqnarray*}
 $$
 
 Later we'll see that the trapezoidal rule gives spectacularly accurate approximations to the Fourier coefficients of smooth periodic functions (the approximations $\widetilde{c}_k$ converge exponentially fast to $c_k$ with $n$ for sufficiently smooth functions $f$).  The first step in analysing the accuracy of the approximations $\widetilde{c}_k$ is the following result:
@@ -77,11 +78,11 @@ $$
 $$
 **Proof**  We have
 $$
-\begin{eqnarray}
+\begin{eqnarray*}
   \widetilde{c}_k   &=&\frac{1}{n}\sum_{j = 0}^{n-1} f(x_j)\mathrm{e}^{-\mathrm{i}kx_j}   \\
     & = & \frac{1}{n}\sum_{j = 0}^{n-1} \sum_{\ell=-\infty}^{\infty} c_{\ell}\mathrm{e}^{\mathrm{i}\ell x_j} \mathrm{e}^{-\mathrm{i}kx_j}  \\
     &=& \sum_{\ell=-\infty}^{\infty}c_{\ell}\left(\frac{1}{n}\sum_{j = 0}^{n-1} \mathrm{e}^{\mathrm{i}(\ell-k) x_j}   \right)
-\end{eqnarray}
+\end{eqnarray*}
 $$
 from which the result follows.
 
@@ -156,7 +157,7 @@ Q_n Q_n^⋆  = \begin{bmatrix} I_n[1] & I_n[{\rm e}^{{\rm i} x}] & ⋯ & I_n[{\r
                             I_n[{\rm e}^{-{\rm i}(n-1) x}] & I_n[{\rm e}^{-{\rm i}(n-2) x}] & ⋯ & I_n[1]
                             \end{bmatrix} = I
 $$
-∎
+$\blacksquare$
 
 **Proposition (trigonometric interpolant)** Suppose $n$ is odd with $n = 2m+1$, then 
 $$
@@ -272,6 +273,714 @@ Putting everything together, we have
 $$
 \mathbf{p} = \sqrt{n}Q_n^* P^{T} P \frac{Q_n}{\sqrt{n}}\mathbf{f} = \mathbf{f}
 $$
-∎
+$\blacksquare$
 
 Let's check the formula $V = \sqrt{n}\,Q_n^* P^{\top}$ in code
+
+```julia
+using Plots, LinearAlgebra, SparseArrays
+n = 11
+m = (n-1)÷2
+x = range(0,2π; length=n+1)[1:end-1] # x_0, …,x_{n-1}, dropping x_n == 2π
+Qₙ = [exp(-im*(k-1)*x[j]) for k = 1:n, j=1:n]/sqrt(n)
+Qₙ*Qₙ' ≈ I
+```
+
+```julia
+P = sparse(1:n, [m+2:n;1:m+1], fill(1,n))
+```
+
+```julia
+V = [exp(im*k*x[j]) for j = 1:n, k=-m:m]
+V ≈ sqrt(n)*Qₙ'*transpose(P)
+```
+
+Here's an example illustrating that $p(x)$ interpolates $f$ at $x_{j}$ for $j = 0, \ldots, n-1$.
+
+```julia
+# write a function that evaluates the interpolant
+function triginterp(c, x)
+    # ct = [c₀, …, cₙ₋₁] (the approximate Fourier coefficients)
+    m = (n-1)÷2 # use coefficients between -m:m
+    p = 0.0 + 0.0im # coefficients are complex so we need complex arithmetic
+    for k = 0:m
+        p += c[k+1] * exp(im*k*x)
+    end
+    for k = -m:-1
+        p += c[end+k+1] * exp(im*k*x)
+    end
+    p
+end;
+```
+
+```julia
+f = x -> exp(cos(x))
+n = 5
+# compute the approximate Fourier coefficients
+x = range(0,2π; length=n+1)[1:end-1] # interpolation nodes x_0, …,x_{n-1}
+Qₙ = 1/sqrt(n) * [exp(-im*(k-1)*x[j]) for k = 1:n, j=1:n]
+c = 1/sqrt(n) * Qₙ * f.(x)
+
+p = x -> triginterp(c, x)
+
+xx = range(0, 2π; length=1000) # plotting grid
+plot(xx, f.(xx); lw=2, label="function",legend=:topright)
+plot!(xx, real.(p.(xx)); lw=2, label="trigonometric interpolant")
+scatter!(x, f.(x); label="samples")
+```
+
+Applying $Qₙ$ or its conjugate transpose $Q_n^⋆$ to a vector naively takes $\mathcal{O}(n^2)$ operations.
+Both can be reduced to $\mathcal{O}(n \log n)$ operations using the celebrated _Fast Fourier Transform_ (FFT),
+which is one of the [Top 10 Algorithms of the 20th Century](https://pi.math.cornell.edu/~web6140/).
+
+```julia
+# Here's an example of using the FFT to map function values to coefficients and vice versa
+using FFTW
+f = x -> exp(cos(x-0.1))
+n = 31
+m = (n-1)÷2
+# evenly spaced points from 0:2π, dropping last node
+x = range(0, 2π; length=n+1)[1:end-1]
+# fft returns the approximate Fourier coefficients n*[c₀, …, c_ₙ₋₁]
+c = fft(f.(x))/n
+# check that ifft maps c to [f(x₀), …, f(xₙ₋₁)]/n
+f.(x) ≈ n*ifft(c)
+```
+
+**Remark** The FFTW.jl package wraps the FFTW (Fastest Fourier Transform in the West) library,
+which is a highly optimised implementation
+of the FFT.
+(As an aside, the creator of FFTW [Steven Johnson](https://math.mit.edu/~stevenj/) is now a
+Julia contributor and user.)
+
+Recall that 
+$$
+\widetilde{\mathbf{c}} =  \frac{1}{\sqrt{n}}Q_{n}\mathbf{f} \qquad \text{and} \qquad \mathbf{f} = \sqrt{n}\,Q_{n}^*\widetilde{\mathbf{c}}.
+$$
+When we use the FFT to map function values on the grid $\mathbf{f}$ to approximate Fourier coefficients, $\widetilde{\mathbf{c}}$, we shall express this as
+$$
+\widetilde{\mathbf{c}} = \mathcal{F}\lbrace \mathbf{f}  \rbrace
+$$
+and we denote the map from coefficients to function values via the (inverse) FFT by
+$$
+\mathbf{f}  = \mathcal{F}^{-1}\lbrace \widetilde{\mathbf{c}} \rbrace
+$$
+
+The magic of the FFT is because its complexity is $\mathcal{O}(n \log n)$ (almost linear) we can scale it to very high orders.
+Here we plot the Fourier coefficients for a function that requires around 100k
+coefficients to resolve:
+
+```julia
+f = x -> exp(sin(x))/(1+1e6cos(x)^2)
+n = 100_001
+m = (n-1)÷2
+# evenly spaced points from 0:2π, dropping last node
+x = range(0, 2π; length=n+1)[1:end-1]
+
+# fft returns discrete Fourier coefficients n*[c₀, …, c_ₙ₋₁]
+c = @time fft(f.(x))/n
+
+# Reorder using [c₋ₘ, …, c₋₁] == [cₙ₋ₘ, …, cₙ₋₁]
+c = [c[m+2:end]; c[1:m+1]]
+
+plot(abs.(c); yscale=:log10, legend=:bottomright, label="default")
+plot!(abs.(c); yscale=:log10, label="reordered")
+```
+
+The FFT allows us to efficiently transform between "function value space"/"physical space" and "coefficient space"/"frequency space".  This is essential in the context of numerical methods for differential equations because we'll see that some operations (e.g. differentiation) can be performed much more efficiently in coefficient space than in function value space, while computing nonlinear terms may be performed more efficiently in function value space.   
+
+## Differentiation in function value space and in coefficient space
+
+We have shown above that for $n$ odd with $n = 2m+1$,
+$$
+p(x) = \sum_{k=-m}^{m} \widetilde{c}_k{\rm e}^{{\rm i}kx},  \qquad \qquad (1)
+$$
+with
+$$
+\widetilde{c}_k = \frac{1}{n}\sum_{j=0}^{n-1}f(x_j){\rm e}^{{\rm i}kx_j}  \qquad  \qquad (2)
+$$
+interpolates $f$ at $x_0$, $\ldots$, $x_{n-1}$. This is a representation of the interpolant $p$ in terms of coefficients $\widetilde{c}_k$ and basis functions ${\rm e}^{{\rm i}kx}$.   Now we want to construct a different representation of $p$ in terms of function values to illustrate the difference between differentiation in function value space and coefficient space. 
+
+Similar to the formula for the Lagrange interpolating polynomial, we want a formula for a trigonometric interpolant of the form
+$$
+p(x) = \sum_{j=0}^{n-1}\ell_{j}(x) f(x_{j}).
+$$
+Notice that now $p$ is reprented as an expansion in function values $f(x_{j})$ and basis functions $\ell_{j}(x)$. We require the basis functions to have property
+$$
+\ell_{j}(x_i) = \begin{cases}
+1 & \text{if } i = j, i = j \pm n, i = j \pm 2n, \ldots \\
+0 & \text{otherwise } 
+\end{cases}
+$$
+so that $p(x)$ is periodic on the grid points ($p(x_{j + pn}) = p(x_{j})$, for $p \in \mathbb{Z}$) and is an interpolant ($p(x_{j}) = f(x_{j})$, for $j = 0, \ldots, n-1$). 
+
+The idea is first to find $\ell_0(x)$ and then to set $\ell_{j}(x) = \ell_0(x-x_j)$ because then  $\ell_{j}(x_i) = \ell_0(x_{i}-x_j)$ and therefore $\ell_{j}(x_{i}) = 1$ if  $i = j$ ${\rm mod } \:n$, as required.
+
+The function $\ell_0(x)$ can be found by using (1) and (2) to construct the interpolant of a periodic function $f$ with the property that $f(x_0) = 1$ and $f(x_j) = 0$, for $j = 1, \ldots, n-1$. For this function (a periodic, discrete delta function), the approximate Fourier coefficients are
+$$
+\widetilde{c}_{k} = \frac{1}{n} = \frac{h}{2\pi}, \qquad \forall k,
+$$
+therefore
+$$
+\ell_0(x) = p(x) = \sum_{k=-m}^{m} \widetilde{c}_k{\rm e}^{{\rm i}kx} = \frac{h}{2\pi}\sum_{k=-m}^{m} {\rm e}^{{\rm i}kx} = \frac{1}{n}\frac{\sin((m+1/2)x)}{\sin(x/2)}
+$$
+(deriving this formula is left as an exercise)
+
+Let's check that $\ell_0(x)$ has the required properties:
+
+```julia
+n = 11
+m = (n-1)÷2
+h = 2π/n
+ℓ₀ = x -> x == 0 ? 1 : h/(2π)*sin((m+0.5)*x)/sin(x/2)
+x = range(0,2π;length=n+1)[1:end-1] #x₀, …, x_{n-1}
+xx = range(0,2π;length=501)[1:end-1] #plotting grid
+plot(xx,ℓ₀.(xx);label="ℓ₀(x)")
+scatter!(x,ℓ₀.(x);label="samples")
+```
+
+Here is a translated version of $\ell_0(x)$, namely $\ell_0(x-x_{m}) = \ell_{m}(x)$
+
+```julia
+plot(xx,ℓ₀.(xx .- x[m+1]);label="ℓₘ(x)")
+scatter!(x,ℓ₀.(x .- x[m+1]);label="samples")
+```
+
+Hence, another representation of the interpolant is
+$$
+p(x) = \sum_{j=0}^{n-1}\ell_j(x)f(x_j) = \sum_{j=0}^{n-1}\ell_0(x-x_j)f(x_j), \qquad \ell_0(x) = \frac{1}{n}\frac{\sin((m+1/2)x)}{\sin(x/2)}
+$$
+from which we obtain approximations to the derivative at the grid points $x_j$, $j = 0, \ldots, n-1$:
+$$
+f'(x_i) \approx p'(x_i) = \sum_{j=0}^{n-1}\ell_{j}'(x_i) f(x_{j})  = \sum_{j=0}^{n-1}\ell_{0}'(x_i-x_j)f(x_{j}), \qquad i = 0, \ldots, n-1.
+$$
+It is left as an exercise to show that
+$$
+\ell_{0}'(x_i-x_j) = \begin{cases}
+ 0 & \text{if } i = j \\
+ \frac{(-1)^{i-j}}{2}\csc\left( \frac{(i-j)h}{2} \right)  & \text{if } i\neq j
+\end{cases}.
+$$
+
+This implies that the differentiation matrix is Toeplitz and the entries on the $(i-j)$-th diagonal is $\frac{(-1)^{i-j}}{2}\csc\left( \frac{(i-j)h}{2} \right)$, i.e.,
+
+$$
+\left(
+\begin{array}{c}
+f'(x_0) \\
+  \\
+\vdots  \\
+  \\
+f'(x_{n-1})
+\end{array}
+\right) \approx 
+\left(
+\begin{array}{c}
+p'(x_0) \\
+  \\
+\vdots  \\
+  \\
+p'(x_{n-1})
+\end{array}
+\right) = 
+\left(
+\begin{array}{c c c c c c c}
+  &       &       & \vdots  &   &   & \\
+  &\ddots &       & \frac{1}{2}\csc \frac{3h}{2}   &   &    &  \\
+   &\ddots &      &-\frac{1}{2}\csc \frac{2h}{2}   &   &    &  \\ 
+   &\ddots &      & \frac{1}{2}\csc \frac{1h}{2}   &   &    &   \\
+  &        &      & 0                              &   &    &   \\
+&      &      & -\frac{1}{2}\csc \frac{1h}{2}   &   &   \ddots &  \\
+&      &      & \frac{1}{2}\csc \frac{2h}{2}   &   &   \ddots &  \\
+&      &      & -\frac{1}{2}\csc \frac{3h}{2}   &   &   \ddots &  \\
+&      &      & \vdots  &   &    &  \\
+\end{array}
+\right)
+\left(
+\begin{array}{c}
+f_0 \\
+  \\
+\vdots  \\
+  \\
+f_{n-1}
+\end{array}
+\right).
+$$
+
+Alternatively, we can approximate $f'$ by differentiating the "coefficient space" interpolant (1):
+$$
+f'(x) \approx p'(x) = \sum_{k=-m}^{m} {\rm i k}\widetilde{c}_k{\rm e}^{{\rm i}kx}.
+$$
+Similarly, we approximate the $\nu$-th order derivative with $\nu \in \mathbb{Z}_+$ as
+$$
+f^{(\nu)}(x) \approx p^{(\nu)}(x) = \sum_{k=-m}^{m} \left({\rm i k}\right)^{\nu}\,\widetilde{c}_k{\rm e}^{{\rm i}kx}.
+$$
+Let's denote the Fourier coefficients of $f^{(\nu)}(x)$ by $c_k^{(\nu)}$, then
+$$
+f^{(\nu)}(x) = \sum_{k=-\infty}^{\infty}c_k^{(\nu)}{\rm e}^{{\rm i}kx},
+$$
+where $c_k^{(\nu)} =  \left( {\rm i}k \right)^{\nu} c_k$.  Therefore we approximate $c_k^{(\nu)}$ using the Fourier coefficients of $p^{(\nu)}(x)$, i.e.,
+$$
+\left(
+\begin{array}{c}
+c_{-m}^{(\nu)} \\
+\vdots \\
+c_{m}^{(\nu)}
+\end{array}
+\right) \approx
+\left(
+\begin{array}{c c c}
+\left(-{\rm i}m\right)^{\nu} &  &   \\
+   & \ddots &    \\
+   &        & \left({\rm i}m\right)^{\nu}
+\end{array}
+\right)
+\left(
+\begin{array}{c}
+\widetilde{c}_{-m} \\
+\vdots \\
+\widetilde{c}_{m}
+\end{array}
+\right).
+$$
+Note that in "coefficient space", the differentiation matrix is diagonal whereas it is dense in "function value" space.  
+
+Starting from the function values on the grid, $f(x_j)$, $j = 0, \ldots, n-1$, we can approximate $f^{(\nu)}(x_j) \approx p^{(\nu)}(x_j)$, $j = 0, \ldots, n-1$ using the FFT and inverse FFT as follows:
+1. compute $\tilde{c}_{-m}, \ldots, \tilde{c}_{m}$ using the FFT  (function values to coefficients)
+2. compute $(-{\rm i}m)^{\nu}\,\tilde{c}_{-m}, (-{\rm i}(m-1))^{\nu}\,\tilde{c}_{-(m-1)}, \ldots, ({\rm i}m)^{\nu}\,\tilde{c}_{m}$ (differentiate in coefficient space)
+3. compute $p^{(\nu)}(x_j)$ using the (inverse) FFT  (coefficients to function values)
+
+Note that this procedure has $\mathcal{O}(n \log n)$ complexity where naive multiplication by a dense differentiation matrix has quadratic complexity ($\mathcal{O}\left(n^2\right)$).
+
+Here is an example:
+
+```julia
+f = x -> 1/(2 + cos(x))
+Df = x -> sin(x)/(2 + cos(x))^2  # derivative
+n = 101
+m = (n-1)÷2
+x = range(0,2π;length=n+1)[1:end-1] # grid points x₀, …, xₙ₋₁
+# map function values to coefficients via the fft
+c = fft(f.(x))/n; # [c₀, …, cₙ₋₁]
+# re-order coefficients
+ch = fftshift(c);  # reorder the coefficients to [c₋ₘ, …, cₘ]
+# Fourier coefficients of the derivative
+dch = (im*(-m:m)).*ch;
+# re-order
+dc = ifftshift(dch); # undoes what fftshift did
+# map coefficients to function values via the ifft
+df = n*ifft(dc);
+norm(df - Df.(x),Inf)
+```
+
+```julia
+# more briefly
+df = ifft(ifftshift(im*(-m:m)).*fft(f.(x)))
+norm(df - Df.(x),Inf)
+```
+
+Mathematically, we express approximate $\nu$-th order differentation of a function $f(x)$ on the equispaced grid $x_j = jh = 2\pi j/n$, $j = 0, \ldots, n-1$ with $n = 2m + 1$ as follows
+$$
+\mathcal{F}^{-1}\left\lbrace\left({\rm i}(-m\!:\!m)\right)^{\nu}\cdot\mathcal{F}\lbrace \mathbf{f} \rbrace\right\rbrace
+$$
+
+Here we approximate $f'(x_j)$, $j = 0, \ldots, n-1$ using (i) differentiation matrices and (ii) the FFT.
+
+```julia
+using ToeplitzMatrices
+nv = 5:2:71
+f = x -> 1/(2 + cos(x))
+Df = x -> sin(x)/(2 + cos(x))^2  # derivative
+
+# Differentiation matrices
+errs = 
+[( h = 2π/n;
+    column = [0; 0.5*(-1).^(1:n-1).*csc.((1:n-1)*h/2)];
+    Dₙ = Toeplitz(column,[column[1]; column[n:-1:2]]); # Differentiation matrix:
+    x = range(0,2π;length=n+1)[1:end-1]; # n equally spaced points on [0, 2π)
+    norm(Dₙ*f.(x) - Df.(x),Inf) ) for n = nv] # maximum error at the set of N points
+
+# Differentiation in coefficient space via the FFT
+errsfft = 
+[(  m = (n-1)÷2;
+    x = range(0,2π;length=n+1)[1:end-1];
+    df = ifft(ifftshift(im*(-m:m)).*fft(f.(x)));
+    norm(df - Df.(x),Inf) ) for n = nv]
+
+# plot the error on a semi-log (log-linear) scale
+scatter(nv,errs;yscale=:log10,ms=7,label="Error: differentiation matrix")
+scatter!(nv,errsfft;yscale=:log10,label="Error: differentiation via FFT")
+```
+
+## PDE example
+
+Now we have the tools to implement a numerical method for the *advection equation*
+$$
+u_t + u_x = 0, \qquad u = u(x,t).
+$$
+We want to approximate the solution to this equation with the initial data
+$$
+u(x,0) = f(x) = {\rm e}^{-100(x-1)^2}.
+$$
+We can easily verify that the exact solution to this Cauchy problem is
+$$
+u(x,t) = f(x - t).
+$$
+This solution can be derived using the method of characteristics.     
+
+As it stands, this problem is posed on the entire real real line.  However, since the initial data decay very rapdily to zero away from $x=1$, it is approximately periodic on $[0, 2\pi]$ and therefore we approximate $u(x,t)$ in the $x$-direction using Fourier methods. 
+
+We let the equispaced spatial grid be
+$$
+x_j = jh = j \frac{2\pi}{n_x}, \qquad j = 0, \ldots, n_x-1, \qquad n_x = 2m+1
+$$
+and we let $t \in [0, T]$ and set
+$$
+t_i = i\tau, \qquad \tau = \frac{T}{n_t}, \qquad i = 0, \ldots, n_t.
+$$
+We let $u^{i}_j$ denote the approximation to the exact solution $u$ at $x=x_j$ and $t = t_i$, i.e.,
+$$
+u^{i}_j \approx u(x_j, t_i).
+$$
+(the index $i$ should not be confused with the imaginary unit ${\rm i} = \sqrt{-1}$).  We set $u^{0}_j = u(x_j,0) = f(x_j)$ or, in vector notation, $\mathbf{u}^{0} = \mathbf{f}$.
+
+We approximate the time-derivative with forward differences:
+$$
+u_t(x_j,t_i) \approx \frac{u(x_j,t_{i+1}) - u(x_j,t_{i})}{\tau} \approx \frac{u^{i+1}_j - u^{i}_j}{\tau}, \qquad j = 0, \ldots, n_x-1
+$$
+or, in vector notation,
+$$
+u_t(\mathbf{x},t_i) \approx \frac{\mathbf{u}^{i+1} - \mathbf{u}^{i}}{\tau}.
+$$
+We approximate the spatial derivative using the FFT!:
+$$
+u_x(\mathbf{x},t_i) \approx \mathcal{F}^{-1}\left\lbrace {\rm i}(-m\!:\!m)\cdot\mathcal{F}\lbrace \mathbf{u}^{i} \rbrace\right\rbrace
+$$
+Therefore we approximate the solution to the PDE as follows:
+$$
+\mathbf{u}^{i+1} = \mathbf{u}^{i} - \tau \mathcal{F}^{-1}\left\lbrace {\rm i}(-m\!:\!m)\cdot\mathcal{F}\lbrace \mathbf{u}^{i} \rbrace\right\rbrace, \qquad i = 0, \ldots, n_t-1, \qquad \mathbf{u}^0 = \mathbf{f}.
+$$
+
+```julia
+f = x -> exp(-100*(x-1)^2)
+nₓ = 401
+m = (nₓ - 1)÷2
+x = range(0,2π;length=nₓ+1)[1:end-1] # the equispaced grid in the x-direction
+nₜ = 500
+T = 1
+τ = T/nₜ
+u = zeros(nₜ + 1,nₓ)
+u[1,:] = f.(x)  # initial data
+for n = 1:nₜ-1
+    u[n+1,:] = real.(u[n,:] - τ*ifft(ifftshift(im*(-m:m)).*fft(u[n,:])))
+end
+```
+
+```julia
+t = range(0,T;length=nₜ+1)
+contour(x,t,u;xlabel="x",ylabel="t",title="Approximate solution to the advection equation")
+```
+
+```julia
+surface(x,t,u;seriescolor=:redsblues, camera=(10,50),
+xlabel="x",ylabel="t",title="Approximate solution to the advection equation")
+```
+
+Note the spurious oscillations in the numerical solution.  We shall analyse why this instability occurs later in this module.  Whe shall also see that if we approximate the time derivative with a central difference, then we can take larger time steps while retaining stability. That is, if we use
+$$
+u_t(x_j,t_i) \approx \frac{u(x_j,t_{i+1}) - u(x_j,t_{i-1})}{2\tau} \approx \frac{u^{i+1}_j - u^{i-1}_j}{2\tau}, \qquad j = 0, \ldots, n_x-1
+$$
+and again approximate the spatial derivative via FFTs, then we obtain another numerical method for the advection equation:
+$$
+\mathbf{u}^{i+1} = \mathbf{u}^{i-1} - 2\tau \mathcal{F}^{-1}\left\lbrace {\rm i}(-m\!:\!m)\cdot\mathcal{F}\lbrace \mathbf{u}^{i} \rbrace\right\rbrace, \qquad i = 0, \ldots, n_t-1, \qquad \mathbf{u}^0 = \mathbf{f}.
+$$
+This is known as a leap frog method.
+
+We have $\mathbf{u}^0$, however we also need $\mathbf{u}^1$ to implement the leap frog method.  There are various one-step methods one could use to obtain $\mathbf{u}^1$ from $\mathbf{u}^0$ (e.g., Runge-Kutta methods, which we might get to later) but here we use 10 steps of the forward difference method above with step size $\tau/10$:
+
+```julia
+nₜ = 500
+T = 2.5
+τ = T/nₜ
+u = zeros(nₜ + 1,nₓ)
+u[1,:] = f.(x) 
+
+# First take ten steps using the forward difference formula
+ut = zeros(11,nₓ)
+u[1,:] = ut[1,:] =  f.(x) # initial data
+for n = 1:10
+    ut[n+1,:] = real.(ut[n,:] - τ/10*ifft(ifftshift(im*(-m:m)).*fft(ut[n,:])))
+end
+
+# Now use the leap frog method
+u[2,:] = ut[11,:]
+for n = 2:nₜ-1
+    u[n+1,:] = real.(u[n-1,:] - 2τ*ifft(ifftshift(im*(-m:m)).*fft(u[n,:])))
+end
+```
+
+```julia
+t = range(0,T;length=nₜ+1)
+contour(x,t,u;xlabel="x",ylabel="t",title="Leapfrog solution to the advection equation")
+```
+
+```julia
+surface(x,t,u;seriescolor=:redsblues, camera=(10,50),
+xlabel="x",ylabel="t",title="Leapfrog solution to the advection equation")
+```
+
+Let's consider now the advection equation with a variable coefficient:
+$$
+u_t + c(x)u_x = 0
+$$
+with 
+$$
+c(x) = \frac{1}{5} + \sin^2(x-1)
+$$
+and the same initial data as before, $u(x,0) = f(x) = {\rm e}^{-100(x-1)^2}$.  We can easily verify that the exact solution to this Cauchy problem (which can be derived using the method of characteristics) is 
+$$
+u(x,t) = f\left(t - C(x)  \right),
+$$
+where $C(x)$ is an antiderivative of $1/c(x)$, i.e., $C'(x) = 1/c(x)$.    For example,
+$$
+C(x) = -\frac{5}{\sqrt{6}}\arctan \left(\sqrt{6}\tan(1-x)  \right).
+$$
+
+If we again use central differences to approximate the time derivative and FFTs to approximate the spatial derivative, then the leapfrog method is
+$$
+\mathbf{u}^{i+1} = \mathbf{u}^{i-1} - 2\tau c(\mathbf{x})\cdot \mathcal{F}^{-1}\left\lbrace {\rm i}(-m\!:\!m)\cdot\mathcal{F}\lbrace \mathbf{u}^{i} \rbrace\right\rbrace, \qquad i = 0, \ldots, n_t-1, \qquad \mathbf{u}^0 = \mathbf{f}.
+$$
+As before, we'll use 10 steps of the forward difference method with a step size of $\tau/10$ to compute $\mathbf{u}^{1}$ to initialise the leapfrog method:
+
+```julia
+c = x -> 0.2 + sin(x - 1)^2
+nₜ = 2000
+T = 8
+τ = T/nₜ
+u = zeros(nₜ + 1,nₓ)
+u[1,:] = f.(x) 
+
+# First take ten steps using the forward difference formula
+ut = zeros(11,nₓ)
+u[1,:] = ut[1,:] =  f.(x) # initial data
+for n = 1:10
+    ut[n+1,:] = real.(ut[n,:] - τ/10*c.(x).*ifft(ifftshift(im*(-m:m)).*fft(ut[n,:])))
+end
+
+# Now use the leap frog method
+u[2,:] = ut[11,:]
+for n = 2:nₜ-1
+    u[n+1,:] = real.(u[n-1,:] - 2τ*c.(x).*ifft(ifftshift(im*(-m:m)).*fft(u[n,:])))
+end
+```
+
+```julia
+t = range(0,T;length=nₜ+1)
+contour(x,t,u;xlabel="x",ylabel="t",title="Leapfrog sln to the variable coefficient advection eqn")
+```
+
+```julia
+surface(x,t,u;seriescolor=:redsblues, camera=(10,50),
+xlabel="x",ylabel="t",title="Leapfrog sln to the variable coefficient advection eqn")
+```
+
+## Smoothness of $f$ and decay of Fourier coefficients
+
+What happens if we approximate a function that is not periodic with the periodic interpolant
+$$
+p(x) = \sum_{k=-m}^{m}\widetilde{c}_k{\rm e}^{{\rm i}kx}?
+$$
+**Example** Consider the function $f(x) = {\rm e}^{x-2\pi}$. This function is not  $2\pi$-periodic because $f(x + 2\pi) \neq f(x)$. However, for any function $f$, we can define its *periodic extension*
+$$
+f(x + 2\pi p) = f(x), \qquad x \in [0, 2\pi), \qquad p \in \mathbb{Z},
+$$
+which is a $2\pi$-periodic function.  Here is a plot of the periodic extension of $f$ on $[-2\pi, 4\pi]$, however it extends infinitely far to the left and right.
+
+```julia
+f₁ = x -> exp(x-2π)
+xx = range(0,2π;length=501)[1:end-1] # plotting grid
+plot(xx,f₁.(xx);lw=3,lc=:blue,legend=false)
+plot!(xx .+ 2π,f₁.(xx);lw=3,lc=:blue,legend=false)
+plot!(xx .- 2π,f₁.(xx);lw=3,lc=:blue,legend=false)
+```
+
+Notice that the periodic extension has jump discontinuities at $x = 2\pi p$, $p \in \mathbb{Z}$.
+
+Here is the trigonometric interpolant of the periodic extension of $f$:
+
+```julia
+plot(xx,f₁.(xx);lw=3,lc=:blue,legend=false)
+plot!(xx .+ 2π,f₁.(xx);lw=3,lc=:blue,legend=false)
+plot!(xx .- 2π,f₁.(xx);lw=3,lc=:blue,legend=false)
+
+# Trigonometric interpolant
+n = 51
+x = range(0,2π;length=n+1)[1:end-1]
+c = fft(f₁.(x))/n
+p = x -> triginterp(c, x)
+plot!(xx,real.(p.(xx)),lw=1.5,lc=:red)
+```
+
+The periodic interpolant is clearly not a good approximation to the function.  The oscillations at the endpoints is known as the *Gibbs phenomenon*.  As $n \to \infty$, the amplitude of the oscillations decrease as $\mathcal{O}(n^{-1})$ (very slowly) and the interpolant at $x=0$ and $x =2\pi$ converges to the average of the function values at  $x=0$ and $x =2\pi$:
+$$
+\lim_{x\to 0, 2\pi}p(x) = \frac{1}{2}\left(\lim_{x \to 0^{+}}f(x) + \lim_{x \to 2\pi^{-}}f(x)\right), \qquad n \to \infty.
+$$
+
+The reason why $p$ is not a good approximation to $f$ is because it is not very smooth (it has jump discontinuities, so it's $0$-th derivative is discontinuous). Our aim in this section is to relate the smoothness of $f$ to the accuracy of its approximation by the interpolant $p(x)$.  Then we'll be able to relate the smoothness of derivatives of $f$ to the accuracy of their approximation by derivatives of the interpolant, which is relevant to the analysis of the accuracy of spectral methods for PDEs.
+
+We now show that the accuracy of the interpolant $p(x)$ and its derivatives depends on the magnitudes of the Fourier coefficients of the function $f$. It follows that
+$$
+\begin{eqnarray*}
+f^{(\nu)}(x) - p^{(\nu)}(x) & = & \sum_{k=-\infty}^{\infty}({\rm i}k)^{\nu}c_k{\rm e}^{{\rm i}kx} - \sum_{k=-m}^{m}({\rm i}k)^{\nu}\,\widetilde{c}_k{\rm e}^{{\rm i}kx} \\
+ &=& \sum_{k=-m}^{m}({\rm i}k)^{\nu}\left(c_k - \widetilde{c}_k\right){\rm e}^{{\rm i}kx} + \sum_{\vert k \vert > m} ({\rm i}k)^{\nu}c_k{\rm e}^{{\rm i}kx}
+\end{eqnarray*}
+$$
+Recall that the approximate Fourier coefficients $\widetilde{c}_k$ that we obtain from the trapezoidal rule and the exact Fourier coefficients are related as follows:
+$$
+\widetilde{c}_k = \cdots + c_{k-2n} + c_{k-n} +  c_k +  c_{k+n} + c_{k+2n} + \cdots
+$$
+
+Therefore,
+$$
+\begin{eqnarray}
+\left\vert f^{(\nu)}(x) - p^{(\nu)}(x) \right\vert & \leq &  \sum_{k=-m}^{m} \vert k\vert^{\nu}\left\vert c_k - \widetilde{c}_k\right\vert + \sum_{\vert k \vert > m} \vert k \vert^{\nu} \vert c_k \vert \leq  2\sum_{\vert k \vert > m} \vert k \vert^{\nu} \vert c_k \vert 
+\end{eqnarray}
+$$
+The infinity norm of a function $g(x)$ on $[0, 2\pi]$ is defined as $\| g \|_{\infty} = \mathrm{sup}_{x\in[0,2\pi]} \vert g(x) \vert$, hence we have
+$$
+\| f^{(\nu)} - p^{(\nu)}  \|_{\infty} \leq  2\sum_{\vert k \vert > m} \vert k \vert^{\nu} \vert c_k \vert 
+$$
+
+Now we show that the magnitudes of the Fourier coefficients depend on the smoothness of $f$. First, we define the one-norm of a function $g(x)$ on $[0, 2\pi)$ by
+$$
+\| g \|_1 = \int_{0}^{2\pi}  \vert g(x) \vert \, {\rm d}x. 
+$$
+Also, we define $g(a^{-})$ as follows:
+$$
+g(a^{-}) :=\lim_{x\to a^{-}} g(x).
+$$
+
+Loosely speaking, the following result says that if the derivatives of order $0, \ldots, \mu-1$ are continuous and integrable (they are "nice") and the derivatives of order $\mu$ and $\mu+1$ are absolutely integrable (but not necessarily periodic or continuous, i.e., not so nice but not too wild), then $c_k = \mathcal{O}(k^{-\mu-1})$, i.e., the Fourier coefficients decay as $\mathcal{O}(k^{-\mu-1})$, as $k \to \infty$.
+
+**Proposition (Smoothness of $f$ and decay of Fourier coefficients)** Suppose the periodic extension of a function $f$ is in $C^{(\mu-1)}[0, 2\pi]$ (i.e., the order $0$-th up to $\mu-1$-st derivatives of the periodic extension of $f$ are continuous on $[0, 2\pi]$; note that continuity on $[0, 2\pi]$ implies $2\pi$-periodicity) and suppose $\left\| f^{(k)} \right\|_{1} < \infty$ for $k = 0, \ldots, \mu+1$ and $f^{(\mu)}(0), f^{(\mu)}(2\pi^{-}) < \infty$, then
+$$
+\left\vert c_k   \right\vert \leq  \frac{M}{2\pi \vert k \vert^{\mu+1}},
+$$
+where $M =  \vert f^{(\mu)}(2\pi^{-}) - f^{(\mu)}(0)   \vert + \left\|f^{(\mu+1)}   \right\|_1$.
+
+**Proof** Integrating by parts $\mu+1$ times, it follows that
+$$
+\begin{eqnarray*}
+c_k &=& \frac{1}{2\pi}\int_{0}^{2\pi}f(x) {\rm e}^{-{\rm i}kx}{\rm d}x  \\
+    &=& \frac{1}{2\pi(-{\rm i}k)}\left\lbrace \left.  f(x) {\rm e}^{-{\rm i}kx}\right]_{0}^{2\pi^{-}}  - \int_{0}^{2\pi}f'(x) {\rm e}^{-{\rm i}kx} {\rm d}x \right\rbrace \\
+    &=& \frac{1}{2\pi({\rm i}k)} \int_{0}^{2\pi}f'(x) {\rm e}^{-{\rm i}kx} {\rm d}x \\
+    &\vdots &   \\
+    & = &  \frac{1}{2\pi({\rm i}k)^{\mu-1}(-{\rm i}k)}\left\lbrace \left.  f^{(\mu-1)}(x) {\rm e}^{-{\rm i}kx}\right]_{0}^{2\pi^{-}}  - \int_{0}^{2\pi}f^{(\mu)}(x) {\rm e}^{-{\rm i}kx} {\rm d}x \right\rbrace \\
+    &=& \frac{1}{2\pi({\rm i}k)^{\mu}} \int_{0}^{2\pi}f^{(\mu)}(x) {\rm e}^{-{\rm i}kx} {\rm d}x \\
+    &=& \frac{1}{2\pi({\rm i}k)^{\mu}(-{\rm i}k)}\left\lbrace \left.  f^{(\mu)}(x) {\rm e}^{-{\rm i}kx}\right]_{0}^{2\pi^{-}}  - \int_{0}^{2\pi}f^{(\mu+1)}(x) {\rm e}^{-{\rm i}kx} {\rm d}x \right\rbrace,
+    \end{eqnarray*}
+$$
+from which the result follows.
+$\blacksquare$
+
+**Corollary (Accuracy of the trigonometric interpolant and its derivatives)**  If the conditions of the above proposition hold and $n$ is odd with $n = 2m + 1$, then
+$$
+\| f^{(\nu)} - p_n^{(\nu)} \|_{\infty} = \mathcal{O}(n^{\nu-\mu}), \qquad n \to \infty.
+$$
+
+**Proof sketch** Let $M  = \vert f^{(\mu)}(2\pi^{-}) - f^{(\mu)}(0)   \vert + \left\|f^{(\mu+1)}   \right\|_1$, then we have that
+$$
+\begin{eqnarray*}
+\| f^{(\nu)} - p^{(\nu)}  \|_{\infty} & \leq  & 2\sum_{\vert k \vert > m} \vert k \vert^{\nu} \vert c_k \vert  \\
+& \leq & \frac{M}{\pi } \sum_{\vert k \vert > m} \vert k \vert^{\nu-\mu-1} \\
+& = & \frac{2M}{\pi } \sum_{ k = m+1}^{\infty}  k^{\nu-\mu-1} \\
+& \leq & \frac{2M}{(\nu-\mu)\pi  } m^{\nu-\mu}
+\end{eqnarray*}
+$$
+where $n = 2m + 1$ and we have used the fact that
+$$
+\sum_{k = m+1}^{\infty}  \frac{1}{k^{p+1}}  \leq \int_{m}^{\infty} \frac{1}{k^{p+1}}{\rm d}k = \frac{1}{pk^p}.
+$$
+Hence, the result follows upon recalling the definition of big-O notation.   $\blacksquare$
+
+**Corollary (accuracy of the approximate Fourier coefficients computed via the trapezoidal rule)** If the conditions of the above proposition hold, then
+$$
+c_k - \widetilde{c}_{k} = \mathcal{O}\left( n^{-\mu-1} \right), \qquad n \to \infty,
+$$
+where $k = -m, \ldots, m$ and $n = 2m + 1$.
+
+**Proof sketch** Since
+$$
+\vert \widetilde{c}_k - c_k \vert \leq  \sum_{\substack{p=-\infty\\ p\neq 0}}^{\infty} \vert c_{k+pn} \vert \leq  \frac{M}{2\pi} \sum_{\substack{p=-\infty\\ p\neq 0}}^{\infty}  \frac{1}{\vert k + pn \vert^{\mu+1}}
+$$
+where $M  = \vert f^{(\mu)}(2\pi^{-}) - f^{(\mu)}(0)   \vert + \left\|f^{(\mu+1)}   \right\|_1$.  The result follows by showing that
+$$
+\sum_{\substack{p=-\infty\\ p\neq 0}}^{\infty}  \frac{1}{\vert k + pn \vert^{\mu+1}} = \mathcal{O}(n^{-\mu-1}), \qquad n \to \infty.
+$$
+$\blacksquare$
+
+As an aside, the sum 
+$$
+\sum_{\substack{p=-\infty\\ p\neq 0}}^{\infty}  \frac{1}{\vert k + pn \vert^{\mu+1}}
+$$
+can be expressed in terms of a special function called the Hurwitz zeta function, which is a generalisation of the Riemann zeta function.  For odd $\mu$, the sum can be expressed in terms of trigonometric functions.  For example, for $k \neq 0$, and $\mu = 1$
+$$
+    \sum_{p=-\infty}^{\infty} \frac{1}{(k+np)^2} = \frac{\pi^2\csc^2(k\pi/n) }{n^2},
+$$
+which can be proved using the residue theorem from complex analysis.
+
+An immediate consequence of this result is that the approximate Fourier coefficients $\widetilde{c}_k$ decay at the same rate as the exact Fourier coefficients $c_k$.
+
+**Examples**  
+1. For the non-periodic function we considered before, $f(x) = {\rm e}^{x-2\pi}$, we have $\mu = 0$ because none of the derivatives of its periodic extension (even the $0$-th order derivative) are continuous.  However, $\| f^{(k)} \|_{1} < \infty$ for $k = 0, 1$ (verify) and $f(0), f(2\pi^{-}) < \infty$, therefore, we expect its Fourier coefficients to decay at the algebraic rate $c_k = \mathcal{O}(k^{-1})$. This is indeed the case because
+$$
+c_{k} = \frac{{\rm e}^{-2\pi}}{2\pi}\int_{0}^{2\pi} {\rm e}^{x(1-{\rm i}k)}{\rm d}x = \frac{{\rm e}^{-2\pi}}{2\pi } \left. \frac{{\rm e}^{x(1-{\rm i}k)}}{1-{\rm i}k}   \right]_{0}^{2\pi} = \frac{1 - {\rm e}^{-2\pi}}{1-{\rm i}k}
+$$
+2. For the function $f(x) = \vert \sin(x) \vert$, the conditions of the above proposition are satisfied for $\mu = 1$ (verify) and therefore we expect its exact and approximate Fourier coefficients to decay at the rate $c_k = \mathcal{O}(k^{-2})$.
+3. For the function $f(x) = \vert \sin(x) \vert \sin(x)$, the conditions of the above proposition are satisfied for $\mu = 2$ and therefore we expect its exact and approximate Fourier coefficients to decay at the rate $c_k = \mathcal{O}(k^{-3})$.
+4. The function $f(x) = {\rm e}^{-1/\sin^2(x/2)} \in C^{\infty}[0, 2\pi]$ (but it is not analytic on $[0, 2\pi]$) and therefore we expect its exact and approximate Fourier coefficients to decay faster than $c_k = \mathcal{O}(k^{-\mu-1})$ *for all* $\mu > 0$.
+
+Let's check numerically that the approximate Fourier coefficients decay at their predicted rates for the functions above:
+
+```julia
+n = 501
+m = (n-1)÷2
+x = range(0,2π;length=n+1)[1:end-1]
+
+f₁ = x -> exp(x-2π)
+c = fftshift(fft(f₁.(x)))/n
+scatter(1:m,abs.(c[m+2:end]);
+yscale=:log10,xscale=:log10,xlabel="k",label="approx. Fourier coeffs. of f₁")
+plot!(1:m,0.2 ./(1:m),label="O(1/k) curve")
+
+f₂ = x -> abs(sin(x))
+c₂ = fftshift(fft(f₂.(x)))/n
+scatter!(2:2:m,abs.(c₂[m+3:2:end]),label="approx. Fourier coeffs. of f₂")
+plot!(1:m,1 ./((1:m).^2),label="O(1/k²) curve")
+
+f₃ = x -> sin(x)*abs(sin(x))
+c₃ = fftshift(fft(f₃.(x)))/n
+scatter!(1:2:m,abs.(c₃[m+2:2:end]),label="approx. Fourier coeffs. of f₃")
+p =plot!(1:m,2 ./((1:m).^3),label="O(1/k³) curve")
+```
+
+```julia
+p
+f₄ = x -> exp(-1/sin(x/2)^2)
+c₄ = fftshift(fft(f₄.(x)))/n
+scatter!(2:2:m,abs.(c₄[m+2:2:end]),label="approx. Fourier coeffs. of f₄",legend=:bottomleft)
+```
+
+Functions that  are analytic on $[0, 2\pi]$ are even smoother than functions in $C^{\infty}[0, 2\pi]$ and consequently their Fourier coefficients decay even faster.
+
+**Definition (analytic function)** A function $f(x)$ is analytic on a region $\Omega$ (think of a real interval $[a, b] \in \mathbb{R}$ or a region in the complex plane for those who have studied complex analysis) if its Taylor series has a positive radius of convergence for every $x \in \Omega$.
+
+The Fourier coefficients of functions that are analytic on a neighbourhood of $[0, 2\pi]$ decay *exponentially* fast.  To prove this and to quantify the rate of convergence, one needs to use techniques from complex analysis.  Since complex analysis is not a pre-requisite for this module, we won't prove this result.  Another fact that is proven in complex analysis is that the derivatives of analytic functions are also analytic functions! Here are two consequences:
+1. If $f$ is analytic on $[0, 2\pi]$, then the approximate Fourier coefficients $\widetilde{c}_k$ (which we obtained via the trapezoidal rule) converge exponentially fast to the exact Fourier coefficients $c_k$ of $f$ as $n \to \infty$.   
+2. The trigonometric interpolant and its derivatives converge exponentially fast with $n$ to $f$ and its derivatives if $f$ is analytic.
+
+A function $f(x)$ is called an *entire function* if it is analytic on the entire complex plane; ${\rm e^{x}}$, $\cos x$ and $\sin x$ are examples of entire functions. The Fourier coefficients of entire functions decay at a *super-exponential* rate.
+
+A function $f(x)$ with $c_{k} = 0$ for $\vert k \vert > N$, where $N$ is a non-negative integer, is called a *band-limited* function; $\cos x$ and $\sin x$ are examples of band-limited functions because $c_{k} = 0$ f]or $\vert k \vert > 1$ for these functions.
+
+Here is an example of the decay of the approximate Fourier coefficients of a function in $C^{\infty}[0, 2\pi]$, an analytic function and an entire function. Note the plot below is on a semi-logarithmic scale.
