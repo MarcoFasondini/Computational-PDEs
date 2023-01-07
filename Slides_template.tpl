@@ -181,7 +181,7 @@
 	}
 
 \begin{document}
-{\LARGE
+{\Huge
 \sf
 {{{ :body }}}
 }
