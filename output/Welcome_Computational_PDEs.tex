@@ -248,16 +248,21 @@
 \begin{document}
 
 \section{Welcome to Computational methods for partial differential equations}
+\textbf{Lecturer:} Dr Marco Fasondini, \href{mailto:m.fasondini@leicester.ac.uk}{m.fasondini@leicester.ac.uk}
+
 Here we
 
 \begin{itemize}
 \item[1. ] Introduce the topic of computational methods for PDEs
 
 
-\item[2. ] Discuss the lecture notes and programming / coding
+\item[2. ] Discuss module admin: see the \href{https://blackboard.le.ac.uk/}{Blackboard page} of this module
 
 
-\item[3. ] Discuss assessment
+\item[3. ] Discuss programming / coding and the lecture notes
+
+
+\item[4. ] Discuss the sources / reading list
 
 \end{itemize}
 \subsection{Computational methods for PDEs}
@@ -428,32 +433,75 @@ used \href{https://www.youtube.com/watch?v=zRUFzJrDtq0}{here} to model water tur
 
 \end{itemize}
 \end{itemize}
-\subsection{Some Admin}
-\subsubsection{Jupyter Notebooks}
-This course will be taught via \href{https://jupyter.org}{Jupyter notebooks}. These notebooks provide a nice environment mixing web technologies, mathematical text (latex) and code. I will use Julia for this course (The "Ju" in Jupyter) but these notebooks can in principle also used with Python ("Py"), R, and other languages:  \href{https://jupyter4edu.github.io/jupyter-edu-book/jupyter.html#language-support-kernels}{docs}"The Jupyter system supports over 100 programming languages (called "kernels" in the Jupyter ecosystem) including Python, Java, R, Julia, Matlab, Octave, Scheme, Processing, Scala, and many more. "
+\subsection{Module admin}
+See the \href{https://blackboard.le.ac.uk/}{Blackboard page} of this module
+
+\subsection{Programming / coding and the lecture notes}
+All the code in the lecture notes will be in the \href{https://julialang.org/}{Julia programming language}. You are free to use whichever programming language you prefer (e.g., Matlab or Python) and Matlab code will be available on Blackboard.
+
+If you prefer to do your coding in Matlab and need to refresh your memory, have a look at this \href{https://matlabacademy.mathworks.com/details/matlab-onramp/gettingstarted}{MathWorks tutorial} (you may need to create a mathworks account with your student email address to access it).
 
 \begin{itemize}
-\item For today's lecture just follow along; I will say a little more about Jupyter, Julia and our eco-system in the next lecture.
+\item If you have no programming background at all, this module is doable but will be hard. 
 
 
-\item You can try to access the Jupyter hub or install Julia/Jupyter/IJulia by yourself until then, following the \href{WS01-Installing-Julia.ipynb}{\texttt{WS01} notebook} which can be accessed through the course github website.
+\item If you have only minimal background, then please ask questions during lectures, or come to office hours.
 
 \end{itemize}
-\subsection{Lecture notes and coding}
-The importance of computational methods
+Back to Julia: it is a modern, compiled, high-level, open-source language developed at MIT. It is becoming increasingly important in high-performance computing and AI and it is used by Astrazeneca, Moderna and Pfizer in drug development and clinical trial accelleration, IBM for medical diagnosis, MIT for robot locomotion, and elsewhere.
 
-How to run Julia code
+Julia is a relatively young programming language, which aims to combine 
 
-\subsubsection{Sources for the lecture notes}
-\subsection{Admin}
-Blackboard and Github
-
-assessment
+\begin{itemize}
+\item the simplicity of Matlab,   \emph{(not really, but maybe close enough...)}
 
 
-\begin{lstlisting}
+\item the dynamism of Python,    \emph{(true ... except for the pre-compilation times which are slowly improving...)}
 
-\end{lstlisting}
+
+\item the speed of C and          \emph{(definitely true; this is impressive!)}
+
+
+\item the meta-programming capabilities of Lisp.     \emph{(also true; but we won't need it in this module.)}
+
+\end{itemize}
+For those interested in using Julia, see the notes titled "??" on Blackboard.  These notes have instructions for running the Julia code in the lecture notes;  it also has recommended sources for learning more about Julia. 
+
+\subsection{Sources}
+I used the following sources for writing the lecture notes (please ask me for relevant page numbers / chapters on a particular topic):
+
+\begin{itemize}
+\item[1.  ] \emph{A Practical Guide to Pseudospectral Methods} (1998), by B. Fornberg
+
+
+\item[2.  ] \href{http://users.math.uoc.gr/~tsogka/Courses/AEMDE-fall2015/Biblio/Georgoulis_notes_new.pdf}{\emph{Computational Methods for Partial Differential Equations}} (2009), notes by M. Georgoulis
+
+
+\item[3.  ] \href{https://le.ac.uk/library}{\emph{A First Course in the Numerical Analysis of Differential Equations}} (2009), by A. Iserles 
+
+
+\item[4.  ] \href{https://le.ac.uk/library}{Fast algorithms using orthogonal polynomials} (2020), by S. Olver, R.M. Slevinsky and A. Townsend. \emph{Acta Numerica}, 29, pp.573-699. 
+
+
+\item[5.  ] \href{https://github.com/Imperial-MATH50003/MATH50003NumericalAnalysis2122}{Sheehan Olver's Numerical Analysis notes} (2022)
+
+
+\item[6.  ] \href{https://github.com/MarcoFasondini/M3M6AppliedComplexAnalysis}{Sheehan Olver and M. Fasondini's Applied Complex Analysis notes} (2021)
+
+
+\item[7.  ] \href{https://github.com/cortner/math405_2022}{Christoph Ortner's notes on Numerical Methods for Differential Equations} (2022)
+
+
+\item[8.  ] \href{https://people.maths.ox.ac.uk/trefethen/spectral.html}{\emph{Spectral Methods in Matlab}} (2000), by L.N. Trefethen
+
+
+\item[9.  ] \href{https://people.maths.ox.ac.uk/trefethen/ATAP/}{\emph{Approximation Theory and Approximation Practice}} (2019), by L.N. Trefethen
+
+
+\item[10. ] \href{https://le.ac.uk/library}{A MATLAB differentiation matrix suite} (2000), by J.A.C.  Weideman and S.C. Reddy,  \emph{ACM Transactions on Mathematical Software} (TOMS), 26(4), pp.465-519.
+
+\end{itemize}
+\texttt{]}
 
 
 
