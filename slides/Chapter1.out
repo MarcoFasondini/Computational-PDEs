@@ -1,0 +1,6 @@
+\BOOKMARK [1][-]{section.1}{Chapter 1: From finite differences to a spectral method for periodic functions}{}% 1
+\BOOKMARK [2][-]{subsection.1.1}{Finite difference approximations to the derivative}{section.1}% 2
+\BOOKMARK [2][-]{subsection.1.2}{Finite differences via Lagrange interpolating polynomials}{section.1}% 3
+\BOOKMARK [3][-]{subsubsection.1.2.1}{Interpolation}{subsection.1.2}% 4
+\BOOKMARK [3][-]{subsubsection.1.2.2}{Lagrange interpolation polynomials}{subsection.1.2}% 5
+\BOOKMARK [2][-]{subsection.1.3}{Differentiation matrices}{section.1}% 6

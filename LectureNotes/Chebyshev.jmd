@@ -1,21 +1,59 @@
 
-# Chebyshev methods for non-periodic functions
+# Chapter 3: Chebyshev methods for non-periodic functions
 
-We learned that smooth periodic functions and their derivatives can be well approximated by trigonometric interpolants:
-$$
-f(x) \approx p(x) =  \sum_{k=-(n-1)/2}^{(n-1)/2} \tilde{c}_k{\rm e}^{{\rm i}kx}
-$$
-and there are fast algorithms for mapping function values to coeffients and vice versa and for differentiation.  We saw how Fourier approximation methods could be used to compute an approximate solution to a PDE.
+Here we discuss:
 
-Here we'll learn that smooth non-periodic functions and their derivatives can be accurately and stably approximated by expansions in orthogonal polynomials (OPs),
-$$
-f(x) \approx \sum_{k = 0}^{n}  c_k p_k(x).
-$$
-and there are  fast algorithms for computing with OPs.  We'll also learn how OPs can be used to approximate solutions to PDEs.
+1. Why high-degree polynomial interpolation in equally spaced points typically give poor approximations of functions
+2. Why high-degree polynomial interpolants in unequally spaced points are typically excellent approximants of functions
+3. Chebyshev polynomials
+4. The connection between Chebyshev and Fourier series
+5. Computing Chebyshev interpolants and their derivatives with the FFT
+6. The solution of the wave equation using the method of separation of variables
+7. The numerical solution of the wave equation using a combination of finite differences and Chebyshev interpolants
+8. The accuracy of Chebyshev interpolants and their derivatives
 
-## The Runge phenomenon and its resolution via OPs
+In the previous chapter we learned that smooth periodic functions and their derivatives can be well approximated by trigonometric interpolants:
+$$
+f(x) \approx p_n(x) =  \sum_{k=-(n-1)/2}^{(n-1)/2} \tilde{c}_k^n{\rm e}^{{\rm i}kx}.
+$$
+We also learnt that there are fast algorithms for mapping function values to coeffients and vice versa and for differentiation.  We saw how Fourier approximation methods could be used to compute an approximate solution to a PDE.
 
-Suppose we want to approximate the function $f(x) = \frac{1}{1 + 25x^2}$ (known as the Runge function) on the interval $x \in[-1, 1]$.  We know that a trigonometric interpolant will not converge very fast to $f$.  Instead, we approximate $f$ by a polynomial interpolant that interpolates $f$ at $n+1$ equally spaced points on $[-1, 1]$.  One method to find the interpolating polynomial is to use the formula for the Lagrange interpolating polynomial.  Instead, here we use the following "quick and dirty" method, based on inverting the Vandermonde matrix. 
+Here we'll learn that smooth *non-periodic* functions and their derivatives can be accurately approximated by expansions in Chebyshev polynomials,
+$$
+f(x) \approx \sum_{k = 0}^{n}  \tilde{b}_k^n T_k(x).
+$$
+We'll see that Chebyshev expansions are Fourier expansions in disguise and therefore we can devise efficient approximation methods for PDEs with Chebyshev polynomials that use the FFT. 
+
+## The Runge phenomenon 
+
+Suppose we want to approximate the function $f(x) = \frac{1}{1 + 25x^2}$ (known as the Runge function) on the interval $x \in[-1, 1]$.  We know that a trigonometric interpolant will not converge very fast to $f$.  Instead, we approximate $f$ by a polynomial interpolant that interpolates $f$ at $n+1$ *equally spaced* points on $[-1, 1]$.  One method to compute the interpolating polynomial is to use the formula for the Lagrange interpolating polynomial that we learned about in Chapter 1.  Instead, here we use the following "quick and dirty" method, based on inverting the Vandermonde matrix. 
+
+Let the unique polynomial of degree $\leq n$ that interpolates $f$ at the distinct points $x_0, \ldots, x_{n}$ be denoted by $p_{n+1}(x)$, then we can express $p_{n+1}(x)$ in the monomial basis (as opposed to the Lagrange basis) as 
+$$
+p_{n+1}(x) = c_0 + c_1 x + \cdots + c_nx^n,
+$$
+and since $p_{n+1}(x_j) = f(x_j)$ for $j = 0, \ldots, n$, we have that
+$$
+\underbrace{\begin{bmatrix}
+                    f(x_0) \\
+                    \vdots \\
+                    f(x_n)
+                    \end{bmatrix}}_{\mathbf{f}} = 
+\underbrace{ \begin{bmatrix}
+                    p_{n+1}(x_0) \\
+                    \vdots \\
+                    p_{n+1}(x_n)
+                    \end{bmatrix}}_{\mathbf{p}} = 
+\begin{bmatrix} 1 & x_0 & ⋯ & x_0^{n} \\
+                    ⋮ & ⋮ & ⋱ & ⋮ \\
+                    1 & x_n & ⋯ & x_n^{n}
+                    \end{bmatrix}
+                    \underbrace{\begin{bmatrix}
+                    c_0 \\
+                    \vdots \\
+                    c_n
+                    \end{bmatrix}}_{\mathbf{c}}
+$$
 
 **Definition (Vandermonde)** The _Vandermonde matrix_ associated with $n+1$ distinct points $x_0,…,x_n ∈ ℝ$
 is the matrix
@@ -23,47 +61,10 @@ $$
 V := \begin{bmatrix} 1 & x_0 & ⋯ & x_0^{n} \\
                     ⋮ & ⋮ & ⋱ & ⋮ \\
                     1 & x_n & ⋯ & x_n^{n}
-                    \end{bmatrix}
+                    \end{bmatrix}.
 $$
 
- We recall the definition of a polynomial interpolant / interpolating polynomial / interpolatory polynomial:
-
-**Definition (polynomial interpolant)** Given $n+1$ distinct points $x_0,…,x_n ∈ ℝ$ 
-and $n+1$ _samples_ $f_0,…,f_n ∈ ℝ$, a degree $n$
-_polynomial interpolant_ $p(x)$ satisfies
-$$
-p(x_j) = f_j, \qquad j = 0, \ldots, n
-$$
-
-**Proposition (interpolatory polynomial uniqueness)** 
-The interpolatory polynomial is unique, and the Vandermonde matrix is invertible.
-
-**Proof**
-Suppose $p$ and $\tilde{p}$ are both interpolatory polynomials. Then $p(x) - \tilde{p}(x)$ vanishes at $n+1$ distinct points $x_j$. By the fundamental theorem of
-algebra it must be zero, i.e., $p = \tilde{p}$.
-
-For the second part, if $V \mathbf{c} = \mathbf{0}$ for $\mathbf{c} ∈ \mathbb{R}^{n+1}$ then for $q(x) = c_0 + c_1 x + ⋯ + c_{n} x^{n}$ we have
-$$
-q(x_j) = \mathbf{e}_j^⊤ V \mathbf{c} = 0, \qquad j = 1, \ldots, n+1,
-$$
-where $\mathbf{e}_j \in \mathbb{R}^{n+1}$ are the canonical basis unit vectors, 
-$$
-\mathbf{e}_1 = \begin{bmatrix}
-1 \\
-0 \\
-\vdots \\
-\vdots \\
-0
-\end{bmatrix}, \quad  \mathbf{e}_2 = \begin{bmatrix}
-0 \\
-1 \\
-0 \\
-\vdots \\
-0
-\end{bmatrix}, \ldots
-$$
-hence $q$ vanishes at $n+1$ distinct points and is therefore 0, i.e., $\mathbf{c} = \mathbf{0}$.
-$\blacksquare$
+It can be shown that $V$ is non-singular, hence we can compute the coefficients $c_0, \ldots, c_n$ by solving the linear system $V\mathbf{c} = \mathbf{f}$
 
 ```julia
 using Plots, LinearAlgebra, ApproxFun, FFTW
@@ -76,7 +77,7 @@ x = range(-1,1;length=n+1)  # n+1 equispaced nodes
 xx = range(-1,1;length=1001)  # plotting grid
 V = x .^ (0:n)' # Vandermonde matrix
 c = V \ f.(x) # coefficients of interpolatory polynomial
-p = x -> dot(c, x .^ (0:n))
+p = x -> dot(c, x .^ (0:n))  # interpolating polynomial
 plot(xx,f.(xx);label="f(x)")
 plot!(xx,p.(xx);label="equispaced interpolant")
 scatter!(x,p.(x);label="samples")
@@ -89,26 +90,25 @@ n = 51
 x = range(-1,1;length=n+1)  # n+1 equispaced nodes  
 V = x .^ (0:n)' # Vandermonde matrix
 c = V \ f.(x) # coefficients of interpolatory polynomial
-p = x -> dot(c, x .^ (0:n))
 plot(xx,f.(xx);label="f(x)",ylims=(-3,3))
 plot!(xx,p.(xx);label="equispaced interpolant")
 scatter!(x,p.(x);label="samples")
 ```
 
-These oscillations of the interpolant through equally spaced nodes is known as the *Runge phenomenon* (not to be confused with the Gibbs phenomenon). Equally spaced interpolation nodes is clearly not a good choice for high-degree polynomial interpolation.  Maybe the oscillations at the endpoints can be suppressed if we choose nodes that are clustered at the ends of the interval?
+These oscillations of the interpolant through equally spaced nodes is known as the *Runge phenomenon* (not to be confused with the Gibbs phenomenon in Chapter 2). Equally spaced interpolation nodes is clearly not a good choice for high-degree polynomial interpolation.  Maybe the oscillations at the endpoints can be suppressed if we choose nodes that are clustered at the ends of the interval?
 
 ```julia
 # Construct an interpolant using ApproxFun
 n = 11
 S = Chebyshev()
-p = Fun(f,S,n+1) # an interpolant through the unevenly spaced nodes x
+p = Fun(f,S,n+1) # an interpolant through clustered nodes
 x = points(S,n+1)  # n+1 unevenly spaced points 
 plot(xx,f.(xx);label="f(x)")
 plot!(p;label="interpolant")
 scatter!(x,p.(x);label="samples")
 ```
 
-In the above figure, we interpolated $f(x)$ at the roots of an orthogonal polynomial (OP), which we'll learn about later.  The interpolants at the roots of the OP converge exponentially fast to $f$ on $[-1, 1]$ as $n$ increases.
+In the above figure, we interpolated $f(x)$ at the roots (zeros) of a Chebyshev polynomial, which we'll learn about later.  The interpolants at the roots of the Chebyshev polynomials converge exponentially fast to $f$ on $[-1, 1]$ as $n$ (the number of interpolation nodes) increases.
 
 ```julia
 n = 31
@@ -120,7 +120,9 @@ plot!(p;label="interpolant")
 scatter!(x,p.(x);label="samples")
 ```
 
-**Remark (advanced)**  A deep and quantitative understanding of the reasons why equispaced interpolation failed for the above function and why interpolants through clustered points converged fast is a beautiful and advanced topic that requires tools from complex analysis and potential theory (See *Approximation Theory and Approximation Practice* by L.N. Trefethen).
+Later we'll learn that interpolants at the roots of Chebyshev polynomials can be computed using the FFT ($\mathcal{O}(n\log n)$ complexity), which is much more efficient than inverting a Vandermonde matrix ($\mathcal{O}(n^3)$ complexity). 
+
+**Remark**  An understanding of the reasons why equispaced interpolation failed for the above function and why interpolants through clustered points converged fast require tools from complex analysis and potential theory (See *Approximation Theory and Approximation Practice* by L.N. Trefethen).
 
 ## An introduction to Chebyshev polynomials
 
@@ -173,9 +175,9 @@ x_j = \cos\left(\frac{j\pi}{n}\right), \qquad j = 0, \ldots, n,
 $$
 which are the extrema (maxima and minima) of $T_{n+2}(x)$.  Notice that the roots of $T_n$ are in $(-1, 1)$, whereas the extrema of $T_{n+2}$ are in $[-1, 1]$.
 
-## The derivatives of interpolants in Chebyshev points can be computed with the FFT
+## The relation between Chebyshev and Fourier series
 
-Suppose a function $f(x)$ has a convergent Chebyshev series on $[-1, 1]$, i.e.,
+Suppose a function $f(x)$ has a convergent Chebyshev series for $x \in [-1, 1]$, i.e.,
 $$
 f(x) = \sum_{k=0}^{\infty} b_k T_k(x).
 $$
@@ -193,55 +195,122 @@ f(x) &=& \sum_{k=0}^{\infty} b_k T_k(x) \\
   &=& \sum_{k=-\infty}^{\infty} c_k {\rm e}^{{\rm i}k\theta}  \qquad (c_0 = b_0, c_{k} = c_{-k} = b_k/2, k\geq 1).
 \end{eqnarray*}
 $$
-That is, a Chebyshev series is a Fourier series in disguise!
+That is, a Chebyshev series is a Fourier series in disguise! We have just proved the following result.
 
-When we studied Fourier methods for periodic functions, we learnt that the trigonometric interpolant $q_n(\theta)$, where
-
+**Proposition (Chebyshev coefficients defined as Fourier coefficients)** If $g(\theta) = f(\cos \theta)$ can be expressed as a Fourier series, then $f(x)$ has a Chebyshev series and the Chebyshev coefficients $b_k$, $k \geq 0$ of $f(x)$ are related to the Fourier coefficients $c_k$, $k \in \mathbb{Z}$  of $g(\theta)$ as follows,
 $$
-\begin{eqnarray*}
-g(\theta) = f(\cos\theta) = f(x) \approx p_n(x) = \sum_{k=0}^{n} \tilde{b}_kT_k(x) = \sum_{k=-n}^{n} \tilde{c}_k {\rm e}^{{\rm i}k\theta} := q_n(\theta)
-\end{eqnarray*}
+b_0 = c_0, \qquad b_k = 2c_k = 2c_{-k}.
 $$
-
-interpolates the periodic function $g(\theta)$ at the points $\theta_j = 2\pi j/(2n+1)$ with $j = 0, \ldots, 2n$, where the approximate Fourier coefficients $\tilde{c}_k$ can be computed via the FFT given the function values $g(\theta_j)$.  This means that $p_n(x_j) = f(x_j)$ for 
-$$
-    x_j = \cos\theta_j = \cos\left( \frac{2\pi j}{2n + 1}  \right), \qquad j = 0, \ldots, 2n 
-$$
-
-and we have that
-
-$$
-\tilde{c}_0 = \tilde{b}_0,\qquad  \tilde{c}_{k} = \tilde{c}_{-k} = \tilde{b}_k/2,\qquad k\geq 1,
-$$
-
 where
 $$
-\tilde{c}_k = \frac{1}{2n+1}\sum_{j = 0}^{2n} g(\theta_j) {\rm e}^{-{\rm i}k\theta_j}, \qquad k = -n, \ldots, n.
+c_k = \frac{1}{2\pi}\int_{0}^{2\pi}g(\theta){\rm e}^{-{\rm i}k\theta}\,{\rm d}\theta.
 $$
 
-We refer to $p_n(x) = \sum_{k=0}^{n} \tilde{b}_kT_k(x)$ as the Chebyshev interpolant of $f(x)$ and the $\tilde{b}_k$ are the approximate Chebyshev coefficients of the the function $f$ we are approximating.
+**Remark** We can prove that $c_{-k} = c_{k}$ for $g(\theta)$ by observing that 
+$$
+\begin{eqnarray*}
+c_k &=& \frac{1}{2\pi} \int_{0}^{2\pi} g(\theta){\rm e}^{-{\rm i}k\theta}\,{\rm d}\theta \\
+    &=& \frac{(-1)^{k}}{2\pi} \int_{-\pi}^{\pi} g(\theta +\pi){\rm e}^{-{\rm i}k\theta}\,{\rm d}\theta \\
+    &=& \frac{(-1)^{k}}{2\pi} \int_{-\pi}^{\pi} g(\theta +\pi)\left(\cos k\theta - {\rm i} \sin k\theta   \right)\,{\rm d}\theta \\
+    &=& \frac{(-1)^{k}}{2\pi} \int_{-\pi}^{\pi} g(\theta +\pi) \cos k\theta \,{\rm d}\theta
+\end{eqnarray*}
+$$
+where we used the fact that $\sin k \theta$ is an odd function, $\cos k \theta$ is an even function and $h(\theta) := g(\theta + \pi) $ is an even function of $\theta$ because
+$$
+h(\theta) = g(\theta + \pi) = f(\cos(\theta+\pi)) = f(\cos(-\theta+\pi)) = g(-\theta +\pi) = h(-\theta). 
+$$
+Therefore if we replace $k$ with $-k$, we get the same integral and hence $c_{k} = c_{-k}$.
 
-Here are the coefficients $\tilde{b}_k$ of the Chebyshev interpolant of the Runge function, which we can obtain using ApproxFun.jl or Chebfun in Matlab:
+## The relation between Chebyshev and trigonometric interpolants
+
+From Chapter 2, we know that the truncated Fourier series
+$$
+q_{2n+1}(\theta) = \sum_{k=-n}^{n} \tilde{c}_k^{2n+1} {\rm e}^{{\rm i}k\theta},
+$$
+where
+$$
+\tilde{c}_k^{2n+1} = \frac{1}{2n+1}\sum_{j = 0}^{2n} g(\theta_j) {\rm e}^{-{\rm i}k\theta_j}, \qquad k = -n, \ldots, n, \qquad \theta_{j} = \frac{2\pi j}{2n+1},\qquad j = 0, \ldots, 2n,
+$$
+interpolates $g(\theta)$ at $\theta = \theta_j$, $j = 0, \ldots, 2n$.  Using parity arguments (as we did when we proved that $c_{k} = c_{-k}$ for $g(\theta)$), we can show that $\tilde{c}_k^{2n+1} = \tilde{c}_{-k}^{2n+1}$. Therefore,
+$$
+\begin{eqnarray*}
+q_{2n+1}(\theta) &=& \tilde{c}_0^{2n+1}+ \sum_{k=1}^{n} \tilde{c}_k^{2n+1}\left( {\rm e}^{{\rm i}k\theta} + {\rm e}^{-{\rm i}k\theta} \right) \\
+&=&  \tilde{c}_0^{2n+1} + 2\sum_{k=1}^{n} \tilde{c}_k^{2n+1}\cos k\theta \\
+&=&  \tilde{c}_0^{2n+1} + 2\sum_{k=1}^{n} \tilde{c}_k^{2n+1} T_k(x) \qquad (x = \cos\theta) \\
+&:=& p_{n+1}(x)
+\end{eqnarray*}
+$$
+from which we get the following result.
+
+**Proposition (Chebyshev polynomial interpolant constructed from a trigonometric interpolant)** The polynomial of degree $\leq n$ defined by 
+$$
+p_{n+1}(x) = \sum_{k=0}^{n} \tilde{b}_k^nT_k(x) 
+$$
+where
+$$
+\tilde{b}_0^n = \tilde{c}_0^{2n+1}, \qquad \tilde{b}_k^n = 2\tilde{c}_k^{2n+1}  = 2\tilde{c}_{-k}^{2n+1}
+$$
+interpolates $f(x)$  at $x_{j}$, where
+$$
+x_j = \cos\left( \frac{2\pi j}{2n + 1}  \right), \qquad j = 0, \ldots, n
+$$
+
+**Proof** Since 
+$$
+q_{2n+1}(\theta_j) = g(\theta_j), \qquad \theta_j = \frac{2\pi j}{2n+ 1}, \qquad j = 0, \ldots, 2n
+$$
+and $q_{2n}(\theta) = p_{2n+1}(\cos \theta) = p_{2n+1}(x)$ where $x = \cos\theta$, it follows that
+$$
+p_{2n+1}(x_j) =p_{2n+1}(\cos \theta_j) = q_{2n+1}(\theta_j) = g(\theta_j) = f(\cos\theta_j) = f(x_j), \qquad j = 0, \ldots, 2n.
+$$
+The result follows by noting that only $n+1$ of the $2n+1$ points $x_j$, $j = 0, \ldots, 2n$ are distinct because
+$$
+x_{n} = \cos\left( \frac{2\pi n}{2n + 1}  \right)= \cos\left( \pi - \frac{\pi}{2n + 1}  \right) =  \cos\left( \pi + \frac{\pi}{2n + 1}  \right) = x_{n+1}
+$$
+and similarly $x_{n-1} = x_{n+2}$, $\ldots$, $x_1 = x_{2n}$. 
+$\blacksquare$
+
+We refer to $p_{n+1}(x) = \sum_{k=0}^{n} \tilde{b}_k^nT_k(x)$ as a Chebyshev interpolant of $f(x)$ and the $\tilde{b}_k^n$ are the approximate Chebyshev coefficients of the the function $f$ we are approximating.
+
+Recall that the approximate Fourier coefficients $\tilde{c}^{2n+1}_k$ can be computed with the FFT, hence we can compute the coefficients $\tilde{b}^n_k$ of a Chebyshev interpolant with the FFT.  We can use the (inverse) FFT to map the coefficients $\tilde{b}^n_k$ to the function values $f(x_j)$. Here's an example:
 
 ```julia
-f = x -> 1/(1 + 25x^2) # Runge function
-fcheb = Fun(f,Chebyshev()) # high-accuracy Chebyshev interpolant
-bt = fcheb.coefficients # approximate Chebyshev coefficients
-scatter(0:length(bt)-1,abs.(bt).+eps();
-    xlabel="k", yscale=:log10,label="Approximate Chebyshev coefficients of the Runge function")
+# Use the FFT to compute the approximate Chebyshev coefficients of the Runge function
+g = θ -> f(cos(θ))
+n = 200
+θ = range(0,2π;length= 2n+2)[1:end-1] # the points θ_j
+ct = fft(g.(θ))/(2n+1) # compute approximate Fourier coefficients of g
+# approximate Chebyshev coefficients
+bt = [ct[1];2ct[2:n+1]] 
+scatter(0:n,abs.(bt);
+xlabel="k", yscale=:log10,label="Approximate Chebyshev coefficients of the Runge function")
 ```
 
-The $\tilde{b}_k$ coefficients decay exponentially fast with $k$ because the Runge function is analytic on $[-1, 1]$.   Let's check that the approximate Fourier coefficients and Chebyshev coefficients are related as stated above:
+The approximate Chebyshev coefficients decay exponentially fast with $k$ because $f(x)$, the Runge function, is analytic on $[-1, 1]$.
 
 ```julia
-g = θ -> f(cos(θ)) 
-n = length(bt)-1
-θ = range(0,2π;length= 2n+2)[1:end-1] 
-ct = fft(g.(θ))/(2n+1) # compute approximate Fourier coefficients
-@show ct[1] ≈ bt[1];
-@show 2ct[2:n+1] ≈ bt[2:n+1]
-norm(2ct[2:n+1] - bt[2:n+1],Inf)
+# Map approximate Chebyshev coefficients to function values
+norm((2n+1)*ifft(ct) - f.(cos.(θ)),Inf)
 ```
+
+In ApproxFun.jl, the command `Fun(f)` approximates a function using a Chebyshev interpolant (in Chebfun, the command `chebfun` does the same).  The number of Chebyshev coefficients required the approximate the function to roughly $10^{-16}$ relative accuracy is determined automatically. Here's an example:
+
+```julia
+fc = Fun(f)
+```
+
+```julia
+length(fc.coefficients)
+```
+
+Let's check that the approximate Chebyshev coefficients we computed with the FFT are approximate equal to the Chebyshev coefficients computed in with ApproxFun:
+
+```julia
+@show bt[1:189] ≈ fc.coefficients
+norm(bt[1:189] - fc.coefficients,Inf)
+```
+
+## Differentiating Chebyshev interpolants with the FFT
 
 Hence, we can also approximate derivatives of $f$ by differentiating $q_n(\theta)$ in Fourier coefficient space via the FFT, which is very efficient, as we learnt when we studied Fourier methods for periodic functions. The first derivatives are related as follows:
 

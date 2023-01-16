@@ -247,23 +247,84 @@
 
 \begin{document}
 
-\section{Chebyshev methods for non-periodic functions}
-We learned that smooth periodic functions and their derivatives can be well approximated by trigonometric interpolants:
+\section{Chapter 3: Chebyshev methods for non-periodic functions}
+
+Here we discuss:
+
+\begin{itemize}
+\item[1. ] Why high-degree polynomial interpolation in equally spaced points typically give poor approximations of functions
+
+
+\item[2. ] Why high-degree polynomial interpolants in unequally spaced points are typically excellent approximants of functions
+
+
+\item[3. ] Chebyshev polynomials
+
+
+\item[4. ] The connection between Chebyshev and Fourier series
+
+
+\item[5. ] Computing Chebyshev interpolants and their derivatives with the FFT
+
+
+\item[6. ] The solution of the wave equation using the method of separation of variables
+
+
+\item[7. ] The numerical solution of the wave equation using a combination of finite differences and Chebyshev interpolants
+
+
+\item[8. ] The accuracy of Chebyshev interpolants and their derivatives
+
+\end{itemize}
+
+In the previous chapter we learned that smooth periodic functions and their derivatives can be well approximated by trigonometric interpolants:
 
 \[
-f(x) \approx p(x) =  \sum_{k=-(n-1)/2}^{(n-1)/2} \tilde{c}_k{\rm e}^{{\rm i}kx}
+f(x) \approx p_n(x) =  \sum_{k=-(n-1)/2}^{(n-1)/2} \tilde{c}_k^n{\rm e}^{{\rm i}kx}.
 \]
-and there are fast algorithms for mapping function values to coeffients and vice versa and for differentiation.  We saw how Fourier approximation methods could be used to compute an approximate solution to a PDE.
+We also learnt that there are fast algorithms for mapping function values to coeffients and vice versa and for differentiation.  We saw how Fourier approximation methods could be used to compute an approximate solution to a PDE.
 
-Here we'll learn that smooth non-periodic functions and their derivatives can be accurately and stably approximated by expansions in orthogonal polynomials (OPs),
+Here we'll learn that smooth \emph{non-periodic} functions and their derivatives can be accurately approximated by expansions in Chebyshev polynomials,
 
 \[
-f(x) \approx \sum_{k = 0}^{n}  c_k p_k(x).
+f(x) \approx \sum_{k = 0}^{n}  \tilde{b}_k^n T_k(x).
 \]
-and there are  fast algorithms for computing with OPs.  We'll also learn how OPs can be used to approximate solutions to PDEs.
+We'll see that Chebyshev expansions are Fourier expansions in disguise and therefore we can devise efficient approximation methods for PDEs with Chebyshev polynomials that use the FFT. 
 
-\subsection{The Runge phenomenon and its resolution via OPs}
-Suppose we want to approximate the function $f(x) = \frac{1}{1 + 25x^2}$ (known as the Runge function) on the interval $x \in[-1, 1]$.  We know that a trigonometric interpolant will not converge very fast to $f$.  Instead, we approximate $f$ by a polynomial interpolant that interpolates $f$ at $n+1$ equally spaced points on $[-1, 1]$.  One method to find the interpolating polynomial is to use the formula for the Lagrange interpolating polynomial.  Instead, here we use the following "quick and dirty" method, based on inverting the Vandermonde matrix. 
+
+\subsection{The Runge phenomenon}
+
+Suppose we want to approximate the function $f(x) = \frac{1}{1 + 25x^2}$ (known as the Runge function) on the interval $x \in[-1, 1]$.  We know that a trigonometric interpolant will not converge very fast to $f$.  Instead, we approximate $f$ by a polynomial interpolant that interpolates $f$ at $n+1$ \emph{equally spaced} points on $[-1, 1]$.  One method to compute the interpolating polynomial is to use the formula for the Lagrange interpolating polynomial that we learned about in Chapter 1.  Instead, here we use the following "quick and dirty" method, based on inverting the Vandermonde matrix. 
+
+
+Let the unique polynomial of degree $\leq n$ that interpolates $f$ at the distinct points $x_0, \ldots, x_{n}$ be denoted by $p_{n+1}(x)$, then we can express $p_{n+1}(x)$ in the monomial basis (as opposed to the Lagrange basis) as 
+
+\[
+p_{n+1}(x) = c_0 + c_1 x + \cdots + c_nx^n,
+\]
+and since $p_{n+1}(x_j) = f(x_j)$ for $j = 0, \ldots, n$, we have that
+
+\[
+\underbrace{\begin{bmatrix}
+                    f(x_0) \\
+                    \vdots \\
+                    f(x_n)
+                    \end{bmatrix}}_{\mathbf{f}} = 
+\underbrace{ \begin{bmatrix}
+                    p_{n+1}(x_0) \\
+                    \vdots \\
+                    p_{n+1}(x_n)
+                    \end{bmatrix}}_{\mathbf{p}} = 
+\begin{bmatrix} 1 & x_0 & \ensuremath{\cdots} & x_0^{n} \\
+                    \ensuremath{\vdots} & \ensuremath{\vdots} & \ensuremath{\ddots} & \ensuremath{\vdots} \\
+                    1 & x_n & \ensuremath{\cdots} & x_n^{n}
+                    \end{bmatrix}
+                    \underbrace{\begin{bmatrix}
+                    c_0 \\
+                    \vdots \\
+                    c_n
+                    \end{bmatrix}}_{\mathbf{c}}
+\]
 
 \textbf{Definition (Vandermonde)} The \emph{Vandermonde matrix} associated with $n+1$ distinct points $x_0,\ensuremath{\ldots},x_n \ensuremath{\in} \ensuremath{\bbR}$ is the matrix
 
@@ -271,42 +332,10 @@ Suppose we want to approximate the function $f(x) = \frac{1}{1 + 25x^2}$ (known 
 V := \begin{bmatrix} 1 & x_0 & \ensuremath{\cdots} & x_0^{n} \\
                     \ensuremath{\vdots} & \ensuremath{\vdots} & \ensuremath{\ddots} & \ensuremath{\vdots} \\
                     1 & x_n & \ensuremath{\cdots} & x_n^{n}
-                    \end{bmatrix}
+                    \end{bmatrix}.
 \]
-We recall the definition of a polynomial interpolant / interpolating polynomial / interpolatory polynomial:
 
-\textbf{Definition (polynomial interpolant)} Given $n+1$ distinct points $x_0,\ensuremath{\ldots},x_n \ensuremath{\in} \ensuremath{\bbR}$  and $n+1$ \emph{samples} $f_0,\ensuremath{\ldots},f_n \ensuremath{\in} \ensuremath{\bbR}$, a degree $n$ \emph{polynomial interpolant} $p(x)$ satisfies
-
-\[
-p(x_j) = f_j, \qquad j = 0, \ldots, n
-\]
-\textbf{Proposition (interpolatory polynomial uniqueness)}  The interpolatory polynomial is unique, and the Vandermonde matrix is invertible.
-
-\textbf{Proof} Suppose $p$ and $\tilde{p}$ are both interpolatory polynomials. Then $p(x) - \tilde{p}(x)$ vanishes at $n+1$ distinct points $x_j$. By the fundamental theorem of algebra it must be zero, i.e., $p = \tilde{p}$.
-
-For the second part, if $V \mathbf{c} = \mathbf{0}$ for $\mathbf{c} \ensuremath{\in} \mathbb{R}^{n+1}$ then for $q(x) = c_0 + c_1 x + \ensuremath{\cdots} + c_{n} x^{n}$ we have
-
-\[
-q(x_j) = \mathbf{e}_j^\ensuremath{\top} V \mathbf{c} = 0, \qquad j = 1, \ldots, n+1,
-\]
-where $\mathbf{e}_j \in \mathbb{R}^{n+1}$ are the canonical basis unit vectors, 
-
-\[
-\mathbf{e}_1 = \begin{bmatrix}
-1 \\
-0 \\
-\vdots \\
-\vdots \\
-0
-\end{bmatrix}, \quad  \mathbf{e}_2 = \begin{bmatrix}
-0 \\
-1 \\
-0 \\
-\vdots \\
-0
-\end{bmatrix}, \ldots
-\]
-hence $q$ vanishes at $n+1$ distinct points and is therefore 0, i.e., $\mathbf{c} = \mathbf{0}$. $\blacksquare$
+It can be shown that $V$ is non-singular, hence we can compute the coefficients $c_0, \ldots, c_n$ by solving the linear system $V\mathbf{c} = \mathbf{f}$
 
 
 \begin{lstlisting}
@@ -320,13 +349,13 @@ hence $q$ vanishes at $n+1$ distinct points and is therefore 0, i.e., $\mathbf{c
 (*@\HLJLn{xx}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{range}@*)(*@\HLJLp{(}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)(*@\HLJLp{,}@*)(*@\HLJLni{1}@*)(*@\HLJLp{;}@*)(*@\HLJLn{length}@*)(*@\HLJLoB{=}@*)(*@\HLJLni{1001}@*)(*@\HLJLp{)}@*)  (*@\HLJLcs{{\#}}@*) (*@\HLJLcs{plotting}@*) (*@\HLJLcs{grid}@*)
 (*@\HLJLn{V}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{x}@*) (*@\HLJLoB{.{\textasciicircum}}@*) (*@\HLJLp{(}@*)(*@\HLJLni{0}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{n}@*)(*@\HLJLp{)}@*)(*@\HLJLoB{{\textquotesingle}}@*) (*@\HLJLcs{{\#}}@*) (*@\HLJLcs{Vandermonde}@*) (*@\HLJLcs{matrix}@*)
 (*@\HLJLn{c}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{V}@*) (*@\HLJLoB{{\textbackslash}}@*) (*@\HLJLn{f}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{)}@*) (*@\HLJLcs{{\#}}@*) (*@\HLJLcs{coefficients}@*) (*@\HLJLcs{of}@*) (*@\HLJLcs{interpolatory}@*) (*@\HLJLcs{polynomial}@*)
-(*@\HLJLn{p}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{x}@*) (*@\HLJLoB{->}@*) (*@\HLJLnf{dot}@*)(*@\HLJLp{(}@*)(*@\HLJLn{c}@*)(*@\HLJLp{,}@*) (*@\HLJLn{x}@*) (*@\HLJLoB{.{\textasciicircum}}@*) (*@\HLJLp{(}@*)(*@\HLJLni{0}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{n}@*)(*@\HLJLp{))}@*)
+(*@\HLJLn{p}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{x}@*) (*@\HLJLoB{->}@*) (*@\HLJLnf{dot}@*)(*@\HLJLp{(}@*)(*@\HLJLn{c}@*)(*@\HLJLp{,}@*) (*@\HLJLn{x}@*) (*@\HLJLoB{.{\textasciicircum}}@*) (*@\HLJLp{(}@*)(*@\HLJLni{0}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{n}@*)(*@\HLJLp{))}@*)  (*@\HLJLcs{{\#}}@*) (*@\HLJLcs{interpolating}@*) (*@\HLJLcs{polynomial}@*)
 (*@\HLJLnf{plot}@*)(*@\HLJLp{(}@*)(*@\HLJLn{xx}@*)(*@\HLJLp{,}@*)(*@\HLJLn{f}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{xx}@*)(*@\HLJLp{);}@*)(*@\HLJLn{label}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}f(x)"{}}@*)(*@\HLJLp{)}@*)
 (*@\HLJLnf{plot!}@*)(*@\HLJLp{(}@*)(*@\HLJLn{xx}@*)(*@\HLJLp{,}@*)(*@\HLJLn{p}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{xx}@*)(*@\HLJLp{);}@*)(*@\HLJLn{label}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}equispaced}@*) (*@\HLJLs{interpolant"{}}@*)(*@\HLJLp{)}@*)
 (*@\HLJLnf{scatter!}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{,}@*)(*@\HLJLn{p}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{);}@*)(*@\HLJLn{label}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}samples"{}}@*)(*@\HLJLp{)}@*)
 \end{lstlisting}
 
-\includegraphics[width=\linewidth]{jl_ottS6U/Chebyshev_1_1.pdf}
+\includegraphics[width=\linewidth]{/figures/Chebyshev_1_1.pdf}
 
 The oscillations at the ends of the interval become larger as we increase $n$:
 
@@ -336,31 +365,30 @@ The oscillations at the ends of the interval become larger as we increase $n$:
 (*@\HLJLn{x}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{range}@*)(*@\HLJLp{(}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)(*@\HLJLp{,}@*)(*@\HLJLni{1}@*)(*@\HLJLp{;}@*)(*@\HLJLn{length}@*)(*@\HLJLoB{=}@*)(*@\HLJLn{n}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{)}@*)  (*@\HLJLcs{{\#}}@*) (*@\HLJLcs{n+1}@*) (*@\HLJLcs{equispaced}@*) (*@\HLJLcs{nodes}@*)  
 (*@\HLJLn{V}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{x}@*) (*@\HLJLoB{.{\textasciicircum}}@*) (*@\HLJLp{(}@*)(*@\HLJLni{0}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{n}@*)(*@\HLJLp{)}@*)(*@\HLJLoB{{\textquotesingle}}@*) (*@\HLJLcs{{\#}}@*) (*@\HLJLcs{Vandermonde}@*) (*@\HLJLcs{matrix}@*)
 (*@\HLJLn{c}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{V}@*) (*@\HLJLoB{{\textbackslash}}@*) (*@\HLJLn{f}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{)}@*) (*@\HLJLcs{{\#}}@*) (*@\HLJLcs{coefficients}@*) (*@\HLJLcs{of}@*) (*@\HLJLcs{interpolatory}@*) (*@\HLJLcs{polynomial}@*)
-(*@\HLJLn{p}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{x}@*) (*@\HLJLoB{->}@*) (*@\HLJLnf{dot}@*)(*@\HLJLp{(}@*)(*@\HLJLn{c}@*)(*@\HLJLp{,}@*) (*@\HLJLn{x}@*) (*@\HLJLoB{.{\textasciicircum}}@*) (*@\HLJLp{(}@*)(*@\HLJLni{0}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{n}@*)(*@\HLJLp{))}@*)
 (*@\HLJLnf{plot}@*)(*@\HLJLp{(}@*)(*@\HLJLn{xx}@*)(*@\HLJLp{,}@*)(*@\HLJLn{f}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{xx}@*)(*@\HLJLp{);}@*)(*@\HLJLn{label}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}f(x)"{}}@*)(*@\HLJLp{,}@*)(*@\HLJLn{ylims}@*)(*@\HLJLoB{=}@*)(*@\HLJLp{(}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{3}@*)(*@\HLJLp{,}@*)(*@\HLJLni{3}@*)(*@\HLJLp{))}@*)
 (*@\HLJLnf{plot!}@*)(*@\HLJLp{(}@*)(*@\HLJLn{xx}@*)(*@\HLJLp{,}@*)(*@\HLJLn{p}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{xx}@*)(*@\HLJLp{);}@*)(*@\HLJLn{label}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}equispaced}@*) (*@\HLJLs{interpolant"{}}@*)(*@\HLJLp{)}@*)
 (*@\HLJLnf{scatter!}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{,}@*)(*@\HLJLn{p}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{);}@*)(*@\HLJLn{label}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}samples"{}}@*)(*@\HLJLp{)}@*)
 \end{lstlisting}
 
-\includegraphics[width=\linewidth]{jl_ottS6U/Chebyshev_2_1.pdf}
+\includegraphics[width=\linewidth]{/figures/Chebyshev_2_1.pdf}
 
-These oscillations of the interpolant through equally spaced nodes is known as the \emph{Runge phenomenon} (not to be confused with the Gibbs phenomenon). Equally spaced interpolation nodes is clearly not a good choice for high-degree polynomial interpolation.  Maybe the oscillations at the endpoints can be suppressed if we choose nodes that are clustered at the ends of the interval?
+These oscillations of the interpolant through equally spaced nodes is known as the \emph{Runge phenomenon} (not to be confused with the Gibbs phenomenon in Chapter 2). Equally spaced interpolation nodes is clearly not a good choice for high-degree polynomial interpolation.  Maybe the oscillations at the endpoints can be suppressed if we choose nodes that are clustered at the ends of the interval?
 
 
 \begin{lstlisting}
 (*@\HLJLcs{{\#}}@*) (*@\HLJLcs{Construct}@*) (*@\HLJLcs{an}@*) (*@\HLJLcs{interpolant}@*) (*@\HLJLcs{using}@*) (*@\HLJLcs{ApproxFun}@*)
 (*@\HLJLn{n}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{11}@*)
 (*@\HLJLn{S}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{Chebyshev}@*)(*@\HLJLp{()}@*)
-(*@\HLJLn{p}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{Fun}@*)(*@\HLJLp{(}@*)(*@\HLJLn{f}@*)(*@\HLJLp{,}@*)(*@\HLJLn{S}@*)(*@\HLJLp{,}@*)(*@\HLJLn{n}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{)}@*) (*@\HLJLcs{{\#}}@*) (*@\HLJLcs{an}@*) (*@\HLJLcs{interpolant}@*) (*@\HLJLcs{through}@*) (*@\HLJLcs{the}@*) (*@\HLJLcs{unevenly}@*) (*@\HLJLcs{spaced}@*) (*@\HLJLcs{nodes}@*) (*@\HLJLcs{x}@*)
+(*@\HLJLn{p}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{Fun}@*)(*@\HLJLp{(}@*)(*@\HLJLn{f}@*)(*@\HLJLp{,}@*)(*@\HLJLn{S}@*)(*@\HLJLp{,}@*)(*@\HLJLn{n}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{)}@*) (*@\HLJLcs{{\#}}@*) (*@\HLJLcs{an}@*) (*@\HLJLcs{interpolant}@*) (*@\HLJLcs{through}@*) (*@\HLJLcs{clustered}@*) (*@\HLJLcs{nodes}@*)
 (*@\HLJLn{x}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{points}@*)(*@\HLJLp{(}@*)(*@\HLJLn{S}@*)(*@\HLJLp{,}@*)(*@\HLJLn{n}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{)}@*)  (*@\HLJLcs{{\#}}@*) (*@\HLJLcs{n+1}@*) (*@\HLJLcs{unevenly}@*) (*@\HLJLcs{spaced}@*) (*@\HLJLcs{points}@*) 
 (*@\HLJLnf{plot}@*)(*@\HLJLp{(}@*)(*@\HLJLn{xx}@*)(*@\HLJLp{,}@*)(*@\HLJLn{f}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{xx}@*)(*@\HLJLp{);}@*)(*@\HLJLn{label}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}f(x)"{}}@*)(*@\HLJLp{)}@*)
 (*@\HLJLnf{plot!}@*)(*@\HLJLp{(}@*)(*@\HLJLn{p}@*)(*@\HLJLp{;}@*)(*@\HLJLn{label}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}interpolant"{}}@*)(*@\HLJLp{)}@*)
 (*@\HLJLnf{scatter!}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{,}@*)(*@\HLJLn{p}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{);}@*)(*@\HLJLn{label}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}samples"{}}@*)(*@\HLJLp{)}@*)
 \end{lstlisting}
 
-\includegraphics[width=\linewidth]{jl_ottS6U/Chebyshev_3_1.pdf}
+\includegraphics[width=\linewidth]{/figures/Chebyshev_3_1.pdf}
 
-In the above figure, we interpolated $f(x)$ at the roots of an orthogonal polynomial (OP), which we'll learn about later.  The interpolants at the roots of the OP converge exponentially fast to $f$ on $[-1, 1]$ as $n$ increases.
+In the above figure, we interpolated $f(x)$ at the roots (zeros) of a Chebyshev polynomial, which we'll learn about later.  The interpolants at the roots of the Chebyshev polynomials converge exponentially fast to $f$ on $[-1, 1]$ as $n$ (the number of interpolation nodes) increases.
 
 
 \begin{lstlisting}
@@ -373,11 +401,16 @@ In the above figure, we interpolated $f(x)$ at the roots of an orthogonal polyno
 (*@\HLJLnf{scatter!}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{,}@*)(*@\HLJLn{p}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{);}@*)(*@\HLJLn{label}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}samples"{}}@*)(*@\HLJLp{)}@*)
 \end{lstlisting}
 
-\includegraphics[width=\linewidth]{jl_ottS6U/Chebyshev_4_1.pdf}
+\includegraphics[width=\linewidth]{/figures/Chebyshev_4_1.pdf}
 
-\textbf{Remark (advanced)}  A deep and quantitative understanding of the reasons why equispaced interpolation failed for the above function and why interpolants through clustered points converged fast is a beautiful and advanced topic that requires tools from complex analysis and potential theory (See \emph{Approximation Theory and Approximation Practice} by L.N. Trefethen).
+Later we'll learn that interpolants at the roots of Chebyshev polynomials can be computed using the FFT ($\mathcal{O}(n\log n)$ complexity), which is much more efficient than inverting a Vandermonde matrix ($\mathcal{O}(n^3)$ complexity). 
+
+
+\textbf{Remark}  An understanding of the reasons why equispaced interpolation failed for the above function and why interpolants through clustered points converged fast require tools from complex analysis and potential theory (See \emph{Approximation Theory and Approximation Practice} by L.N. Trefethen).
+
 
 \subsection{An introduction to Chebyshev polynomials}
+
 \textbf{Definition (Chebyshev polynomials of the first kind)}
 
 \[
@@ -388,6 +421,7 @@ or in other words,
 \[
 T_n(\cos \theta) = \cos n \theta, \qquad \theta \in [0, \pi].
 \]
+
 \textbf{Proposition (Chebyshev three-term recurrence)}  The Chebyshev polynomials satisfy the following three-term recurrence:
 
 
@@ -406,7 +440,9 @@ In other words $T_{n+1}(x) = 2x T_n(x) - T_{n-1}(x)$ for $n \geq 1$.
 \[
 \blacksquare
 \]
+
 \textbf{Corollary} $T_n(x)$ is a polynomial of degree precisely $n$.
+
 
 Here are a few Chebyshev polynomials
 
@@ -420,7 +456,7 @@ Here are a few Chebyshev polynomials
 (*@\HLJLn{p}@*)
 \end{lstlisting}
 
-\includegraphics[width=\linewidth]{jl_ottS6U/Chebyshev_5_1.pdf}
+\includegraphics[width=\linewidth]{/figures/Chebyshev_5_1.pdf}
 
 In the example above, we resolved the Runge phenomenon by interpolating the function at the roots of $T_n(x)$, which are at
 
@@ -434,8 +470,10 @@ x_j = \cos\left(\frac{j\pi}{n}\right), \qquad j = 0, \ldots, n,
 \]
 which are the extrema (maxima and minima) of $T_{n+2}(x)$.  Notice that the roots of $T_n$ are in $(-1, 1)$, whereas the extrema of $T_{n+2}$ are in $[-1, 1]$.
 
-\subsection{The derivatives of interpolants in Chebyshev points can be computed with the FFT}
-Suppose a function $f(x)$ has a convergent Chebyshev series on $[-1, 1]$, i.e.,
+
+\subsection{The relation between Chebyshev and Fourier series}
+
+Suppose a function $f(x)$ has a convergent Chebyshev series for $x \in [-1, 1]$, i.e.,
 
 \[
 f(x) = \sum_{k=0}^{\infty} b_k T_k(x).
@@ -455,65 +493,170 @@ f(x) &=& \sum_{k=0}^{\infty} b_k T_k(x) \\
   &=& \sum_{k=0}^{\infty} b_k\left(\frac{{\rm e}^{{\rm i}k\theta} + {\rm e}^{-{\rm i}k\theta}}{2}   \right) \\
   &=& \sum_{k=-\infty}^{\infty} c_k {\rm e}^{{\rm i}k\theta}  \qquad (c_0 = b_0, c_{k} = c_{-k} = b_k/2, k\geq 1).
 \end{eqnarray*}
-That is, a Chebyshev series is a Fourier series in disguise!
-
-When we studied Fourier methods for periodic functions, we learnt that the trigonometric interpolant $q_n(\theta)$, where
+That is, a Chebyshev series is a Fourier series in disguise! We have just proved the following result.
 
 
-\begin{eqnarray*}
-g(\theta) = f(\cos\theta) = f(x) \approx p_n(x) = \sum_{k=0}^{n} \tilde{b}_kT_k(x) = \sum_{k=-n}^{n} \tilde{c}_k {\rm e}^{{\rm i}k\theta} := q_n(\theta)
-\end{eqnarray*}
-interpolates the periodic function $g(\theta)$ at the points $\theta_j = 2\pi j/(2n+1)$ with $j = 0, \ldots, 2n$, where the approximate Fourier coefficients $\tilde{c}_k$ can be computed via the FFT given the function values $g(\theta_j)$.  This means that $p_n(x_j) = f(x_j)$ for 
+\textbf{Proposition (Chebyshev coefficients defined as Fourier coefficients)} If $g(\theta) = f(\cos \theta)$ can be expressed as a Fourier series, then $f(x)$ has a Chebyshev series and the Chebyshev coefficients $b_k$, $k \geq 0$ of $f(x)$ are related to the Fourier coefficients $c_k$, $k \in \mathbb{Z}$  of $g(\theta)$ as follows,
 
 \[
-    x_j = \cos\theta_j = \cos\left( \frac{2\pi j}{2n + 1}  \right), \qquad j = 0, \ldots, 2n 
-\]
-and we have that
-
-\[
-\tilde{c}_0 = \tilde{b}_0,\qquad  \tilde{c}_{k} = \tilde{c}_{-k} = \tilde{b}_k/2,\qquad k\geq 1,
+b_0 = c_0, \qquad b_k = 2c_k = 2c_{-k}.
 \]
 where
 
 \[
-\tilde{c}_k = \frac{1}{2n+1}\sum_{j = 0}^{2n} g(\theta_j) {\rm e}^{-{\rm i}k\theta_j}, \qquad k = -n, \ldots, n.
+c_k = \frac{1}{2\pi}\int_{0}^{2\pi}g(\theta){\rm e}^{-{\rm i}k\theta}\,{\rm d}\theta.
 \]
-We refer to $p_n(x) = \sum_{k=0}^{n} \tilde{b}_kT_k(x)$ as the Chebyshev interpolant of $f(x)$ and the $\tilde{b}_k$ are the approximate Chebyshev coefficients of the the function $f$ we are approximating.
 
-Here are the coefficients $\tilde{b}_k$ of the Chebyshev interpolant of the Runge function, which we can obtain using ApproxFun.jl or Chebfun in Matlab:
+\textbf{Remark} We can prove that $c_{-k} = c_{k}$ for $g(\theta)$ by observing that 
+
+
+\begin{eqnarray*}
+c_k &=& \frac{1}{2\pi} \int_{0}^{2\pi} g(\theta){\rm e}^{-{\rm i}k\theta}\,{\rm d}\theta \\
+    &=& \frac{(-1)^{k}}{2\pi} \int_{-\pi}^{\pi} g(\theta +\pi){\rm e}^{-{\rm i}k\theta}\,{\rm d}\theta \\
+    &=& \frac{(-1)^{k}}{2\pi} \int_{-\pi}^{\pi} g(\theta +\pi)\left(\cos k\theta - {\rm i} \sin k\theta   \right)\,{\rm d}\theta \\
+    &=& \frac{(-1)^{k}}{2\pi} \int_{-\pi}^{\pi} g(\theta +\pi) \cos k\theta \,{\rm d}\theta
+\end{eqnarray*}
+where we used the fact that $\sin k \theta$ is an odd function, $\cos k \theta$ is an even function and $h(\theta) := g(\theta + \pi) $ is an even function of $\theta$ because
+
+\[
+h(\theta) = g(\theta + \pi) = f(\cos(\theta+\pi)) = f(\cos(-\theta+\pi)) = g(-\theta +\pi) = h(-\theta). 
+\]
+Therefore if we replace $k$ with $-k$, we get the same integral and hence $c_{k} = c_{-k}$.
+
+
+\subsection{The relation between Chebyshev and trigonometric interpolants}
+
+From Chapter 2, we know that the truncated Fourier series
+
+\[
+q_{2n+1}(\theta) = \sum_{k=-n}^{n} \tilde{c}_k^{2n+1} {\rm e}^{{\rm i}k\theta},
+\]
+where
+
+\[
+\tilde{c}_k^{2n+1} = \frac{1}{2n+1}\sum_{j = 0}^{2n} g(\theta_j) {\rm e}^{-{\rm i}k\theta_j}, \qquad k = -n, \ldots, n, \qquad \theta_{j} = \frac{2\pi j}{2n+1},\qquad j = 0, \ldots, 2n,
+\]
+interpolates $g(\theta)$ at $\theta = \theta_j$, $j = 0, \ldots, 2n$.  Using parity arguments (as we did when we proved that $c_{k} = c_{-k}$ for $g(\theta)$), we can show that $\tilde{c}_k^{2n+1} = \tilde{c}_{-k}^{2n+1}$. Therefore,
+
+
+\begin{eqnarray*}
+q_{2n+1}(\theta) &=& \tilde{c}_0^{2n+1}+ \sum_{k=1}^{n} \tilde{c}_k^{2n+1}\left( {\rm e}^{{\rm i}k\theta} + {\rm e}^{-{\rm i}k\theta} \right) \\
+&=&  \tilde{c}_0^{2n+1} + 2\sum_{k=1}^{n} \tilde{c}_k^{2n+1}\cos k\theta \\
+&=&  \tilde{c}_0^{2n+1} + 2\sum_{k=1}^{n} \tilde{c}_k^{2n+1} T_k(x) \qquad (x = \cos\theta) \\
+&:=& p_{n+1}(x)
+\end{eqnarray*}
+from which we get the following result.
+
+
+\textbf{Proposition (Chebyshev polynomial interpolant constructed from a trigonometric interpolant)} The polynomial of degree $\leq n$ defined by 
+
+\[
+p_{n+1}(x) = \sum_{k=0}^{n} \tilde{b}_k^nT_k(x) 
+\]
+where
+
+\[
+\tilde{b}_0^n = \tilde{c}_0^{2n+1}, \qquad \tilde{b}_k^n = 2\tilde{c}_k^{2n+1}  = 2\tilde{c}_{-k}^{2n+1}
+\]
+interpolates $f(x)$  at $x_{j}$, where
+
+\[
+x_j = \cos\left( \frac{2\pi j}{2n + 1}  \right), \qquad j = 0, \ldots, n
+\]
+
+\textbf{Proof} Since 
+
+\[
+q_{2n+1}(\theta_j) = g(\theta_j), \qquad \theta_j = \frac{2\pi j}{2n+ 1}, \qquad j = 0, \ldots, 2n
+\]
+and $q_{2n}(\theta) = p_{2n+1}(\cos \theta) = p_{2n+1}(x)$ where $x = \cos\theta$, it follows that
+
+\[
+p_{2n+1}(x_j) =p_{2n+1}(\cos \theta_j) = q_{2n+1}(\theta_j) = g(\theta_j) = f(\cos\theta_j) = f(x_j), \qquad j = 0, \ldots, 2n.
+\]
+The result follows by noting that only $n+1$ of the $2n+1$ points $x_j$, $j = 0, \ldots, 2n$ are distinct because
+
+\[
+x_{n} = \cos\left( \frac{2\pi n}{2n + 1}  \right)= \cos\left( \pi - \frac{\pi}{2n + 1}  \right) =  \cos\left( \pi + \frac{\pi}{2n + 1}  \right) = x_{n+1}
+\]
+and similarly $x_{n-1} = x_{n+2}$, $\ldots$, $x_1 = x_{2n}$.  $\blacksquare$
+
+
+We refer to $p_{n+1}(x) = \sum_{k=0}^{n} \tilde{b}_k^nT_k(x)$ as a Chebyshev interpolant of $f(x)$ and the $\tilde{b}_k^n$ are the approximate Chebyshev coefficients of the the function $f$ we are approximating.
+
+
+Recall that the approximate Fourier coefficients $\tilde{c}^{2n+1}_k$ can be computed with the FFT, hence we can compute the coefficients $\tilde{b}^n_k$ of a Chebyshev interpolant with the FFT.  We can use the (inverse) FFT to map the coefficients $\tilde{b}^n_k$ to the function values $f(x_j)$. Here's an example:
 
 
 \begin{lstlisting}
-(*@\HLJLn{f}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{x}@*) (*@\HLJLoB{->}@*) (*@\HLJLni{1}@*)(*@\HLJLoB{/}@*)(*@\HLJLp{(}@*)(*@\HLJLni{1}@*) (*@\HLJLoB{+}@*) (*@\HLJLni{25}@*)(*@\HLJLn{x}@*)(*@\HLJLoB{{\textasciicircum}}@*)(*@\HLJLni{2}@*)(*@\HLJLp{)}@*) (*@\HLJLcs{{\#}}@*) (*@\HLJLcs{Runge}@*) (*@\HLJLcs{function}@*)
-(*@\HLJLn{fcheb}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{Fun}@*)(*@\HLJLp{(}@*)(*@\HLJLn{f}@*)(*@\HLJLp{,}@*)(*@\HLJLnf{Chebyshev}@*)(*@\HLJLp{())}@*) (*@\HLJLcs{{\#}}@*) (*@\HLJLcs{high-accuracy}@*) (*@\HLJLcs{Chebyshev}@*) (*@\HLJLcs{interpolant}@*)
-(*@\HLJLn{bt}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{fcheb}@*)(*@\HLJLoB{.}@*)(*@\HLJLn{coefficients}@*) (*@\HLJLcs{{\#}}@*) (*@\HLJLcs{approximate}@*) (*@\HLJLcs{Chebyshev}@*) (*@\HLJLcs{coefficients}@*)
-(*@\HLJLnf{scatter}@*)(*@\HLJLp{(}@*)(*@\HLJLni{0}@*)(*@\HLJLoB{:}@*)(*@\HLJLnf{length}@*)(*@\HLJLp{(}@*)(*@\HLJLn{bt}@*)(*@\HLJLp{)}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)(*@\HLJLp{,}@*)(*@\HLJLn{abs}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{bt}@*)(*@\HLJLp{)}@*)(*@\HLJLoB{.+}@*)(*@\HLJLnf{eps}@*)(*@\HLJLp{();}@*)
-    (*@\HLJLn{xlabel}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}k"{}}@*)(*@\HLJLp{,}@*) (*@\HLJLn{yscale}@*)(*@\HLJLoB{=:}@*)(*@\HLJLn{log10}@*)(*@\HLJLp{,}@*)(*@\HLJLn{label}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}Approximate}@*) (*@\HLJLs{Chebyshev}@*) (*@\HLJLs{coefficients}@*) (*@\HLJLs{of}@*) (*@\HLJLs{the}@*) (*@\HLJLs{Runge}@*) (*@\HLJLs{function"{}}@*)(*@\HLJLp{)}@*)
+(*@\HLJLcs{{\#}}@*) (*@\HLJLcs{Use}@*) (*@\HLJLcs{the}@*) (*@\HLJLcs{FFT}@*) (*@\HLJLcs{to}@*) (*@\HLJLcs{compute}@*) (*@\HLJLcs{the}@*) (*@\HLJLcs{approximate}@*) (*@\HLJLcs{Chebyshev}@*) (*@\HLJLcs{coefficients}@*) (*@\HLJLcs{of}@*) (*@\HLJLcs{the}@*) (*@\HLJLcs{Runge}@*) (*@\HLJLcs{function}@*)
+(*@\HLJLn{g}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{\ensuremath{\theta}}@*) (*@\HLJLoB{->}@*) (*@\HLJLnf{f}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{cos}@*)(*@\HLJLp{(}@*)(*@\HLJLn{\ensuremath{\theta}}@*)(*@\HLJLp{))}@*)
+(*@\HLJLn{n}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{200}@*)
+(*@\HLJLn{\ensuremath{\theta}}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{range}@*)(*@\HLJLp{(}@*)(*@\HLJLni{0}@*)(*@\HLJLp{,}@*)(*@\HLJLni{2}@*)(*@\HLJLn{\ensuremath{\pi}}@*)(*@\HLJLp{;}@*)(*@\HLJLn{length}@*)(*@\HLJLoB{=}@*) (*@\HLJLni{2}@*)(*@\HLJLn{n}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{2}@*)(*@\HLJLp{)[}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLk{end}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)(*@\HLJLp{]}@*) (*@\HLJLcs{{\#}}@*) (*@\HLJLcs{the}@*) (*@\HLJLcs{points}@*) (*@\HLJLcs{\ensuremath{\theta}{\_}j}@*)
+(*@\HLJLn{ct}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{fft}@*)(*@\HLJLp{(}@*)(*@\HLJLn{g}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{\ensuremath{\theta}}@*)(*@\HLJLp{))}@*)(*@\HLJLoB{/}@*)(*@\HLJLp{(}@*)(*@\HLJLni{2}@*)(*@\HLJLn{n}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{)}@*) (*@\HLJLcs{{\#}}@*) (*@\HLJLcs{compute}@*) (*@\HLJLcs{approximate}@*) (*@\HLJLcs{Fourier}@*) (*@\HLJLcs{coefficients}@*) (*@\HLJLcs{of}@*) (*@\HLJLcs{g}@*)
+(*@\HLJLcs{{\#}}@*) (*@\HLJLcs{approximate}@*) (*@\HLJLcs{Chebyshev}@*) (*@\HLJLcs{coefficients}@*)
+(*@\HLJLn{bt}@*) (*@\HLJLoB{=}@*) (*@\HLJLp{[}@*)(*@\HLJLn{ct}@*)(*@\HLJLp{[}@*)(*@\HLJLni{1}@*)(*@\HLJLp{];}@*)(*@\HLJLni{2}@*)(*@\HLJLn{ct}@*)(*@\HLJLp{[}@*)(*@\HLJLni{2}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{n}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{]]}@*) 
+(*@\HLJLnf{scatter}@*)(*@\HLJLp{(}@*)(*@\HLJLni{0}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{n}@*)(*@\HLJLp{,}@*)(*@\HLJLn{abs}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{bt}@*)(*@\HLJLp{);}@*)
+(*@\HLJLn{xlabel}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}k"{}}@*)(*@\HLJLp{,}@*) (*@\HLJLn{yscale}@*)(*@\HLJLoB{=:}@*)(*@\HLJLn{log10}@*)(*@\HLJLp{,}@*)(*@\HLJLn{label}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}Approximate}@*) (*@\HLJLs{Chebyshev}@*) (*@\HLJLs{coefficients}@*) (*@\HLJLs{of}@*) (*@\HLJLs{the}@*) (*@\HLJLs{Runge}@*) (*@\HLJLs{function"{}}@*)(*@\HLJLp{)}@*)
 \end{lstlisting}
 
-\includegraphics[width=\linewidth]{jl_ottS6U/Chebyshev_6_1.pdf}
+\includegraphics[width=\linewidth]{/figures/Chebyshev_6_1.pdf}
 
-The $\tilde{b}_k$ coefficients decay exponentially fast with $k$ because the Runge function is analytic on $[-1, 1]$.   Let's check that the approximate Fourier coefficients and Chebyshev coefficients are related as stated above:
+The approximate Chebyshev coefficients decay exponentially fast with $k$ because $f(x)$, the Runge function, is analytic on $[-1, 1]$.
 
 
 \begin{lstlisting}
-(*@\HLJLn{g}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{\ensuremath{\theta}}@*) (*@\HLJLoB{->}@*) (*@\HLJLnf{f}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{cos}@*)(*@\HLJLp{(}@*)(*@\HLJLn{\ensuremath{\theta}}@*)(*@\HLJLp{))}@*) 
-(*@\HLJLn{n}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{length}@*)(*@\HLJLp{(}@*)(*@\HLJLn{bt}@*)(*@\HLJLp{)}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)
-(*@\HLJLn{\ensuremath{\theta}}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{range}@*)(*@\HLJLp{(}@*)(*@\HLJLni{0}@*)(*@\HLJLp{,}@*)(*@\HLJLni{2}@*)(*@\HLJLn{\ensuremath{\pi}}@*)(*@\HLJLp{;}@*)(*@\HLJLn{length}@*)(*@\HLJLoB{=}@*) (*@\HLJLni{2}@*)(*@\HLJLn{n}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{2}@*)(*@\HLJLp{)[}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLk{end}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)(*@\HLJLp{]}@*) 
-(*@\HLJLn{ct}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{fft}@*)(*@\HLJLp{(}@*)(*@\HLJLn{g}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{\ensuremath{\theta}}@*)(*@\HLJLp{))}@*)(*@\HLJLoB{/}@*)(*@\HLJLp{(}@*)(*@\HLJLni{2}@*)(*@\HLJLn{n}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{)}@*) (*@\HLJLcs{{\#}}@*) (*@\HLJLcs{compute}@*) (*@\HLJLcs{approximate}@*) (*@\HLJLcs{Fourier}@*) (*@\HLJLcs{coefficients}@*)
-(*@\HLJLnd{@show}@*) (*@\HLJLn{ct}@*)(*@\HLJLp{[}@*)(*@\HLJLni{1}@*)(*@\HLJLp{]}@*) (*@\HLJLoB{\ensuremath{\approx}}@*) (*@\HLJLn{bt}@*)(*@\HLJLp{[}@*)(*@\HLJLni{1}@*)(*@\HLJLp{];}@*)
-(*@\HLJLnd{@show}@*) (*@\HLJLni{2}@*)(*@\HLJLn{ct}@*)(*@\HLJLp{[}@*)(*@\HLJLni{2}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{n}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{]}@*) (*@\HLJLoB{\ensuremath{\approx}}@*) (*@\HLJLn{bt}@*)(*@\HLJLp{[}@*)(*@\HLJLni{2}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{n}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{]}@*)
-(*@\HLJLnf{norm}@*)(*@\HLJLp{(}@*)(*@\HLJLni{2}@*)(*@\HLJLn{ct}@*)(*@\HLJLp{[}@*)(*@\HLJLni{2}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{n}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{]}@*) (*@\HLJLoB{-}@*) (*@\HLJLn{bt}@*)(*@\HLJLp{[}@*)(*@\HLJLni{2}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{n}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{],}@*)(*@\HLJLn{Inf}@*)(*@\HLJLp{)}@*)
+(*@\HLJLcs{{\#}}@*) (*@\HLJLcs{Map}@*) (*@\HLJLcs{approximate}@*) (*@\HLJLcs{Chebyshev}@*) (*@\HLJLcs{coefficients}@*) (*@\HLJLcs{to}@*) (*@\HLJLcs{function}@*) (*@\HLJLcs{values}@*)
+(*@\HLJLnf{norm}@*)(*@\HLJLp{((}@*)(*@\HLJLni{2}@*)(*@\HLJLn{n}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{)}@*)(*@\HLJLoB{*}@*)(*@\HLJLnf{ifft}@*)(*@\HLJLp{(}@*)(*@\HLJLn{ct}@*)(*@\HLJLp{)}@*) (*@\HLJLoB{-}@*) (*@\HLJLn{f}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{cos}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{\ensuremath{\theta}}@*)(*@\HLJLp{)),}@*)(*@\HLJLn{Inf}@*)(*@\HLJLp{)}@*)
 \end{lstlisting}
 
 \begin{lstlisting}
-ct[1] (*@\ensuremath{\approx}@*) bt[1] = true
-2 * ct[2:n + 1] (*@\ensuremath{\approx}@*) bt[2:n + 1] = true
-9.898839542956632e-17
+3.544325313357017e-16
 \end{lstlisting}
 
+
+In ApproxFun.jl, the command \texttt{Fun(f)} approximates a function using a Chebyshev interpolant (in Chebfun, the command \texttt{chebfun} does the same).  The number of Chebyshev coefficients required the approximate the function to roughly $10^{-16}$ relative accuracy is determined automatically. Here's an example:
+
+
+\begin{lstlisting}
+(*@\HLJLn{fc}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{Fun}@*)(*@\HLJLp{(}@*)(*@\HLJLn{f}@*)(*@\HLJLp{)}@*)
+\end{lstlisting}
+
+\begin{lstlisting}
+Fun(Chebyshev(),[0.19611613513818404, 0.0, -0.26361085189847744, 0.0, 0.177
+16716982434333, 0.0, -0.11907023492210417, 0.0, 0.0800245376074016, 0.0  (*@\ensuremath{\ldots}@*) 
+ 0.0, 1.2368591486255537e-16, 0.0, -7.257531816796535e-17, 0.0, 5.855258184
+7052e-17, 0.0, -3.05491432152328e-17, 0.0, 2.7525712049567778e-17])
+\end{lstlisting}
+
+
+\begin{lstlisting}
+(*@\HLJLnf{length}@*)(*@\HLJLp{(}@*)(*@\HLJLn{fc}@*)(*@\HLJLoB{.}@*)(*@\HLJLn{coefficients}@*)(*@\HLJLp{)}@*)
+\end{lstlisting}
+
+\begin{lstlisting}
+189
+\end{lstlisting}
+
+
+Let's check that the approximate Chebyshev coefficients we computed with the FFT are approximate equal to the Chebyshev coefficients computed in with ApproxFun:
+
+
+\begin{lstlisting}
+(*@\HLJLnd{@show}@*) (*@\HLJLn{bt}@*)(*@\HLJLp{[}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLni{189}@*)(*@\HLJLp{]}@*) (*@\HLJLoB{\ensuremath{\approx}}@*) (*@\HLJLn{fc}@*)(*@\HLJLoB{.}@*)(*@\HLJLn{coefficients}@*)
+(*@\HLJLnf{norm}@*)(*@\HLJLp{(}@*)(*@\HLJLn{bt}@*)(*@\HLJLp{[}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLni{189}@*)(*@\HLJLp{]}@*) (*@\HLJLoB{-}@*) (*@\HLJLn{fc}@*)(*@\HLJLoB{.}@*)(*@\HLJLn{coefficients}@*)(*@\HLJLp{,}@*)(*@\HLJLn{Inf}@*)(*@\HLJLp{)}@*)
+\end{lstlisting}
+
+\begin{lstlisting}
+bt[1:189] (*@\ensuremath{\approx}@*) fc.coefficients = true
+1.3121635288093246e-16
+\end{lstlisting}
+
+
+\subsection{Differentiating Chebyshev interpolants with the FFT}
 
 Hence, we can also approximate derivatives of $f$ by differentiating $q_n(\theta)$ in Fourier coefficient space via the FFT, which is very efficient, as we learnt when we studied Fourier methods for periodic functions. The first derivatives are related as follows:
+
 
 \[
 f'(x) \approx \frac{{\rm d}}{{\rm d}x}p_n(x) = \frac{{\rm d}}{{\rm d}x}q_n(\theta) = q_n'(\theta)\frac{{\rm d} \theta}{\mathrm{d}x} = -\frac{q_n'(\theta)}{\sin \theta}
@@ -530,11 +673,12 @@ f'(x) \approx \frac{{\rm d}}{{\rm d}x}p_n(x) = \frac{{\rm d}}{{\rm d}x}q_n(\thet
 \end{lstlisting}
 
 \begin{lstlisting}
-8.453005772678412e-13
+1.340491672910366e-12
 \end{lstlisting}
 
 
 Note that $p_n'(x) = -q_n'(\theta)/\sin \theta$ is not well-defined for $\theta = 0, \pi$ (i.e., at $x = \cos\theta =  \pm 1$).  For these cases we use l'Hopital's rule.
+
 
 We typically prefer to approximate a function (or solution to a differential equation) at the \emph{Chebyshev points}, 
 
@@ -570,12 +714,14 @@ chebfft (generic function with 1 method)
 
 
 \subsection{Differentiation matrices for Chebyshev interpolants}
+
 When we studied Fourier methods for periodic functions, we learnt about two representations of the trigonometric interpolant.  Here we do the same for Chebeshev polynomial interpolants. We have already seen one representation as an expansion in Chebyshev polynomials
 
 \[
 p_n(x) = \sum_{k = 0}^{n}\tilde{b}_kT_k(x),
 \]
 which allowed us to leverage Fourier series to compute $\tilde{b}_k$ and derivatives of $p_n(x)$ via the FFT.  We now build differentiation matrices to compute derivatives of $p_n(x)$ by using its representation as a Lagrange interpolating polynomial.
+
 
 Recall from the formula for the Lagrange interpolating polynomial that
 
@@ -587,6 +733,7 @@ here we let $x_k$ be the Chebyshev points
 \[
 x_k = \cos\left(\frac{\pi k}{n} \right), \qquad k = 0, \ldots, n.
 \]
+
 We can represent differentiation of the Chebyshev interpolant via an $(n+1) \times (n+1)$ differentiation matrix $D_n$: since
 
 \[
@@ -616,6 +763,7 @@ or in vector form,
 \[
 \mathbf{p}' = D_n \mathbf{f}.
 \]
+
 Here is a function that builds the differentiation matrix $D_n$:
 
 
@@ -641,6 +789,7 @@ cheb (generic function with 1 method)
 
 To summarise, we have two equivalent methods for computing the derivate of the Chebyshev interpolant at the $n+1$ Chebyshev points.  The FFT method has $\mathcal{O}(n\log n)$ complexity while  applying a differentiation matrix to a vector requires $\mathcal{O}(n^2)$ operations because $D_n$ is a dense matrix.
 
+
 Let's check that the two methods give the same output:
 
 
@@ -656,6 +805,7 @@ true
 
 
 \subsection{A PDE example: the wave equation}
+
 Consider the following $(1+1)$-dimensional wave equation PDE initial / boundary value problem 
 
 \[
@@ -667,6 +817,7 @@ subject to the initial data
 u(x,0) = f(x), \qquad u_t(x,0) = g(x), \qquad x \in [-1, 1],
 \]
 where we assume that not both of $f$ and $g$ are identically zero (because then the trivial solution $u(x,t) = 0$ solves the problem).  We are going to approximate the solution to this problem by approximating $u_{tt}$ with finite differences and $u_{xx}$ with differentiation of a Chebyshev interpolant in $x$. First, we derive the exact solution to this problem using the method of separation of variables. 
+
 
 \subsubsection{The method of separation of variables}
 We attempt to find a solution of the form
@@ -711,6 +862,7 @@ For case (3), we set $\lambda = - \kappa^2$ with $\kappa \in \mathbb{R}\setminus
 \[
 X'' = -\kappa^2 X, \qquad X(-1) = 0 = X(1)
 \]
+
 The general solution to the ODE $X''+\kappa^2 X = 0$ is $X = c_1 \sin\kappa x + c_2\cos\kappa x$, for arbitrary constants $c_1$, $c_2$ ($\sin\kappa x$ and $\cos\kappa x$ are eigenfunctions of the differential operator $\frac{{\rm d}^2}{{\rm d}x^2}$). To satisfy the boundary conditions $X(-1) = 0 = X(1)$, we require
 
 \[
@@ -743,6 +895,7 @@ u = \left( b_1 \sin\kappa_n t + b_2\cos\kappa_n t \right)\cos \kappa_n x, \qquad
 \]
 Since the wave equation is linear, any scalar multiples and linear combinations of the solutions above are also solutions to the PDE initial / boundary-value problem. 
 
+
 Therfore the following series is a formal solution to the PDE,
 
 \[
@@ -750,12 +903,14 @@ u(x,t) = \sum_{n = 1}^{\infty} \left(\alpha_n\sin\pi n t + \beta_n\cos\pi n t  \
 \]
 where $\kappa_n =(2n + 1)\frac{\pi}{2}$ and  $\alpha_n, \beta_n, \gamma_n, \delta_n$ are arbitrary constants whose values we shall determine by using the initial data:
 
+
 \[
 u(x,0) = \sum_{n = 1}^{\infty} \beta_n  \sin\pi n x +  \sum_{n = 0}^{\infty} \delta_n \cos\kappa_n x = f(x)
 \]
 \[
 u_t(x,0) = \sum_{n = 1}^{\infty} \pi n\alpha_n  \sin\pi n x +  \sum_{n = 0}^{\infty}\kappa_n \gamma_n \cos\kappa_n x = g(x)
 \]
+
 Using the fact that 
 
 \[
@@ -782,12 +937,14 @@ and
 \[
 \alpha_m = \frac{1}{\pi n}\int_{-1}^{1} g(x) \sin m\pi x \,{\rm d}x, \quad m\geq 1, \qquad \gamma_m = \frac{1}{\kappa_n}\int_{-1}^{1} g(x) \cos \kappa_m x \,{\rm d}x,\quad m \geq 0.
 \]
+
 We have derived the exact solution to the PDE intial/boundary value problem as the sum of two series.  To compute an approximation to the solution, we could use the FFT to compute approximate coefficients  $\tilde{\alpha}_n$, $\tilde{\beta}_n$, $\tilde{\gamma}_n$, $\tilde{\delta}_n$ and then set
 
 \[
 u(x,t) \approx \sum_{n = 1}^{N} \left(\tilde{\alpha}_n\sin\pi n t + \tilde{\beta}_n\cos\pi n t  \right)\sin\pi n x +  \sum_{n = 0}^{N} \left(\tilde{\gamma}_n\sin \kappa_n t + \tilde{\delta}_n\cos \kappa_n t  \right)\cos\kappa_n x.
 \]
 This method relies on knowing the exact solution to the problem, which may not be possible for a more complicated PDE. Instead, we shall compute an approximate solution using a combination of finite differences and Chebyshev interpolants, which is a method which doesn't require knowing the exact solution.
+
 
 \textbf{Remark} We derived an exact solution to the initial / boundary-value PDE problem above.  If we consider the "pure" initial-value problem (the Cauchy problem) for the wave equation on the whole real line, i.e., 
 
@@ -806,12 +963,15 @@ u(x,0) = f(x), \qquad u_t(x,0) = g(x).
 \]
 This solution can be derived using the method of characteristics. 
 
+
 \subsubsection{Numerical solution}
+
 We consider the initial / boundary-value problem for the wave equation
 
 \[
 u_{tt} = u_{xx}, \qquad t > 0, \qquad -1 < x < 1, \qquad u(\pm 1, t) = 0.
 \]
+
 We discretise $x$ using the Chebyshev points,
 
 \[
@@ -892,9 +1052,12 @@ Therefore we approximate the solution to the PDE as follows:
 \[
 \mathbf{u}^{i+1} = 2\mathbf{u}^{i} - \mathbf{u}^{i-1} + \tau^2 D_n^2\mathbf{u}^{i}, \qquad i = 0, \ldots, n_t-1.
 \]
+
 \textbf{Remark} Note that we don't need to include the approximations $u_0^{i}$ and $u_n^{i}$ since we know the solution values at $x = \pm 1$ from the zero boundary conditions $u(\pm 1, t) = 0$.  For now we ignore this fact since we shall discuss the imposition of boundary conditions later in this module.
 
+
 \textbf{Remark} In practice, we don't compute $D_n^2\mathbf{u}^{i}$ by building the differentiation matrix $D_n$ and squaring it, since it costs $\mathcal{O}(n_x^3)$ operations, however computing $D_n(D_n\mathbf{u}^{i})$ has $\mathcal{O}(n_x^2)$ complexity. As we showed above, $D_n\mathbf{u}^{i}$ can be computed with the FFT with $\mathcal{O}(n_x\log n_x)$ complexity, so we compute $D_n^2\mathbf{u}^{i}$ by differentiating twice via the FFT, which thus also has $\mathcal{O}(n_x\log n_x)$ complexity.
+
 
 We require two starting values to implement the numerical method.  We let
 
@@ -919,18 +1082,24 @@ u(x,-\tau) = f(x - \tau) = {\rm e}^{-200(x-\tau)^2}.
 (*@\HLJLn{plotgap}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{Int64}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{round}@*)(*@\HLJLp{(}@*)(*@\HLJLn{tplot}@*)(*@\HLJLoB{/}@*)(*@\HLJLn{dt}@*)(*@\HLJLp{));}@*) (*@\HLJLn{dt}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{tplot}@*)(*@\HLJLoB{/}@*)(*@\HLJLn{plotgap}@*)(*@\HLJLp{;}@*)
 (*@\HLJLn{nplots}@*) (*@\HLJLoB{=}@*) (*@\HLJLnd{@show}@*) (*@\HLJLnf{Int64}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{round}@*)(*@\HLJLp{(}@*)(*@\HLJLn{tmax}@*)(*@\HLJLoB{/}@*)(*@\HLJLn{tplot}@*)(*@\HLJLp{))}@*)
 (*@\HLJLn{plotdata}@*) (*@\HLJLoB{=}@*) (*@\HLJLp{[}@*)(*@\HLJLnf{transpose}@*)(*@\HLJLp{(}@*)(*@\HLJLn{v}@*)(*@\HLJLp{);}@*) (*@\HLJLnf{zeros}@*)(*@\HLJLp{(}@*)(*@\HLJLn{nplots}@*)(*@\HLJLp{,}@*)(*@\HLJLn{N}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{)];}@*) (*@\HLJLn{tdata}@*) (*@\HLJLoB{=}@*) (*@\HLJLp{[}@*)(*@\HLJLnfB{0.0}@*)(*@\HLJLp{];}@*)
+(*@\HLJLnd{@time}@*) (*@\HLJLk{begin}@*)
 (*@\HLJLk{for}@*) (*@\HLJLn{i}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{nplots}@*)
     (*@\HLJLk{for}@*) (*@\HLJLn{n}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{plotgap}@*)
+        (*@\HLJLkd{global}@*) (*@\HLJLn{v}@*)
+        (*@\HLJLkd{global}@*) (*@\HLJLn{vold}@*)
         (*@\HLJLn{w}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{chebfft}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{chebfft}@*)(*@\HLJLp{(}@*)(*@\HLJLn{v}@*)(*@\HLJLp{));}@*) (*@\HLJLn{w}@*)(*@\HLJLp{[}@*)(*@\HLJLni{1}@*)(*@\HLJLp{]}@*)(*@\HLJLoB{=}@*)(*@\HLJLni{0}@*)(*@\HLJLp{;}@*) (*@\HLJLn{w}@*)(*@\HLJLp{[}@*)(*@\HLJLn{N}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{]}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{0}@*)(*@\HLJLp{;}@*)
         (*@\HLJLn{vnew}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{2}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{v}@*) (*@\HLJLoB{-}@*) (*@\HLJLn{vold}@*) (*@\HLJLoB{+}@*) (*@\HLJLn{dt}@*)(*@\HLJLoB{{\textasciicircum}}@*)(*@\HLJLni{2}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{w}@*)(*@\HLJLp{;}@*) (*@\HLJLn{vold}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{v}@*)(*@\HLJLp{;}@*) (*@\HLJLn{v}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{vnew}@*)(*@\HLJLp{;}@*)
     (*@\HLJLk{end}@*)
+        (*@\HLJLkd{global}@*) (*@\HLJLn{tdata}@*)
     (*@\HLJLn{plotdata}@*)(*@\HLJLp{[}@*)(*@\HLJLn{i}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{,}@*)(*@\HLJLoB{:}@*)(*@\HLJLp{]}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{v}@*)(*@\HLJLp{;}@*) (*@\HLJLn{tdata}@*) (*@\HLJLoB{=}@*) (*@\HLJLp{[}@*)(*@\HLJLn{tdata}@*)(*@\HLJLp{;}@*)(*@\HLJLn{dt}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{i}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{plotgap}@*)(*@\HLJLp{]}@*)
+(*@\HLJLk{end}@*)
 (*@\HLJLk{end}@*)
 \end{lstlisting}
 
 \begin{lstlisting}
 Int64(round(tmax / tplot)) = 400
-Error: UndefVarError: v not defined
+  2.302461 seconds (3.76 M allocations: 360.930 MiB, 4.32(*@{{\%}}@*) gc time, 57.81(*@{{\%}}@*) 
+compilation time)
 \end{lstlisting}
 
 
@@ -938,24 +1107,18 @@ Error: UndefVarError: v not defined
 (*@\HLJLnf{surface}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{,}@*)(*@\HLJLn{tdata}@*)(*@\HLJLp{,}@*)(*@\HLJLn{plotdata}@*)(*@\HLJLp{,}@*)(*@\HLJLn{seriescolor}@*)(*@\HLJLoB{=:}@*)(*@\HLJLn{redsblues}@*)(*@\HLJLp{,}@*) (*@\HLJLn{camera}@*)(*@\HLJLoB{=}@*)(*@\HLJLp{(}@*)(*@\HLJLni{10}@*)(*@\HLJLp{,}@*)(*@\HLJLni{40}@*)(*@\HLJLp{))}@*)
 \end{lstlisting}
 
-\begin{lstlisting}
-Arrays have incorrect length or dimension.
-\end{lstlisting}
-
-\includegraphics[width=\linewidth]{jl_ottS6U/Chebyshev_13_1.pdf}
+\includegraphics[width=\linewidth]{/figures/Chebyshev_16_1.pdf}
 
 \begin{lstlisting}
 (*@\HLJLnf{contour}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{[}@*)(*@\HLJLk{end}@*)(*@\HLJLoB{:-}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLni{1}@*)(*@\HLJLp{],}@*)(*@\HLJLn{tdata}@*)(*@\HLJLp{,}@*)(*@\HLJLn{plotdata}@*)(*@\HLJLp{[}@*)(*@\HLJLoB{:}@*)(*@\HLJLp{,}@*)(*@\HLJLk{end}@*)(*@\HLJLoB{:-}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLni{1}@*)(*@\HLJLp{])}@*)
 \end{lstlisting}
 
-\begin{lstlisting}
-Arrays have incorrect length or dimension.
-\end{lstlisting}
-
-\includegraphics[width=\linewidth]{jl_ottS6U/Chebyshev_14_1.pdf}
+\includegraphics[width=\linewidth]{/figures/Chebyshev_17_1.pdf}
 
 \subsection{Rate of convergence of Chebyshev interpolants and its derivatives}
+
 Since Chebyshev interpolants of a generally non-periodic function $f(x)$ on $[-1, 1]$ are trigonometric interpolants of the periodic function $g(\theta) = f(\cos\theta)$, we can deduce the rate of convergence of Chebyshev interpolating polynomials from the rate of convergence of trigonometric interpolants of $g(\theta)$.
+
 
 \textbf{Examples}
 
@@ -1001,6 +1164,7 @@ for $n \geq m$ because $q_n(\theta) = g(\theta)$ and $p_n(x) = f(x)$ for $n \geq
 \]
 for $\nu = 0, 1, \ldots$ if $n \geq m$.
 
+
 Let's check whether the numerics agree with these predictions:
 
 
@@ -1017,7 +1181,7 @@ Let's check whether the numerics agree with these predictions:
 (*@\HLJLnf{plot!}@*)(*@\HLJLp{(}@*)(*@\HLJLn{nn}@*)(*@\HLJLp{,}@*)(*@\HLJLni{1}@*) (*@\HLJLoB{./}@*)(*@\HLJLn{nn}@*)(*@\HLJLp{;}@*)(*@\HLJLn{label}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}1/n"{}}@*)(*@\HLJLp{)}@*)
 \end{lstlisting}
 
-\includegraphics[width=\linewidth]{jl_ottS6U/Chebyshev_15_1.pdf}
+\includegraphics[width=\linewidth]{/figures/Chebyshev_18_1.pdf}
 
 \begin{lstlisting}
 (*@\HLJLn{f\ensuremath{\_2}}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{x}@*) (*@\HLJLoB{->}@*) (*@\HLJLnf{abs}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{)}@*)(*@\HLJLoB{{\textasciicircum}}@*)(*@\HLJLni{3}@*)
@@ -1030,7 +1194,7 @@ Let's check whether the numerics agree with these predictions:
 (*@\HLJLnf{plot!}@*)(*@\HLJLp{(}@*)(*@\HLJLn{nn}@*)(*@\HLJLp{,}@*)(*@\HLJLni{1}@*) (*@\HLJLoB{./}@*)(*@\HLJLn{nn}@*)(*@\HLJLoB{.{\textasciicircum}}@*)(*@\HLJLni{2}@*)(*@\HLJLp{;}@*)(*@\HLJLn{label}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}1/n{\textasciicircum}2"{}}@*)(*@\HLJLp{)}@*)
 \end{lstlisting}
 
-\includegraphics[width=\linewidth]{jl_ottS6U/Chebyshev_16_1.pdf}
+\includegraphics[width=\linewidth]{/figures/Chebyshev_19_1.pdf}
 
 The increase of the error for Chebyshev differentiation is caused by a combination of rounding errors on the order of $10^{-15}$ and the $\mathcal{O}(n^2)$ growth in the formulae for Chebyshev differentiation at $x = \pm 1$ (see the function $\texttt{chebfft}$).
 
@@ -1045,7 +1209,7 @@ The increase of the error for Chebyshev differentiation is caused by a combinati
 (*@\HLJLn{label}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}Chebyshev}@*) (*@\HLJLs{differentiation}@*) (*@\HLJLs{error}@*) (*@\HLJLs{for}@*) (*@\HLJLs{f}@*) (*@\HLJLs{=}@*) (*@\HLJLs{exp(-1/x{\textasciicircum}2)"{}}@*)(*@\HLJLp{)}@*)
 \end{lstlisting}
 
-\includegraphics[width=\linewidth]{jl_ottS6U/Chebyshev_17_1.pdf}
+\includegraphics[width=\linewidth]{/figures/Chebyshev_20_1.pdf}
 
 \begin{lstlisting}
 (*@\HLJLnf{scatter}@*)(*@\HLJLp{(}@*)(*@\HLJLn{nn}@*)(*@\HLJLp{,}@*)(*@\HLJLn{errs}@*)(*@\HLJLp{;}@*)(*@\HLJLn{yscale}@*)(*@\HLJLoB{=:}@*)(*@\HLJLn{log10}@*)(*@\HLJLp{,}@*)(*@\HLJLn{label}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}Chebyshev}@*) (*@\HLJLs{differentiation}@*) (*@\HLJLs{error}@*) (*@\HLJLs{for}@*) (*@\HLJLs{f}@*) (*@\HLJLs{=}@*) (*@\HLJLs{exp(-1/x\ensuremath{\^2})"{}}@*)(*@\HLJLp{)}@*)
@@ -1063,7 +1227,7 @@ The increase of the error for Chebyshev differentiation is caused by a combinati
 (*@\HLJLnf{scatter!}@*)(*@\HLJLp{(}@*)(*@\HLJLn{nn}@*)(*@\HLJLp{,}@*)(*@\HLJLn{errs}@*)(*@\HLJLp{;}@*)(*@\HLJLn{label}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}Chebyshev}@*) (*@\HLJLs{differentiation}@*) (*@\HLJLs{error}@*) (*@\HLJLs{for}@*) (*@\HLJLs{f}@*) (*@\HLJLs{=}@*) (*@\HLJLs{x\ensuremath{\^2}\ensuremath{\^0}"{}}@*)(*@\HLJLp{)}@*)
 \end{lstlisting}
 
-\includegraphics[width=\linewidth]{jl_ottS6U/Chebyshev_18_1.pdf}
+\includegraphics[width=\linewidth]{/figures/Chebyshev_21_1.pdf}
 
 Note that this a plot with semi-logarithmic axes whereas the previous plot is a log-log set of axes.
 

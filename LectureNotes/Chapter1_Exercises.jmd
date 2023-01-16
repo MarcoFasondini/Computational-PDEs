@@ -1,0 +1,22 @@
+
+# Chapter 1: Exercises
+
+1. **(Second-order central difference approximation to the second derivative)** Show that if $f \in C^{4}[x_{j-1}, x_{j+1}]$, then
+$$
+f''(x_j) = \frac{f(x_{j+1}) -  2f(x_{j}) + f(x_{j-1})}{h^2} + \mathcal{O}(h^2), \qquad h \to 0.
+$$
+
+2. Run the Julia code and / or the Matlab code for this chapter (see the Blackboard page of this module) on your own machine.  To run the Julia code, see the document titled Julia on Blackboard.  To run the Matlab code, you'll need to use Chebfun (see the instructions for how to do this [here](https://www.chebfun.org/download/)). 
+
+3. Construct, by hand, a polynomial that interpolates $f(x) = {\rm e}^{x}$ at $x = 0, 1, 2$.
+
+4. **(Second-order backward difference approximation)** Construct a Lagrange interpolating polynomial $p_3(x)$ that interpolates $f(x)$ at $x_{j-2}$, $x_{j-1}$ and $x_{j}$, where $x_{j}-x_{j-1} = x_{j-1}-x_{j-2} = h$, and derive the following one-sided finite difference approximation:  
+$$
+f'(x_j) \approx p_3'(x_j) = \frac{3f(x_j) - 4f(x_{j-1}) + f(x_{j-2})}{2h}
+$$
+
+5. In Julia or Matlab, compute the maximum error of the finite difference approximation 
+$$
+f'(x_j) \approx \frac{f(x_{j-2}) -8 f(x_{j-1}) + 8 f(x_{j+1}) - f(x_{j-2})}{12h},
+$$
+at the points $x_j = jh$ with $j = 0, \ldots, n-1$ and $h = 2\pi/n$ for the function $f(x) = 1/(2 + \cos(x))$ for various values of $n$.  Then plot the errors on a log-log plot. Comment on your results.

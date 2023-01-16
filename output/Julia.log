@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 2.9.7440 64-bit) (preloaded format=pdflatex 2020.7.13)  9 JAN 2023 07:08
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 2.9.7440 64-bit) (preloaded format=pdflatex 2020.7.13)  12 JAN 2023 12:17
 entering extended mode
 **./Julia.tex
 (Julia.tex
@@ -547,7 +547,7 @@ LaTeX Info: Redefining \nameref on input line 245.
 
 \c@lstlisting=\count284
 LaTeX Font Info:    Trying to load font information for OT1+lmtt on input line 
-257.
+258.
 
 ("C:\Users\mfaso\AppData\Local\Programs\MiKTeX 2.9\tex/latex/lm\ot1lmtt.fd"
 File: ot1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
@@ -559,67 +559,67 @@ Package microtype Info: Loading generic protrusion settings for font family
 <figures/julia.png, id=12, 337.26pt x 92.345pt>
 File: figures/julia.png Graphic file (type png)
 <use figures/julia.png>
-Package pdftex.def Info: figures/julia.png  used on input line 260.
+Package pdftex.def Info: figures/julia.png  used on input line 261.
 (pdftex.def)             Requested size: 469.47046pt x 128.54796pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 260--261
+Underfull \hbox (badness 10000) in paragraph at lines 261--262
 
  []
 
 <figures/julia_step3.png, id=14, 35.13126pt x 15.55812pt>
 File: figures/julia_step3.png Graphic file (type png)
 <use figures/julia_step3.png>
-Package pdftex.def Info: figures/julia_step3.png  used on input line 264.
+Package pdftex.def Info: figures/julia_step3.png  used on input line 265.
 (pdftex.def)             Requested size: 46.9499pt x 20.7934pt.
 <figures/julia_step2.png, id=15, 107.40125pt x 14.0525pt>
 File: figures/julia_step2.png Graphic file (type png)
 <use figures/julia_step2.png>
-Package pdftex.def Info: figures/julia_step2.png  used on input line 273.
+Package pdftex.def Info: figures/julia_step2.png  used on input line 274.
 (pdftex.def)             Requested size: 187.78531pt x 24.57228pt.
 <figures/julia_step4.png, id=16, 83.31125pt x 30.61438pt>
 File: figures/julia_step4.png Graphic file (type png)
 <use figures/julia_step4.png>
-Package pdftex.def Info: figures/julia_step4.png  used on input line 283.
+Package pdftex.def Info: figures/julia_step4.png  used on input line 284.
 (pdftex.def)             Requested size: 140.84256pt x 51.7639pt.
 <figures/julia_step5.png, id=17, 38.1425pt x 39.64813pt>
 File: figures/julia_step5.png Graphic file (type png)
 <use figures/julia_step5.png>
-Package pdftex.def Info: figures/julia_step5.png  used on input line 290.
+Package pdftex.def Info: figures/julia_step5.png  used on input line 291.
 (pdftex.def)             Requested size: 70.4177pt x 73.20026pt.
 [1
 
 {C:/Users/mfaso/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map} <./figures/j
 ulia.png> <./figures/julia_step3.png> <./figures/julia_step2.png> <./figures/ju
 lia_step4.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 293--294
+Underfull \hbox (badness 10000) in paragraph at lines 294--295
 
  []
 
 <figures/julia_step6.png, id=30, 434.12187pt x 43.66313pt>
 File: figures/julia_step6.png Graphic file (type png)
 <use figures/julia_step6.png>
-Package pdftex.def Info: figures/julia_step6.png  used on input line 295.
+Package pdftex.def Info: figures/julia_step6.png  used on input line 296.
 (pdftex.def)             Requested size: 469.47046pt x 47.22075pt.
 <figures/julia_step7.png, id=31, 459.7175pt x 342.27875pt>
 File: figures/julia_step7.png Graphic file (type png)
 <use figures/julia_step7.png>
-Package pdftex.def Info: figures/julia_step7.png  used on input line 301.
+Package pdftex.def Info: figures/julia_step7.png  used on input line 302.
 (pdftex.def)             Requested size: 469.47046pt x 349.5584pt.
 [2 <./figures/julia_step5.png> <./figures/julia_step6.png> <./figures/julia_ste
 p7.png>]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 320.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 321.
  [3]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 320.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 321.
  (Julia.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 320.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 320.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 321.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 321.
 Package rerunfilecheck Info: File `Julia.out' has not changed.
 (rerunfilecheck)             Checksum: 1E5E60F976BF352D416A224A00213967;108.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 320.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 321.
  ) 
 Here is how much of TeX's memory you used:
  10349 strings out of 480797
- 157447 string characters out of 2895575
+ 157445 string characters out of 2895575
  462527 words of memory out of 3000000
  26178 multiletter control sequences out of 15000+200000
  548393 words of font info for 39 fonts, out of 3000000 for 9000
@@ -631,7 +631,7 @@ enc}<C:/Users/mfaso/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm/lmb
 x12.pfb><C:/Users/mfaso/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/lm
 /lmr12.pfb><C:/Users/mfaso/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public
 /lm/lmtt12.pfb>
-Output written on Julia.pdf (3 pages, 132861 bytes).
+Output written on Julia.pdf (3 pages, 133326 bytes).
 PDF statistics:
  65 PDF objects out of 1000 (max. 8388607)
  6 named destinations out of 1000 (max. 500000)

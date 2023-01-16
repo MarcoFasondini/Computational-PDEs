@@ -1,0 +1,529 @@
+\documentclass[12pt,landscape]{article}
+
+%\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage{microtype}
+\usepackage{hyperref}
+\pagestyle{empty}
+\usepackage{titlesec}
+\titleformat*{\section}{\LARGE\bfseries}
+\titleformat*{\subsection}{\LARGE\bfseries}
+\titleformat*{\subsubsection}{\LARGE\bfseries}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1.2ex}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1.2ex}
+
+\setlength{\oddsidemargin}{-16mm}
+\setlength{\textwidth}{260mm}
+\setlength{\columnsep}{0.5in}
+\setlength{\columnseprule}{1pt}
+\setlength{\textheight}{202mm}
+\setlength{\topmargin}{-32mm}
+\setlength{\headsep}{0.25in}
+
+\hypersetup
+       {   pdfauthor = { Marco Fasondini },
+           pdftitle={ foo },
+           colorlinks=TRUE,
+           linkcolor=black,
+           citecolor=blue,
+           urlcolor=blue
+       }
+
+
+
+
+\usepackage{upquote}
+\usepackage{listings}
+\usepackage{xcolor}
+\lstset{
+    basicstyle=\ttfamily\footnotesize,
+    upquote=true,
+    breaklines=true,
+    breakindent=0pt,
+    keepspaces=true,
+    showspaces=false,
+    columns=fullflexible,
+    showtabs=false,
+    showstringspaces=false,
+    escapeinside={(*@}{@*)},
+    extendedchars=true,
+}
+\newcommand{\HLJLt}[1]{#1}
+\newcommand{\HLJLw}[1]{#1}
+\newcommand{\HLJLe}[1]{#1}
+\newcommand{\HLJLeB}[1]{#1}
+\newcommand{\HLJLo}[1]{#1}
+\newcommand{\HLJLk}[1]{\textcolor[RGB]{148,91,176}{\textbf{#1}}}
+\newcommand{\HLJLkc}[1]{\textcolor[RGB]{59,151,46}{\textit{#1}}}
+\newcommand{\HLJLkd}[1]{\textcolor[RGB]{214,102,97}{\textit{#1}}}
+\newcommand{\HLJLkn}[1]{\textcolor[RGB]{148,91,176}{\textbf{#1}}}
+\newcommand{\HLJLkp}[1]{\textcolor[RGB]{148,91,176}{\textbf{#1}}}
+\newcommand{\HLJLkr}[1]{\textcolor[RGB]{148,91,176}{\textbf{#1}}}
+\newcommand{\HLJLkt}[1]{\textcolor[RGB]{148,91,176}{\textbf{#1}}}
+\newcommand{\HLJLn}[1]{#1}
+\newcommand{\HLJLna}[1]{#1}
+\newcommand{\HLJLnb}[1]{#1}
+\newcommand{\HLJLnbp}[1]{#1}
+\newcommand{\HLJLnc}[1]{#1}
+\newcommand{\HLJLncB}[1]{#1}
+\newcommand{\HLJLnd}[1]{\textcolor[RGB]{214,102,97}{#1}}
+\newcommand{\HLJLne}[1]{#1}
+\newcommand{\HLJLneB}[1]{#1}
+\newcommand{\HLJLnf}[1]{\textcolor[RGB]{66,102,213}{#1}}
+\newcommand{\HLJLnfm}[1]{\textcolor[RGB]{66,102,213}{#1}}
+\newcommand{\HLJLnp}[1]{#1}
+\newcommand{\HLJLnl}[1]{#1}
+\newcommand{\HLJLnn}[1]{#1}
+\newcommand{\HLJLno}[1]{#1}
+\newcommand{\HLJLnt}[1]{#1}
+\newcommand{\HLJLnv}[1]{#1}
+\newcommand{\HLJLnvc}[1]{#1}
+\newcommand{\HLJLnvg}[1]{#1}
+\newcommand{\HLJLnvi}[1]{#1}
+\newcommand{\HLJLnvm}[1]{#1}
+\newcommand{\HLJLl}[1]{#1}
+\newcommand{\HLJLld}[1]{\textcolor[RGB]{148,91,176}{\textit{#1}}}
+\newcommand{\HLJLs}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsa}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsb}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsc}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsd}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsdB}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsdC}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLse}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLsh}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsi}[1]{#1}
+\newcommand{\HLJLso}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsr}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLss}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLssB}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLnB}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLnbB}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLnfB}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLnh}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLni}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLnil}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLnoB}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLoB}[1]{\textcolor[RGB]{102,102,102}{\textbf{#1}}}
+\newcommand{\HLJLow}[1]{\textcolor[RGB]{102,102,102}{\textbf{#1}}}
+\newcommand{\HLJLp}[1]{#1}
+\newcommand{\HLJLc}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLch}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLcm}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLcp}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLcpB}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLcs}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLcsB}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLg}[1]{#1}
+\newcommand{\HLJLgd}[1]{#1}
+\newcommand{\HLJLge}[1]{#1}
+\newcommand{\HLJLgeB}[1]{#1}
+\newcommand{\HLJLgh}[1]{#1}
+\newcommand{\HLJLgi}[1]{#1}
+\newcommand{\HLJLgo}[1]{#1}
+\newcommand{\HLJLgp}[1]{#1}
+\newcommand{\HLJLgs}[1]{#1}
+\newcommand{\HLJLgsB}[1]{#1}
+\newcommand{\HLJLgt}[1]{#1}
+
+
+
+\def\qqand{\qquad\hbox{and}\qquad}
+\def\qqfor{\qquad\hbox{for}\qquad}
+\def\qqas{\qquad\hbox{as}\qquad}
+\def\half{ {1 \over 2} }
+\def\D{ {\rm d} }
+\def\I{ {\rm i} }
+\def\E{ {\rm e} }
+\def\C{ {\mathbb C} }
+\def\R{ {\mathbb R} }
+\def\H{ {\mathbb H} }
+\def\Z{ {\mathbb Z} }
+\def\CC{ {\cal C} }
+\def\FF{ {\cal F} }
+\def\HH{ {\cal H} }
+\def\LL{ {\cal L} }
+\def\vc#1{ {\mathbf #1} }
+\def\bbC{ {\mathbb C} }
+
+
+
+\def\fR{ f_{\rm R} }
+\def\fL{ f_{\rm L} }
+
+\def\qqqquad{\qquad\qquad}
+\def\qqwhere{\qquad\hbox{where}\qquad}
+\def\Res_#1{\underset{#1}{\rm Res}\,}
+\def\sech{ {\rm sech}\, }
+\def\acos{ {\rm acos}\, }
+\def\asin{ {\rm asin}\, }
+\def\atan{ {\rm atan}\, }
+\def\Ei{ {\rm Ei}\, }
+\def\upepsilon{\varepsilon}
+
+
+\def\Xint#1{ \mathchoice
+   {\XXint\displaystyle\textstyle{#1} }%
+   {\XXint\textstyle\scriptstyle{#1} }%
+   {\XXint\scriptstyle\scriptscriptstyle{#1} }%
+   {\XXint\scriptscriptstyle\scriptscriptstyle{#1} }%
+   \!\int}
+\def\XXint#1#2#3{ {\setbox0=\hbox{$#1{#2#3}{\int}$}
+     \vcenter{\hbox{$#2#3$}}\kern-.5\wd0} }
+\def\ddashint{\Xint=}
+\def\dashint{\Xint-}
+% \def\dashint
+\def\infdashint{\dashint_{-\infty}^\infty}
+
+
+
+
+\def\addtab#1={#1\;&=}
+\def\ccr{\\\addtab}
+\def\ip<#1>{\left\langle{#1}\right\rangle}
+\def\dx{\D x}
+\def\dt{\D t}
+\def\dz{\D z}
+\def\ds{\D s}
+
+\def\rR{ {\rm R} }
+\def\rL{ {\rm L} }
+
+\def\norm#1{\left\| #1 \right\|}
+
+\def\pr(#1){\left({#1}\right)}
+\def\br[#1]{\left[{#1}\right]}
+
+\def\abs#1{\left|{#1}\right|}
+\def\fpr(#1){\!\pr({#1})}
+
+\def\sopmatrix#1{ \begin{pmatrix}#1\end{pmatrix} }
+
+\def\endash{–}
+\def\emdash{—}
+\def\mdblksquare{\blacksquare}
+\def\lgblksquare{\blacksquare}
+\def\scre{\E}
+\def\mapengine#1,#2.{\mapfunction{#1}\ifx\void#2\else\mapengine #2.\fi }
+
+\def\map[#1]{\mapengine #1,\void.}
+
+\def\mapenginesep_#1#2,#3.{\mapfunction{#2}\ifx\void#3\else#1\mapengine #3.\fi }
+
+\def\mapsep_#1[#2]{\mapenginesep_{#1}#2,\void.}
+
+
+\def\vcbr[#1]{\pr(#1)}
+
+
+\def\bvect[#1,#2]{
+{
+\def\dots{\cdots}
+\def\mapfunction##1{\ | \  ##1}
+	\sopmatrix{
+		 \,#1\map[#2]\,
+	}
+}
+}
+
+
+
+\def\vect[#1]{
+{\def\dots{\ldots}
+	\vcbr[{#1}]
+} }
+
+\def\vectt[#1]{
+{\def\dots{\ldots}
+	\vect[{#1}]^{\top}
+} }
+
+\def\Vectt[#1]{
+{
+\def\mapfunction##1{##1 \cr}
+\def\dots{\vdots}
+	\begin{pmatrix}
+		\map[#1]
+	\end{pmatrix}
+} }
+
+\def\addtab#1={#1\;&=}
+\def\ccr{\\\addtab}
+
+\def\questionequals{= \!\!\!\!\!\!{\scriptstyle ? \atop }\,\,\,}
+
+\def\cent#1{\begin{center}#1\end{center} }
+
+\def\Ei{\rm Ei\,}
+
+\lstset{
+    basicstyle=\ttfamily,
+	}
+
+\begin{document}
+{\Huge
+\sf
+\section{Chapter 0: Welcome to Computational methods for partial differential equations}
+\textbf{Lecturer:} Dr Marco Fasondini, \href{mailto:m.fasondini@leicester.ac.uk}{m.fasondini@leicester.ac.uk}
+
+Here we
+
+\begin{itemize}
+\item[1. ] Introduce the topic of computational methods for PDEs
+
+
+\item[2. ] Discuss module admin: see the \href{https://blackboard.le.ac.uk/}{Blackboard page} of this module
+
+
+\item[3. ] Discuss programming / coding 
+
+
+\item[4. ] Discuss the sources / reading list
+
+\end{itemize}
+\newpage
+\subsection{Computational methods for PDEs}
+The purpose of this module is to introduce you to the analysis and implementation of computational methods for partial differential equations.  We shall study \textbf{finite difference} methods, \textbf{spectral collocation} methods, the \textbf{ultraspherical spectral} method and, time permitting, the \textbf{finite element} method.  \\
+\\
+
+A broader perspective: A quote from \emph{An Applied Mathematician's Apology} by L.N. Trefethen, 2022:
+
+... the language of the laws of nature, partial differential equations or PDEs. When Maxwell discovered that light and radio waves are one, it was because of a PDE. When Einstein predicted gravitational waves, it was because     of a PDE. Chemistry is built on Schrodinger's equation, fluid mechanics on the Navier-Stokes equations, and civil engineering on the equations of elasticity.
+\newpage
+A few important PDEs (there are many variations!)
+
+\begin{itemize}
+\item Laplace equation ($f = 0$) / Poisson equation ($f \neq 0$) 
+
+\end{itemize}
+\[
+\nabla^2 u = f   \qquad \text{or} \qquad \Delta u = f
+\]
+An elliptic equation
+
+\begin{itemize}
+\item Heat equation
+
+\end{itemize}
+\[
+ u_t - \nabla^2 u = f 
+\]
+A parabolic equation
+
+\begin{itemize}
+\item Transport / Advection and Wave equation 
+
+\end{itemize}
+
+\begin{align*}
+    u_t + (v \cdot \nabla) u &= 0 \\
+  u_{tt} - \nabla^2 u &= f 
+\end{align*}
+Wave equation: a hyperbolic equation
+\newpage
+
+\begin{itemize}
+\item Navier's equations : small-strain elasticity 
+
+\end{itemize}
+\[
+- \mu \nabla^2 \mathbf{u} + (\lambda+\mu) \nabla  (\nabla\cdot\mathbf{u}) = \mathbf{f}
+\]
+\begin{itemize}
+\item Navier-Stokes equations : incompressible viscous fluids 
+
+\end{itemize}
+\[
+\mathbf{u}_t + (\mathbf{u} \cdot \nabla)\mathbf{u} = \nu \nabla^2 \mathbf{u} - \nabla p, \quad \nabla \cdot \mathbf{u} = 0
+\]
+Numerical solutions to the (quasilinear) Navier-Stokes equations have been computed for decades (for example, these equations are used for weather prediction), however the mathematical analysis of these PDEs is still not settled (see the Wiki page on \href{https://en.wikipedia.org/wiki/Navier%E2%80%93Stokes_existence_and_smoothness}{Navier-Stokes existence and smoothness}): the Clay Mathematics Institute in May 2000 made this problem one of its seven Millennium Prize problems in mathematics. It offered a US\$1,000,000 prize to the first person providing a solution for a specific statement of the problem:
+\\
+
+Prove or give a counter-example of the following statement:
+\\
+
+In three space dimensions and time, given an initial velocity field, there exists a vector velocity and a scalar pressure field, which are both smooth and globally defined, that solve the Navier-Stokes equations.
+\newpage
+\begin{itemize}
+\item Reaction-Diffusion systems; example, Brusselator: simple model for an autocatalytic reaction (arises also in enzymatic reactions, plasma and laser physics)
+\end{itemize}
+\begin{align*}
+u_t &= B + u^2 v - (A+1) u + \alpha \nabla^2 u \\ 
+v_t &= Au  - u^2 v + \alpha \nabla^2 v
+\end{align*}
+\begin{itemize}
+\item Black-Scholes equation (mathematical finance)
+
+\end{itemize}
+\[
+\frac{\partial u}{\partial t} + \frac{1}{2}x^2\sigma^2 \frac{\partial^2 u}{\partial x^2} + rx \frac{\partial u}{\partial x} - ru = 0
+\]
+Through a change of variables, this equation can be reduced to the heat equation. \href{https://twitter.com/nntaleb/status/1596178404675551239}{According to Nassim Taleb}, this equation should be called the Fokker-Plank and / or Kolmogorov Forward Equation and he also explains \href{https://www.youtube.com/watch?v=UoGlUZPNouM}{why we never use the Black-Scholes equation}.   The use of mathematical models have resulted in mixed fortunes in finance: for example, there's the cautionary tale \href{https://en.wikipedia.org/wiki/When_Genius_Failed}{When Genius Failed: The Rise and Fall of Long-Term Capital Management} (in which Myron Scholes was involved) and then there's the extremely successful \href{https://en.wikipedia.org/wiki/Renaissance_Technologies}{Renaissance Technologies}, a hedge fund founded by the mathematician Jim Simons, see the book \emph{The Man who Solved the Market: How Jim Simons Launched the Quant Revolution}. 
+
+\begin{itemize}
+\item Maxwell's equations 
+
+
+\item Einstein field equations
+
+
+\item Dirac equation
+
+
+\item ...
+
+\end{itemize}
+Only in very few cases are we able to solve PDEs exactly, so we use computational methods to approximate solutions to PDEs. Here are some videos of simulations produced by computing solutions to differential equations:
+
+\begin{itemize}
+\item Cahn-Hilliard equation: (\href{https://www.youtube.com/watch?v=MovUu2DwWvI}{phase separation of a binary fluid})
+
+\end{itemize}
+\[
+c_t = \Delta \big( c^3 - c - \gamma \Delta c \big)
+\]
+\begin{itemize}
+\item Molecular Dynamics: (or more general Hamiltonian dynamics)
+
+\end{itemize}
+\[
+m_n \ddot{r_n} = - \nabla E(r_1, \dots, r_N)
+\]
+used \href{https://www.youtube.com/watch?v=zRUFzJrDtq0}{here} to model water turing into ice.
+\newpage
+
+\begin{itemize}
+\item \href{https://www.youtube.com/watch?v=u8Kfn2o7epQ}{Nonlinear elasticity}
+
+
+\item \href{https://www.youtube.com/watch?v=-kDb0HlDsIM}{thermal convection in earth's mantle}
+
+
+\item \href{https://www.youtube.com/watch?v=dbBmSBA7Kyw}{spread of covid-19}
+
+
+\item \href{https://www.youtube.com/watch?v=gxAaO2rsdIs}{simulating the spread of an epidemic}
+
+
+\item \href{https://www.youtube.com/watch?v=_0QhOCDzP4I&t}{salt crystal melting in water}
+
+
+\item \href{https://www.youtube.com/watch?v=jj0WsQYtT7M}{NASA climate simulations}
+
+
+\item \href{https://www.youtube.com/watch?v=rtBlZJ6gNiI}{Predicting matter distribution in the universe}
+
+
+\item \href{https://www.youtube.com/watch?v=hz7UjN_vYuw}{flow past an airfoil - high resolution}
+
+
+\item \href{https://www.youtube.com/watch?v=bJX8fVsq5oQ}{Aerodynamics of Different Geometries - 2d Navier-Stokes Simulation}
+
+
+\item \href{https://www.youtube.com/watch?v=vOFcHqImXJ8}{Another Navier-Stokes simulation}
+
+\end{itemize}
+\newpage
+\subsubsection{Reality $\rightarrow$ Model$\rightarrow$ Simulation $\rightarrow$ Prediction}
+\begin{itemize}
+\item Mathematical models of "real-world" processes (physics, chemistry, life sciences, engineering, ...) more often than not take the form of a system of ordinary or partial differential equations, integral equations, or closely related models. (sometimes stochastic, on networks, etc, but this is beyond the scope of this module) 
+
+
+\item In this module we take the mathematical model as given and study how it is solved numerically.
+
+
+\item But we should not forget what the origin of the mathematical model is so that we are appreciative of the requirements. 
+
+\begin{itemize}
+\item the model is an approximation of reality, the numerical scheme / computational method is an approximation of the model.
+
+
+\item how accurate is the model, i.e. how accurate should the numerical solution be? 
+
+
+\item how accurate are the model parameters? 
+
+
+\item are real-time simulations required?
+
+
+\item long-time behaviour? 
+\end{itemize}
+\end{itemize}
+\newpage
+\subsection{Module admin}
+See the \href{https://blackboard.le.ac.uk/}{Blackboard page} of this module
+\newpage
+\subsection{Programming / coding}
+All the code in the lecture notes are in the \href{https://julialang.org/}{Julia programming language}. You are free to use whichever programming language you prefer (e.g., Matlab or Python) and Matlab code will be available on Blackboard.
+
+If you prefer to do your coding in Matlab and need to refresh your memory, have a look at this \href{https://matlabacademy.mathworks.com/details/matlab-onramp/gettingstarted}{MathWorks tutorial} (you may need to create a mathworks account with your student email address to access it).  For those using Matlab, to perform some of the numerical experiments in this module, you will find it helpful to use the Matlab package called \href{https://www.chebfun.org/}{Chebfun} (see Chapter 1: Exercise 2).  In Julia, the counterpart of Chebfun is \href{https://github.com/JuliaApproximation/ApproxFun.jl}{ApproxFun.jl}. 
+
+\begin{itemize}
+\item If you have no programming background at all, the module is doable but will be hard. 
+
+
+\item If you have only minimal background, then please ask questions during lectures, or come to office hours.
+
+\end{itemize}
+\newpage
+Back to Julia: it is a modern, compiled, high-level, open-source language developed at MIT. It is becoming increasingly important in high-performance computing and AI and it is used by Astrazeneca, Moderna and Pfizer in drug development and clinical trial accelleration, IBM for medical diagnosis, MIT for robot locomotion, and elsewhere.
+
+Julia is a relatively young programming language, which aims to combine 
+
+\begin{itemize}
+\item the simplicity of Matlab,   \emph{(not really, but maybe close enough...)}
+
+
+\item the dynamism of Python,   \emph{(true ... except for the pre-compilation times which are slowly improving...)}
+
+
+\item the speed of C and   \emph{(definitely true; this is impressive!)}
+
+
+\item the meta-programming capabilities of Lisp.   \emph{(also true; but we won't need it in this module.)}
+
+\end{itemize}
+For those interested in using Julia, see the notes titled "Julia" on Blackboard, which have instructions for running the Julia code in the notes in a Jupyter notebook.  The Jupyter notebooks are available on Blackboard and have the file extension ".ipynb".  The notes for this module are Jupyter notebooks that have been converted to PDFs using the package \href{https://github.com/JunoLab/Weave.jl}{Weave.jl}.
+
+\subsection{Sources}
+I used the following sources for writing the lecture notes (please ask me for relevant page numbers / chapters on a particular topic):
+
+\begin{itemize}
+\item[1.  ] \emph{A Practical Guide to Pseudospectral Methods} (1998), by B. Fornberg
+
+
+\item[2.  ] \href{http://users.math.uoc.gr/~tsogka/Courses/AEMDE-fall2015/Biblio/Georgoulis_notes_new.pdf}{\emph{Computational Methods for Partial Differential Equations}} (2009), notes by M. Georgoulis
+
+
+\item[3.  ] \href{https://le.ac.uk/library}{\emph{A First Course in the Numerical Analysis of Differential Equations}} (2009), by A. Iserles 
+
+
+\item[4.  ] \href{https://le.ac.uk/library}{Fast algorithms using orthogonal polynomials} (2020), by S. Olver, R.M. Slevinsky and A. Townsend. \emph{Acta Numerica}, 29, pp.573-699. 
+
+
+\item[5.  ] \href{https://github.com/Imperial-MATH50003/MATH50003NumericalAnalysis2122}{Sheehan Olver's Numerical Analysis notes} (2022)
+
+
+\item[6.  ] \href{https://github.com/MarcoFasondini/M3M6AppliedComplexAnalysis}{Sheehan Olver and M. Fasondini's Applied Complex Analysis notes} (2021)
+
+
+\item[7.  ] \href{https://github.com/cortner/math405_2022}{Christoph Ortner's notes on Numerical Methods for Differential Equations} (2022)
+
+
+\item[8.  ] \href{https://people.maths.ox.ac.uk/trefethen/spectral.html}{\emph{Spectral Methods in Matlab}} (2000), by L.N. Trefethen
+
+
+\item[9.  ] \href{https://people.maths.ox.ac.uk/trefethen/ATAP/}{\emph{Approximation Theory and Approximation Practice}} (2019), by L.N. Trefethen
+
+
+\item[10. ] \href{https://le.ac.uk/library}{A MATLAB differentiation matrix suite} (2000), by J.A.C.  Weideman and S.C. Reddy,  \emph{ACM Transactions on Mathematical Software} (TOMS), 26(4), pp.465-519.
+
+\end{itemize}
+
+}
+\end{document}
