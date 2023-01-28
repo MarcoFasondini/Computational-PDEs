@@ -1,0 +1,555 @@
+
+# Chapter 4: orthogonal polynomial methods for differential equations
+
+Here we discuss
+1. The de
+10. The solution of 2-point boundary value problems with four methods: ultraspherical method, collocation method, finite difference method, the ultraspherical method in weak form.  Prove convergence of the finite difference method
+11. Next chapter: finite difference methods for time-dependent PDEs
+12. We must do two-dimensional PDEs
+
+In the previous chapter, we learnt that interpolants expressed in terms of Chebyshev polynomials can be very useful for approximating non-periodic functions.  We learnt that there are fast algorithms for computing Chebyshev interpolants and their derivatives and these can be used to approximate solutions to PDEs.
+
+Chebyshev polynomials are examples of *orthogonal polynomials* (OPs).  In this chapter we'll learn that OPs can be used to design *sparse* methods for differential equations.
+
+OPs are fundamental for computational mathematics, with applications in function approximation, quadrature (calculating integrals), solving differential equations, spectral analysis of Schrödinger operators, etc.  In addition, OPs play a very important role in many mathematical areas
+including representation theory, functional analysis, integrable systems, singular integral equations,
+complex analysis, and random matrix theory.
+
+**Note:** In previous chapters, a polynomial $p_n(x)$ denoted an interpolating polynomial through $n$ distinct nodes and $p_n$ had degree $\leq n-1$.  In this chapter, unless stated otherwise, $p_n(x)$ denotes a polynomial of degree precisely $n$, i.e., 
+$$
+p_n(x) = k_n x^n + \mathcal{O}(x^{n-1})
+$$
+where $k_n \neq 0$.
+
+The set of polynomials of degree $\leq n$ with real coefficients, $\mathbb{P}_n$, is a linear space (or vector space) of dimension $n+1$.  The set of  monomials of degree $\leq n$, $\lbrace 1, x, x^2, \ldots, x^n \rbrace$, is a basis for the space $\mathbb{P}_n$, meaning that all polynomials of degree $\leq n$ can be expressed as linear combinations of monomials.  Likewise, $\lbrace p_0(x), p_1(x), \ldots, p_n(x) \rbrace$ is a basis of $\mathbb{P}_n$.  It is much  more efficient and stable to perform computations in OP bases as oposed to the monomial basis.
+
+## Definition of orthogonal polynomials
+
+Let $p_0(x),p_1(x),p_2(x),…$ be a sequence of polynomials such that $p_n(x)$ is exactly of degree $n$, i.e.,$
+p_n(x) = k_n x^n + \mathcal{O}(x^{n-1})
+$
+where $k_n \neq 0$ .  Let $w(x)$ be a continuous weight function on a (possibly infinite) interval $(a,b)$: that is $w(x) \geq 0$ for all $a < x < b$.
+This induces an inner product
+$$
+\langle f,g \rangle := \int_a^b f(x) g(x) w(x) {\rm d}x
+$$
+
+We say that $\{p_0, p_1,\ldots\}$ are _orthogonal with respect to the weight $w$_ if
+$$
+\langle p_n,p_m \rangle = 0\qquad \text{ for }\: n \neq m.
+$$
+Because $w$ is continuous, we have
+$$
+\| p_n \|^2 = \langle p_n,p_n \rangle > 0 .
+$$
+
+Orthogonal polymomials are not unique: we can multiply each $p_n$ by a different nonzero constant $\tilde p_n(x) = c_n p_n(x)$, and
+$\tilde p_n$ will be orthogonal w.r.t. $w$.  However, if we specify $k_n$, this is sufficient to uniquely define them:
+
+**Proposition (Uniqueness of OPs)** Given a non-zero $k_n$, there is a unique polynomial $p_n$ orthogonal w.r.t. $w$
+to all lower degree polynomials.
+
+**Proof** Suppose $r_n(x) = k_n x^n + O(x^{n-1})$ is another  OP w.r.t. $w$. We want to show $p_n - r_n$ is zero.
+But this is a polynomial of degree $<n$, hence
+$$
+p_n(x) - r_n(x) = \sum_{k=0}^{n-1} c_k p_k(x)
+$$
+But we have for $j \leq n-1$
+$$
+\langle p_j,p_j \rangle c_j = \langle p_n - r_n, p_j \rangle = \langle p_n,p_j \rangle - \langle r_n, p_j\rangle = 0 - 0 = 0
+$$
+which shows all $c_j$ are zero.  Note that we used the linearity property of the inner product: for constants $\alpha$, $\beta$ and functions $f(x)$, $g(x)$ and $h(x)$, it follows that $\langle  f,\alpha g + \beta h\rangle = \alpha\langle f, g\rangle + \beta\langle f, h \rangle $.  $\blacksquare$
+
+**Corollary** If $q_n$ and $p_n$ are orthogonal w.r.t. $w$ to all lower degree polynomials,
+then $q_n(x) = C p_n(x)$ for some constant $C$.
+
+**Example and Proposition (Chebyshev polynomials of the first kind are OPs)** The Chebyshev polynomials of the first kind,
+$$
+T_n(x) = \cos n\,{\rm acos}\, x,
+$$
+are OPs on $x \in [-1, 1]$ with respect to the weight
+$$
+w(x) = \frac{1}{\sqrt{1 - x^2}},
+$$
+and
+$$
+k_0 = 1, \qquad k_n = 2^{n-1}, \qquad n \geq 1.
+$$
+
+**Proof**  It follows immediately from the definition that $T_0(x) = 1$, $T_{1}(x) = x$ and for $n \geq 1$, setting $x = \cos \theta$,
+$$
+x T_n(x) = \cos θ \cos n θ = {\cos(n-1)θ + \cos(n+1)θ \over 2} = {T_{n-1}(x) + T_{n+1}(x) \over 2}
+$$
+In other words $T_{n+1}(x) = 2x T_n(x) - T_{n-1}(x)$ for $n \geq 1$. This shows that $T_n(x) = k_nx^{n} + \mathcal{O}(x^{n-1})$ with $k_0 = 1$ and $k_n = 2^{n-1}$, $n \geq 1$.  What remains to be shown is orthogonality with respect to the inner product defined by $w(x)$: again setting $x = \cos \theta$
+$$
+\begin{eqnarray*}
+\langle T_n, T_m\rangle &=& \int_{-1}^{1}\frac{T_n(x)T_m(x)}{\sqrt{1 - x^2}}\, {\rm d}x \\
+  &= & \int_{0}^{\pi} \cos n\theta \cos m\theta \, {\rm d}x \\
+  &=& \begin{cases} 
+0 & \text{if } n \neq m \\
+\frac{\pi}{2} & \text{if } n = m \geq 1 \\
+\pi & \text{if } n = m = 0
+\end{cases},
+\end{eqnarray*}
+$$
+which completes the proof.  $\blacksquare$
+
+
+
+
+### Monic orthogonal polynomials
+
+If $k_n = 1$, that is,
+$$
+p_n(x) = x^n + O(x^{n-1})
+$$
+then we refer to the orthogonal polynomials as monic.
+
+Monic OPs are unique as we have specified $k_n$.
+
+### Orthonormal polynomials
+
+If  $\| p_n \| = 1$, then we refer to the orthogonal polynomials as orthonormal w.r.t. $w$.
+We will usually use $q_n$ when they are orthonormal.   Note they're not unique: we can multiply by $\pm 1$ without changing the norm.
+
+**Proposition (existence)** Given a weight $w(x)$, monic orthogonal polynomials
+exist.
+
+**Proof**  Existence follows immediately from the Gram–Schmidt procedure. That is,
+define $p_0(x) := 1$ and
+$$
+p_n(x) := x^n - ∑_{k=0}^{n-1} {⟨x^n,p_k⟩ \over \|p_k\|^2} p_k(x)
+$$
+$\blacksquare$
+
+## Function approximation with OPs
+
+A basic usage of orthogonal polynomials is for
+approximating functions. First we observe the following:
+
+**Proposition (expansion)**
+If $f(x)$ is a degree $n$ polynomial, $\{p_n\}$ are orthogonal
+and $\{q_n\}$ are orthonormal then
+$$
+\begin{align*}
+f(x) &= \sum_{k=0}^n {⟨p_k,f⟩ \over \|p_k\|^2} p_k(x) \\
+     &    = \sum_{k=0}^n ⟨q_k,f⟩ q_k(x)
+\end{align*}
+$$
+
+**Proof**
+Because $\{p_0,…,p_n \}$ are a basis of the space of polynomials of degree $\leq n$, we can
+write
+$$
+f(x) = \sum_{k=0}^n f_k p_k(x)
+$$
+for constants $f_k ∈ ℝ$.
+By linearity we have
+$$
+⟨p_m,f⟩ = \sum_{k=0}^n f_k ⟨p_m,p_k⟩= f_m ⟨p_m,p_m⟩
+$$
+for $m = 0, \ldots, n$, i.e.,
+$$
+f_k = \frac{\langle p_k,f \rangle}{\langle p_k,p_k \rangle}, \qquad k = 0, \ldots, n.
+$$
+$\blacksquare$
+
+If $f$ is not a polynomial, we make the approximation $f(x) \approx \sum_{k=0}^n f_k p_k(x)$, with the expansion coefficients $f_k$ defined as above. 
+
+**Example:**  For Chebyshev polynomials, $p_k(x) = T_k(x)$ and for $k \geq 1$,
+$$
+\begin{eqnarray*}
+f_k &=&  \frac{\langle T_k,f \rangle}{\langle T_k,T_k \rangle} = \frac{\langle T_k,f \rangle}{\| T_k \|^2} \\
+   & = & \frac{2}{\pi}\int_{-1}^{1}   \frac{f(x) T_k(x)}{\sqrt{1 - x^2}}\,{\rm d}x  \\
+   & = &  \frac{2}{\pi}\int_{0}^{\pi}   f(\cos \theta) \cos k\theta\,{\rm d}\theta \\
+   & = & \frac{1}{\pi}\int_{-\pi}^{\pi}   f(\cos \theta) \cos k\theta\,{\rm d}\theta \\
+   & = & \frac{1}{\pi}\int_{-\pi}^{\pi}   f(\cos \theta) {\rm e}^{-{\rm i}k\theta} \,{\rm d}\theta \\
+   & = & \frac{(-1)^{k}}{\pi}\int_{0}^{2\pi}   f(\cos (\theta-\pi)) {\rm e}^{-{\rm i}k\theta} \,{\rm d}\theta
+\end{eqnarray*}
+$$
+
+That is, for Chebyshev polynomials, the expansion coefficients $f_k$ (aka Chebyshev coefficients) can be expressed as Fourier coefficients and therefore, they can be approximated with the FFT, as we learned in Chapter 3.
+
+## Three-term recurrences and Jacobi matrices for general orthogonal polynomials
+### Three-term recurrence relationships
+
+In Chapter 3, we used the formula $T_n(x) = \cos n\,{\rm acos}x$ and trigonometric identities to show that the Chebyshev polynomials satisfy a three-term recurrence relationship: $T_0(x) = 1$, $T_1(x)= x$ and for $n \geq 1$,
+$$
+xT_{n}(x) = \frac{1}{2}T_{n-1}(x) + \frac{1}{2}T_{n+1}(x).
+$$
+We'll soon prove that, as a consequence of orthogonality, all OP families satisfy three-term recurrences, which is a fundamental property of OPs.  By collecting OPs in a vector, we'll see that three-term recurrences can be expressed as multiplication by a tridiagonal matrix, the Jacobi matrix associated with a family of OPs.   
+
+A central theme: if you know the Jacobi matrix / three-term recurrence, you know the polynomials.
+This is the __best__ way to evaluate expansions in orthogonal polynomials: even for cases where we have explicit
+formulae (e.g. Chebyshev polynomials $T_n(x) = \cos n \arccos x$),
+using the recurrence avoids evaluating trigonometric functions.  The following shows, suprisingly, that evaluating Chebyshev polynomials using the three-term recurrence is much faster than using the explicit formula:
+
+```julia
+using LinearAlgebra, Plots, ApproxFun, BandedMatrices
+
+function recurrence_Chebyshev(n,x)
+    T = zeros(n)
+    T[1] = 1.0
+    T[2] = x*T[1]
+    for k = 2:n-1
+        T[k+1] = 2x*T[k] - T[k-1]
+    end
+    T
+end
+
+trig_Chebyshev(n,x) = [cos(k*acos(x)) for k=0:n-1]
+
+n = 10
+@show norm(recurrence_Chebyshev(n, 0.1) - trig_Chebyshev(n,0.1),Inf)
+
+n = 1_000_000
+@time recurrence_Chebyshev(n, 0.1)
+@time trig_Chebyshev(n,0.1);
+```
+
+**Theorem (three-term recurrence)** Suppose $\{p_n(x)\}$ are a family of orthogonal polynomials w.r.t. a weight $w(x)$.
+Then there exists constants $a_n$, $b_n \neq 0$ and $c_n \neq 0$ such that
+$$
+\begin{align*}
+x p_0(x) = a_0 p_0(x) + b_0 p_1(x) \\
+x p_n(x) = c_n p_{n-1}(x) + a_n p_n(x) + b_n p_{n+1}(x)
+\end{align*}
+$$
+
+**Proof**
+The first part follows since $p_0(x)$ and $p_1(x)$ span all degree 1 polynomials.
+
+The second part follows essentially because multiplication by $x$ is "self-adjoint", that is,
+$$
+\langle x f, g\rangle = \int_a^b x f(x) g(x) w(x) {\rm d}x = \langle f, x g \rangle
+$$
+Therefore, if $f_m$ is a degree $m < n-1$ polynomial, we have
+$$
+\langle x p_n, f_m\rangle = \langle p_n, x f_m\rangle = 0.
+$$
+In particular, if we write
+$$
+x p_n(x) = \sum_{k=0}^{n+1} C_k p_k(x)
+$$
+then
+$$
+C_k = {\langle x p_n, p_k\rangle \over \| p_k\|^2} = 0
+$$
+if $k < n-1$.
+
+Note that
+$$
+C_{n+1} = b_n = {⟨p_{n+1}, x p_n⟩ \over \|p_{n+1} \|^2} ≠ 0
+$$
+since $x p_n = k_n x^{n+1} + O(x^n)$ is precisely degree
+$n$. Further,
+$$
+C_{n-1} = c_{n-1} = {⟨p_{n-1}, x p_n⟩ \over \|p_{n-1}\|^2 } =
+{⟨p_n, x p_{n-1}⟩  \over \|p_{n-1}\|^2 } =  b_{n-1}{\|p_n\|^2  \over \|p_{n-1}\|^2 } ≠ 0.
+$$
+$\blacksquare$
+
+Clearly if $p_n$ is monic then so is $x p_n$ which leads to the following:
+
+**Corollary (monic 3-term recurrence)** If
+$\{p_n\}$ are monic then $b_n =  1$.
+
+### Jacobi matrices and multiplication by $x$
+
+The three-term recurrence can also be interpreted as an infinite tridiagonal matrix known
+as the Jacobi matrix:
+
+**Corollary (Jacobi matrix)**
+For
+$$
+P(x) := [p_0(x) | p_1(x) | ⋯]
+$$
+we have
+$$
+x P(x) = P(x) \underbrace{\begin{bmatrix} a_0 & c_0 \\
+                                                        b_0 & a_1 & c_1\\
+                                                        & b_1 & a_2 & ⋱ \\
+                                                        && ⋱ & ⋱
+                                                        \end{bmatrix}}_X
+$$
+
+
+Here is the Jacobi matrix for the Chebyshev polynomials:
+
+```julia
+X = Multiplication(Fun(x->x),Chebyshev())
+```
+
+For the special cases of orthonormal polynomials we have extra structure:
+
+**Corollary (orthonormal 3-term recurrence)** If
+$\{q_n\}$ are orthonormal then its recurrence coefficients satisfy $c_n = b_n$.
+That is, the Jacobi matrix is symmetric:
+$$
+X = \begin{bmatrix} a_0 & b_0 \\
+                                                        b_0 & a_1 & b_1\\
+                                                        & b_1 & a_2 & ⋱ \\
+                                                        && ⋱ & ⋱
+                                                        \end{bmatrix}
+$$
+
+**Proof**
+$$
+b_n = ⟨x q_n, q_{n+1}⟩ = ⟨q_n, x q_{n+1}⟩ = c_{n}.
+$$
+$\blacksquare$
+
+If we set
+$$
+Q(x) := [q_0(x) | q_1(x) | ⋯],
+$$
+then
+$$
+P(x)D = Q(x)
+$$
+where
+$$
+D = \begin{bmatrix}
+\frac{1}{\|p_0 \|} &   &     \\
+                   & \frac{1}{\|p_1 \|} &   \\
+                   &                    & \ddots
+\end{bmatrix}
+$$
+hence 
+$$
+xQ(x) = xP(x)D = P(x)XD = Q(x)D^{-1}XD
+$$
+so the Jacobi matrix of the orthonormal polynomials can be obtained from the Jacobi matrix of the un-normalised OPs as $D^{-1}XD$.  Let's take again the Chebyshev polynomials of the first kind:
+
+```julia
+n = 11
+d = [1/sqrt(π);fill(sqrt(2/π),n-1)]
+D = BandedMatrix(0 => d)
+Dinv = BandedMatrix(0 => 1 ./d )
+Dinv*X[1:n,1:n]*D
+```
+
+**Remark (advanced)** Every integrable weight generates a family of
+orthonormal polynomials, which in turn generates a symmetric Jacobi matrix.
+There is a "Spectral Theorem for Jacobi matrices" that says one can go the
+other way: every tridiagonal symmetric matrix with bounded entries is a Jacobi
+matrix for some integrable weight with compact support. This is an example of what
+[Barry Simon](https://en.wikipedia.org/wiki/Barry_Simon) calls a "Gem of spectral theory",
+that is.
+
+## Multiplication matrices 
+
+Jacobi matrices tell us how to multiply by $x$ in coefficient space.  Suppose a function $f(x)$ has an expansion in the OPs $\{ p_n \}$, then
+
+$$
+f(x) = \sum_{k = 0}^{\infty} f_k p_k(x) = [p_0(x) | p_1(x) | ⋯]\underbrace{\begin{bmatrix}
+f_0 \\
+f_1 \\
+\vdots
+\end{bmatrix}}_{\mathbf{f}} = P(x)\mathbf{f}
+$$
+
+and
+$$
+xf(x) = xP(x)\mathbf{f} = P(x) X\mathbf{f},
+$$
+i.e., the expansion coefficients of $xf(x)$ in the OP basis $\{ p_n \}$ are given by $X\mathbf{f}$.  In practice, we approximate functions with truncated expansions, i.e.,
+$$
+f(x) \approx \sum_{k = 0}^{n-1} f_k p_k(x) = [p_0(x) | p_1(x) | ⋯ | p_{n-1}]\begin{bmatrix}
+f_0 \\
+\vdots \\
+f_{n-1}
+\end{bmatrix}
+$$
+then
+$$
+\begin{eqnarray*}
+xf(x) & \approx & x[p_0(x) | p_1(x) | ⋯ | p_{n-1}]\begin{bmatrix}
+f_0 \\
+\vdots \\
+f_{n-1}
+\end{bmatrix}  \\
+&=& [p_0(x) | p_1(x) | ⋯ | p_{n}]
+\underbrace{\begin{bmatrix}
+a_0  & c_0  &     &      \\
+b_0  & a_1  & \ddots    &       \\
+     & b_1  & \ddots & c_{n-2}   \\
+     &      & \ddots & a_{n-1}    \\
+     &      &        & b_{n-1} 
+\end{bmatrix}}_{X[1:n+1,1:n]}
+\begin{bmatrix}
+f_0 \\
+\vdots \\
+f_{n-1}
+\end{bmatrix} ,
+\end{eqnarray*}
+$$
+i.e., the expansion coefficients of the polynomial approximation of $xf(x)$ are given by $X[1\!\!:\!n+1,1\!\!:\!n]\mathbf{f}[1\!\!:\!n]$
+
+**Example** Let's take the Chebyshev basis, $p_k(x) = T_k(x)$ and a polynomial approximation of $f(x) = {\rm e}^x$:
+
+```julia
+# Construct a polynomial approximation to f(x) = exp(x) in the Chebyshev basis
+f = Fun(x -> exp(x), Chebyshev())
+n = ncoefficients(f) # number of coefficients in the expansion
+fn = f.coefficients  # coefficients
+xfn = X[1:n+1,1:n]*fn  # coefficients of x*f(x) in the Chebyshev basis
+xf = Fun(Chebyshev(),fn) # construct a Chebyshev expansion with the coefficients X*c
+x = 0.1
+xf(x) - x*f(x)
+```
+
+Since 
+$$
+xP(x) = P(x) X,
+$$
+for any polynomial $a(x)$, we have
+$$
+a(x) P(x) = P(x) a(X),
+$$
+and if $a(x)$ is of degree $d$, then $a(X)$ is a matrix with bandwidths $(d,d)$.  Here's an example with $a(x) = 1 + x + x^2$ (i.e., $d = 2$) and $X$ is the Jacobi matrix of the Chebyshev polynomials:
+
+```julia
+Multiplication(Fun(x -> 1 + x + x^2),Chebyshev())
+```
+
+As with the Jacobi matrix $X$, we can multiply a function $f(x)$ with a polynomial $a(x)$ in coefficient space via $a(X)$: since 
+
+$$
+f(x) = \sum_{k = 0}^{\infty} f_k p_k(x) = [p_0(x) | p_1(x) | ⋯]\underbrace{\begin{bmatrix}
+f_0 \\
+f_1 \\
+\vdots
+\end{bmatrix}}_{\mathbf{f}} = P(x)\mathbf{f}
+$$
+we have
+
+$$
+a(x)f(x) = a(x)P(x)\mathbf{f} = P(x)a(X)\mathbf{f}
+$$
+and therefore the coefficients of $a(x)f(x)$ in the OP basis $\{ p_n\}$ are given by $a(X)\mathbf{f}$.  Here is an example of a multiplication matrix $a(X)$, where $a(x)$ is a degree $13$ polynomial approximation of ${\rm e}^{x}$ (with roughly $10^{-15}$ accuracy on $[-1, 1]$) in the Chebyshev basis and $X$ is the Jacobi matrix of the Chebyshev polynomials.
+
+```julia
+aX = Multiplication(Fun(x->exp(x)),Chebyshev())
+n = 100
+aX[1:n,1:n]
+```
+
+```julia
+spy(aX[1:n,1:n])
+```
+
+## Ultraspherical orthogonal polynomials
+
+Thus far, we've discussed properties of general orthogonal polynomials and illustrated them with Chebyshev polynomials.  Here we introduce the ultraspherical OPs and show how they can be used to represent linear differential operators as banded matrices and thus result in an efficient method for solving boundary value problems.
+
+**Definition (Ultrapsherical OPs)** The ultraspherical OPs $\left\lbrace C_n^{(\lambda)} \right\rbrace$ are orthogonal on $[-1, 1]$ w.r.t. the weight function
+$$
+w(x) = (1-x^2)^{\lambda - {1\over 2}},
+$$
+where  $\lambda > 0$ and $C_n^{(\lambda)}(x) = k^{(\lambda)}_{n}x^n + \mathcal{O}(x^{n-1})$, where
+$$
+k_n^{(\lambda)} = {2^n (\lambda)_n \over n!} = {2^n \lambda (\lambda+1) (\lambda+2) \cdots (\lambda+n-1)  \over n!}
+$$
+and $(\lambda)_n$ is known as the (rising) Pochhammer symbol.
+
+### Differentiation matrices
+
+It turns out that the derivative of $T_n(x)$ is precisely a multiple of  $C^{(1)}_{n-1}(x)$, and similarly the derivative of $C_n^{(\lambda)}$ is a multiple of $C_{n-1}^{(\lambda+1)}$.
+
+Let $\langle \cdot, \cdot \rangle_{\lambda}$ denote the following inner product,
+$$
+\langle f, g \rangle_{\lambda} = \int_{-1}^{1} f(x) g(x) (1-x^2)^{\lambda - \frac{1}{2}}\,{\rm d}x
+$$
+and note that Chebyshev polynomials are orthogonal w.r.t. $\langle \cdot, \cdot \rangle_{0}$ and the OP family $\{ C_n^{(\lambda)}\}$ are orthogonal w.r.t. $\langle \cdot, \cdot \rangle_{\lambda}$.
+
+**Proposition (Chebyshev derivative)**
+$$
+T_n'(x) = n C^{(1)}_{n-1}(x)
+$$
+
+**Proof**
+We first show that $T_n'(x)$ is orthogonal w.r.t. $\sqrt{1-x^2}$ to all  polynomials of degree $m < n-1$, denoted $f_m$, using integration by parts:
+$$
+\begin{eqnarray*}
+\langle T_n',f_m\rangle_{1} &=& \int_{-1}^1 T_n'(x) f_m(x) \sqrt{1-x^2} {\rm d}x \\
+&=& -\int_{-1}^1 T_n(x) (f_m'(x)(1-x^2) - xf_m(x)) {1  \over \sqrt{1-x^2}} {\rm d}x  \\ 
+&=& - \langle T_n, f_m'(1-x^2) - x f_m \rangle_{0}  = 0
+\end{eqnarray*}
+$$
+since $f_m'(1-x^2) - x f_m $ has degree $m-1 +2 = m+1 < n$.  Since $T_n'(x)$ and $C^{(1)}_{n-1}(x)$ have the same degree and are orthogonal with respect to the same weight, there exists a constant $K$ such that 
+$$
+T_n'(x) = KC^{(1)}_{n-1}(x) = K k_{n-1}^{(1)}x^{n-1} + \mathcal{O}(x^{n-2})= K 2^{n-1}x^{n-1} + \mathcal{O}(x^{n-2}).
+$$
+We have that $K = n$ since
+$$
+T_n'(x) = {{\rm d} \over {\rm d}x} (2^{n-1} x^n)  + O(x^{n-2}) = n 2^{n-1} x^{n-1} + O(x^{n-2}).
+$$
+$\blacksquare$
+
+The exact same proof shows the following:
+
+**Proposition (Ultraspherical derivative)**
+$${{\rm d} \over {\rm d}x} C_n^{(\lambda)}(x) = 2 \lambda  C_{n-1}^{(\lambda+1)}(x)$$
+
+As with the three-term recurrence and Jacobi matrices, it is useful to express this in matrix form. That is, for the derivatives of $T_n(x)$ we get
+$$
+{{\rm d} \over {\rm d}x}\left[T_0(x) | T_1(x) | \cdots \right] = \left[C_0^{(1)}(x) | C_1^{(1)}(x) | \cdots \right]\begin{bmatrix}
+0 & 1 \cr
+&& 2 \cr
+&&& 3 \cr
+&&&&\ddots
+\end{bmatrix},
+$$
+hence for 
+$$
+f(x) = \left[T_0(x) | T_1(x) | \cdots \right] \begin{bmatrix} f_0\\f_1\\\vdots \end{bmatrix}
+$$
+we have a sparse differentiation matrix in coefficient space with only one nonzero diagonal: 
+$$
+f'(x) = \left[C_0^{(1)}(x) | C_1^{(1)}(x) | \cdots \right]\begin{bmatrix}
+0 & 1 \cr
+&& 2 \cr
+&&& 3 \cr
+&&&&\ddots
+\end{bmatrix}  \begin{bmatrix} f_0\\f_1\\\vdots \end{bmatrix}
+$$
+
+**Example** Here we see that applying a matrix to a vector of coefficients successfully calculates the derivative:
+
+```julia
+f = Fun(x -> cos(x^2), Chebyshev())   # f is expanded in Chebyshev coefficients
+n = ncoefficients(f)   # This is the number of coefficients
+# ∞-dimensional version of differentiation matrix
+D = Derivative(Chebyshev())
+```
+
+```julia
+# finite section
+D[1:n-1,1:n]
+```
+
+```julia
+# Here is how we could create the differentiation matrix ourselves
+BandedMatrix(1 => Vector(1.0:n-1))[1:n-1,1:n] == D[1:n-1,1:n]
+```
+
+Here `D*f.coefficients` gives the vector of coefficients corresponding to the derivative, but now the coefficients are in the $\lbrace C_n^{(1)}(x)\rbrace$ basis, that is, `Ultraspherical(1)`:
+
+```julia
+fp = Fun(Ultraspherical(1), D[1:n-1,1:n]*f.coefficients)
+fp(0.1)
+```
+
+Let's check if it's correct:
+
+```julia
+f'(0.1)-fp(0.1),-2*0.1*sin(0.1^2)-fp(0.1)
+```
+
+Note that in ApproxFun.jl we can construct these operators rather nicely:
+
+```julia
+D = Derivative()
+(D*f)(0.1)
+```

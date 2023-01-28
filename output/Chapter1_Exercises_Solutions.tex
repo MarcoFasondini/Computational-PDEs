@@ -1,0 +1,443 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[a4paper,text={16.5cm,25.2cm},centering]{geometry}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage{microtype}
+\usepackage{hyperref}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1.2ex}
+
+\hypersetup
+       {   pdfauthor = { Marco Fasondini },
+           pdftitle={ foo },
+           colorlinks=TRUE,
+           linkcolor=black,
+           citecolor=blue,
+           urlcolor=blue
+       }
+
+
+
+
+\usepackage{upquote}
+\usepackage{listings}
+\usepackage{xcolor}
+\lstset{
+    basicstyle=\ttfamily\footnotesize,
+    upquote=true,
+    breaklines=true,
+    breakindent=0pt,
+    keepspaces=true,
+    showspaces=false,
+    columns=fullflexible,
+    showtabs=false,
+    showstringspaces=false,
+    escapeinside={(*@}{@*)},
+    extendedchars=true,
+}
+\newcommand{\HLJLt}[1]{#1}
+\newcommand{\HLJLw}[1]{#1}
+\newcommand{\HLJLe}[1]{#1}
+\newcommand{\HLJLeB}[1]{#1}
+\newcommand{\HLJLo}[1]{#1}
+\newcommand{\HLJLk}[1]{\textcolor[RGB]{148,91,176}{\textbf{#1}}}
+\newcommand{\HLJLkc}[1]{\textcolor[RGB]{59,151,46}{\textit{#1}}}
+\newcommand{\HLJLkd}[1]{\textcolor[RGB]{214,102,97}{\textit{#1}}}
+\newcommand{\HLJLkn}[1]{\textcolor[RGB]{148,91,176}{\textbf{#1}}}
+\newcommand{\HLJLkp}[1]{\textcolor[RGB]{148,91,176}{\textbf{#1}}}
+\newcommand{\HLJLkr}[1]{\textcolor[RGB]{148,91,176}{\textbf{#1}}}
+\newcommand{\HLJLkt}[1]{\textcolor[RGB]{148,91,176}{\textbf{#1}}}
+\newcommand{\HLJLn}[1]{#1}
+\newcommand{\HLJLna}[1]{#1}
+\newcommand{\HLJLnb}[1]{#1}
+\newcommand{\HLJLnbp}[1]{#1}
+\newcommand{\HLJLnc}[1]{#1}
+\newcommand{\HLJLncB}[1]{#1}
+\newcommand{\HLJLnd}[1]{\textcolor[RGB]{214,102,97}{#1}}
+\newcommand{\HLJLne}[1]{#1}
+\newcommand{\HLJLneB}[1]{#1}
+\newcommand{\HLJLnf}[1]{\textcolor[RGB]{66,102,213}{#1}}
+\newcommand{\HLJLnfm}[1]{\textcolor[RGB]{66,102,213}{#1}}
+\newcommand{\HLJLnp}[1]{#1}
+\newcommand{\HLJLnl}[1]{#1}
+\newcommand{\HLJLnn}[1]{#1}
+\newcommand{\HLJLno}[1]{#1}
+\newcommand{\HLJLnt}[1]{#1}
+\newcommand{\HLJLnv}[1]{#1}
+\newcommand{\HLJLnvc}[1]{#1}
+\newcommand{\HLJLnvg}[1]{#1}
+\newcommand{\HLJLnvi}[1]{#1}
+\newcommand{\HLJLnvm}[1]{#1}
+\newcommand{\HLJLl}[1]{#1}
+\newcommand{\HLJLld}[1]{\textcolor[RGB]{148,91,176}{\textit{#1}}}
+\newcommand{\HLJLs}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsa}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsb}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsc}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsd}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsdB}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsdC}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLse}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLsh}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsi}[1]{#1}
+\newcommand{\HLJLso}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsr}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLss}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLssB}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLnB}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLnbB}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLnfB}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLnh}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLni}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLnil}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLnoB}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLoB}[1]{\textcolor[RGB]{102,102,102}{\textbf{#1}}}
+\newcommand{\HLJLow}[1]{\textcolor[RGB]{102,102,102}{\textbf{#1}}}
+\newcommand{\HLJLp}[1]{#1}
+\newcommand{\HLJLc}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLch}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLcm}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLcp}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLcpB}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLcs}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLcsB}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLg}[1]{#1}
+\newcommand{\HLJLgd}[1]{#1}
+\newcommand{\HLJLge}[1]{#1}
+\newcommand{\HLJLgeB}[1]{#1}
+\newcommand{\HLJLgh}[1]{#1}
+\newcommand{\HLJLgi}[1]{#1}
+\newcommand{\HLJLgo}[1]{#1}
+\newcommand{\HLJLgp}[1]{#1}
+\newcommand{\HLJLgs}[1]{#1}
+\newcommand{\HLJLgsB}[1]{#1}
+\newcommand{\HLJLgt}[1]{#1}
+
+
+
+\def\qqand{\qquad\hbox{and}\qquad}
+\def\qqfor{\qquad\hbox{for}\qquad}
+\def\qqas{\qquad\hbox{as}\qquad}
+\def\half{ {1 \over 2} }
+\def\D{ {\rm d} }
+\def\I{ {\rm i} }
+\def\E{ {\rm e} }
+\def\C{ {\mathbb C} }
+\def\R{ {\mathbb R} }
+\def\bbR{ {\mathbb R} }
+\def\H{ {\mathbb H} }
+\def\Z{ {\mathbb Z} }
+\def\CC{ {\cal C} }
+\def\FF{ {\cal F} }
+\def\HH{ {\cal H} }
+\def\LL{ {\cal L} }
+\def\vc#1{ {\mathbf #1} }
+\def\bbC{ {\mathbb C} }
+
+
+
+\def\fR{ f_{\rm R} }
+\def\fL{ f_{\rm L} }
+
+\def\qqqquad{\qquad\qquad}
+\def\qqwhere{\qquad\hbox{where}\qquad}
+\def\Res_#1{\underset{#1}{\rm Res}\,}
+\def\sech{ {\rm sech}\, }
+\def\acos{ {\rm acos}\, }
+\def\asin{ {\rm asin}\, }
+\def\atan{ {\rm atan}\, }
+\def\Ei{ {\rm Ei}\, }
+\def\upepsilon{\varepsilon}
+
+
+\def\Xint#1{ \mathchoice
+   {\XXint\displaystyle\textstyle{#1} }%
+   {\XXint\textstyle\scriptstyle{#1} }%
+   {\XXint\scriptstyle\scriptscriptstyle{#1} }%
+   {\XXint\scriptscriptstyle\scriptscriptstyle{#1} }%
+   \!\int}
+\def\XXint#1#2#3{ {\setbox0=\hbox{$#1{#2#3}{\int}$}
+     \vcenter{\hbox{$#2#3$}}\kern-.5\wd0} }
+\def\ddashint{\Xint=}
+\def\dashint{\Xint-}
+% \def\dashint
+\def\infdashint{\dashint_{-\infty}^\infty}
+
+
+
+
+\def\addtab#1={#1\;&=}
+\def\ccr{\\\addtab}
+\def\ip<#1>{\left\langle{#1}\right\rangle}
+\def\dx{\D x}
+\def\dt{\D t}
+\def\dz{\D z}
+\def\ds{\D s}
+
+\def\rR{ {\rm R} }
+\def\rL{ {\rm L} }
+
+\def\norm#1{\left\| #1 \right\|}
+
+\def\pr(#1){\left({#1}\right)}
+\def\br[#1]{\left[{#1}\right]}
+
+\def\abs#1{\left|{#1}\right|}
+\def\fpr(#1){\!\pr({#1})}
+
+\def\sopmatrix#1{ \begin{pmatrix}#1\end{pmatrix} }
+
+\def\endash{–}
+\def\emdash{—}
+\def\mdblksquare{\blacksquare}
+\def\lgblksquare{\blacksquare}
+\def\scre{\E}
+\def\mapengine#1,#2.{\mapfunction{#1}\ifx\void#2\else\mapengine #2.\fi }
+
+\def\map[#1]{\mapengine #1,\void.}
+
+\def\mapenginesep_#1#2,#3.{\mapfunction{#2}\ifx\void#3\else#1\mapengine #3.\fi }
+
+\def\mapsep_#1[#2]{\mapenginesep_{#1}#2,\void.}
+
+
+\def\vcbr[#1]{\pr(#1)}
+
+
+\def\bvect[#1,#2]{
+{
+\def\dots{\cdots}
+\def\mapfunction##1{\ | \  ##1}
+	\sopmatrix{
+		 \,#1\map[#2]\,
+	}
+}
+}
+
+
+
+\def\vect[#1]{
+{\def\dots{\ldots}
+	\vcbr[{#1}]
+} }
+
+\def\vectt[#1]{
+{\def\dots{\ldots}
+	\vect[{#1}]^{\top}
+} }
+
+\def\Vectt[#1]{
+{
+\def\mapfunction##1{##1 \cr}
+\def\dots{\vdots}
+	\begin{pmatrix}
+		\map[#1]
+	\end{pmatrix}
+} }
+
+\def\addtab#1={#1\;&=}
+\def\ccr{\\\addtab}
+
+\def\questionequals{= \!\!\!\!\!\!{\scriptstyle ? \atop }\,\,\,}
+
+\def\Ei{\rm Ei\,}
+
+\begin{document}
+
+\section{Chapter 1: Solutions to Exercises}
+\begin{itemize}
+\item[1. ] \textbf{(Second-order central difference approximation to the second derivative)} Show that if $f \in C^{4}[x_{j-1}, x_{j+1}]$, then
+
+\end{itemize}
+\[
+f''(x_j) = \frac{f(x_{j+1}) -  2f(x_{j}) + f(x_{j-1})}{h^2} + \mathcal{O}(h^2), \qquad h \to 0.
+\]
+It follows from Taylor's theorem that there exists an $\xi_1 \in [x_{j},x_{j+1}]$ such that
+
+\[
+f(x_{j+1}) = f(x_{j}) + hf'(x_j) + \frac{h^2}{2}f''(x_j) +  \frac{h^3}{6}f'''(x_j)  +  \frac{h^4}{24}f^{(4)}(\xi_1)
+\]
+where we used the fact that  $x_{j+1} - x_j = h$. Similarly, there exists an $\xi_2 \in [x_{j-1},x_{j}]$ such that
+
+\[
+f(x_{j-1}) = f(x_{j}) - hf'(x_j) + \frac{h^2}{2}f''(x_j) -  \frac{h^3}{6}f'''(x_j)  +  \frac{h^4}{24}f^{(4)}(\xi_2)
+\]
+Adding these two equations and solving for $f''(x_j)$, we have that
+
+\[
+f''(x_j) = \frac{f(x_{j+1}) -  2f(x_{j}) + f(x_{j-1})}{h^2} + \frac{h^2}{24}\left(f^{(4)}(\xi_1) + f^{(4)}(\xi_2)\right)
+\]
+Since $f \in C^{4}[x_{j-1}, x_{j+1}]$, there exists an $M < \infty$ such that 
+
+\[
+M = \sup_{x \in [x_{j-1}, x_{j+1}]} \vert f^{(4)}(x)\vert
+\]
+and therefore
+
+\[
+\left\vert f''(x_j) - \frac{f(x_{j+1}) -  2f(x_{j}) + f(x_{j-1})}{h^2}\right\vert  \leq \frac{ M}{12}h^2
+\]
+and hence the result follows.
+
+\begin{itemize}
+\item[2. ] Run the Julia code and / or the Matlab code for this chapter (see the Blackboard page of this module) on your own machine.  To run the Julia code, see the document titled Julia on Blackboard.  To run the Matlab code, you'll need to use Chebfun (see the instructions for how to do this \href{https://www.chebfun.org/download/}{here}). 
+
+
+\item[3. ] Construct, by hand, a polynomial that interpolates $f(x) = {\rm e}^{x}$ at $x = 0, 1, 2$.
+
+\end{itemize}
+Using the formula for the Lagrange interpolating polynomial, we have that
+
+\[
+p_3(x) = \frac{(x-1)(x-2)}{2}{\rm e}^0 - (x-0)(x-2){\rm e}^1 + \frac{(x-0)(x-1)}{2}{\rm e}^2
+\]
+\begin{itemize}
+\item[4. ] \textbf{(Second-order backward difference approximation)} Construct a Lagrange interpolating polynomial $p_3(x)$ that interpolates $f(x)$ at $x_{j-2}$, $x_{j-1}$ and $x_{j}$, where $x_{j}-x_{j-1} = x_{j-1}-x_{j-2} = h$, and derive the following one-sided finite difference approximation:  
+
+\end{itemize}
+\[
+f'(x_j) \approx p_3'(x_j) = \frac{3f(x_j) - 4f(x_{j-1}) + f(x_{j-2})}{2h}
+\]
+Using the formula for the Lagrange interpolating polynomial, it follows that
+
+\[
+p_3(x) = \frac{(x-x_{j-1})(x-x_{j})}{2h^2} f(x_{j-2}) - \frac{(x-x_{j-2})(x-x_{j})}{h^2} f(x_{j-1}) +  \frac{(x-x_{j-2})(x-x_{j-1})}{2h^2} f(x_{j}).
+\]
+Since
+
+\[
+p_3'(x) = \frac{(x-x_{j-1}) + (x-x_{j})}{2h^2} f(x_{j-2}) - \frac{(x-x_{j-2})+ (x-x_{j})}{h^2} f(x_{j-1}) +  \frac{(x-x_{j-2}) + (x-x_{j-1})}{2h^2} f(x_{j})
+\]
+we have that
+
+\[
+p_3'(x_j) = \frac{h}{2h^2} f(x_{j-2}) - \frac{2h}{h^2} f(x_{j-1}) +  \frac{2h + h}{2h^2} f(x_{j})
+\]
+and the result follows.
+
+\begin{itemize}
+\item[5. ] In Julia or Matlab, compute the maximum error of the finite difference approximation 
+
+\end{itemize}
+\[
+f'(x_j) \approx \frac{f(x_{j-2}) -8 f(x_{j-1}) + 8 f(x_{j+1}) - f(x_{j+2})}{12h},
+\]
+at the points $x_j = jh$ with $j = 0, \ldots, n-1$ and $h = 2\pi/n$ for the function $f(x) = 1/(2 + \cos(x))$ for various values of $n$.  Then plot the errors on a log-log plot. Comment on your results.
+
+Since $f(x)$ is periodic, the differentiation matrix is as follows:
+
+\[
+\left(
+\begin{array}{c}
+f'(x_0) \\
+f'(x_1) \\
+  \\
+\vdots  \\
+  \\
+f'(x_{n-2}) \\ 
+f'(x_{n-1})
+\end{array}
+\right)
+\approx 
+\left(
+\begin{array}{c}
+p'(x_0) \\
+p'(x_1) \\
+  \\
+\vdots  \\
+  \\
+p'(x_{n-2}) \\
+p'(x_{n-1})
+\end{array}
+\right) = \frac{1}{h}\begin{bmatrix}
+ 0 & \frac{2}{3} & -\frac{1}{12} &   &  &  \frac{1}{12} & -\frac{2}{3}    \\
+-\frac{2}{3} & 0 &  \frac{2}{3} & \ddots   & & & \frac{1}{12}   \\
+\frac{1}{12} & -\frac{2}{3} & 0 & \ddots  & \ddots  & &  \\
+& \ddots    & \ddots   & \ddots & \ddots &\ddots  & \\
+&     & \frac{1}{12} &-\frac{2}{3} & 0 & \frac{2}{3} & -\frac{1}{12} \\
+ -\frac{1}{12} &   &  & \frac{1}{12} &-\frac{2}{3} & 0 & \frac{2}{3} \\
+ \frac{2}{3}&  -\frac{1}{12} &   &   & \frac{1}{12} &-\frac{2}{3} & 0 
+\end{bmatrix}
+\left(
+\begin{array}{c}
+f(x_0) \\
+f(x_1) \\
+  \\
+\vdots  \\
+  \\
+f(x_{n-2}) \\
+f(x_{n-1})
+\end{array}
+\right).
+\]
+Here is how we can build the differentiation matrix:
+
+
+\begin{lstlisting}
+(*@\HLJLk{using}@*) (*@\HLJLn{LinearAlgebra}@*)(*@\HLJLp{,}@*) (*@\HLJLn{Plots}@*)(*@\HLJLp{,}@*) (*@\HLJLn{SparseArrays}@*)
+(*@\HLJLn{n}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{10}@*)
+(*@\HLJLn{Dn}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{spdiagm}@*)(*@\HLJLp{(}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{=>}@*)(*@\HLJLnf{fill}@*)(*@\HLJLp{(}@*)(*@\HLJLni{2}@*)(*@\HLJLoB{/}@*)(*@\HLJLni{3}@*)(*@\HLJLp{,}@*)(*@\HLJLn{n}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)(*@\HLJLp{),}@*)(*@\HLJLni{2}@*)(*@\HLJLoB{=>}@*)(*@\HLJLnf{fill}@*)(*@\HLJLp{(}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{/}@*)(*@\HLJLni{12}@*)(*@\HLJLp{,}@*)(*@\HLJLn{n}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{2}@*)(*@\HLJLp{),}@*)(*@\HLJLn{n}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{2}@*)(*@\HLJLoB{=>}@*)(*@\HLJLnf{fill}@*)(*@\HLJLp{(}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{/}@*)(*@\HLJLni{12}@*)(*@\HLJLp{,}@*)(*@\HLJLni{2}@*)(*@\HLJLp{),}@*)(*@\HLJLn{n}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{=>}@*)(*@\HLJLnf{fill}@*)(*@\HLJLp{(}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{2}@*)(*@\HLJLoB{/}@*)(*@\HLJLni{3}@*)(*@\HLJLp{,}@*)(*@\HLJLni{1}@*)(*@\HLJLp{))}@*)
+(*@\HLJLn{Dn}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{Dn}@*) (*@\HLJLoB{-}@*) (*@\HLJLn{Dn}@*)(*@\HLJLoB{{\textquotesingle}}@*)
+\end{lstlisting}
+
+\begin{lstlisting}
+10(*@\ensuremath{\times}@*)10 SparseArrays.SparseMatrixCSC(*@{{\{}}@*)Float64, Int64(*@{{\}}}@*) with 40 stored entries:
+   (*@\ensuremath{\cdot}@*)          0.666667   -0.0833333  (*@\ensuremath{\ldots}@*)    (*@\ensuremath{\cdot}@*)          0.0833333  -0.666667
+ -0.666667     (*@\ensuremath{\cdot}@*)          0.666667        (*@\ensuremath{\cdot}@*)           (*@\ensuremath{\cdot}@*)          0.0833333
+  0.0833333  -0.666667     (*@\ensuremath{\cdot}@*)              (*@\ensuremath{\cdot}@*)           (*@\ensuremath{\cdot}@*)           (*@\ensuremath{\cdot}@*) 
+   (*@\ensuremath{\cdot}@*)          0.0833333  -0.666667        (*@\ensuremath{\cdot}@*)           (*@\ensuremath{\cdot}@*)           (*@\ensuremath{\cdot}@*) 
+   (*@\ensuremath{\cdot}@*)           (*@\ensuremath{\cdot}@*)          0.0833333       (*@\ensuremath{\cdot}@*)           (*@\ensuremath{\cdot}@*)           (*@\ensuremath{\cdot}@*) 
+   (*@\ensuremath{\cdot}@*)           (*@\ensuremath{\cdot}@*)           (*@\ensuremath{\cdot}@*)         (*@\ensuremath{\ldots}@*)  -0.0833333    (*@\ensuremath{\cdot}@*)           (*@\ensuremath{\cdot}@*) 
+   (*@\ensuremath{\cdot}@*)           (*@\ensuremath{\cdot}@*)           (*@\ensuremath{\cdot}@*)             0.666667   -0.0833333    (*@\ensuremath{\cdot}@*) 
+   (*@\ensuremath{\cdot}@*)           (*@\ensuremath{\cdot}@*)           (*@\ensuremath{\cdot}@*)              (*@\ensuremath{\cdot}@*)          0.666667   -0.0833333
+ -0.0833333    (*@\ensuremath{\cdot}@*)           (*@\ensuremath{\cdot}@*)            -0.666667     (*@\ensuremath{\cdot}@*)          0.666667
+  0.666667   -0.0833333    (*@\ensuremath{\cdot}@*)             0.0833333  -0.666667     (*@\ensuremath{\cdot}@*)
+\end{lstlisting}
+
+
+\begin{lstlisting}
+(*@\HLJLn{f}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{x}@*) (*@\HLJLoB{->}@*) (*@\HLJLni{1}@*)(*@\HLJLoB{/}@*)(*@\HLJLp{(}@*)(*@\HLJLni{2}@*) (*@\HLJLoB{+}@*) (*@\HLJLnf{cos}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{))}@*)
+(*@\HLJLn{Df}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{x}@*) (*@\HLJLoB{->}@*) (*@\HLJLnf{sin}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{)}@*)(*@\HLJLoB{/}@*)(*@\HLJLp{(}@*)(*@\HLJLni{2}@*) (*@\HLJLoB{+}@*) (*@\HLJLnf{cos}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{))}@*)(*@\HLJLoB{{\textasciicircum}}@*)(*@\HLJLni{2}@*)  (*@\HLJLcs{{\#}}@*) (*@\HLJLcs{derivative}@*)
+(*@\HLJLcs{{\#}}@*) (*@\HLJLcs{compute}@*) (*@\HLJLcs{the}@*) (*@\HLJLcs{errors}@*)
+(*@\HLJLn{nv}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{Int64}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{round}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLni{10}@*) (*@\HLJLoB{.{\textasciicircum}}@*)(*@\HLJLp{(}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLnfB{0.5}@*)(*@\HLJLoB{:}@*)(*@\HLJLni{6}@*)(*@\HLJLp{)))}@*)
+(*@\HLJLnd{@time}@*) (*@\HLJLk{begin}@*)
+(*@\HLJLn{errs}@*) (*@\HLJLoB{=}@*) 
+(*@\HLJLp{[(}@*) (*@\HLJLn{h}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{2}@*)(*@\HLJLn{\ensuremath{\pi}}@*)(*@\HLJLoB{/}@*)(*@\HLJLn{n}@*)(*@\HLJLp{;}@*)
+   (*@\HLJLcs{{\#}}@*) (*@\HLJLcs{differentiation}@*) (*@\HLJLcs{matrix:}@*)
+   (*@\HLJLn{Dn}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{1}@*)(*@\HLJLoB{/}@*)(*@\HLJLn{h}@*)(*@\HLJLoB{*}@*)(*@\HLJLnf{spdiagm}@*)(*@\HLJLp{(}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{=>}@*)(*@\HLJLnf{fill}@*)(*@\HLJLp{(}@*)(*@\HLJLni{2}@*)(*@\HLJLoB{/}@*)(*@\HLJLni{3}@*)(*@\HLJLp{,}@*)(*@\HLJLn{n}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)(*@\HLJLp{),}@*)(*@\HLJLni{2}@*)(*@\HLJLoB{=>}@*)(*@\HLJLnf{fill}@*)(*@\HLJLp{(}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{/}@*)(*@\HLJLni{12}@*)(*@\HLJLp{,}@*)(*@\HLJLn{n}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{2}@*)(*@\HLJLp{),}@*)(*@\HLJLn{n}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{2}@*)(*@\HLJLoB{=>}@*)(*@\HLJLnf{fill}@*)(*@\HLJLp{(}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{/}@*)(*@\HLJLni{12}@*)(*@\HLJLp{,}@*)(*@\HLJLni{2}@*)(*@\HLJLp{),}@*)(*@\HLJLn{n}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{=>}@*)(*@\HLJLnf{fill}@*)(*@\HLJLp{(}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{2}@*)(*@\HLJLoB{/}@*)(*@\HLJLni{3}@*)(*@\HLJLp{,}@*)(*@\HLJLni{1}@*)(*@\HLJLp{));}@*)
+   (*@\HLJLn{Dn}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{Dn}@*) (*@\HLJLoB{-}@*) (*@\HLJLn{Dn}@*)(*@\HLJLoB{{\textquotesingle}}@*)(*@\HLJLp{;}@*)
+   (*@\HLJLn{x}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{range}@*)(*@\HLJLp{(}@*)(*@\HLJLni{0}@*)(*@\HLJLp{,}@*)(*@\HLJLni{2}@*)(*@\HLJLn{\ensuremath{\pi}}@*)(*@\HLJLp{;}@*)(*@\HLJLn{length}@*)(*@\HLJLoB{=}@*)(*@\HLJLn{n}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{)[}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLk{end}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)(*@\HLJLp{];}@*) (*@\HLJLcs{{\#}}@*) (*@\HLJLcs{the}@*) (*@\HLJLcs{nodes}@*) (*@\HLJLcs{x\ensuremath{\_j},}@*) (*@\HLJLcs{j}@*) (*@\HLJLcs{=}@*) (*@\HLJLcs{0,}@*) (*@\HLJLcs{...,}@*) (*@\HLJLcs{n-1}@*)
+   (*@\HLJLcs{{\#}}@*) (*@\HLJLcs{compute}@*) (*@\HLJLcs{the}@*) (*@\HLJLcs{maximum}@*) (*@\HLJLcs{error}@*) (*@\HLJLcs{at}@*) (*@\HLJLcs{the}@*) (*@\HLJLcs{nodes}@*)
+   (*@\HLJLnf{norm}@*)(*@\HLJLp{(}@*)(*@\HLJLn{Dn}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{f}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{)}@*) (*@\HLJLoB{-}@*) (*@\HLJLn{Df}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{),}@*)(*@\HLJLn{Inf}@*)(*@\HLJLp{)}@*) (*@\HLJLp{)}@*) (*@\HLJLk{for}@*) (*@\HLJLn{n}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{nv}@*)(*@\HLJLp{]}@*)
+(*@\HLJLk{end}@*)(*@\HLJLp{;}@*)
+(*@\HLJLcs{{\#}}@*) (*@\HLJLcs{plot}@*) (*@\HLJLcs{the}@*) (*@\HLJLcs{errors}@*) (*@\HLJLcs{on}@*) (*@\HLJLcs{a}@*) (*@\HLJLcs{log-log}@*) (*@\HLJLcs{scale}@*)
+(*@\HLJLnf{scatter}@*)(*@\HLJLp{(}@*)(*@\HLJLn{nv}@*)(*@\HLJLp{,}@*)(*@\HLJLn{errs}@*)(*@\HLJLp{;}@*)(*@\HLJLn{xscale}@*)(*@\HLJLoB{=:}@*)(*@\HLJLn{log10}@*)(*@\HLJLp{,}@*)(*@\HLJLn{yscale}@*)(*@\HLJLoB{=:}@*)(*@\HLJLn{log10}@*)(*@\HLJLp{,}@*)(*@\HLJLn{label}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}Finite}@*) (*@\HLJLs{difference}@*) (*@\HLJLs{error"{}}@*)(*@\HLJLp{,}@*)(*@\HLJLn{xlabel}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}n"{}}@*)(*@\HLJLp{)}@*)
+\end{lstlisting}
+
+\begin{lstlisting}
+1.643177 seconds (514.34 k allocations: 497.255 MiB, 52.42(*@{{\%}}@*) gc time, 24.6
+7(*@{{\%}}@*) compilation time)
+\end{lstlisting}
+
+\includegraphics[width=\linewidth]{/figures/Chapter1_Exercises_Solutions_2_1.pdf}
+
+The errors decrease as $n$ is increased but for large enough $n$, the errors increase due to cancellation error in double precision.   To estimate the rate of convergence, we need to estimate the slope of the line along which the errors decrease.  Here is an estimate of the slope:
+
+
+\begin{lstlisting}
+(*@\HLJLp{(}@*)(*@\HLJLnf{log}@*)(*@\HLJLp{(}@*)(*@\HLJLn{errs}@*)(*@\HLJLp{[}@*)(*@\HLJLni{6}@*)(*@\HLJLp{])}@*)(*@\HLJLoB{-}@*)(*@\HLJLnf{log}@*)(*@\HLJLp{(}@*)(*@\HLJLn{errs}@*)(*@\HLJLp{[}@*)(*@\HLJLni{4}@*)(*@\HLJLp{]))}@*)(*@\HLJLoB{/}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{log}@*)(*@\HLJLp{(}@*)(*@\HLJLn{nv}@*)(*@\HLJLp{[}@*)(*@\HLJLni{6}@*)(*@\HLJLp{])}@*) (*@\HLJLoB{-}@*) (*@\HLJLnf{log}@*)(*@\HLJLp{(}@*)(*@\HLJLn{nv}@*)(*@\HLJLp{[}@*)(*@\HLJLni{4}@*)(*@\HLJLp{]))}@*)
+\end{lstlisting}
+
+\begin{lstlisting}
+-3.9935549986049828
+\end{lstlisting}
+
+
+The slope is approximately $-4$, hence the error decreases as $\mathcal{O}(n^{-4})$, $n \to \infty$ or $\mathcal{O}(h^{4})$, $h \to 0$.
+
+
+
+\end{document}

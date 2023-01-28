@@ -1,0 +1,568 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[a4paper,text={16.5cm,25.2cm},centering]{geometry}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage{microtype}
+\usepackage{hyperref}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1.2ex}
+
+\hypersetup
+       {   pdfauthor = { Marco Fasondini },
+           pdftitle={ foo },
+           colorlinks=TRUE,
+           linkcolor=black,
+           citecolor=blue,
+           urlcolor=blue
+       }
+
+
+
+
+\usepackage{upquote}
+\usepackage{listings}
+\usepackage{xcolor}
+\lstset{
+    basicstyle=\ttfamily\footnotesize,
+    upquote=true,
+    breaklines=true,
+    breakindent=0pt,
+    keepspaces=true,
+    showspaces=false,
+    columns=fullflexible,
+    showtabs=false,
+    showstringspaces=false,
+    escapeinside={(*@}{@*)},
+    extendedchars=true,
+}
+\newcommand{\HLJLt}[1]{#1}
+\newcommand{\HLJLw}[1]{#1}
+\newcommand{\HLJLe}[1]{#1}
+\newcommand{\HLJLeB}[1]{#1}
+\newcommand{\HLJLo}[1]{#1}
+\newcommand{\HLJLk}[1]{\textcolor[RGB]{148,91,176}{\textbf{#1}}}
+\newcommand{\HLJLkc}[1]{\textcolor[RGB]{59,151,46}{\textit{#1}}}
+\newcommand{\HLJLkd}[1]{\textcolor[RGB]{214,102,97}{\textit{#1}}}
+\newcommand{\HLJLkn}[1]{\textcolor[RGB]{148,91,176}{\textbf{#1}}}
+\newcommand{\HLJLkp}[1]{\textcolor[RGB]{148,91,176}{\textbf{#1}}}
+\newcommand{\HLJLkr}[1]{\textcolor[RGB]{148,91,176}{\textbf{#1}}}
+\newcommand{\HLJLkt}[1]{\textcolor[RGB]{148,91,176}{\textbf{#1}}}
+\newcommand{\HLJLn}[1]{#1}
+\newcommand{\HLJLna}[1]{#1}
+\newcommand{\HLJLnb}[1]{#1}
+\newcommand{\HLJLnbp}[1]{#1}
+\newcommand{\HLJLnc}[1]{#1}
+\newcommand{\HLJLncB}[1]{#1}
+\newcommand{\HLJLnd}[1]{\textcolor[RGB]{214,102,97}{#1}}
+\newcommand{\HLJLne}[1]{#1}
+\newcommand{\HLJLneB}[1]{#1}
+\newcommand{\HLJLnf}[1]{\textcolor[RGB]{66,102,213}{#1}}
+\newcommand{\HLJLnfm}[1]{\textcolor[RGB]{66,102,213}{#1}}
+\newcommand{\HLJLnp}[1]{#1}
+\newcommand{\HLJLnl}[1]{#1}
+\newcommand{\HLJLnn}[1]{#1}
+\newcommand{\HLJLno}[1]{#1}
+\newcommand{\HLJLnt}[1]{#1}
+\newcommand{\HLJLnv}[1]{#1}
+\newcommand{\HLJLnvc}[1]{#1}
+\newcommand{\HLJLnvg}[1]{#1}
+\newcommand{\HLJLnvi}[1]{#1}
+\newcommand{\HLJLnvm}[1]{#1}
+\newcommand{\HLJLl}[1]{#1}
+\newcommand{\HLJLld}[1]{\textcolor[RGB]{148,91,176}{\textit{#1}}}
+\newcommand{\HLJLs}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsa}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsb}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsc}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsd}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsdB}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsdC}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLse}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLsh}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsi}[1]{#1}
+\newcommand{\HLJLso}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsr}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLss}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLssB}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLnB}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLnbB}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLnfB}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLnh}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLni}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLnil}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLnoB}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLoB}[1]{\textcolor[RGB]{102,102,102}{\textbf{#1}}}
+\newcommand{\HLJLow}[1]{\textcolor[RGB]{102,102,102}{\textbf{#1}}}
+\newcommand{\HLJLp}[1]{#1}
+\newcommand{\HLJLc}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLch}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLcm}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLcp}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLcpB}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLcs}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLcsB}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLg}[1]{#1}
+\newcommand{\HLJLgd}[1]{#1}
+\newcommand{\HLJLge}[1]{#1}
+\newcommand{\HLJLgeB}[1]{#1}
+\newcommand{\HLJLgh}[1]{#1}
+\newcommand{\HLJLgi}[1]{#1}
+\newcommand{\HLJLgo}[1]{#1}
+\newcommand{\HLJLgp}[1]{#1}
+\newcommand{\HLJLgs}[1]{#1}
+\newcommand{\HLJLgsB}[1]{#1}
+\newcommand{\HLJLgt}[1]{#1}
+
+
+
+\def\qqand{\qquad\hbox{and}\qquad}
+\def\qqfor{\qquad\hbox{for}\qquad}
+\def\qqas{\qquad\hbox{as}\qquad}
+\def\half{ {1 \over 2} }
+\def\D{ {\rm d} }
+\def\I{ {\rm i} }
+\def\E{ {\rm e} }
+\def\C{ {\mathbb C} }
+\def\R{ {\mathbb R} }
+\def\bbR{ {\mathbb R} }
+\def\H{ {\mathbb H} }
+\def\Z{ {\mathbb Z} }
+\def\CC{ {\cal C} }
+\def\FF{ {\cal F} }
+\def\HH{ {\cal H} }
+\def\LL{ {\cal L} }
+\def\vc#1{ {\mathbf #1} }
+\def\bbC{ {\mathbb C} }
+
+
+
+\def\fR{ f_{\rm R} }
+\def\fL{ f_{\rm L} }
+
+\def\qqqquad{\qquad\qquad}
+\def\qqwhere{\qquad\hbox{where}\qquad}
+\def\Res_#1{\underset{#1}{\rm Res}\,}
+\def\sech{ {\rm sech}\, }
+\def\acos{ {\rm acos}\, }
+\def\asin{ {\rm asin}\, }
+\def\atan{ {\rm atan}\, }
+\def\Ei{ {\rm Ei}\, }
+\def\upepsilon{\varepsilon}
+
+
+\def\Xint#1{ \mathchoice
+   {\XXint\displaystyle\textstyle{#1} }%
+   {\XXint\textstyle\scriptstyle{#1} }%
+   {\XXint\scriptstyle\scriptscriptstyle{#1} }%
+   {\XXint\scriptscriptstyle\scriptscriptstyle{#1} }%
+   \!\int}
+\def\XXint#1#2#3{ {\setbox0=\hbox{$#1{#2#3}{\int}$}
+     \vcenter{\hbox{$#2#3$}}\kern-.5\wd0} }
+\def\ddashint{\Xint=}
+\def\dashint{\Xint-}
+% \def\dashint
+\def\infdashint{\dashint_{-\infty}^\infty}
+
+
+
+
+\def\addtab#1={#1\;&=}
+\def\ccr{\\\addtab}
+\def\ip<#1>{\left\langle{#1}\right\rangle}
+\def\dx{\D x}
+\def\dt{\D t}
+\def\dz{\D z}
+\def\ds{\D s}
+
+\def\rR{ {\rm R} }
+\def\rL{ {\rm L} }
+
+\def\norm#1{\left\| #1 \right\|}
+
+\def\pr(#1){\left({#1}\right)}
+\def\br[#1]{\left[{#1}\right]}
+
+\def\abs#1{\left|{#1}\right|}
+\def\fpr(#1){\!\pr({#1})}
+
+\def\sopmatrix#1{ \begin{pmatrix}#1\end{pmatrix} }
+
+\def\endash{–}
+\def\emdash{—}
+\def\mdblksquare{\blacksquare}
+\def\lgblksquare{\blacksquare}
+\def\scre{\E}
+\def\mapengine#1,#2.{\mapfunction{#1}\ifx\void#2\else\mapengine #2.\fi }
+
+\def\map[#1]{\mapengine #1,\void.}
+
+\def\mapenginesep_#1#2,#3.{\mapfunction{#2}\ifx\void#3\else#1\mapengine #3.\fi }
+
+\def\mapsep_#1[#2]{\mapenginesep_{#1}#2,\void.}
+
+
+\def\vcbr[#1]{\pr(#1)}
+
+
+\def\bvect[#1,#2]{
+{
+\def\dots{\cdots}
+\def\mapfunction##1{\ | \  ##1}
+	\sopmatrix{
+		 \,#1\map[#2]\,
+	}
+}
+}
+
+
+
+\def\vect[#1]{
+{\def\dots{\ldots}
+	\vcbr[{#1}]
+} }
+
+\def\vectt[#1]{
+{\def\dots{\ldots}
+	\vect[{#1}]^{\top}
+} }
+
+\def\Vectt[#1]{
+{
+\def\mapfunction##1{##1 \cr}
+\def\dots{\vdots}
+	\begin{pmatrix}
+		\map[#1]
+	\end{pmatrix}
+} }
+
+\def\addtab#1={#1\;&=}
+\def\ccr{\\\addtab}
+
+\def\questionequals{= \!\!\!\!\!\!{\scriptstyle ? \atop }\,\,\,}
+
+\def\Ei{\rm Ei\,}
+
+\begin{document}
+
+\section{Chapter 4: orthogonal polynomial methods for differential equations}
+Here we discuss
+
+\begin{itemize}
+\item[1. ] The de
+
+
+\item[2. ] The solution of 2-point boundary value problems with four methods: ultraspherical method, collocation method, finite difference method, the ultraspherical method in weak form.  Prove convergence of the finite difference method
+
+
+\item[3. ] Next chapter: finite difference methods for time-dependent PDEs
+
+
+\item[4. ] We must do two-dimensional PDEs
+
+\end{itemize}
+In the previous chapter, we learnt that interpolants expressed in terms of Chebyshev polynomials can be very useful for approximating non-periodic functions.  We learnt that there are fast algorithms for computing Chebyshev interpolants and their derivatives and these can be used to approximate solutions to PDEs.
+
+Chebyshev polynomials are examples of \emph{orthogonal polynomials} (OPs).  In this chapter we'll learn that OPs can be used to design \emph{sparse} methods for differential equations.
+
+OPs are fundamental for computational mathematics, with applications in function approximation, quadrature (calculating integrals), solving differential equations, spectral analysis of Schrödinger operators, etc.  In addition, OPs play a very important role in many mathematical areas including representation theory, functional analysis, integrable systems, singular integral equations, complex analysis, and random matrix theory.
+
+\textbf{Note:} In previous chapters, a polynomial $p_n(x)$ denoted an interpolating polynomial through $n$ distinct nodes and $p_n$ had degree $\leq n-1$.  In this chapter, unless stated otherwise, $p_n(x)$ denotes a polynomial of degree precisely $n$, i.e., 
+
+\[
+p_n(x) = k_n x^n + \mathcal{O}(x^{n-1})
+\]
+where $k_n \neq 0$.
+
+The set of polynomials of degree $\leq n$ with real coefficients, $\mathbb{P}_n$, is a linear space (or vector space) of dimension $n+1$.  The set of  monomials of degree $\leq n$, $\lbrace 1, x, x^2, \ldots, x^n \rbrace$, is a basis for the space $\mathbb{P}_n$, meaning that all polynomials of degree $\leq n$ can be expressed as linear combinations of monomials.  Likewise, $\lbrace p_0(x), p_1(x), \ldots, p_n(x) \rbrace$ is a basis of $\mathbb{P}_n$.  It is much  more efficient and stable to perform computations in OP bases as oposed to the monomial basis.
+
+\subsection{Definition of orthogonal polynomials}
+Let $p_0(x),p_1(x),p_2(x),\ensuremath{\ldots}$ be a sequence of polynomials such that $p_n(x)$ is exactly of degree $n$, i.e.,\$ p\emph{n(x) = k}n x\^{}n + {\textbackslash}mathcal\{O\}(x\^{}\{n-1\}) \$ where $k_n \neq 0$ .  Let $w(x)$ be a continuous weight function on a (possibly infinite) interval $(a,b)$: that is $w(x) \geq 0$ for all $a < x < b$. This induces an inner product
+
+\[
+\langle f,g \rangle := \int_a^b f(x) g(x) w(x) {\rm d}x
+\]
+We say that $\{p_0, p_1,\ldots\}$ are \emph{orthogonal with respect to the weight $w$} if
+
+\[
+\langle p_n,p_m \rangle = 0\qquad \text{ for }\: n \neq m.
+\]
+Because $w$ is continuous, we have
+
+\[
+\| p_n \|^2 = \langle p_n,p_n \rangle > 0 .
+\]
+Orthogonal polymomials are not unique: we can multiply each $p_n$ by a different nonzero constant $\tilde p_n(x) = c_n p_n(x)$, and $\tilde p_n$ will be orthogonal w.r.t. $w$.  However, if we specify $k_n$, this is sufficient to uniquely define them:
+
+\textbf{Proposition (Uniqueness of OPs)} Given a non-zero $k_n$, there is a unique polynomial $p_n$ orthogonal w.r.t. $w$ to all lower degree polynomials.
+
+\textbf{Proof} Suppose $r_n(x) = k_n x^n + O(x^{n-1})$ is another  OP w.r.t. $w$. We want to show $p_n - r_n$ is zero. But this is a polynomial of degree $<n$, hence
+
+\[
+p_n(x) - r_n(x) = \sum_{k=0}^{n-1} c_k p_k(x)
+\]
+But we have for $j \leq n-1$
+
+\[
+\langle p_j,p_j \rangle c_j = \langle p_n - r_n, p_j \rangle = \langle p_n,p_j \rangle - \langle r_n, p_j\rangle = 0 - 0 = 0
+\]
+which shows all $c_j$ are zero.  Note that we used the linearity property of the inner product: for constants $\alpha$, $\beta$ and functions $f(x)$, $g(x)$ and $h(x)$, it follows that $\langle  f,\alpha g + \beta h\rangle = \alpha\langle f, g\rangle + \beta\langle f, h \rangle $.  $\blacksquare$
+
+\textbf{Corollary} If $q_n$ and $p_n$ are orthogonal w.r.t. $w$ to all lower degree polynomials, then $q_n(x) = C p_n(x)$ for some constant $C$.
+
+\textbf{Example and Proposition (Chebyshev polynomials of the first kind are OPs)} The Chebyshev polynomials of the first kind,
+
+\[
+T_n(x) = \cos n\,{\rm acos}\, x,
+\]
+are OPs on $x \in [-1, 1]$ with respect to the weight
+
+\[
+w(x) = \frac{1}{\sqrt{1 - x^2}},
+\]
+and
+
+\[
+k_0 = 1, \qquad k_n = 2^{n-1}, \qquad n \geq 1.
+\]
+\textbf{Proof}  It follows immediately from the definition that $T_0(x) = 1$, $T_{1}(x) = x$ and for $n \geq 1$, setting $x = \cos \theta$,
+
+\[
+x T_n(x) = \cos \ensuremath{\theta} \cos n \ensuremath{\theta} = {\cos(n-1)\ensuremath{\theta} + \cos(n+1)\ensuremath{\theta} \over 2} = {T_{n-1}(x) + T_{n+1}(x) \over 2}
+\]
+In other words $T_{n+1}(x) = 2x T_n(x) - T_{n-1}(x)$ for $n \geq 1$. This shows that $T_n(x) = k_nx^{n} + \mathcal{O}(x^{n-1})$ with $k_0 = 1$ and $k_n = 2^{n-1}$, $n \geq 1$.  What remains to be shown is orthogonality with respect to the inner product defined by $w(x)$: again setting $x = \cos \theta$
+
+
+\begin{eqnarray*}
+\langle T_n, T_m\rangle &=& \int_{-1}^{1}\frac{T_n(x)T_m(x)}{\sqrt{1 - x^2}}\, {\rm d}x \\
+  &= & \int_{0}^{\pi} \cos n\theta \cos m\theta \, {\rm d}x \\
+  &=& \begin{cases} 
+0 & \text{if } n \neq m \\
+\frac{\pi}{2} & \text{if } n = m \geq 1 \\
+\pi & \text{if } n = m = 0
+\end{cases},
+\end{eqnarray*}
+which completes the proof.  $\blacksquare$
+
+\subsubsection{Monic orthogonal polynomials}
+If $k_n = 1$, that is,
+
+\[
+p_n(x) = x^n + O(x^{n-1})
+\]
+then we refer to the orthogonal polynomials as monic.
+
+Monic OPs are unique as we have specified $k_n$.
+
+\subsubsection{Orthonormal polynomials}
+If  $\| p_n \| = 1$, then we refer to the orthogonal polynomials as orthonormal w.r.t. $w$. We will usually use $q_n$ when they are orthonormal.   Note they're not unique: we can multiply by $\pm 1$ without changing the norm.
+
+\textbf{Proposition (existence)} Given a weight $w(x)$, monic orthogonal polynomials exist.
+
+\textbf{Proof}  Existence follows immediately from the Gram\ensuremath{\endash}Schmidt procedure. That is, define $p_0(x) := 1$ and
+
+\[
+p_n(x) := x^n - \ensuremath{\sum}_{k=0}^{n-1} {\ensuremath{\langle}x^n,p_k\ensuremath{\rangle} \over \|p_k\|^2} p_k(x)
+\]
+\[
+\blacksquare
+\]
+\subsection{Function approximation with OPs}
+A basic usage of orthogonal polynomials is for approximating functions. First we observe the following:
+
+\textbf{Proposition (expansion)} If $f(x)$ is a degree $n$ polynomial, $\{p_n\}$ are orthogonal and $\{q_n\}$ are orthonormal then
+
+
+\begin{align*}
+f(x) &= \sum_{k=0}^n {\ensuremath{\langle}p_k,f\ensuremath{\rangle} \over \|p_k\|^2} p_k(x) \\
+     &    = \sum_{k=0}^n \ensuremath{\langle}q_k,f\ensuremath{\rangle} q_k(x)
+\end{align*}
+\textbf{Proof} Because $\{p_0,\ensuremath{\ldots},p_n \}$ are a basis of the space of polynomials of degree $\leq n$, we can write
+
+\[
+f(x) = \sum_{k=0}^n f_k p_k(x)
+\]
+for constants $f_k \ensuremath{\in} \ensuremath{\bbR}$. By linearity we have
+
+\[
+\ensuremath{\langle}p_m,f\ensuremath{\rangle} = \sum_{k=0}^n f_k \ensuremath{\langle}p_m,p_k\ensuremath{\rangle}= f_m \ensuremath{\langle}p_m,p_m\ensuremath{\rangle}
+\]
+for $m = 0, \ldots, n$, i.e.,
+
+\[
+f_k = \frac{\langle p_k,f \rangle}{\langle p_k,p_k \rangle}, \qquad k = 0, \ldots, n.
+\]
+\[
+\blacksquare
+\]
+If $f$ is not a polynomial, we make the approximation $f(x) \approx \sum_{k=0}^n f_k p_k(x)$, with the expansion coefficients $f_k$ defined as above. 
+
+\textbf{Example:}  For Chebyshev polynomials, $p_k(x) = T_k(x)$ and for $k \geq 1$,
+
+
+\begin{eqnarray*}
+f_k &=&  \frac{\langle T_k,f \rangle}{\langle T_k,T_k \rangle} = \frac{\langle T_k,f \rangle}{\| T_k \|^2} \\
+   & = & \frac{2}{\pi}\int_{-1}^{1}   \frac{f(x) T_k(x)}{\sqrt{1 - x^2}}\,{\rm d}x  \\
+   & = &  \frac{2}{\pi}\int_{0}^{\pi}   f(\cos \theta) \cos k\theta\,{\rm d}\theta \\
+   & = & \frac{1}{\pi}\int_{-\pi}^{\pi}   f(\cos \theta) \cos k\theta\,{\rm d}\theta \\
+   & = & \frac{1}{\pi}\int_{-\pi}^{\pi}   f(\cos \theta) {\rm e}^{-{\rm i}k\theta} \,{\rm d}\theta \\
+   & = & \frac{(-1)^{k}}{\pi}\int_{0}^{2\pi}   f(\cos (\theta-\pi)) {\rm e}^{-{\rm i}k\theta} \,{\rm d}\theta
+\end{eqnarray*}
+That is, for Chebyshev polynomials, the expansion coefficients $f_k$ (aka Chebyshev coefficients) can be expressed as Fourier coefficients and therefore, they can be approximated with the FFT, as we learned in Chapter 3.
+
+\subsection{Three-term recurrences and Jacobi matrices for general orthogonal polynomials}
+\subsubsection{Three-term recurrence relationships}
+In Chapter 3, we used the formula $T_n(x) = \cos n\,{\rm acos}x$ and trigonometric identities to show that the Chebyshev polynomials satisfy a three-term recurrence relationship: $T_0(x) = 1$, $T_1(x)= x$ and for $n \geq 1$,
+
+\[
+xT_{n}(x) = \frac{1}{2}T_{n-1}(x) + \frac{1}{2}T_{n+1}(x).
+\]
+We'll soon prove that, as a consequence of orthogonality, all OP families satisfy three-term recurrences, which is a fundamental property of OPs.  By collecting OPs in a vector, we'll see that three-term recurrences can be expressed as multiplication by a tridiagonal matrix, the Jacobi matrix associated with a family of OPs.   
+
+A central theme: if you know the Jacobi matrix / three-term recurrence, you know the polynomials. This is the \textbf{best} way to evaluate expansions in orthogonal polynomials: even for cases where we have explicit formulae (e.g. Chebyshev polynomials $T_n(x) = \cos n \arccos x$), using the recurrence avoids evaluating trigonometric functions.  The following shows, suprisingly, that evaluating Chebyshev polynomials using the three-term recurrence is much faster than using the explicit formula:
+
+
+\begin{lstlisting}
+(*@\HLJLk{using}@*) (*@\HLJLn{LinearAlgebra}@*)(*@\HLJLp{,}@*) (*@\HLJLn{Plots}@*)(*@\HLJLp{,}@*) (*@\HLJLn{ApproxFun}@*)(*@\HLJLp{,}@*) (*@\HLJLn{BandedMatrices}@*)
+
+(*@\HLJLk{function}@*) (*@\HLJLnf{recurrence{\_}Chebyshev}@*)(*@\HLJLp{(}@*)(*@\HLJLn{n}@*)(*@\HLJLp{,}@*)(*@\HLJLn{x}@*)(*@\HLJLp{)}@*)
+    (*@\HLJLn{T}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{zeros}@*)(*@\HLJLp{(}@*)(*@\HLJLn{n}@*)(*@\HLJLp{)}@*)
+    (*@\HLJLn{T}@*)(*@\HLJLp{[}@*)(*@\HLJLni{1}@*)(*@\HLJLp{]}@*) (*@\HLJLoB{=}@*) (*@\HLJLnfB{1.0}@*)
+    (*@\HLJLn{T}@*)(*@\HLJLp{[}@*)(*@\HLJLni{2}@*)(*@\HLJLp{]}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{x}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{T}@*)(*@\HLJLp{[}@*)(*@\HLJLni{1}@*)(*@\HLJLp{]}@*)
+    (*@\HLJLk{for}@*) (*@\HLJLn{k}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{2}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{n}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)
+        (*@\HLJLn{T}@*)(*@\HLJLp{[}@*)(*@\HLJLn{k}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{]}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{2}@*)(*@\HLJLn{x}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{T}@*)(*@\HLJLp{[}@*)(*@\HLJLn{k}@*)(*@\HLJLp{]}@*) (*@\HLJLoB{-}@*) (*@\HLJLn{T}@*)(*@\HLJLp{[}@*)(*@\HLJLn{k}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)(*@\HLJLp{]}@*)
+    (*@\HLJLk{end}@*)
+    (*@\HLJLn{T}@*)
+(*@\HLJLk{end}@*)
+
+(*@\HLJLnf{trig{\_}Chebyshev}@*)(*@\HLJLp{(}@*)(*@\HLJLn{n}@*)(*@\HLJLp{,}@*)(*@\HLJLn{x}@*)(*@\HLJLp{)}@*) (*@\HLJLoB{=}@*) (*@\HLJLp{[}@*)(*@\HLJLnf{cos}@*)(*@\HLJLp{(}@*)(*@\HLJLn{k}@*)(*@\HLJLoB{*}@*)(*@\HLJLnf{acos}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{))}@*) (*@\HLJLk{for}@*) (*@\HLJLn{k}@*)(*@\HLJLoB{=}@*)(*@\HLJLni{0}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{n}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)(*@\HLJLp{]}@*)
+
+(*@\HLJLn{n}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{10}@*)
+(*@\HLJLnd{@show}@*) (*@\HLJLnf{norm}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{recurrence{\_}Chebyshev}@*)(*@\HLJLp{(}@*)(*@\HLJLn{n}@*)(*@\HLJLp{,}@*) (*@\HLJLnfB{0.1}@*)(*@\HLJLp{)}@*) (*@\HLJLoB{-}@*) (*@\HLJLnf{trig{\_}Chebyshev}@*)(*@\HLJLp{(}@*)(*@\HLJLn{n}@*)(*@\HLJLp{,}@*)(*@\HLJLnfB{0.1}@*)(*@\HLJLp{),}@*)(*@\HLJLn{Inf}@*)(*@\HLJLp{)}@*)
+
+(*@\HLJLn{n}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{1{\_}000{\_}000}@*)
+(*@\HLJLnd{@time}@*) (*@\HLJLnf{recurrence{\_}Chebyshev}@*)(*@\HLJLp{(}@*)(*@\HLJLn{n}@*)(*@\HLJLp{,}@*) (*@\HLJLnfB{0.1}@*)(*@\HLJLp{)}@*)
+(*@\HLJLnd{@time}@*) (*@\HLJLnf{trig{\_}Chebyshev}@*)(*@\HLJLp{(}@*)(*@\HLJLn{n}@*)(*@\HLJLp{,}@*)(*@\HLJLnfB{0.1}@*)(*@\HLJLp{);}@*)
+\end{lstlisting}
+
+\begin{lstlisting}
+norm(recurrence(*@{{\_}}@*)Chebyshev(n, 0.1) - trig(*@{{\_}}@*)Chebyshev(n, 0.1), Inf) = 1.110223
+0246251565e-16
+  0.004717 seconds (2 allocations: 7.629 MiB)
+  0.029896 seconds (2 allocations: 7.629 MiB)
+\end{lstlisting}
+
+
+\textbf{Theorem (three-term recurrence)} Suppose $\{p_n(x)\}$ are a family of orthogonal polynomials w.r.t. a weight $w(x)$. Then there exists constants $a_n$, $b_n \neq 0$ and $c_n \neq 0$ such that
+
+
+\begin{align*}
+x p_0(x) = a_0 p_0(x) + b_0 p_1(x) \\
+x p_n(x) = c_n p_{n-1}(x) + a_n p_n(x) + b_n p_{n+1}(x)
+\end{align*}
+\textbf{Proof} The first part follows since $p_0(x)$ and $p_1(x)$ span all degree 1 polynomials.
+
+The second part follows essentially because multiplication by $x$ is "self-adjoint", that is,
+
+\[
+\langle x f, g\rangle = \int_a^b x f(x) g(x) w(x) {\rm d}x = \langle f, x g \rangle
+\]
+Therefore, if $f_m$ is a degree $m < n-1$ polynomial, we have
+
+\[
+\langle x p_n, f_m\rangle = \langle p_n, x f_m\rangle = 0.
+\]
+In particular, if we write
+
+\[
+x p_n(x) = \sum_{k=0}^{n+1} C_k p_k(x)
+\]
+then
+
+\[
+C_k = {\langle x p_n, p_k\rangle \over \| p_k\|^2} = 0
+\]
+if $k < n-1$.
+
+Note that
+
+\[
+C_{n+1} = b_n = {\ensuremath{\langle}p_{n+1}, x p_n\ensuremath{\rangle} \over \|p_{n+1} \|^2} \ensuremath{\ne} 0
+\]
+since $x p_n = k_n x^{n+1} + O(x^n)$ is precisely degree $n$. Further,
+
+\[
+C_{n-1} = c_{n-1} = {\ensuremath{\langle}p_{n-1}, x p_n\ensuremath{\rangle} \over \|p_{n-1}\|^2 } =
+{\ensuremath{\langle}p_n, x p_{n-1}\ensuremath{\rangle}  \over \|p_{n-1}\|^2 } =  b_{n-1}{\|p_n\|^2  \over \|p_{n-1}\|^2 } \ensuremath{\ne} 0.
+\]
+\[
+\blacksquare
+\]
+Clearly if $p_n$ is monic then so is $x p_n$ which leads to the following:
+
+\textbf{Corollary (monic 3-term recurrence)} If $\{p_n\}$ are monic then $b_n =  1$.
+
+\subsubsection{Jacobi matrices and multiplication by $x$}
+The three-term recurrence can also be interpreted as an infinite tridiagonal matrix known as the Jacobi matrix:
+
+\textbf{Corollary (Jacobi matrix)} For
+
+\[
+P(x) := [p_0(x) | p_1(x) | \ensuremath{\cdots}]
+\]
+we have
+
+\[
+x P(x) = P(x) \underbrace{\begin{bmatrix} a_0 & c_0 \\
+                                                        b_0 & a_1 & c_1\\
+                                                        & b_1 & a_2 & \ensuremath{\ddots} \\
+                                                        && \ensuremath{\ddots} & \ensuremath{\ddots}
+                                                        \end{bmatrix}}_X
+\]
+Here is the Jacobi matrix for the Chebyshev polynomials:
+
+
+\begin{lstlisting}
+(*@\HLJLn{X}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{Multiplication}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{Fun}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLoB{->}@*)(*@\HLJLn{x}@*)(*@\HLJLp{),}@*)(*@\HLJLnf{Chebyshev}@*)(*@\HLJLp{())}@*)
+\end{lstlisting}
+
+\begin{lstlisting}
+ConcreteMultiplication : Chebyshev() (*@\ensuremath{\rightarrow}@*) Chebyshev()
+ 0.0  0.5   (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)   (*@\ensuremath{\cdot}@*)
+ 1.0  0.0  0.5   (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)   (*@\ensuremath{\cdot}@*)
+  (*@\ensuremath{\cdot}@*)   0.5  0.0  0.5   (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)   (*@\ensuremath{\cdot}@*)
+  (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)   0.5  0.0  0.5   (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)   (*@\ensuremath{\cdot}@*)
+  (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)   0.5  0.0  0.5   (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)   (*@\ensuremath{\cdot}@*)
+  (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)   0.5  0.0  0.5   (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)   (*@\ensuremath{\cdot}@*)
+  (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)   0.5  0.0  0.5   (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)   (*@\ensuremath{\cdot}@*)
+  (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)   0.5  0.0  0.5   (*@\ensuremath{\cdot}@*)   (*@\ensuremath{\cdot}@*)
+  (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)   0.5  0.0  0.5  (*@\ensuremath{\cdot}@*)
+  (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)   0.5  0.0  (*@\ensuremath{\ddots}@*)
+  (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\ddots}@*)   (*@\ensuremath{\ddots}@*)
+\end{lstlisting}
+
+
+For the special cases of orthonormal polynomials we have extra structure:
+
+\textbf{Corollary (orthonormal 3-term recurrence)} If $\{q_n\}$ are orthonormal then its recurrence coefficients satisfy $c_n = b_n$. That is, the Jacobi matrix is symmetric:
+
+\[
+X = \begin{bmatrix} a_0 & b_0 \\
+                                                        b_0 & a_1 & b_1\\
+                                                        & b_1 & a_2 & \ensuremath{\ddots} \\
+                                                        && \ensuremath{\ddots} & \ensuremath{\ddots}
+                                                        \end{bmatrix}
+\]
+\textbf{Proof}
+
+\[
+b_n = \ensuremath{\langle}x q_n, q_{n+1}\ensuremath{\rangle} = \ensuremath{\langle}q_n, x q_{n+1}\ensuremath{\rangle} = c_{n}.
+\]
+\[
+\blacksquare
+\]
+
+
+\end{document}

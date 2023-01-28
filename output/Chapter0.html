@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<HTML lang = "en">
+<HEAD>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  
+  
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: { equationNumbers: { autoNumber: "AMS" } }
+    });
+  </script>
+
+  <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script>
+
+  
+<style>
+pre.hljl {
+    border: 1px solid #ccc;
+    margin: 5px;
+    padding: 5px;
+    overflow-x: auto;
+    color: rgb(68,68,68); background-color: rgb(251,251,251); }
+pre.hljl > span.hljl-t { }
+pre.hljl > span.hljl-w { }
+pre.hljl > span.hljl-e { }
+pre.hljl > span.hljl-eB { }
+pre.hljl > span.hljl-o { }
+pre.hljl > span.hljl-k { color: rgb(148,91,176); font-weight: bold; }
+pre.hljl > span.hljl-kc { color: rgb(59,151,46); font-style: italic; }
+pre.hljl > span.hljl-kd { color: rgb(214,102,97); font-style: italic; }
+pre.hljl > span.hljl-kn { color: rgb(148,91,176); font-weight: bold; }
+pre.hljl > span.hljl-kp { color: rgb(148,91,176); font-weight: bold; }
+pre.hljl > span.hljl-kr { color: rgb(148,91,176); font-weight: bold; }
+pre.hljl > span.hljl-kt { color: rgb(148,91,176); font-weight: bold; }
+pre.hljl > span.hljl-n { }
+pre.hljl > span.hljl-na { }
+pre.hljl > span.hljl-nb { }
+pre.hljl > span.hljl-nbp { }
+pre.hljl > span.hljl-nc { }
+pre.hljl > span.hljl-ncB { }
+pre.hljl > span.hljl-nd { color: rgb(214,102,97); }
+pre.hljl > span.hljl-ne { }
+pre.hljl > span.hljl-neB { }
+pre.hljl > span.hljl-nf { color: rgb(66,102,213); }
+pre.hljl > span.hljl-nfm { color: rgb(66,102,213); }
+pre.hljl > span.hljl-np { }
+pre.hljl > span.hljl-nl { }
+pre.hljl > span.hljl-nn { }
+pre.hljl > span.hljl-no { }
+pre.hljl > span.hljl-nt { }
+pre.hljl > span.hljl-nv { }
+pre.hljl > span.hljl-nvc { }
+pre.hljl > span.hljl-nvg { }
+pre.hljl > span.hljl-nvi { }
+pre.hljl > span.hljl-nvm { }
+pre.hljl > span.hljl-l { }
+pre.hljl > span.hljl-ld { color: rgb(148,91,176); font-style: italic; }
+pre.hljl > span.hljl-s { color: rgb(201,61,57); }
+pre.hljl > span.hljl-sa { color: rgb(201,61,57); }
+pre.hljl > span.hljl-sb { color: rgb(201,61,57); }
+pre.hljl > span.hljl-sc { color: rgb(201,61,57); }
+pre.hljl > span.hljl-sd { color: rgb(201,61,57); }
+pre.hljl > span.hljl-sdB { color: rgb(201,61,57); }
+pre.hljl > span.hljl-sdC { color: rgb(201,61,57); }
+pre.hljl > span.hljl-se { color: rgb(59,151,46); }
+pre.hljl > span.hljl-sh { color: rgb(201,61,57); }
+pre.hljl > span.hljl-si { }
+pre.hljl > span.hljl-so { color: rgb(201,61,57); }
+pre.hljl > span.hljl-sr { color: rgb(201,61,57); }
+pre.hljl > span.hljl-ss { color: rgb(201,61,57); }
+pre.hljl > span.hljl-ssB { color: rgb(201,61,57); }
+pre.hljl > span.hljl-nB { color: rgb(59,151,46); }
+pre.hljl > span.hljl-nbB { color: rgb(59,151,46); }
+pre.hljl > span.hljl-nfB { color: rgb(59,151,46); }
+pre.hljl > span.hljl-nh { color: rgb(59,151,46); }
+pre.hljl > span.hljl-ni { color: rgb(59,151,46); }
+pre.hljl > span.hljl-nil { color: rgb(59,151,46); }
+pre.hljl > span.hljl-noB { color: rgb(59,151,46); }
+pre.hljl > span.hljl-oB { color: rgb(102,102,102); font-weight: bold; }
+pre.hljl > span.hljl-ow { color: rgb(102,102,102); font-weight: bold; }
+pre.hljl > span.hljl-p { }
+pre.hljl > span.hljl-c { color: rgb(153,153,119); font-style: italic; }
+pre.hljl > span.hljl-ch { color: rgb(153,153,119); font-style: italic; }
+pre.hljl > span.hljl-cm { color: rgb(153,153,119); font-style: italic; }
+pre.hljl > span.hljl-cp { color: rgb(153,153,119); font-style: italic; }
+pre.hljl > span.hljl-cpB { color: rgb(153,153,119); font-style: italic; }
+pre.hljl > span.hljl-cs { color: rgb(153,153,119); font-style: italic; }
+pre.hljl > span.hljl-csB { color: rgb(153,153,119); font-style: italic; }
+pre.hljl > span.hljl-g { }
+pre.hljl > span.hljl-gd { }
+pre.hljl > span.hljl-ge { }
+pre.hljl > span.hljl-geB { }
+pre.hljl > span.hljl-gh { }
+pre.hljl > span.hljl-gi { }
+pre.hljl > span.hljl-go { }
+pre.hljl > span.hljl-gp { }
+pre.hljl > span.hljl-gs { }
+pre.hljl > span.hljl-gsB { }
+pre.hljl > span.hljl-gt { }
+</style>
+
+
+
+  <style type="text/css">
+  @font-face {
+  font-style: normal;
+  font-weight: 300;
+}
+@font-face {
+  font-style: normal;
+  font-weight: 400;
+}
+@font-face {
+  font-style: normal;
+  font-weight: 600;
+}
+html {
+  font-family: sans-serif; /* 1 */
+  -ms-text-size-adjust: 100%; /* 2 */
+  -webkit-text-size-adjust: 100%; /* 2 */
+}
+body {
+  margin: 0;
+}
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+menu,
+nav,
+section,
+summary {
+  display: block;
+}
+audio,
+canvas,
+progress,
+video {
+  display: inline-block; /* 1 */
+  vertical-align: baseline; /* 2 */
+}
+audio:not([controls]) {
+  display: none;
+  height: 0;
+}
+[hidden],
+template {
+  display: none;
+}
+a:active,
+a:hover {
+  outline: 0;
+}
+abbr[title] {
+  border-bottom: 1px dotted;
+}
+b,
+strong {
+  font-weight: bold;
+}
+dfn {
+  font-style: italic;
+}
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+mark {
+  background: #ff0;
+  color: #000;
+}
+small {
+  font-size: 80%;
+}
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+sup {
+  top: -0.5em;
+}
+sub {
+  bottom: -0.25em;
+}
+img {
+  border: 0;
+}
+svg:not(:root) {
+  overflow: hidden;
+}
+figure {
+  margin: 1em 40px;
+}
+hr {
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  height: 0;
+}
+pre {
+  overflow: auto;
+}
+code,
+kbd,
+pre,
+samp {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+button,
+input,
+optgroup,
+select,
+textarea {
+  color: inherit; /* 1 */
+  font: inherit; /* 2 */
+  margin: 0; /* 3 */
+}
+button {
+  overflow: visible;
+}
+button,
+select {
+  text-transform: none;
+}
+button,
+html input[type="button"], /* 1 */
+input[type="reset"],
+input[type="submit"] {
+  -webkit-appearance: button; /* 2 */
+  cursor: pointer; /* 3 */
+}
+button[disabled],
+html input[disabled] {
+  cursor: default;
+}
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+input {
+  line-height: normal;
+}
+input[type="checkbox"],
+input[type="radio"] {
+  box-sizing: border-box; /* 1 */
+  padding: 0; /* 2 */
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  height: auto;
+}
+input[type="search"] {
+  -webkit-appearance: textfield; /* 1 */
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box; /* 2 */
+  box-sizing: content-box;
+}
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+fieldset {
+  border: 1px solid #c0c0c0;
+  margin: 0 2px;
+  padding: 0.35em 0.625em 0.75em;
+}
+legend {
+  border: 0; /* 1 */
+  padding: 0; /* 2 */
+}
+textarea {
+  overflow: auto;
+}
+optgroup {
+  font-weight: bold;
+}
+table {
+  font-family: monospace, monospace;
+  font-size : 0.8em;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+td,
+th {
+  padding: 0;
+}
+thead th {
+    border-bottom: 1px solid black;
+    background-color: white;
+}
+tr:nth-child(odd){
+  background-color: rgb(248,248,248);
+}
+
+
+/*
+* Skeleton V2.0.4
+* Copyright 2014, Dave Gamache
+* www.getskeleton.com
+* Free to use under the MIT license.
+* http://www.opensource.org/licenses/mit-license.php
+* 12/29/2014
+*/
+.container {
+  position: relative;
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box; }
+.column,
+.columns {
+  width: 100%;
+  float: left;
+  box-sizing: border-box; }
+@media (min-width: 400px) {
+  .container {
+    width: 85%;
+    padding: 0; }
+}
+@media (min-width: 550px) {
+  .container {
+    width: 80%; }
+  .column,
+  .columns {
+    margin-left: 4%; }
+  .column:first-child,
+  .columns:first-child {
+    margin-left: 0; }
+
+  .one.column,
+  .one.columns                    { width: 4.66666666667%; }
+  .two.columns                    { width: 13.3333333333%; }
+  .three.columns                  { width: 22%;            }
+  .four.columns                   { width: 30.6666666667%; }
+  .five.columns                   { width: 39.3333333333%; }
+  .six.columns                    { width: 48%;            }
+  .seven.columns                  { width: 56.6666666667%; }
+  .eight.columns                  { width: 65.3333333333%; }
+  .nine.columns                   { width: 74.0%;          }
+  .ten.columns                    { width: 82.6666666667%; }
+  .eleven.columns                 { width: 91.3333333333%; }
+  .twelve.columns                 { width: 100%; margin-left: 0; }
+
+  .one-third.column               { width: 30.6666666667%; }
+  .two-thirds.column              { width: 65.3333333333%; }
+
+  .one-half.column                { width: 48%; }
+
+  /* Offsets */
+  .offset-by-one.column,
+  .offset-by-one.columns          { margin-left: 8.66666666667%; }
+  .offset-by-two.column,
+  .offset-by-two.columns          { margin-left: 17.3333333333%; }
+  .offset-by-three.column,
+  .offset-by-three.columns        { margin-left: 26%;            }
+  .offset-by-four.column,
+  .offset-by-four.columns         { margin-left: 34.6666666667%; }
+  .offset-by-five.column,
+  .offset-by-five.columns         { margin-left: 43.3333333333%; }
+  .offset-by-six.column,
+  .offset-by-six.columns          { margin-left: 52%;            }
+  .offset-by-seven.column,
+  .offset-by-seven.columns        { margin-left: 60.6666666667%; }
+  .offset-by-eight.column,
+  .offset-by-eight.columns        { margin-left: 69.3333333333%; }
+  .offset-by-nine.column,
+  .offset-by-nine.columns         { margin-left: 78.0%;          }
+  .offset-by-ten.column,
+  .offset-by-ten.columns          { margin-left: 86.6666666667%; }
+  .offset-by-eleven.column,
+  .offset-by-eleven.columns       { margin-left: 95.3333333333%; }
+
+  .offset-by-one-third.column,
+  .offset-by-one-third.columns    { margin-left: 34.6666666667%; }
+  .offset-by-two-thirds.column,
+  .offset-by-two-thirds.columns   { margin-left: 69.3333333333%; }
+
+  .offset-by-one-half.column,
+  .offset-by-one-half.columns     { margin-left: 52%; }
+
+}
+html {
+  font-size: 62.5%; }
+body {
+  font-size: 1.5em; /* currently ems cause chrome bug misinterpreting rems on body element */
+  line-height: 1.6;
+  font-weight: 400;
+  font-family: "Raleway", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #222; }
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 0;
+  margin-bottom: 2rem;
+  font-weight: 300; }
+h1 { font-size: 3.6rem; line-height: 1.2;  letter-spacing: -.1rem;}
+h2 { font-size: 3.4rem; line-height: 1.25; letter-spacing: -.1rem; }
+h3 { font-size: 3.2rem; line-height: 1.3;  letter-spacing: -.1rem; }
+h4 { font-size: 2.8rem; line-height: 1.35; letter-spacing: -.08rem; }
+h5 { font-size: 2.4rem; line-height: 1.5;  letter-spacing: -.05rem; }
+h6 { font-size: 1.5rem; line-height: 1.6;  letter-spacing: 0; }
+
+p {
+  margin-top: 0; }
+a {
+  color: #1EAEDB; }
+a:hover {
+  color: #0FA0CE; }
+.button,
+button,
+input[type="submit"],
+input[type="reset"],
+input[type="button"] {
+  display: inline-block;
+  height: 38px;
+  padding: 0 30px;
+  color: #555;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 38px;
+  letter-spacing: .1rem;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  background-color: transparent;
+  border-radius: 4px;
+  border: 1px solid #bbb;
+  cursor: pointer;
+  box-sizing: border-box; }
+.button:hover,
+button:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover,
+input[type="button"]:hover,
+.button:focus,
+button:focus,
+input[type="submit"]:focus,
+input[type="reset"]:focus,
+input[type="button"]:focus {
+  color: #333;
+  border-color: #888;
+  outline: 0; }
+.button.button-primary,
+button.button-primary,
+input[type="submit"].button-primary,
+input[type="reset"].button-primary,
+input[type="button"].button-primary {
+  color: #FFF;
+  background-color: #33C3F0;
+  border-color: #33C3F0; }
+.button.button-primary:hover,
+button.button-primary:hover,
+input[type="submit"].button-primary:hover,
+input[type="reset"].button-primary:hover,
+input[type="button"].button-primary:hover,
+.button.button-primary:focus,
+button.button-primary:focus,
+input[type="submit"].button-primary:focus,
+input[type="reset"].button-primary:focus,
+input[type="button"].button-primary:focus {
+  color: #FFF;
+  background-color: #1EAEDB;
+  border-color: #1EAEDB; }
+input[type="email"],
+input[type="number"],
+input[type="search"],
+input[type="text"],
+input[type="tel"],
+input[type="url"],
+input[type="password"],
+textarea,
+select {
+  height: 38px;
+  padding: 6px 10px; /* The 6px vertically centers text on FF, ignored by Webkit */
+  background-color: #fff;
+  border: 1px solid #D1D1D1;
+  border-radius: 4px;
+  box-shadow: none;
+  box-sizing: border-box; }
+/* Removes awkward default styles on some inputs for iOS */
+input[type="email"],
+input[type="number"],
+input[type="search"],
+input[type="text"],
+input[type="tel"],
+input[type="url"],
+input[type="password"],
+textarea {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none; }
+textarea {
+  min-height: 65px;
+  padding-top: 6px;
+  padding-bottom: 6px; }
+input[type="email"]:focus,
+input[type="number"]:focus,
+input[type="search"]:focus,
+input[type="text"]:focus,
+input[type="tel"]:focus,
+input[type="url"]:focus,
+input[type="password"]:focus,
+textarea:focus,
+select:focus {
+  border: 1px solid #33C3F0;
+  outline: 0; }
+label,
+legend {
+  display: block;
+  margin-bottom: .5rem;
+  font-weight: 600; }
+fieldset {
+  padding: 0;
+  border-width: 0; }
+input[type="checkbox"],
+input[type="radio"] {
+  display: inline; }
+label > .label-body {
+  display: inline-block;
+  margin-left: .5rem;
+  font-weight: normal; }
+ul {
+  list-style: circle; }
+ol {
+  list-style: decimal; }
+ul ul,
+ul ol,
+ol ol,
+ol ul {
+  margin: 1.5rem 0 1.5rem 3rem;
+  font-size: 90%; }
+li > p {margin : 0;}
+th,
+td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #E1E1E1; }
+th:first-child,
+td:first-child {
+  padding-left: 0; }
+th:last-child,
+td:last-child {
+  padding-right: 0; }
+button,
+.button {
+  margin-bottom: 1rem; }
+input,
+textarea,
+select,
+fieldset {
+  margin-bottom: 1.5rem; }
+pre,
+blockquote,
+dl,
+figure,
+table,
+p,
+ul,
+ol,
+form {
+  margin-bottom: 1.0rem; }
+.u-full-width {
+  width: 100%;
+  box-sizing: border-box; }
+.u-max-full-width {
+  max-width: 100%;
+  box-sizing: border-box; }
+.u-pull-right {
+  float: right; }
+.u-pull-left {
+  float: left; }
+hr {
+  margin-top: 3rem;
+  margin-bottom: 3.5rem;
+  border-width: 0;
+  border-top: 1px solid #E1E1E1; }
+.container:after,
+.row:after,
+.u-cf {
+  content: "";
+  display: table;
+  clear: both; }
+
+pre {
+  display: block;
+  padding: 9.5px;
+  margin: 0 0 10px;
+  font-size: 13px;
+  line-height: 1.42857143;
+  word-break: break-all;
+  word-wrap: break-word;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+pre.hljl {
+  margin: 0 0 10px;
+  display: block;
+  background: #f5f5f5;
+  border-radius: 4px;
+  padding : 5px;
+}
+
+pre.output {
+  background: #ffffff;
+}
+
+pre.code {
+  background: #ffffff;
+}
+
+pre.julia-error {
+  color : red
+}
+
+code,
+kbd,
+pre,
+samp {
+  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+  font-size: 0.9em;
+}
+
+
+@media (min-width: 400px) {}
+@media (min-width: 550px) {}
+@media (min-width: 750px) {}
+@media (min-width: 1000px) {}
+@media (min-width: 1200px) {}
+
+h1.title {margin-top : 20px}
+img {max-width : 100%}
+div.title {text-align: center;}
+
+  </style>
+</HEAD>
+
+<BODY>
+  <div class ="container">
+    <div class = "row">
+      <div class = "col-md-12 twelve columns">
+        <div class="title">
+          
+          
+          
+        </div>
+
+        <h1>Chapter 0: Welcome to Computational methods for partial differential equations</h1>
+
+<p><strong>Lecturer:</strong> Dr Marco Fasondini, <a href="mailto:m.fasondini@leicester.ac.uk">m.fasondini@leicester.ac.uk</a></p>
+
+<p>Here we</p>
+<ol>
+<li><p>Introduce the topic of computational methods for PDEs</p>
+</li>
+<li><p>Discuss module admin: see the <a href="https://blackboard.le.ac.uk/">Blackboard page</a> of this module</p>
+</li>
+<li><p>Discuss programming / coding </p>
+</li>
+<li><p>Discuss the sources / reading list</p>
+</li>
+</ol>
+
+<h2>Computational methods for PDEs</h2>
+
+<p>The purpose of this module is to introduce you to the analysis and implementation of computational methods for partial differential equations.  We shall study <strong>finite difference</strong> methods, <strong>spectral collocation</strong> methods, the <strong>ultraspherical spectral</strong> method and, time permitting, the <strong>finite element</strong> method.  </p>
+
+<p>A broader perspective: A quote from <em>An Applied Mathematician&#39;s Apology</em> by L.N. Trefethen, 2022:</p>
+<p>... the language of the laws of nature, partial differential equations or PDEs. When Maxwell discovered that light and radio waves are one, it was because of a PDE. When Einstein predicted gravitational waves, it was because     of a PDE. Chemistry is built on Schrodinger&#39;s equation, fluid mechanics on the Navier-Stokes equations, and civil engineering on the equations of elasticity.</p>
+
+<p>A few important PDEs &#40;there are many variations&#33;&#41;</p>
+<ul>
+<li><p>Laplace equation &#40;<span class="math">$f = 0$</span>&#41; / Poisson equation &#40;<span class="math">$f \neq 0$</span>&#41; </p>
+</li>
+</ul>
+<p class="math">\[
+\nabla^2 u = f   \qquad \text{or} \qquad \Delta u = f
+\]</p>
+<p>An elliptic equation</p>
+<ul>
+<li><p>Heat equation</p>
+</li>
+</ul>
+<p class="math">\[
+ u_t - \nabla^2 u = f 
+\]</p>
+<p>A parabolic equation</p>
+<ul>
+<li><p>Transport / Advection and Wave equation </p>
+</li>
+</ul>
+<p class="math">\[
+\begin{align*}
+    u_t + (v \cdot \nabla) u &= 0 \\
+  u_{tt} - \nabla^2 u &= f 
+\end{align*}
+\]</p>
+<p>Wave equation: a hyperbolic equation</p>
+<ul>
+<li><p>Navier&#39;s equations : small-strain elasticity </p>
+</li>
+</ul>
+<p class="math">\[
+- \mu \nabla^2 \mathbf{u} + (\lambda+\mu) \nabla  (\nabla\cdot\mathbf{u}) = \mathbf{f}
+\]</p>
+<ul>
+<li><p>Navier-Stokes equations : incompressible viscous fluids </p>
+</li>
+</ul>
+<p class="math">\[
+\mathbf{u}_t + (\mathbf{u} \cdot \nabla)\mathbf{u} = \nu \nabla^2 \mathbf{u} - \nabla p, \quad \nabla \cdot \mathbf{u} = 0
+\]</p>
+<p>Numerical solutions to the &#40;quasilinear&#41; Navier-Stokes equations have been computed for decades &#40;for example, these equations are used for weather prediction&#41;, however the mathematical analysis of these PDEs is still not settled &#40;see the Wiki page on <a href="https://en.wikipedia.org/wiki/Navier&#37;E2&#37;80&#37;93Stokes_existence_and_smoothness">Navier-Stokes existence and smoothness</a>&#41;: the Clay Mathematics Institute in May 2000 made this problem one of its seven Millennium Prize problems in mathematics. It offered a US&#36;1,000,000 prize to the first person providing a solution for a specific statement of the problem:</p>
+<p>Prove or give a counter-example of the following statement:</p>
+<p>In three space dimensions and time, given an initial velocity field, there exists a vector velocity and a scalar pressure field, which are both smooth and globally defined, that solve the Navier-Stokes equations.</p>
+<ul>
+<li><p>Reaction-Diffusion systems; example, Brusselator: simple model for an autocatalytic reaction &#40;arises also in enzymatic reactions, plasma and laser physics&#41;</p>
+</li>
+</ul>
+<p class="math">\[
+\begin{align*}
+u_t &= B + u^2 v - (A+1) u + \alpha \nabla^2 u \\ 
+v_t &= Au  - u^2 v + \alpha \nabla^2 v
+\end{align*}
+\]</p>
+<ul>
+<li><p>Black-Scholes equation &#40;mathematical finance&#41;</p>
+</li>
+</ul>
+<p class="math">\[
+\frac{\partial u}{\partial t} + \frac{1}{2}x^2\sigma^2 \frac{\partial^2 u}{\partial x^2} + rx \frac{\partial u}{\partial x} - ru = 0
+\]</p>
+<p>Through a change of variables, this equation can be reduced to the heat equation. <a href="https://twitter.com/nntaleb/status/1596178404675551239">According to Nassim Taleb</a>, this equation should be called the Fokker-Plank and / or Kolmogorov Forward Equation and he also explains <a href="https://www.youtube.com/watch?v&#61;UoGlUZPNouM">why we never use the Black-Scholes equation</a>.   The use of mathematical models have resulted in mixed fortunes in finance: for example, there&#39;s the cautionary tale <a href="https://en.wikipedia.org/wiki/When_Genius_Failed">When Genius Failed: The Rise and Fall of Long-Term Capital Management</a> &#40;in which Myron Scholes was involved&#41; and then there&#39;s the extremely successful <a href="https://en.wikipedia.org/wiki/Renaissance_Technologies">Renaissance Technologies</a>, a hedge fund founded by the mathematician Jim Simons, see the book <em>The Man who Solved the Market: How Jim Simons Launched the Quant Revolution</em>. </p>
+<ul>
+<li><p>Maxwell&#39;s equations </p>
+</li>
+<li><p>Einstein field equations</p>
+</li>
+<li><p>Dirac equation</p>
+</li>
+<li><p>...</p>
+</li>
+</ul>
+
+<p>Only in very few cases are we able to solve PDEs exactly, so we use computational methods to approximate solutions to PDEs. Here are some videos of simulations produced by computing solutions to differential equations:</p>
+<ul>
+<li><p>Cahn-Hilliard equation: &#40;<a href="https://www.youtube.com/watch?v&#61;MovUu2DwWvI">phase separation of a binary fluid</a>&#41;</p>
+</li>
+</ul>
+<p class="math">\[
+c_t = \Delta \big( c^3 - c - \gamma \Delta c \big)
+\]</p>
+<ul>
+<li><p>Molecular Dynamics: &#40;or more general Hamiltonian dynamics&#41;</p>
+</li>
+</ul>
+<p class="math">\[
+m_n \ddot{r_n} = - \nabla E(r_1, \dots, r_N)
+\]</p>
+<p>used <a href="https://www.youtube.com/watch?v&#61;zRUFzJrDtq0">here</a> to model water turing into ice.</p>
+<ul>
+<li><p><a href="https://www.youtube.com/watch?v&#61;u8Kfn2o7epQ">Nonlinear elasticity</a></p>
+</li>
+<li><p><a href="https://www.youtube.com/watch?v&#61;-kDb0HlDsIM">thermal convection in earth&#39;s mantle</a></p>
+</li>
+<li><p><a href="https://www.youtube.com/watch?v&#61;dbBmSBA7Kyw">spread of covid-19</a></p>
+</li>
+<li><p><a href="https://www.youtube.com/watch?v&#61;gxAaO2rsdIs">simulating the spread of an epidemic</a></p>
+</li>
+<li><p><a href="https://www.youtube.com/watch?v&#61;_0QhOCDzP4I&amp;t">salt crystal melting in water</a></p>
+</li>
+<li><p><a href="https://www.youtube.com/watch?v&#61;jj0WsQYtT7M">NASA climate simulations</a></p>
+</li>
+<li><p><a href="https://www.youtube.com/watch?v&#61;rtBlZJ6gNiI">Predicting matter distribution in the universe</a></p>
+</li>
+<li><p><a href="https://www.youtube.com/watch?v&#61;hz7UjN_vYuw">flow past an airfoil - high resolution</a></p>
+</li>
+<li><p><a href="https://www.youtube.com/watch?v&#61;bJX8fVsq5oQ">Aerodynamics of Different Geometries - 2d Navier-Stokes Simulation</a></p>
+</li>
+<li><p><a href="https://www.youtube.com/watch?v&#61;vOFcHqImXJ8">Another Navier-Stokes simulation</a></p>
+</li>
+</ul>
+
+<h3>Reality <span class="math">$\rightarrow$</span> Model<span class="math">$\rightarrow$</span> Simulation <span class="math">$\rightarrow$</span> Prediction</h3>
+<ul>
+<li><p>Mathematical models of &quot;real-world&quot; processes &#40;physics, chemistry, life sciences, engineering, ...&#41; more often than not take the form of a system of ordinary or partial differential equations, integral equations, or closely related models. &#40;sometimes stochastic, on networks, etc, but this is beyond the scope of this module&#41; </p>
+</li>
+<li><p>In this module we take the mathematical model as given and study how it is solved numerically.</p>
+</li>
+<li><p>But we should not forget what the origin of the mathematical model is so that we are appreciative of the requirements. </p>
+<ul>
+<li><p>the model is an approximation of reality, the numerical scheme / computational method is an approximation of the model.</p>
+</li>
+<li><p>how accurate is the model, i.e. how accurate should the numerical solution be? </p>
+</li>
+<li><p>how accurate are the model parameters? </p>
+</li>
+<li><p>are real-time simulations required?</p>
+</li>
+<li><p>long-time behaviour? </p>
+</li>
+<li><p>inverse and control problems</p>
+</li>
+</ul>
+</li>
+</ul>
+
+<h2>Module admin</h2>
+<p>See the <a href="https://blackboard.le.ac.uk/">Blackboard page</a> of this module</p>
+
+<h2>Programming / coding</h2>
+
+<p>All the code in the lecture notes are in the <a href="https://julialang.org/">Julia programming language</a>. You are free to use whichever programming language you prefer &#40;e.g., Matlab or Python&#41; and Matlab code will be available on Blackboard.</p>
+<p>If you prefer to do your coding in Matlab and need to refresh your memory, have a look at this <a href="https://matlabacademy.mathworks.com/details/matlab-onramp/gettingstarted">MathWorks tutorial</a> &#40;you may need to create a mathworks account with your student email address to access it&#41;.  For those using Matlab, to perform some of the numerical experiments in this module, you will find it helpful to use the Matlab package called <a href="https://www.chebfun.org/">Chebfun</a> &#40;see Chapter 1: Exercise 2&#41;.  In Julia, the counterpart of Chebfun is <a href="https://github.com/JuliaApproximation/ApproxFun.jl">ApproxFun.jl</a>. </p>
+<ul>
+<li><p>If you have no programming background at all, the module is doable but will be hard. </p>
+</li>
+<li><p>If you have only minimal background, then please ask questions during lectures, or come to office hours.</p>
+</li>
+</ul>
+<p>Back to Julia: it is a modern, compiled, high-level, open-source language developed at MIT. It is becoming increasingly important in high-performance computing and AI and it is used by Astrazeneca, Moderna and Pfizer in drug development and clinical trial accelleration, IBM for medical diagnosis, MIT for robot locomotion, and elsewhere.</p>
+
+<p>Julia is a relatively young programming language, which aims to combine </p>
+<ul>
+<li><p>the simplicity of Matlab,   <em>&#40;not really, but maybe close enough...&#41;</em></p>
+</li>
+<li><p>the dynamism of Python,   <em>&#40;true ... except for the pre-compilation times which are slowly improving...&#41;</em></p>
+</li>
+<li><p>the speed of C and   <em>&#40;definitely true; this is impressive&#33;&#41;</em></p>
+</li>
+<li><p>the meta-programming capabilities of Lisp.   <em>&#40;also true; but we won&#39;t need it in this module.&#41;</em></p>
+</li>
+</ul>
+
+<p>For those interested in using Julia, see the notes titled &quot;Julia&quot; on Blackboard, which have instructions for running the Julia code in the notes in a Jupyter notebook.  The Jupyter notebooks are available on Blackboard and have the file extension &quot;.ipynb&quot;.  The notes for this module are Jupyter notebooks that have been converted to PDFs using the package <a href="https://github.com/JunoLab/Weave.jl">Weave.jl</a>.</p>
+
+<h2>Sources</h2>
+
+<p>I used the following sources for writing the lecture notes &#40;please ask me for relevant page numbers / chapters on a particular topic&#41;:</p>
+<ol>
+<li><p><em>A Practical Guide to Pseudospectral Methods</em> &#40;1998&#41;, by B. Fornberg</p>
+</li>
+<li><p><a href="http://users.math.uoc.gr/~tsogka/Courses/AEMDE-fall2015/Biblio/Georgoulis_notes_new.pdf"><em>Computational Methods for Partial Differential Equations</em></a> &#40;2009&#41;, notes by M. Georgoulis</p>
+</li>
+<li><p><a href="https://le.ac.uk/library"><em>A First Course in the Numerical Analysis of Differential Equations</em></a> &#40;2009&#41;, by A. Iserles </p>
+</li>
+<li><p><a href="https://le.ac.uk/library">Fast algorithms using orthogonal polynomials</a> &#40;2020&#41;, by S. Olver, R.M. Slevinsky and A. Townsend. <em>Acta Numerica</em>, 29, pp.573-699. </p>
+</li>
+<li><p><a href="https://github.com/Imperial-MATH50003/MATH50003NumericalAnalysis2122">Sheehan Olver&#39;s Numerical Analysis notes</a> &#40;2022&#41;</p>
+</li>
+<li><p><a href="https://github.com/MarcoFasondini/M3M6AppliedComplexAnalysis">Sheehan Olver and M. Fasondini&#39;s Applied Complex Analysis notes</a> &#40;2021&#41;</p>
+</li>
+<li><p><a href="https://github.com/cortner/math405_2022">Christoph Ortner&#39;s notes on Numerical Methods for Differential Equations</a> &#40;2022&#41;</p>
+</li>
+<li><p><a href="https://people.maths.ox.ac.uk/trefethen/spectral.html"><em>Spectral Methods in Matlab</em></a> &#40;2000&#41;, by L.N. Trefethen</p>
+</li>
+<li><p><a href="https://people.maths.ox.ac.uk/trefethen/ATAP/"><em>Approximation Theory and Approximation Practice</em></a> &#40;2019&#41;, by L.N. Trefethen</p>
+</li>
+<li><p><a href="https://le.ac.uk/library">A MATLAB differentiation matrix suite</a> &#40;2000&#41;, by J.A.C.  Weideman and S.C. Reddy,  <em>ACM Transactions on Mathematical Software</em> &#40;TOMS&#41;, 26&#40;4&#41;, pp.465-519.</p>
+</li>
+</ol>
+
+
+        <HR/>
+        <div class="footer">
+          <p>
+            Published from <a href="Chapter0.ipynb">Chapter0.ipynb</a>
+            using <a href="http://github.com/JunoLab/Weave.jl">Weave.jl</a> v0.10.11 on 2023-01-27.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</BODY>
+
+</HTML>

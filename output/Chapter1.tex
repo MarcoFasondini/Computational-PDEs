@@ -378,7 +378,7 @@ We can construct interpolatory polynomials directly. We will use the following p
 \textbf{Definition (Lagrange basis polynomial)} The \emph{Lagrange basis polynomial} on the grid (or at the nodes)  $x_{j}$, $j = 0, \ldots, n-1$  is defined as
 
 \[
-\ensuremath{\ell}_k(x) := \prod_{\substack{j = 0 \\ j \neq k}}^{n-1} {x-x_j \over x_k - x_j} =  {(x-x_1) \ensuremath{\cdots}(x-x_{k-1})(x-x_{k+1}) \ensuremath{\cdots} (x-x_{n-1}) \over (x_k - x_1) \ensuremath{\cdots} (x_k - x_{k-1}) (x_k - x_{k+1}) \ensuremath{\cdots} (x_k - x_{n-1})}
+\ensuremath{\ell}_k(x) := \prod_{\substack{j = 0 \\ j \neq k}}^{n-1} {x-x_j \over x_k - x_j} =  {(x-x_0) \ensuremath{\cdots}(x-x_{k-1})(x-x_{k+1}) \ensuremath{\cdots} (x-x_{n-1}) \over (x_k - x_0) \ensuremath{\cdots} (x_k - x_{k-1}) (x_k - x_{k+1}) \ensuremath{\cdots} (x_k - x_{n-1})}
 \]
 Plugging in the grid points verifies the following property:
 
@@ -400,7 +400,7 @@ p_n(x) = f(x_0) \ensuremath{\ell}_0(x) + \ensuremath{\cdots} + f(x_{n-1}) \ensur
 \textbf{Proof} Note that
 
 \[
-p_n(x_j) = \sum_{j=0}^{n-1} f(x_j) \ensuremath{\ell}_k(x_j) = f(x_j), \qquad j = 0, \ldots, n-1,
+p_n(x_j) = \sum_{k=0}^{n-1} f(x_k) \ensuremath{\ell}_k(x_j) = f(x_j), \qquad j = 0, \ldots, n-1,
 \]
 and the fact that $p_n(x)$ is of degree $\leq n-1$ follows from the definition of the Lagrange basis polynomials, so we just need to show it is unique. Suppose $\tilde{p}_n(x)$ is a  polynomial of degree at most $n-1$ that also interpolates $f$. Then $\tilde{p}_n - p_n$ vanishes at $n$ distinct points. Thus by the fundamental theorem of algebra it must be zero.
 
@@ -519,8 +519,8 @@ For various values of $n$, let's compute the maximum error of the central differ
 \end{lstlisting}
 
 \begin{lstlisting}
-3.349492 seconds (490.79 k allocations: 3.078 GiB, 36.13(*@{{\%}}@*) gc time, 5.82(*@{{\%}}@*) 
-compilation time)
+5.648183 seconds (490.79 k allocations: 3.078 GiB, 36.80(*@{{\%}}@*) gc time, 12.62(*@{{\%}}@*)
+ compilation time)
 \end{lstlisting}
 
 \includegraphics[width=\linewidth]{/figures/Chapter1_3_1.pdf}
