@@ -1,0 +1,13 @@
+
+# Chapter 3: Exercises
+
+1. In the method of separation of variables for the wave equation (see the lecture notes for Chapter 3), consider the cases $\lambda > 0$ and $\lambda = 0$.
+2. We showed, using the method of separation of variables, that 
+$$
+     u(x,t) =  \left( \sin\pi t + \cos\pi t  \right)\sin \pi x
+$$
+   is a solution to the wave equation with zero boundary conditions.  Use this solution to the wave equation to investigate the accuracy of the  numerical method discussed in the notes, i.e., 
+$$
+   \mathbf{u}^{i+1} = 2\mathbf{u}^{i} - \mathbf{u}^{i-1} + \tau^2 D_n^2\mathbf{u}^{i}, \qquad i = 0, \ldots, n_t-1.
+$$
+   Let $\tau = 8/n_x^2$ and $n_t \tau = 2$, compute the maximum error of the method for $n_x = 2^3, 2^4, \ldots, 2^8$, plot it on a log-log scale and deduce the rate of decay of the error with $n_x$.

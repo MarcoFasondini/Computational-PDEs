@@ -1,0 +1,199 @@
+
+# Problem Sheet 1 Solutions
+
+1. **[5 marks]** What are the Fourier coefficients $c_k$ of $\sin^4 x$?
+
+$$
+\begin{eqnarray*}
+(\sin x)^4 &=& \left({\exp({\rm i} x) - \exp(-{\rm i} x) \over 2 {\rm i}}\right)^4 \\
+&=& \left({\exp(2{\rm i} x) -2 + \exp(-2{\rm i} x) \over -4}\right)^2 \\
+&=& {\exp(4{\rm i} x) -4\exp(2{\rm i} x) +6 -4 \exp(-2{\rm i} x)+\exp(-4{\rm i} x) \over 16}
+\end{eqnarray*}
+$$
+hence, $c_{-4} = c_{4} = 1/16$, $c_{-2} = c_2 = -1/4$, $c_0 = 3/8$ and $c_k = 0$ otherwise.
+
+2. **[5 marks]** Show for $0 \leq k,\ell \leq n-1$
+$$
+{1 \over n} \sum_{j=1}^n \cos k \theta_j \cos \ell \theta_j = \begin{cases} 1 & k = \ell = 0 \\
+                                                  1/2 & k = \ell \\
+                                                  0 & \hbox{otherwise}
+                                                  \end{cases}
+$$
+   for $\theta_j = \pi (j-1/2)/n$. Hint: 
+   You may consider replacing $\cos$ with 
+   complex exponentials:
+$$
+\cos \theta = {{\rm e}^{{\rm i}\theta} + {\rm e}^{-{\rm i}\theta} \over 2}.
+$$
+
+
+We have,
+
+$$
+\begin{align*}
+\frac{1}{n}\sum_{j=1}^n \cos(k\theta_j)\cos(l\theta_j) &= \frac{1}{4n}\sum_{j=1}^n\left( e^{i(k+l)\theta_j} + e^{-i(k+l)\theta_j} + e^{i(k-l)\theta_j} + e^{-i(k-l)\theta_j}\right) \\
+&=	\frac{1}{4n}\sum_{j=1}^n \left( e^{ia_{kl}\theta_j} + e^{-ia_{kl}\theta_j} + e^{ib_{kl}\theta_j} + e^{-ib_{kl}\theta_j}\right),
+\end{align*}
+$$
+where we have defined $a_{kl} = k+l$ and $b_{kl} = k-l$. Now consider, for $a \in \mathbb{Z}$, a $\neq 2kn$ for some $k \in \mathbb{Z}$,
+$$
+\begin{align*}
+	\sum_{j=1}^n e^{ia\theta_j} &=\sum_{j=1}^n e^{ia\pi(j-\frac{1}{2})/n} \\
+	&=e^{-ia\pi/2n}\sum_{j=1}^n e^{iaj\pi/n} \\
+	&=e^{-ia\pi/2n}\sum_{j=1}^n (e^{ia\pi/n})^j \\
+	&=e^{-ia\pi/2n} e^{ia\pi/n}\frac{(e^{ia\pi /n})^n - 1}{e^{ia\pi/n} - 1} \\
+	&= e^{ia\pi/2n} \frac{e^{ia\pi} - 1 }{e^{ia\pi / n} - 1},
+\end{align*}
+$$
+where our assumptions on $a$ ensure that we are not dividing by $0$. Then we have, for $a$ as above,
+$$
+\begin{align*}
+	\sum_{j=1}^n \left(e^{ia\theta_j} + e^{-ia\theta_j}\right) &= e^{ia\pi/2n} \frac{e^{ia\pi} - 1 }{e^{ia\pi / n} - 1} + e^{-ia\pi/2n} \frac{e^{-ia\pi} - 1 }{e^{-ia\pi / n} - 1} \\
+	&= e^{ia\pi/2n} \frac{e^{ia\pi} - 1 }{e^{ia\pi / n} - 1} + e^{-ia\pi/2n} \cdot\frac{e^{ia\pi/n}}{e^{ia\pi/n}}\cdot \frac{e^{-ia\pi} - 1 }{e^{-ia\pi / n} - 1} \\
+	&= e^{ia\pi/2n} \frac{e^{ia\pi} - 1 }{e^{ia\pi / n} - 1} + e^{ia\pi/2n}\frac{e^{-ia\pi} - 1}{1 - e^{ia\pi/n}} \\
+	&=e^{ia\pi/2n} \frac{e^{ia\pi} - 1 }{e^{ia\pi / n} - 1} - e^{ia\pi/2n}\frac{e^{-ia\pi} - 1}{e^{ia\pi/n} - 1} \\
+	&= \frac{e^{ia\pi/2n}}{e^{ia\pi/n-1}}\left(e^{ia\pi} - 1 - e^{-ia\pi} + 1 \right) \\
+	&= \frac{e^{ia\pi/2n}}{e^{ia\pi/n-1}}\frac{1}{2i}\sin(a\pi),
+\end{align*}
+$$
+which is $0$ for $a$ an integer.
+
+Now, when $k = l = 0$, we have $a_{kl} = b_{kl} = 0$, and,
+$$
+\frac{1}{n}\sum_{j=1}^n \cos(k\theta_j)\cos(l\theta_j) = \frac{1}{4n}\sum_{j=1}^n (1 + 1 + 1 + 1) = 1.
+$$
+When $k = l \neq 0$, we have $0 < a_{kl} = 2k < 2n$, and $b_{kl} = 0$. Hence,
+$$
+\begin{align*}
+	\frac{1}{n}\sum_{j=1}^n \cos(k\theta_j)\cos(l\theta_j) &= \frac{1}{4n}\sum_{j=1}^n (e^{ia_{kl}\theta_j} + e^{-ia_{kl}\theta_j} + 1 + 1) \\
+	&= \frac{1}{4n}\left[ \sum_{j=1}^n\left( e^{ia_{kl}\theta_j} + e^{-ia_{kl}\theta_j}\right) +2n\right] \\
+	&= \frac{1}{2},
+\end{align*}
+$$
+since $a_{kl}$ meets the conditions for the sum considered above.
+
+When $k \neq l$, we have, $-2n < a_{kl}, b_{kl} <  2n$ and $a_{kl}, b_{kl} \neq 0$, hence,
+$$
+\begin{align*}
+	\frac{1}{n}\sum_{j=1}^n \cos(k\theta_j)\cos(l\theta_j) &= \frac{1}{4n}\sum_{j=1}^n (e^{ia_{kl}\theta_j} + e^{-ia_{kl}\theta_j} + e^{ib_{kl}\theta_j} + e^{-ib_{kl}\theta_j}) \\
+	&= \frac{1}{4n} \left[\sum_{j=1}^n (e^{ia_{kl}\theta_j} + e^{-ia_{kl}\theta_j})  + \sum_{j=1}^n (e^{ib_{kl}\theta_j} + e^{-ib_{kl}\theta_j} )\right] \\
+	&= 0.
+\end{align*}
+$$
+
+
+
+3. **[5 marks]** Consider the Discrete Cosine Transform (DCT)
+$$
+C_n := \begin{bmatrix}
+\sqrt{1/n} \\
+ & \sqrt{2/n} \\ 
+ && \ddots \\
+ &&& \sqrt{2/n}
+ \end{bmatrix}
+\begin{bmatrix}
+    1 & \cdots & 1\\
+    \cos \theta_1 & \cdots & \cos \theta_n \\
+    \vdots & \ddots & \vdots \\
+    \cos (n-1)\theta_1 & \cdots & \cos (n-1)\theta_n
+\end{bmatrix}
+$$
+for $\theta_j = \pi(j-1/2)/n$. Prove that $C_n$ is orthogonal: $C_n^{\top} C_n = C_n C_n^{\top} = I$.
+Hint: $C_n C_n^{\top} = I$ might be easier to show than $C_n^{\top} C_n = I$ using the previous problem.
+
+
+The components of $C$ without the diagonal matrix, which we may call $\hat{C}$ are
+$$
+\hat{C}_{ij} = \cos((j-1)θ_{i-1}),
+$$
+where $θ_j = π(j-1/2)/n$. Recalling that the elements of matrix multiplication are given by
+$$
+(ab)_{ij} := \sum_{k=1}^n a_{ik} b_{kj}
+$$
+we find that
+$$
+(\hat{C}_n \hat{C}_n^⊤)_{ij} = \sum_{k=1}^n \cos((i-1)θ_{k-1}) \cos((k-1)θ_{j-1}).
+$$
+
+By using the previous problem and the terms on the diagonal matrices which ensure that the $1/2$ terms become $1$ we know how to compute all of these entries and find that it is the identity.
+
+Here is a computer-based demonstration:
+
+```julia
+using LinearAlgebra, Plots, FFTW
+n = 5
+θ = range(π/(2n); step=π/n, length=n) # n evenly spaced points starting at π/(2n) with step size π/n
+C = Diagonal([1/sqrt(n); fill(sqrt(2/n), n-1)]) * [cos((k-1)*θ[j]) for k=1:n, j=1:n]
+C'C
+```
+
+4. **[10 marks]**  Consider the variable-coefficient advection equation
+$$
+   u_t + c(x)u_x = 0, \qquad c(x) = \frac{1}{5} + \sin^2(x-1), \qquad x \in [0, 2\pi), \qquad t \in [0, T],
+$$
+   with $u(x,0) = f(x) = {\rm e}^{-100(x-1)^2}$, which we approximate with the leapfrog method
+$$
+\mathbf{u}^{i+1} = \mathbf{u}^{i-1} - 2\tau \mathcal{F}^{-1}\left\lbrace {\rm i}(-m\!:\!m)\cdot\mathcal{F}\lbrace \mathbf{u}^{i} \rbrace\right\rbrace, \qquad i = 0, \ldots, n_t-1.
+$$
+   Note that one needs $\mathbf{u}^{-1}$ to initialise the leapfrog method.  Let the entries of $\mathbf{u}^{-1}$ be $u^{-1}_j = f(x_j + \tau/5)$, $j = 0, \ldots, n_x-1$.  The exact solution is periodic in time, i.e.,
+$$
+   u(x,t+T) = u(x,t)
+$$
+   where
+$$
+   T = \int_{0}^{2\pi}\frac{1}{c(x)}{\rm d}x = 12.8254983016186\ldots
+$$
+   Compute $T$ using the Trapezoidal rule and confirm that you get the value stated above.  Then compute
+$$
+   e(n_x) = \max_{j = 0, \ldots, n_x-1} \vert u^{0}_j - u^{n_t}_{j} \vert
+$$
+where $n_t = 8n_x$ and $\tau n_t = T$  and plot $e(n_x)$ for $n_x = 2^k + 1$, with $k = 5, 6, \ldots, 10$.  Comment on the behaviour of $e(n_x)$.
+
+As discussed in the notes, the trapezoidal rule approximation to an integral is
+$$
+\int_{a}^{b} g(x)\,{\rm d}x \approx \frac{h}{2}\left(g(x_0) + 2g(x_1) + 2g(x_2) + \cdots + 2g(x_{n-1}) + g(x_{n})    \right).
+$$
+To compute $T$, we set $a = 0$, $b = 2\pi$ and $g(x) = 1/c(x)$ and note that since $c(x)$ is $2\pi$-periodic, $g(x_0) = g(x_n)$, hence
+$$
+\int_0^{2\pi}\frac{1}{c(x)}\,{\rm d}x \approx \frac{2\pi}{n}\sum_{j=0}^{n-1}\frac{1}{c(x_j)}
+$$
+
+```julia
+c = x -> 0.2 + sin(x - 1)^2
+n = 80
+xx = range(0,2π;length=n+1)[1:end-1]
+T = 2π/n*sum(1 ./c.(xx))
+```
+
+```julia
+c = x -> 0.2 + sin(x - 1)^2
+f = x -> exp(-100*(x-1)^2)
+nxv = 2 .^(5:10) .+ 1
+maxerr = []
+for nₓ = nxv 
+    m = (nₓ-1)÷2
+    h = 2π/nₓ
+    x = h*(0:nₓ-1)
+    tv = range(0,T;length=8nₓ+1)
+    τ = tv[2]-tv[1]
+    u = f.(x)
+    uold = f.(x .+ 0.2τ)
+    @time begin
+    for n = 1:8nₓ
+        unew = real.(uold - 2τ*c.(x).*ifft(ifftshift(im*(-m:m)).*fft(u)))
+        uold = u
+        u = unew
+    end
+    end
+    global maxerr
+    maxerr = [maxerr;norm(u-f.(x),Inf)]
+end
+```
+
+```julia
+scatter(nxv,maxerr;yscale=:log10,xscale=:log10,legend=false,
+xlabel="nₓ",ylabel="e(nₓ)")
+plot!(nxv,170 ./nxv.^2)
+```
+
+The plot indicates that $e(n_x) = \mathcal{O}(n_x^{-2})$, $n_x \to \infty$.

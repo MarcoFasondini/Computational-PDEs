@@ -1,0 +1,252 @@
+
+# Chapter 4: Exercises Part I Solutions
+
+1. Construct  $p_0(x),p_1(x),p_2(x),p_3(x)$, monic OPs
+   for the weight $\sqrt{1-x^2}$ on $[-1,1]$.
+   
+   Hint: first compute $\int_{-1}^1 x^k \sqrt{1-x^2} {\rm d} x$ for $0 ≤ k ≤ 2$
+   using a change-of-variables.
+
+Following the hint, we first calculate $\int_{-1}^1 x^k\sqrt{1-x^2}{\rm d}x$. By symmetry, it's zero when $k$ is odd and double the integral on $[0,1]$ when $k$ is even. 
+
+$$
+\underbrace{\int_0^1 x^k\sqrt{1-x^2}{\rm d}x}_{I_k}=_{x=\sin t}\underbrace{\int_0^{\pi/2}\sin^k(t)\cos^2(t){\rm d}t}_{I_k}=\underbrace{\int_0^{\pi/2}\sin^k t{\rm d}t}_{J_k}-\underbrace{\int_0^{\pi/2}\sin^{k+2}t{\rm d}t}_{J_{k+2}}.
+$$
+
+Meanwhile, 
+$$
+J_k=-\int_0^{\pi/2}\sin^{k-1}t{\rm d}(\cos t)=_{\text{integral by part}}(k-1)I_{k-2}.
+$$
+
+Putting the above 2 equations together, we have $I_k=(k-1)I_{k-2}-(k+1)I_k$, so $I_k=\frac{k-1}{k+2}I_{k-2}$. Since $I_0=\pi/4$, we have $I_k=\frac{(k-1)!!}{(k+2)!!}\frac{\pi}{2}$ for positive even $k$. (Note that the denominator multiplies to 4, not to 2.) Keep in mind that the integral we want is double this value when $k$ is even.
+
+**Remark** Check the [beta function](https://en.wikipedia.org/wiki/Beta_function).
+
+Let $p_0(x)=1$, then $\|p_0\|^2=2I_0=\pi/2$. We know from the 3-term recurrence that
+$$xp_0(x)=a_0p_0(x)+p_1(x)$$
+where
+$$
+a_0=\frac{\langle p_0,xp_0\rangle}{\|p_0\|^2}=0.
+$$
+Thus $p_1(x)=x$ and $\|p_1\|^2=2I_2=\pi/8$.
+From
+$$
+xp_1(x)=c_0p_0(x)+a_1p_1(x)+p_2(x)
+$$
+we have
+$$
+c_0=\frac{\langle p_0,xp_1\rangle}{\|p_0\|^2}=2I_2/2I_0=1/4
+$$
+$$
+a_1=\frac{\langle p_1,xp_1\rangle}{\|p_1\|^2}=0
+$$
+$$
+p_2(x)=xp_1(x)-c_0-a_1p_1(x)=x^2-1/4
+$$
+$$
+\|p_2\|^2=2I_4-I_2+1/8I_0=\pi/32
+$$
+Finally, from
+$$
+xp_2(x)=c_1p_1(x)+a_2p_2(x)+p_3(x)
+$$
+we have
+$$
+c_1=\frac{\langle p_1,xp_2\rangle}{\|p_1\|^2}=(2I_4-1/2I_2)/(\pi/8)=1/4
+$$
+$$
+a_2=\frac{\langle p_2,xp_2\rangle}{\|p_2\|^2}=0
+$$
+$$
+p_3(x)=xp_2(x)-c_1p_1(x)-a_2p_2(x)=x^3-1/2x
+$$
+
+2. Let $w(x)$ be a weight function on $x \in [-b, b]$, $b > 0$ satisfying $w(-x) = w(x)$. Show that $a_n = 0$, $n \geq 0$ and conclude that $a_n = 0$ for the Chebyshev polynomials $\lbrace T_n \rbrace$ and the ultraspherical polynomials $\lbrace C_n^{(\lambda)}\rbrace$.
+    
+    Hint: first show that the OPs $p_{2n}(x)$ are even and $p_{2n+1}(x)$ are odd.
+
+Recall that 
+$$
+a_n = \frac{\langle xp_n, p_n\rangle}{\langle p_n, p_n\rangle},
+$$
+where
+$$
+\langle f, g \rangle = \int_{-b}^{b} f(x)g(x)w(x)\,{\rm d}x.
+$$
+The inner product is zero if the integrand is odd. 
+Moreover an even function times an odd function is odd and
+an odd function times an odd fuction is even.
+Note that $p_0(x)$ and $w(x)$ are even and $x$ is odd. 
+
+We see that $a_0$ is zero
+$$
+⟨p_0,x p_0(x)⟩ = p_0^2\int_{-b}^b x w(x) {\rm d} x = 0
+$$
+since $xw(x)$ is odd,
+which shows that
+$$
+p_1(x) = xp_0(x)/b_0
+$$
+is odd. We now proceed by induction. Assume that $p_{2n}$ is even and $p_{2n-1}$ is odd.
+We have:
+$$
+⟨p_{2n},x p_{2n}(x)⟩ = \int_{-b}^b x w(x) p_{2n}(x)^2 {\rm d} x = 0
+$$
+since $x w(x) p_{2n}(x)^2$ is odd, therefore $a_{2n} = 0$.
+Thus from
+$$
+p_{2n+1}(x) = (x p_{2n}(x)- c_{2n-1} p_{2n-1}(x)) / b_{2n} 
+$$
+we see that $p_{2n+1}$ is odd. Then
+$$
+⟨p_{2n+1},x p_{2n+1}(x)⟩ = \int_{-b}^b x w(x) p_{2n+1}(x)^2 {\rm d} x = 0
+$$
+since $x w(x) p_{2n+1}(x)^2$ is odd, therefore $a_{2n+1} = 0$.
+and hence
+$$
+p_{2n+2}(x) = (x p_{2n+1}(x)- c_{2n} p_{2n}(x)) / b_{2n+1} 
+$$
+is even.
+
+For the Chebyshev polynomials and the ultraspherical polynomials, $b = 1$ and the weight functions are even; therefore $a_n = 0$.
+
+3. Consider orthogonal polynomials with respect to $\sqrt{1-x^2}$ on $[-1,1]$ with the
+   normalisation
+$$
+U_n(x) = 2^n x^n + O(x^{n-1})
+$$
+   Prove that
+$$
+U_n(\cos θ) = {\sin(n+1) θ \over \sin θ},
+$$
+   where $x = \cos\theta$.
+
+We need to verify that $U_n(x)$ is
+1. a polynomial of degree precisely $n$ 
+2. orthogonal w.r.t. $\sqrt{1-x^2}$ on $[-1,1]$, and
+3. has the leading coefficient $2^n$.
+
+(2) follows under a change of variables
+$$\int_{-1}^1U_n(x)U_m(x)\sqrt{1-x^2}{\rm d}x=\int_0^{\pi}U_n(\cos\theta)U_m(\cos\theta)\sin^2\theta{\rm d}\theta=\int_0^{\pi}\sin(n+1)\theta\sin(m+1)\theta{\rm d}\theta=\frac{\pi}{2}\delta_{mn}.$$
+
+To prove (1) and (3) we use the fact that
+$$xU_n(x)=\frac{\cos\theta\sin(n+1)\theta}{\sin\theta}=\frac{\sin (n+2)\theta+\sin n\theta}{2\sin\theta}$$
+In other words $2xU_n(x)=U_{n+1}(x)+U_{n-1}(x)$. Since each time we multiply by $2x$ and $U_0(x)=1$ we have
+$$U_n(x) = 2^n x^n + O(x^{n-1})$$
+which also proves (3).
+
+4.  Show that $\mathcal{S}_{n-1}\cdots\mathcal{S}_1\mathcal{S}_0$ has bandwidths $(0,2n)$.
+
+Recall that 
+$$
+\left[T_0(x) | T_1(x) | \cdots  \right] =\left[C^{(n)}_0(x) | C^{(n)}_1(x) | \cdots  \right]  \mathcal{S}_{n-1}\cdots\mathcal{S}_1\mathcal{S}_0.
+$$
+Let $S = \mathcal{S}_{n-1}\cdots\mathcal{S}_1\mathcal{S}_0$.  Since the OPs $\{C^{(n)}_k(x)\} $ form a basis for the space of polynomials, any Chebyshev polynomial can be expressed as a linear combination of $C^{(n)}_k(x)$ polynomials:
+$$
+T_k(x) = \sum_{j = 0}^{k} c_{j,k}C^{(n)}_j(x).
+$$
+Note that $(j,k)$ entry of the matrix $S$ is $c_{j,k}$.  The above equation shows that $S$ is at worst upper triangular. Since
+$$
+c_{j,k} = \frac{\langle T_k,  C^{(n)}_j \rangle_{n}}{\langle C^{(n)}_j, C^{(n)}_j \rangle_n}
+$$
+and
+$$
+\begin{eqnarray*}
+\langle T_k,  C^{(n)}_j \rangle_{n} &=& \int_{-1}^{1}T_k(x) C^{(n)}_j(x)(1 - x^2)^{n-\frac{1}{2}}\,{\rm d}x \\
+&=& \int_{-1}^{1}T_k(x) C^{(n)}_j(x)(1 - x^2)^{n}\,\frac{{\rm d}x}{\sqrt{1-x^2}} \\
+&=& \langle T_k,  (1-x^2)^nC^{(n)}_j \rangle_{0},
+\end{eqnarray*}
+$$
+it follows that $c_{j,k} = 0$ if $j + 2n<k$ or $k-j>2n$, which shows that $S$ has bandwidths $(0, 2n)$.
+
+5.  We showed that when we differentiate the Chebyshev polynomials and change basis, we obtain a sparse differentiation matrix.   That is,
+$$
+\frac{{\rm d}}{{\rm d}x}\left[T_0(x) | T_1(x) | \cdots    \right] = \left[C^{(1)}_0(x) | C^{(1)}_1(x) | \cdots  \right]\mathcal{D}_0
+$$
+    where $\mathcal{D}_0$ has bandwidths $(-1,1)$.  Suppose we don't change basis when differentiating, i.e., let
+$$
+\frac{{\rm d}}{{\rm d}x}\left[T_0(x) | T_1(x) | \cdots    \right] = \left[T_0(x) | T_1(x) | \cdots    \right]\mathcal{D}.
+$$
+    What are the bandwidths of $\mathcal{D}$?
+
+Recall that 
+$$
+\left[T_0(x) | T_1(x) | \cdots  \right] =\left[C^{(1)}_0(x) | C^{(1)}_1(x) | \cdots  \right] \mathcal{S}_0.
+$$
+which implies that
+$$
+\left[C^{(1)}_0(x) | C^{(1)}_1(x) | \cdots  \right] = \left[T_0(x) | T_1(x) | \cdots  \right] \mathcal{S}_0^{-1}
+$$
+therefore
+$$
+\frac{{\rm d}}{{\rm d}x}\left[T_0(x) | T_1(x) | \cdots    \right] =  \left[T_0(x) | T_1(x) | \cdots  \right] \mathcal{S}_0^{-1}\mathcal{D}_0
+$$
+and thus $\mathcal{D} = \mathcal{S}_0^{-1}\mathcal{D}_0$.  Let's see what are the bandwidths of $S_0^{-1}$:
+
+```julia
+using LinearAlgebra, ApproxFun
+```
+
+```julia
+S0 = Conversion(Chebyshev(),Ultraspherical(1))
+n = 4
+inv(S0[1:n,1:n])
+```
+
+```julia
+n = 5
+inv(S0[1:n,1:n])
+```
+
+```julia
+n = 6
+inv(S0[1:n,1:n])
+```
+
+```julia
+n = 7
+inv(S0[1:n,1:n])
+```
+
+These results suggest that $\mathcal{S}_0^{-1}$ is upper triangular, i.e., the bandwidths of $\mathcal{S}_0^{-1}$ are $(0, \infty)$.   We can prove this by calculating the entries of $\mathcal{S}_0^{-1}$.  We won't go into the details, but here is an indication of these entries can be calculated explicitly: we have that $\left(  \mathcal{S}_0^{-1} \right)_{k,n} = c_{k,n}$, where
+
+$$
+U_n(x) = \sum_{k = 0}^{n}c_{k,n}T_k(x)
+$$
+$$
+c_{k,n} = \frac{\langle U_n(x), T_k(x) \rangle_0}{\langle T_k(x), T_k(x) \rangle_0}
+$$
+and if $n \neq 0$
+$$
+\begin{eqnarray*}
+\langle U_n(x), T_k(x) \rangle_0 &=& \int_{-1}^{1}U_n(x) T_k(x)\,\frac{{\rm d}x}{\sqrt{1-x^2}} \\
+&=& \int_{0}^{\pi}  \frac{\sin[(n+1)\theta]}{\sin\theta}\cos k\theta\, {\rm d}\theta \\
+&=& \frac{1}{2}\int_{0}^{\pi} \left({\rm e}^{-{\rm i}n\theta} + {\rm e}^{-{\rm i}(n-2)\theta} + \cdots+ {\rm e}^{{\rm i}(n-2)\theta} + {\rm e}^{{\rm i}n\theta}   \right)\left(  {\rm e}^{{\rm i}k\theta} + {\rm e}^{-{\rm i}k\theta}  \right)\,{\rm d}\theta.
+\end{eqnarray*}
+$$
+
+Since $\mathcal{S}_0^{-1}$ has bandwidths $(0, \infty)$ and $\mathcal{D}_0$ has bandwidths $(-1, 1)$, $\mathcal{S}_0^{-1}\mathcal{D}_0$ has bandwdiths $(-1, \infty)$.   Here are a few examples of $\mathcal{S}_0^{-1}\mathcal{D}_0$:
+
+```julia
+D0 = Derivative(Chebyshev())
+n = 4
+S0[1:n,1:n]\D0[1:n,1:n]
+```
+
+```julia
+n = 5
+S0[1:n,1:n]\D0[1:n,1:n]
+```
+
+```julia
+n = 6
+S0[1:n,1:n]\D0[1:n,1:n]
+```
+
+```julia
+n = 7
+S0[1:n,1:n]\D0[1:n,1:n]
+```
+
+```julia
+```

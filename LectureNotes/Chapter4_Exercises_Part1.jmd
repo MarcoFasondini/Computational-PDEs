@@ -1,0 +1,35 @@
+
+# Chapter 4: Exercises Part I
+
+1. Construct  $p_0(x),p_1(x),p_2(x),p_3(x)$, monic OPs
+   for the weight $\sqrt{1-x^2}$ on $[-1,1]$.
+   
+   Hint: first compute $\int_{-1}^1 x^k \sqrt{1-x^2} {\rm d} x$ for $0 ≤ k ≤ 2$
+   using a change-of-variables.
+   
+2. Let $w(x)$ be a weight function on $x \in [-b, b]$, $b > 0$ satisfying $w(-x) = w(x)$. Show that $a_n = 0$, $n \geq 0$ and conclude that $a_n = 0$ for the Chebyshev polynomials $\lbrace T_n \rbrace$ and the ultraspherical polynomials $\lbrace C_n^{(\lambda)}\rbrace$.
+    
+    Hint: first show that the OPs $p_{2n}(x)$ are even and $p_{2n+1}(x)$ are odd.
+    
+3. Consider orthogonal polynomials with respect to $\sqrt{1-x^2}$ on $[-1,1]$ with the
+   normalisation
+$$
+U_n(x) = 2^n x^n + O(x^{n-1})
+$$
+   Prove that
+$$
+U_n(\cos θ) = {\sin(n+1) θ \over \sin θ},
+$$
+   where $x = \cos\theta$.
+   
+4.  Show that $\mathcal{S}_{n-1}\cdots\mathcal{S}_1\mathcal{S}_0$ has bandwidths $(0,2n)$.
+
+5.  We showed that when we differentiate the Chebyshev polynomials and change basis, we obtain a sparse differentiation matrix.   That is,
+$$
+\frac{{\rm d}}{{\rm d}x}\left[T_0(x) | T_1(x) | \cdots    \right] = \left[C^{(1)}_0(x) | C^{(1)}_1(x) | \cdots  \right]\mathcal{D}_0
+$$
+    where $\mathcal{D}_0$ has bandwidths $(-1,1)$.  Suppose we don't change basis when differentiating, i.e., let
+$$
+\frac{{\rm d}}{{\rm d}x}\left[T_0(x) | T_1(x) | \cdots    \right] = \left[T_0(x) | T_1(x) | \cdots    \right]\mathcal{D}.
+$$
+    What are the bandwidths of $\mathcal{D}$?

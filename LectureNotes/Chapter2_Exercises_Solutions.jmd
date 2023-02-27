@@ -1,0 +1,244 @@
+
+# Chapter 2: Solutions to exercises
+
+1. Give explicit formulae for the Fourier coefficients $c_k$ and approximate Fourier coefficients $\tilde{c}_k^n$ for the following functions:
+$$
+\cos x,  {3 \over 3 - {\rm e}^{{\rm i }x}}
+$$
+Hint: You may wish to try the change of variables $z = {\rm e}^{{\rm i}x}$.
+
+For $f(x) = \cos x$, since 
+$$
+f(x) = \frac{1}{2}{\rm e}^{{\rm i}x} + \frac{1}{2}{\rm e}^{-{\rm i}x}
+$$
+we have that
+$$
+c_{-1} = c_1 = \frac{1}{2}, \qquad c_k = 0, \qquad k \neq -1, 1.
+$$
+To find $\tilde{c}^n_k$, we use the aliasing formula:
+$$
+\tilde{c}^{n}_k = \cdots + c_{k-2n}+c_{k-n}+c_k+c_{k+n}+c_{k+2n}+\cdots
+$$
+we also note that
+$$
+\tilde{c}^{n}_{k+np} = \tilde{c}^{n}_k, \qquad p \in \mathbb{Z}.
+$$
+Therefore for $p \in \mathbb{Z}$ we have
+$$
+\begin{align*}
+\tilde{c}^{1}_k &= c_1 + c_{-1} = 1 \\
+\tilde{c}^{2}_{2p} &= 0, \quad \tilde{c}^{2}_{2p+1} = c_1 + c_{-1} = 1 \\
+\end{align*}
+$$
+and for $n \geq 3$,
+$$
+\tilde{c}^{n}_{1+np} = \tilde{c}^{n}_{-1+np} = 1/2, \qquad \tilde{c}^{n}_{k} = 0 \: \text{otherwise} 
+$$
+
+For $f(x) = {3 \over 3 - {\rm e}^{{\rm i }x}}$, under the change of variables $z = {\rm e}^{{\rm i}x}$ we can use geometric series to determine
+$$
+f = {3 \over 3 - z} = {1 \over 1- z/3} = \sum_{k=0}^{\infty} {z^k \over 3^k}
+$$
+That is $c_k = 1/3^k$ for $k ≥ 0$, and $c_k = 0$ for $k < 0$.
+We then have for $0 ≤ k ≤ n-1$
+$$
+\tilde{c}_{k+pn}^n =  \sum_{\ell=0}^{\infty} {1 \over 3^{k+\ell n}} = {1 \over 3^k} {1 \over 1 - 1/3^n} = {3^n \over 3^{n+k} - 3^k}
+$$
+
+2. Show that the DFT $Q_n$ is symmetric ($Q_n = Q_n^{\top}$) but not Hermitian ($Q_n \neq Q_n^*$).
+
+$$
+\begin{align*}
+Q_n &:= {1 \over √n} \begin{bmatrix} 1 & 1 & 1&  ⋯ & 1 \\
+                                    1 & {\rm e}^{-{\rm i} x_1} & {\rm e}^{-{\rm i} x_2} & ⋯ & {\rm e}^{-{\rm i} x_{n-1}} \\
+                                    1 & {\rm e}^{-{\rm i} 2 x_1} & {\rm e}^{-{\rm i} 2 x_2} & ⋯ & {\rm e}^{-{\rm i} 2x_{n-1}} \\
+                                    ⋮ & ⋮ & ⋮ & ⋱ & ⋮ \\
+                                    1 & {\rm e}^{-{\rm i} (n-1) x_1} & {\rm e}^{-{\rm i} (n-1) x_2} & ⋯ & {\rm e}^{-{\rm i} (n-1) x_{n-1}}
+\end{bmatrix}
+\end{align*}
+$$
+
+where $x_j = 2πj/n$ for $j = 0,1,…,n$ and $ω := {\rm e}^{{\rm i} x_1} = {\rm e}^{2 π {\rm i} \over n}$ are $n$ th roots of unity in the sense that $ω^n = 1$. So ${\rm e}^{{\rm i} x_j} ={\rm e}^{2 π {\rm i} j \over n}= ω^j$. Note that $x_j = 2π(j-1)/n+2π/n = x_{j-1} + x_1$. By completing this recurrence we find that $x_j = jx_1$, from which the following symmetric version follows immediately
+$$
+\begin{align*}
+Q_n 
+&= {1 \over \sqrt{n}} \begin{bmatrix} 1 & 1 & 1&  ⋯ & 1 \\
+                                    1 & ω^{-1} & ω^{-2} & ⋯ & ω^{-(n-1)}\\
+                                    1 & ω^{-2} & ω^{-4} & ⋯ & ω^{-2(n-1)}\\
+                                    ⋮ & ⋮ & ⋮ & ⋱ & ⋮ \\
+                                    1 & ω^{-(n-1)} & ω^{-2(n-1)} & ⋯ & ω^{-(n-1)^2}
+\end{bmatrix}.
+\end{align*}
+$$
+Now $Q_n^⋆$ is found to be
+$$
+\begin{align*}
+Q_n^⋆ &= {1 \over \sqrt{n}} \begin{bmatrix}
+1 & 1 & 1&  ⋯ & 1 \\
+1 & {\rm e}^{{\rm i} x_1} & {\rm e}^{{\rm i} 2 x_1} & ⋯ & {\rm e}^{{\rm i} (n-1) x_1} \\
+1 &  {\rm e}^{{\rm i} x_2}  & {\rm e}^{{\rm i} 2 x_2} & ⋯ & {\rm e}^{{\rm i} (n-1)x_2} \\
+⋮ & ⋮ & ⋮ & ⋱ & ⋮ \\
+1 & {\rm e}^{{\rm i} x_{n-1}} & {\rm e}^{{\rm i} 2 x_{n-1}} & ⋯ & {\rm e}^{{\rm i} (n-1) x_{n-1}}
+\end{bmatrix}
+= {1 \over \sqrt{n}} \begin{bmatrix}
+1 & 1 & 1&  ⋯ & 1 \\
+1 & ω^{1} & ω^{2} & ⋯ & ω^{(n-1)}\\
+1 & ω^{2} & ω^{4} & ⋯ & ω^{2(n-1)}\\
+⋮ & ⋮ & ⋮ & ⋱ & ⋮ \\
+1 & ω^{(n-1)} & ω^{2(n-1)} & ⋯ & ω^{(n-1)^2}
+\end{bmatrix}
+\end{align*}
+$$
+using the above arguments. Evidently, $Q_n^⋆ \neq Q_n$ since $ω \neq ω^{-1}$.
+
+3. Show that 
+$$
+ \sum_{k=-m}^{m} {\rm e}^{{\rm i}kx} = \begin{cases}
+ \frac{\sin((m+1/2)x)}{\sin(x/2)} & \text{if } x \neq 0 \\
+ 2m + 1 & \text{if } x = 0
+ \end{cases}
+$$
+
+If $x = 0 \: ({\rm mod}\: 2\pi))$, then ${\rm e}^{{\rm i}kx}=1$ and thus
+$$
+\sum_{k=-m}^{m} {\rm e}^{{\rm i}kx} = \sum_{k=-m}^{m} 1 = 2m + 1
+$$
+otherwise (for $x \neq 0 \:({\rm mod}\: 2\pi)$ and thus ${\rm e}^{{\rm i}kx} \neq 1)$
+$$
+\begin{eqnarray*}
+\sum_{k=-m}^{m} {\rm e}^{{\rm i}kx} &=& {\rm e}^{-{\rm i}mx}\sum_{k=0}^{2m} {\rm e}^{{\rm i}kx} \\
+&=& {\rm e}^{-{\rm i}mx}\frac{1 -  {\rm e}^{{\rm i}(2m+1)x}}{1 -  {\rm e}^{{\rm i}x}} \\
+&=& \frac{{\rm e}^{-{\rm i}(m+1/2)x} -  {\rm e}^{{\rm i}(m+1/2)x}}{{\rm e}^{-{\rm i}x/2} -  {\rm e}^{{\rm i}x/2}} \\
+&=& \frac{\sin((m+1/2)x)}{\sin(x/2)}
+\end{eqnarray*}
+$$
+
+4. Prove that the trigonometric interpolant $p_n(x)$ that interpolates $f$ at $x = x_j = jh$, $j  = 0, \ldots, n-1$ with $h = 2\pi/n$ is unique.
+
+Let 
+$$
+p_n(x) = \sum_{m = -k}^{m}\tilde{c}^n_k{\rm e}^{{\rm i}kx}
+$$
+and suppose there is some other trigonometric interpolant $q_n(x)$ with
+$$
+q_n(x) = \sum_{k = -m}^{m}\tilde{b}^n_k{\rm e}^{{\rm i}kx}
+$$
+that also satisfies $q_n(x_j) = f(x_j)$, $j = 0, \ldots, n-1$, then
+$$
+\mathbf{p} = \left(
+\begin{array}{c}
+p_n(x_0) \\
+p_n(x_1) \\
+\vdots \\
+p_n(x_{n-2}) \\
+p_n(x_{n-1})
+\end{array}
+\right)
+=
+\underbrace{\begin{bmatrix}
+1 & 1 & 1&  ⋯ & 1 \\
+{\rm e}^{-{\rm i}m x_1} & {\rm e}^{-{\rm i}(m-1) x_1} &  {\rm e}^{-{\rm i}(m-2) x_1} & ⋯ & {\rm e}^{{\rm i} m x_1} \\
+{\rm e}^{-{\rm i}m x_2} & {\rm e}^{-{\rm i}(m-1) x_2} &  {\rm e}^{-{\rm i}(m-2) x_2} & ⋯ & {\rm e}^{{\rm i} m x_2} \\
+⋮ & ⋮ & ⋮ & ⋱ & ⋮ \\
+{\rm e}^{-{\rm i}m x_{n-1}}& {\rm e}^{-{\rm i}(m-1)x_{n-1}}& {\rm e}^{-{\rm i}(m-2)x_{n-1}}& \cdots & {\rm e}^{{\rm i}m x_{n-1}}
+\end{bmatrix}}_{V} 
+\left(
+\begin{array}{l}
+\tilde{c}^n_{-m} \\
+\tilde{c}^n_{-m+1} \\
+\vdots \\
+\tilde{c}^n_{m-1} \\
+\tilde{c}^n_{m}
+\end{array}
+\right)
+$$
+and
+$$
+\mathbf{q} = \left(
+\begin{array}{c}
+q_n(x_0) \\
+q_n(x_1) \\
+\vdots \\
+q_n(x_{n-2}) \\
+q_n(x_{n-1})
+\end{array}
+\right)
+=
+\underbrace{\begin{bmatrix}
+1 & 1 & 1&  ⋯ & 1 \\
+{\rm e}^{-{\rm i}m x_1} & {\rm e}^{-{\rm i}(m-1) x_1} &  {\rm e}^{-{\rm i}(m-2) x_1} & ⋯ & {\rm e}^{{\rm i} m x_1} \\
+{\rm e}^{-{\rm i}m x_2} & {\rm e}^{-{\rm i}(m-1) x_2} &  {\rm e}^{-{\rm i}(m-2) x_2} & ⋯ & {\rm e}^{{\rm i} m x_2} \\
+⋮ & ⋮ & ⋮ & ⋱ & ⋮ \\
+{\rm e}^{-{\rm i}m x_{n-1}}& {\rm e}^{-{\rm i}(m-1)x_{n-1}}& {\rm e}^{-{\rm i}(m-2)x_{n-1}}& \cdots & {\rm e}^{{\rm i}m x_{n-1}}
+\end{bmatrix}}_{V} 
+\left(
+\begin{array}{l}
+\tilde{b}^n_{-m} \\
+\tilde{b}^n_{-m+1} \\
+\vdots \\
+\tilde{b}^n_{m-1} \\
+\tilde{b}^n_{m}
+\end{array}
+\right).
+$$
+We have that $\mathbf{p} = \mathbf{q}$ because $p_n(x_j) = f(x_j) = q_n(x_j)$, $j = 0, \ldots, n-1$.  As shown in the notes of Chapter 2, 
+$$
+V = \sqrt{n}\,Q_n^*P^{\top}
+$$
+and $\left(Q_n^*\right)^{-1} = Q_n$ and $\left(P^{\top}\right)^{-1} = P$, therefore $V$ is invertible and $V^{-1} = PQ_n/\sqrt{n}$.  Multiplying the equations for $\mathbf{p}$ and $\mathbf{q}$ above by $V^{-1}$, i.e., $V^{-1}\mathbf{p} = V^{-1}\mathbf{q}$,  it follows that $\tilde{c}^{n}_k = \tilde{b}^n_k$, $k = -m, \ldots, m$ and therefore $p_n(x) = q_n(x)$.
+
+5. Consider the advection equation
+$$
+   u_t + u_x = 0, \qquad x \in [0, 2\pi), \qquad t \in [0, T],
+$$
+   with $u(x,0) = f(x) = {\rm e}^{-100(x-1)^2}$ and exact solution $u(x,t) = f(x - t)$; also consider (i) the forward-difference-Fourier    method 
+$$
+\mathbf{u}^{i+1} = \mathbf{u}^{i} - \tau \mathcal{F}^{-1}\left\lbrace {\rm i}(-m\!:\!m)\cdot\mathcal{F}\lbrace \mathbf{u}^{i} \rbrace\right\rbrace, \qquad i = 0, \ldots, n_t-1
+$$
+   and (ii) the central-difference-Fourier method (aka the leapfrog method)
+$$
+\mathbf{u}^{i+1} = \mathbf{u}^{i-1} - 2\tau \mathcal{F}^{-1}\left\lbrace {\rm i}(-m\!:\!m)\cdot\mathcal{F}\lbrace \mathbf{u}^{i} \rbrace\right\rbrace, \qquad i = 1, \ldots, n_t-1.
+$$
+   For the leapfrog method, set $u^{1}_{j} = f(x_j - \tau)$. 
+   For both methods, set $n_x = 401$, $n_t = 500$ and $T = 1.05$ and plot the maximum error for each time step, i.e., plot
+$$
+   e_i := \max_{j = 0, \ldots, n_x-1} \vert u(x_j,t_i) - u^i_j \vert
+$$
+   for $i = 1, \ldots, n_t$.  Describe the behaviour of $e_i$ for each method.
+
+```julia
+using LinearAlgebra, FFTW, Plots
+f = x -> exp(-100*(x-1)^2)
+nₓ = 401
+m = (nₓ - 1)÷2
+x = range(0,2π;length=nₓ+1)[1:end-1] # the equispaced grid in the x-direction
+nₜ = 500
+T = 1.05
+τ = T/nₜ
+u = zeros(nₜ + 1,nₓ)
+ulf = zeros(nₜ+1,nₓ)
+maxe = zeros(nₜ)
+maxelf = zeros(nₜ-1)
+u[1,:] = ulf[1,:] = f.(x)  # initial data
+ulf[2,:] = f.(x .- τ)
+for n = 1:nₜ
+    exact = f.(x .- n*τ)
+    u[n+1,:] = real.(u[n,:] - τ*ifft(ifftshift(im*(-m:m)).*fft(u[n,:]))) 
+    maxe[n] = norm(u[n+1,:] - exact,Inf)
+    if n > 1
+        ulf[n+1,:] = real.(ulf[n-1,:] - 2τ*ifft(ifftshift(im*(-m:m)).*fft(ulf[n,:])))
+        maxelf[n-1] = norm(ulf[n+1,:] - exact,Inf)
+    end
+end
+```
+
+```julia
+v = 1:nₜ
+plot(v,maxe;yscale=:log10,xscale=:log10,lw=2,
+label="Forward difference error",legend=:topleft)
+plot!(v,100*v*τ^2;label="error model")
+plot!(v[2:end],maxelf,label="central difference error",lw=2)
+plot!(v,600*v*τ^3;label="error model")
+```
+
+For the forward-difference-Fourier method, we have $e_i \approx 100 i \tau^2$, however $e_i$ grows explosively after roughly $t = 1$.  For the central-difference-Fourier method, $e_i \approx 600 i \tau^3$.  Later in this module, we'll see where these error models come from, however you might be able to derive these using Taylor expansions.

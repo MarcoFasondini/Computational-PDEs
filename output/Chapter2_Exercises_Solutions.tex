@@ -1,0 +1,520 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[a4paper,text={16.5cm,25.2cm},centering]{geometry}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage{microtype}
+\usepackage{hyperref}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1.2ex}
+
+\hypersetup
+       {   pdfauthor = { Marco Fasondini },
+           pdftitle={ foo },
+           colorlinks=TRUE,
+           linkcolor=black,
+           citecolor=blue,
+           urlcolor=blue
+       }
+
+
+
+
+\usepackage{upquote}
+\usepackage{listings}
+\usepackage{xcolor}
+\lstset{
+    basicstyle=\ttfamily\footnotesize,
+    upquote=true,
+    breaklines=true,
+    breakindent=0pt,
+    keepspaces=true,
+    showspaces=false,
+    columns=fullflexible,
+    showtabs=false,
+    showstringspaces=false,
+    escapeinside={(*@}{@*)},
+    extendedchars=true,
+}
+\newcommand{\HLJLt}[1]{#1}
+\newcommand{\HLJLw}[1]{#1}
+\newcommand{\HLJLe}[1]{#1}
+\newcommand{\HLJLeB}[1]{#1}
+\newcommand{\HLJLo}[1]{#1}
+\newcommand{\HLJLk}[1]{\textcolor[RGB]{148,91,176}{\textbf{#1}}}
+\newcommand{\HLJLkc}[1]{\textcolor[RGB]{59,151,46}{\textit{#1}}}
+\newcommand{\HLJLkd}[1]{\textcolor[RGB]{214,102,97}{\textit{#1}}}
+\newcommand{\HLJLkn}[1]{\textcolor[RGB]{148,91,176}{\textbf{#1}}}
+\newcommand{\HLJLkp}[1]{\textcolor[RGB]{148,91,176}{\textbf{#1}}}
+\newcommand{\HLJLkr}[1]{\textcolor[RGB]{148,91,176}{\textbf{#1}}}
+\newcommand{\HLJLkt}[1]{\textcolor[RGB]{148,91,176}{\textbf{#1}}}
+\newcommand{\HLJLn}[1]{#1}
+\newcommand{\HLJLna}[1]{#1}
+\newcommand{\HLJLnb}[1]{#1}
+\newcommand{\HLJLnbp}[1]{#1}
+\newcommand{\HLJLnc}[1]{#1}
+\newcommand{\HLJLncB}[1]{#1}
+\newcommand{\HLJLnd}[1]{\textcolor[RGB]{214,102,97}{#1}}
+\newcommand{\HLJLne}[1]{#1}
+\newcommand{\HLJLneB}[1]{#1}
+\newcommand{\HLJLnf}[1]{\textcolor[RGB]{66,102,213}{#1}}
+\newcommand{\HLJLnfm}[1]{\textcolor[RGB]{66,102,213}{#1}}
+\newcommand{\HLJLnp}[1]{#1}
+\newcommand{\HLJLnl}[1]{#1}
+\newcommand{\HLJLnn}[1]{#1}
+\newcommand{\HLJLno}[1]{#1}
+\newcommand{\HLJLnt}[1]{#1}
+\newcommand{\HLJLnv}[1]{#1}
+\newcommand{\HLJLnvc}[1]{#1}
+\newcommand{\HLJLnvg}[1]{#1}
+\newcommand{\HLJLnvi}[1]{#1}
+\newcommand{\HLJLnvm}[1]{#1}
+\newcommand{\HLJLl}[1]{#1}
+\newcommand{\HLJLld}[1]{\textcolor[RGB]{148,91,176}{\textit{#1}}}
+\newcommand{\HLJLs}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsa}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsb}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsc}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsd}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsdB}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsdC}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLse}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLsh}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsi}[1]{#1}
+\newcommand{\HLJLso}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsr}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLss}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLssB}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLnB}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLnbB}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLnfB}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLnh}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLni}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLnil}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLnoB}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLoB}[1]{\textcolor[RGB]{102,102,102}{\textbf{#1}}}
+\newcommand{\HLJLow}[1]{\textcolor[RGB]{102,102,102}{\textbf{#1}}}
+\newcommand{\HLJLp}[1]{#1}
+\newcommand{\HLJLc}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLch}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLcm}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLcp}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLcpB}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLcs}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLcsB}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLg}[1]{#1}
+\newcommand{\HLJLgd}[1]{#1}
+\newcommand{\HLJLge}[1]{#1}
+\newcommand{\HLJLgeB}[1]{#1}
+\newcommand{\HLJLgh}[1]{#1}
+\newcommand{\HLJLgi}[1]{#1}
+\newcommand{\HLJLgo}[1]{#1}
+\newcommand{\HLJLgp}[1]{#1}
+\newcommand{\HLJLgs}[1]{#1}
+\newcommand{\HLJLgsB}[1]{#1}
+\newcommand{\HLJLgt}[1]{#1}
+
+
+
+\def\qqand{\qquad\hbox{and}\qquad}
+\def\qqfor{\qquad\hbox{for}\qquad}
+\def\qqas{\qquad\hbox{as}\qquad}
+\def\half{ {1 \over 2} }
+\def\D{ {\rm d} }
+\def\I{ {\rm i} }
+\def\E{ {\rm e} }
+\def\C{ {\mathbb C} }
+\def\R{ {\mathbb R} }
+\def\bbR{ {\mathbb R} }
+\def\H{ {\mathbb H} }
+\def\Z{ {\mathbb Z} }
+\def\CC{ {\cal C} }
+\def\FF{ {\cal F} }
+\def\HH{ {\cal H} }
+\def\LL{ {\cal L} }
+\def\vc#1{ {\mathbf #1} }
+\def\bbC{ {\mathbb C} }
+
+
+
+\def\fR{ f_{\rm R} }
+\def\fL{ f_{\rm L} }
+
+\def\qqqquad{\qquad\qquad}
+\def\qqwhere{\qquad\hbox{where}\qquad}
+\def\Res_#1{\underset{#1}{\rm Res}\,}
+\def\sech{ {\rm sech}\, }
+\def\acos{ {\rm acos}\, }
+\def\asin{ {\rm asin}\, }
+\def\atan{ {\rm atan}\, }
+\def\Ei{ {\rm Ei}\, }
+\def\upepsilon{\varepsilon}
+
+
+\def\Xint#1{ \mathchoice
+   {\XXint\displaystyle\textstyle{#1} }%
+   {\XXint\textstyle\scriptstyle{#1} }%
+   {\XXint\scriptstyle\scriptscriptstyle{#1} }%
+   {\XXint\scriptscriptstyle\scriptscriptstyle{#1} }%
+   \!\int}
+\def\XXint#1#2#3{ {\setbox0=\hbox{$#1{#2#3}{\int}$}
+     \vcenter{\hbox{$#2#3$}}\kern-.5\wd0} }
+\def\ddashint{\Xint=}
+\def\dashint{\Xint-}
+% \def\dashint
+\def\infdashint{\dashint_{-\infty}^\infty}
+
+
+
+
+\def\addtab#1={#1\;&=}
+\def\ccr{\\\addtab}
+\def\ip<#1>{\left\langle{#1}\right\rangle}
+\def\dx{\D x}
+\def\dt{\D t}
+\def\dz{\D z}
+\def\ds{\D s}
+
+\def\rR{ {\rm R} }
+\def\rL{ {\rm L} }
+
+\def\norm#1{\left\| #1 \right\|}
+
+\def\pr(#1){\left({#1}\right)}
+\def\br[#1]{\left[{#1}\right]}
+
+\def\abs#1{\left|{#1}\right|}
+\def\fpr(#1){\!\pr({#1})}
+
+\def\sopmatrix#1{ \begin{pmatrix}#1\end{pmatrix} }
+
+\def\endash{–}
+\def\emdash{—}
+\def\mdblksquare{\blacksquare}
+\def\lgblksquare{\blacksquare}
+\def\scre{\E}
+\def\mapengine#1,#2.{\mapfunction{#1}\ifx\void#2\else\mapengine #2.\fi }
+
+\def\map[#1]{\mapengine #1,\void.}
+
+\def\mapenginesep_#1#2,#3.{\mapfunction{#2}\ifx\void#3\else#1\mapengine #3.\fi }
+
+\def\mapsep_#1[#2]{\mapenginesep_{#1}#2,\void.}
+
+
+\def\vcbr[#1]{\pr(#1)}
+
+
+\def\bvect[#1,#2]{
+{
+\def\dots{\cdots}
+\def\mapfunction##1{\ | \  ##1}
+	\sopmatrix{
+		 \,#1\map[#2]\,
+	}
+}
+}
+
+
+
+\def\vect[#1]{
+{\def\dots{\ldots}
+	\vcbr[{#1}]
+} }
+
+\def\vectt[#1]{
+{\def\dots{\ldots}
+	\vect[{#1}]^{\top}
+} }
+
+\def\Vectt[#1]{
+{
+\def\mapfunction##1{##1 \cr}
+\def\dots{\vdots}
+	\begin{pmatrix}
+		\map[#1]
+	\end{pmatrix}
+} }
+
+\def\addtab#1={#1\;&=}
+\def\ccr{\\\addtab}
+
+\def\questionequals{= \!\!\!\!\!\!{\scriptstyle ? \atop }\,\,\,}
+
+\def\Ei{\rm Ei\,}
+
+\begin{document}
+
+\section{Chapter 2: Solutions to exercises}
+\begin{itemize}
+\item[1. ] Give explicit formulae for the Fourier coefficients $c_k$ and approximate Fourier coefficients $\tilde{c}_k^n$ for the following functions:
+
+\end{itemize}
+\[
+\cos x,  {3 \over 3 - {\rm e}^{{\rm i }x}}
+\]
+Hint: You may wish to try the change of variables $z = {\rm e}^{{\rm i}x}$.
+
+For $f(x) = \cos x$, since 
+
+\[
+f(x) = \frac{1}{2}{\rm e}^{{\rm i}x} + \frac{1}{2}{\rm e}^{-{\rm i}x}
+\]
+we have that
+
+\[
+c_{-1} = c_1 = \frac{1}{2}, \qquad c_k = 0, \qquad k \neq -1, 1.
+\]
+To find $\tilde{c}^n_k$, we use the aliasing formula:
+
+\[
+\tilde{c}^{n}_k = \cdots + c_{k-2n}+c_{k-n}+c_k+c_{k+n}+c_{k+2n}+\cdots
+\]
+we also note that
+
+\[
+\tilde{c}^{n}_{k+np} = \tilde{c}^{n}_k, \qquad p \in \mathbb{Z}.
+\]
+Therefore for $p \in \mathbb{Z}$ we have
+
+
+\begin{align*}
+\tilde{c}^{1}_k &= c_1 + c_{-1} = 1 \\
+\tilde{c}^{2}_{2p} &= 0, \quad \tilde{c}^{2}_{2p+1} = c_1 + c_{-1} = 1 \\
+\end{align*}
+and for $n \geq 3$,
+
+\[
+\tilde{c}^{n}_{1+np} = \tilde{c}^{n}_{-1+np} = 1/2, \qquad \tilde{c}^{n}_{k} = 0 \: \text{otherwise} 
+\]
+For $f(x) = {3 \over 3 - {\rm e}^{{\rm i }x}}$, under the change of variables $z = {\rm e}^{{\rm i}x}$ we can use geometric series to determine
+
+\[
+f = {3 \over 3 - z} = {1 \over 1- z/3} = \sum_{k=0}^{\infty} {z^k \over 3^k}
+\]
+That is $c_k = 1/3^k$ for $k \ensuremath{\geq} 0$, and $c_k = 0$ for $k < 0$. We then have for $0 \ensuremath{\leq} k \ensuremath{\leq} n-1$
+
+\[
+\tilde{c}_{k+pn}^n =  \sum_{\ell=0}^{\infty} {1 \over 3^{k+\ell n}} = {1 \over 3^k} {1 \over 1 - 1/3^n} = {3^n \over 3^{n+k} - 3^k}
+\]
+\begin{itemize}
+\item[2. ] Show that the DFT $Q_n$ is symmetric ($Q_n = Q_n^{\top}$) but not Hermitian ($Q_n \neq Q_n^*$).
+
+\end{itemize}
+
+\begin{align*}
+Q_n &:= {1 \over \ensuremath{\sqrt}n} \begin{bmatrix} 1 & 1 & 1&  \ensuremath{\cdots} & 1 \\
+                                    1 & {\rm e}^{-{\rm i} x_1} & {\rm e}^{-{\rm i} x_2} & \ensuremath{\cdots} & {\rm e}^{-{\rm i} x_{n-1}} \\
+                                    1 & {\rm e}^{-{\rm i} 2 x_1} & {\rm e}^{-{\rm i} 2 x_2} & \ensuremath{\cdots} & {\rm e}^{-{\rm i} 2x_{n-1}} \\
+                                    \ensuremath{\vdots} & \ensuremath{\vdots} & \ensuremath{\vdots} & \ensuremath{\ddots} & \ensuremath{\vdots} \\
+                                    1 & {\rm e}^{-{\rm i} (n-1) x_1} & {\rm e}^{-{\rm i} (n-1) x_2} & \ensuremath{\cdots} & {\rm e}^{-{\rm i} (n-1) x_{n-1}}
+\end{bmatrix}
+\end{align*}
+where $x_j = 2\ensuremath{\pi}j/n$ for $j = 0,1,\ensuremath{\ldots},n$ and $\ensuremath{\omega} := {\rm e}^{{\rm i} x_1} = {\rm e}^{2 \ensuremath{\pi} {\rm i} \over n}$ are $n$ th roots of unity in the sense that $\ensuremath{\omega}^n = 1$. So ${\rm e}^{{\rm i} x_j} ={\rm e}^{2 \ensuremath{\pi} {\rm i} j \over n}= \ensuremath{\omega}^j$. Note that $x_j = 2\ensuremath{\pi}(j-1)/n+2\ensuremath{\pi}/n = x_{j-1} + x_1$. By completing this recurrence we find that $x_j = jx_1$, from which the following symmetric version follows immediately
+
+
+\begin{align*}
+Q_n 
+&= {1 \over \sqrt{n}} \begin{bmatrix} 1 & 1 & 1&  \ensuremath{\cdots} & 1 \\
+                                    1 & \ensuremath{\omega}^{-1} & \ensuremath{\omega}^{-2} & \ensuremath{\cdots} & \ensuremath{\omega}^{-(n-1)}\\
+                                    1 & \ensuremath{\omega}^{-2} & \ensuremath{\omega}^{-4} & \ensuremath{\cdots} & \ensuremath{\omega}^{-2(n-1)}\\
+                                    \ensuremath{\vdots} & \ensuremath{\vdots} & \ensuremath{\vdots} & \ensuremath{\ddots} & \ensuremath{\vdots} \\
+                                    1 & \ensuremath{\omega}^{-(n-1)} & \ensuremath{\omega}^{-2(n-1)} & \ensuremath{\cdots} & \ensuremath{\omega}^{-(n-1)^2}
+\end{bmatrix}.
+\end{align*}
+Now $Q_n^\ensuremath{\star}$ is found to be
+
+
+\begin{align*}
+Q_n^\ensuremath{\star} &= {1 \over \sqrt{n}} \begin{bmatrix}
+1 & 1 & 1&  \ensuremath{\cdots} & 1 \\
+1 & {\rm e}^{{\rm i} x_1} & {\rm e}^{{\rm i} 2 x_1} & \ensuremath{\cdots} & {\rm e}^{{\rm i} (n-1) x_1} \\
+1 &  {\rm e}^{{\rm i} x_2}  & {\rm e}^{{\rm i} 2 x_2} & \ensuremath{\cdots} & {\rm e}^{{\rm i} (n-1)x_2} \\
+\ensuremath{\vdots} & \ensuremath{\vdots} & \ensuremath{\vdots} & \ensuremath{\ddots} & \ensuremath{\vdots} \\
+1 & {\rm e}^{{\rm i} x_{n-1}} & {\rm e}^{{\rm i} 2 x_{n-1}} & \ensuremath{\cdots} & {\rm e}^{{\rm i} (n-1) x_{n-1}}
+\end{bmatrix}
+= {1 \over \sqrt{n}} \begin{bmatrix}
+1 & 1 & 1&  \ensuremath{\cdots} & 1 \\
+1 & \ensuremath{\omega}^{1} & \ensuremath{\omega}^{2} & \ensuremath{\cdots} & \ensuremath{\omega}^{(n-1)}\\
+1 & \ensuremath{\omega}^{2} & \ensuremath{\omega}^{4} & \ensuremath{\cdots} & \ensuremath{\omega}^{2(n-1)}\\
+\ensuremath{\vdots} & \ensuremath{\vdots} & \ensuremath{\vdots} & \ensuremath{\ddots} & \ensuremath{\vdots} \\
+1 & \ensuremath{\omega}^{(n-1)} & \ensuremath{\omega}^{2(n-1)} & \ensuremath{\cdots} & \ensuremath{\omega}^{(n-1)^2}
+\end{bmatrix}
+\end{align*}
+using the above arguments. Evidently, $Q_n^\ensuremath{\star} \neq Q_n$ since $\ensuremath{\omega} \neq \ensuremath{\omega}^{-1}$.
+
+\begin{itemize}
+\item[3. ] Show that 
+
+\end{itemize}
+\[
+ \sum_{k=-m}^{m} {\rm e}^{{\rm i}kx} = \begin{cases}
+ \frac{\sin((m+1/2)x)}{\sin(x/2)} & \text{if } x \neq 0 \\
+ 2m + 1 & \text{if } x = 0
+ \end{cases}
+\]
+If $x = 0 \: ({\rm mod}\: 2\pi))$, then ${\rm e}^{{\rm i}kx}=1$ and thus
+
+\[
+\sum_{k=-m}^{m} {\rm e}^{{\rm i}kx} = \sum_{k=-m}^{m} 1 = 2m + 1
+\]
+otherwise (for $x \neq 0 \:({\rm mod}\: 2\pi)$ and thus ${\rm e}^{{\rm i}kx} \neq 1)$
+
+
+\begin{eqnarray*}
+\sum_{k=-m}^{m} {\rm e}^{{\rm i}kx} &=& {\rm e}^{-{\rm i}mx}\sum_{k=0}^{2m} {\rm e}^{{\rm i}kx} \\
+&=& {\rm e}^{-{\rm i}mx}\frac{1 -  {\rm e}^{{\rm i}(2m+1)x}}{1 -  {\rm e}^{{\rm i}x}} \\
+&=& \frac{{\rm e}^{-{\rm i}(m+1/2)x} -  {\rm e}^{{\rm i}(m+1/2)x}}{{\rm e}^{-{\rm i}x/2} -  {\rm e}^{{\rm i}x/2}} \\
+&=& \frac{\sin((m+1/2)x)}{\sin(x/2)}
+\end{eqnarray*}
+\begin{itemize}
+\item[4. ] Prove that the trigonometric interpolant $p_n(x)$ that interpolates $f$ at $x = x_j = jh$, $j  = 0, \ldots, n-1$ with $h = 2\pi/n$ is unique.
+
+\end{itemize}
+Let 
+
+\[
+p_n(x) = \sum_{m = -k}^{m}\tilde{c}^n_k{\rm e}^{{\rm i}kx}
+\]
+and suppose there is some other trigonometric interpolant $q_n(x)$ with
+
+\[
+q_n(x) = \sum_{k = -m}^{m}\tilde{b}^n_k{\rm e}^{{\rm i}kx}
+\]
+that also satisfies $q_n(x_j) = f(x_j)$, $j = 0, \ldots, n-1$, then
+
+\[
+\mathbf{p} = \left(
+\begin{array}{c}
+p_n(x_0) \\
+p_n(x_1) \\
+\vdots \\
+p_n(x_{n-2}) \\
+p_n(x_{n-1})
+\end{array}
+\right)
+=
+\underbrace{\begin{bmatrix}
+1 & 1 & 1&  \ensuremath{\cdots} & 1 \\
+{\rm e}^{-{\rm i}m x_1} & {\rm e}^{-{\rm i}(m-1) x_1} &  {\rm e}^{-{\rm i}(m-2) x_1} & \ensuremath{\cdots} & {\rm e}^{{\rm i} m x_1} \\
+{\rm e}^{-{\rm i}m x_2} & {\rm e}^{-{\rm i}(m-1) x_2} &  {\rm e}^{-{\rm i}(m-2) x_2} & \ensuremath{\cdots} & {\rm e}^{{\rm i} m x_2} \\
+\ensuremath{\vdots} & \ensuremath{\vdots} & \ensuremath{\vdots} & \ensuremath{\ddots} & \ensuremath{\vdots} \\
+{\rm e}^{-{\rm i}m x_{n-1}}& {\rm e}^{-{\rm i}(m-1)x_{n-1}}& {\rm e}^{-{\rm i}(m-2)x_{n-1}}& \cdots & {\rm e}^{{\rm i}m x_{n-1}}
+\end{bmatrix}}_{V} 
+\left(
+\begin{array}{l}
+\tilde{c}^n_{-m} \\
+\tilde{c}^n_{-m+1} \\
+\vdots \\
+\tilde{c}^n_{m-1} \\
+\tilde{c}^n_{m}
+\end{array}
+\right)
+\]
+and
+
+\[
+\mathbf{q} = \left(
+\begin{array}{c}
+q_n(x_0) \\
+q_n(x_1) \\
+\vdots \\
+q_n(x_{n-2}) \\
+q_n(x_{n-1})
+\end{array}
+\right)
+=
+\underbrace{\begin{bmatrix}
+1 & 1 & 1&  \ensuremath{\cdots} & 1 \\
+{\rm e}^{-{\rm i}m x_1} & {\rm e}^{-{\rm i}(m-1) x_1} &  {\rm e}^{-{\rm i}(m-2) x_1} & \ensuremath{\cdots} & {\rm e}^{{\rm i} m x_1} \\
+{\rm e}^{-{\rm i}m x_2} & {\rm e}^{-{\rm i}(m-1) x_2} &  {\rm e}^{-{\rm i}(m-2) x_2} & \ensuremath{\cdots} & {\rm e}^{{\rm i} m x_2} \\
+\ensuremath{\vdots} & \ensuremath{\vdots} & \ensuremath{\vdots} & \ensuremath{\ddots} & \ensuremath{\vdots} \\
+{\rm e}^{-{\rm i}m x_{n-1}}& {\rm e}^{-{\rm i}(m-1)x_{n-1}}& {\rm e}^{-{\rm i}(m-2)x_{n-1}}& \cdots & {\rm e}^{{\rm i}m x_{n-1}}
+\end{bmatrix}}_{V} 
+\left(
+\begin{array}{l}
+\tilde{b}^n_{-m} \\
+\tilde{b}^n_{-m+1} \\
+\vdots \\
+\tilde{b}^n_{m-1} \\
+\tilde{b}^n_{m}
+\end{array}
+\right).
+\]
+We have that $\mathbf{p} = \mathbf{q}$ because $p_n(x_j) = f(x_j) = q_n(x_j)$, $j = 0, \ldots, n-1$.  As shown in the notes of Chapter 2, 
+
+\[
+V = \sqrt{n}\,Q_n^*P^{\top}
+\]
+and $\left(Q_n^*\right)^{-1} = Q_n$ and $\left(P^{\top}\right)^{-1} = P$, therefore $V$ is invertible and $V^{-1} = PQ_n/\sqrt{n}$.  Multiplying the equations for $\mathbf{p}$ and $\mathbf{q}$ above by $V^{-1}$, i.e., $V^{-1}\mathbf{p} = V^{-1}\mathbf{q}$,  it follows that $\tilde{c}^{n}_k = \tilde{b}^n_k$, $k = -m, \ldots, m$ and therefore $p_n(x) = q_n(x)$.
+
+\begin{itemize}
+\item[5. ] Consider the advection equation
+
+\end{itemize}
+\[
+   u_t + u_x = 0, \qquad x \in [0, 2\pi), \qquad t \in [0, T],
+\]
+with $u(x,0) = f(x) = {\rm e}^{-100(x-1)^2}$ and exact solution $u(x,t) = f(x - t)$; also consider (i) the forward-difference-Fourier    method 
+
+\[
+\mathbf{u}^{i+1} = \mathbf{u}^{i} - \tau \mathcal{F}^{-1}\left\lbrace {\rm i}(-m\!:\!m)\cdot\mathcal{F}\lbrace \mathbf{u}^{i} \rbrace\right\rbrace, \qquad i = 0, \ldots, n_t-1
+\]
+and (ii) the central-difference-Fourier method (aka the leapfrog method)
+
+\[
+\mathbf{u}^{i+1} = \mathbf{u}^{i-1} - 2\tau \mathcal{F}^{-1}\left\lbrace {\rm i}(-m\!:\!m)\cdot\mathcal{F}\lbrace \mathbf{u}^{i} \rbrace\right\rbrace, \qquad i = 1, \ldots, n_t-1.
+\]
+For the leapfrog method, set $u^{1}_{j} = f(x_j - \tau)$.     For both methods, set $n_x = 401$, $n_t = 500$ and $T = 1.05$ and plot the maximum error for each time step, i.e., plot
+
+\[
+   e_i := \max_{j = 0, \ldots, n_x-1} \vert u(x_j,t_i) - u^i_j \vert
+\]
+for $i = 1, \ldots, n_t$.  Describe the behaviour of $e_i$ for each method.
+
+
+\begin{lstlisting}
+(*@\HLJLk{using}@*) (*@\HLJLn{LinearAlgebra}@*)(*@\HLJLp{,}@*) (*@\HLJLn{FFTW}@*)(*@\HLJLp{,}@*) (*@\HLJLn{Plots}@*)
+(*@\HLJLn{f}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{x}@*) (*@\HLJLoB{->}@*) (*@\HLJLnf{exp}@*)(*@\HLJLp{(}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{100}@*)(*@\HLJLoB{*}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)(*@\HLJLp{)}@*)(*@\HLJLoB{{\textasciicircum}}@*)(*@\HLJLni{2}@*)(*@\HLJLp{)}@*)
+(*@\HLJLn{n\ensuremath{\_x}}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{401}@*)
+(*@\HLJLn{m}@*) (*@\HLJLoB{=}@*) (*@\HLJLp{(}@*)(*@\HLJLn{n\ensuremath{\_x}}@*) (*@\HLJLoB{-}@*) (*@\HLJLni{1}@*)(*@\HLJLp{)}@*)(*@\HLJLoB{\ensuremath{\div}}@*)(*@\HLJLni{2}@*)
+(*@\HLJLn{x}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{range}@*)(*@\HLJLp{(}@*)(*@\HLJLni{0}@*)(*@\HLJLp{,}@*)(*@\HLJLni{2}@*)(*@\HLJLn{\ensuremath{\pi}}@*)(*@\HLJLp{;}@*)(*@\HLJLn{length}@*)(*@\HLJLoB{=}@*)(*@\HLJLn{n\ensuremath{\_x}}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{)[}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLk{end}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)(*@\HLJLp{]}@*) (*@\HLJLcs{{\#}}@*) (*@\HLJLcs{the}@*) (*@\HLJLcs{equispaced}@*) (*@\HLJLcs{grid}@*) (*@\HLJLcs{in}@*) (*@\HLJLcs{the}@*) (*@\HLJLcs{x-direction}@*)
+(*@\HLJLn{n\ensuremath{\_t}}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{500}@*)
+(*@\HLJLn{T}@*) (*@\HLJLoB{=}@*) (*@\HLJLnfB{1.05}@*)
+(*@\HLJLn{\ensuremath{\tau}}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{T}@*)(*@\HLJLoB{/}@*)(*@\HLJLn{n\ensuremath{\_t}}@*)
+(*@\HLJLn{u}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{zeros}@*)(*@\HLJLp{(}@*)(*@\HLJLn{n\ensuremath{\_t}}@*) (*@\HLJLoB{+}@*) (*@\HLJLni{1}@*)(*@\HLJLp{,}@*)(*@\HLJLn{n\ensuremath{\_x}}@*)(*@\HLJLp{)}@*)
+(*@\HLJLn{ulf}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{zeros}@*)(*@\HLJLp{(}@*)(*@\HLJLn{n\ensuremath{\_t}}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{,}@*)(*@\HLJLn{n\ensuremath{\_x}}@*)(*@\HLJLp{)}@*)
+(*@\HLJLn{maxe}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{zeros}@*)(*@\HLJLp{(}@*)(*@\HLJLn{n\ensuremath{\_t}}@*)(*@\HLJLp{)}@*)
+(*@\HLJLn{maxelf}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{zeros}@*)(*@\HLJLp{(}@*)(*@\HLJLn{n\ensuremath{\_t}}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)(*@\HLJLp{)}@*)
+(*@\HLJLn{u}@*)(*@\HLJLp{[}@*)(*@\HLJLni{1}@*)(*@\HLJLp{,}@*)(*@\HLJLoB{:}@*)(*@\HLJLp{]}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{ulf}@*)(*@\HLJLp{[}@*)(*@\HLJLni{1}@*)(*@\HLJLp{,}@*)(*@\HLJLoB{:}@*)(*@\HLJLp{]}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{f}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{)}@*)  (*@\HLJLcs{{\#}}@*) (*@\HLJLcs{initial}@*) (*@\HLJLcs{data}@*)
+(*@\HLJLn{ulf}@*)(*@\HLJLp{[}@*)(*@\HLJLni{2}@*)(*@\HLJLp{,}@*)(*@\HLJLoB{:}@*)(*@\HLJLp{]}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{f}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*) (*@\HLJLoB{.-}@*) (*@\HLJLn{\ensuremath{\tau}}@*)(*@\HLJLp{)}@*)
+(*@\HLJLk{for}@*) (*@\HLJLn{n}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{n\ensuremath{\_t}}@*)
+    (*@\HLJLn{exact}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{f}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*) (*@\HLJLoB{.-}@*) (*@\HLJLn{n}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{\ensuremath{\tau}}@*)(*@\HLJLp{)}@*)
+    (*@\HLJLn{u}@*)(*@\HLJLp{[}@*)(*@\HLJLn{n}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{,}@*)(*@\HLJLoB{:}@*)(*@\HLJLp{]}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{real}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{u}@*)(*@\HLJLp{[}@*)(*@\HLJLn{n}@*)(*@\HLJLp{,}@*)(*@\HLJLoB{:}@*)(*@\HLJLp{]}@*) (*@\HLJLoB{-}@*) (*@\HLJLn{\ensuremath{\tau}}@*)(*@\HLJLoB{*}@*)(*@\HLJLnf{ifft}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{ifftshift}@*)(*@\HLJLp{(}@*)(*@\HLJLn{im}@*)(*@\HLJLoB{*}@*)(*@\HLJLp{(}@*)(*@\HLJLoB{-}@*)(*@\HLJLn{m}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{m}@*)(*@\HLJLp{))}@*)(*@\HLJLoB{.*}@*)(*@\HLJLnf{fft}@*)(*@\HLJLp{(}@*)(*@\HLJLn{u}@*)(*@\HLJLp{[}@*)(*@\HLJLn{n}@*)(*@\HLJLp{,}@*)(*@\HLJLoB{:}@*)(*@\HLJLp{])))}@*) 
+    (*@\HLJLn{maxe}@*)(*@\HLJLp{[}@*)(*@\HLJLn{n}@*)(*@\HLJLp{]}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{norm}@*)(*@\HLJLp{(}@*)(*@\HLJLn{u}@*)(*@\HLJLp{[}@*)(*@\HLJLn{n}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{,}@*)(*@\HLJLoB{:}@*)(*@\HLJLp{]}@*) (*@\HLJLoB{-}@*) (*@\HLJLn{exact}@*)(*@\HLJLp{,}@*)(*@\HLJLn{Inf}@*)(*@\HLJLp{)}@*)
+    (*@\HLJLk{if}@*) (*@\HLJLn{n}@*) (*@\HLJLoB{>}@*) (*@\HLJLni{1}@*)
+        (*@\HLJLn{ulf}@*)(*@\HLJLp{[}@*)(*@\HLJLn{n}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{,}@*)(*@\HLJLoB{:}@*)(*@\HLJLp{]}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{real}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{ulf}@*)(*@\HLJLp{[}@*)(*@\HLJLn{n}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)(*@\HLJLp{,}@*)(*@\HLJLoB{:}@*)(*@\HLJLp{]}@*) (*@\HLJLoB{-}@*) (*@\HLJLni{2}@*)(*@\HLJLn{\ensuremath{\tau}}@*)(*@\HLJLoB{*}@*)(*@\HLJLnf{ifft}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{ifftshift}@*)(*@\HLJLp{(}@*)(*@\HLJLn{im}@*)(*@\HLJLoB{*}@*)(*@\HLJLp{(}@*)(*@\HLJLoB{-}@*)(*@\HLJLn{m}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{m}@*)(*@\HLJLp{))}@*)(*@\HLJLoB{.*}@*)(*@\HLJLnf{fft}@*)(*@\HLJLp{(}@*)(*@\HLJLn{ulf}@*)(*@\HLJLp{[}@*)(*@\HLJLn{n}@*)(*@\HLJLp{,}@*)(*@\HLJLoB{:}@*)(*@\HLJLp{])))}@*)
+        (*@\HLJLn{maxelf}@*)(*@\HLJLp{[}@*)(*@\HLJLn{n}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)(*@\HLJLp{]}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{norm}@*)(*@\HLJLp{(}@*)(*@\HLJLn{ulf}@*)(*@\HLJLp{[}@*)(*@\HLJLn{n}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{,}@*)(*@\HLJLoB{:}@*)(*@\HLJLp{]}@*) (*@\HLJLoB{-}@*) (*@\HLJLn{exact}@*)(*@\HLJLp{,}@*)(*@\HLJLn{Inf}@*)(*@\HLJLp{)}@*)
+    (*@\HLJLk{end}@*)
+(*@\HLJLk{end}@*)
+\end{lstlisting}
+
+
+\begin{lstlisting}
+(*@\HLJLn{v}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{n\ensuremath{\_t}}@*)
+(*@\HLJLnf{plot}@*)(*@\HLJLp{(}@*)(*@\HLJLn{v}@*)(*@\HLJLp{,}@*)(*@\HLJLn{maxe}@*)(*@\HLJLp{;}@*)(*@\HLJLn{yscale}@*)(*@\HLJLoB{=:}@*)(*@\HLJLn{log10}@*)(*@\HLJLp{,}@*)(*@\HLJLn{xscale}@*)(*@\HLJLoB{=:}@*)(*@\HLJLn{log10}@*)(*@\HLJLp{,}@*)(*@\HLJLn{lw}@*)(*@\HLJLoB{=}@*)(*@\HLJLni{2}@*)(*@\HLJLp{,}@*)
+(*@\HLJLn{label}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}Forward}@*) (*@\HLJLs{difference}@*) (*@\HLJLs{error"{}}@*)(*@\HLJLp{,}@*)(*@\HLJLn{legend}@*)(*@\HLJLoB{=:}@*)(*@\HLJLn{topleft}@*)(*@\HLJLp{)}@*)
+(*@\HLJLnf{plot!}@*)(*@\HLJLp{(}@*)(*@\HLJLn{v}@*)(*@\HLJLp{,}@*)(*@\HLJLni{100}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{v}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{\ensuremath{\tau}}@*)(*@\HLJLoB{{\textasciicircum}}@*)(*@\HLJLni{2}@*)(*@\HLJLp{;}@*)(*@\HLJLn{label}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}error}@*) (*@\HLJLs{model"{}}@*)(*@\HLJLp{)}@*)
+(*@\HLJLnf{plot!}@*)(*@\HLJLp{(}@*)(*@\HLJLn{v}@*)(*@\HLJLp{[}@*)(*@\HLJLni{2}@*)(*@\HLJLoB{:}@*)(*@\HLJLk{end}@*)(*@\HLJLp{],}@*)(*@\HLJLn{maxelf}@*)(*@\HLJLp{,}@*)(*@\HLJLn{label}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}central}@*) (*@\HLJLs{difference}@*) (*@\HLJLs{error"{}}@*)(*@\HLJLp{,}@*)(*@\HLJLn{lw}@*)(*@\HLJLoB{=}@*)(*@\HLJLni{2}@*)(*@\HLJLp{)}@*)
+(*@\HLJLnf{plot!}@*)(*@\HLJLp{(}@*)(*@\HLJLn{v}@*)(*@\HLJLp{,}@*)(*@\HLJLni{600}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{v}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{\ensuremath{\tau}}@*)(*@\HLJLoB{{\textasciicircum}}@*)(*@\HLJLni{3}@*)(*@\HLJLp{;}@*)(*@\HLJLn{label}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}error}@*) (*@\HLJLs{model"{}}@*)(*@\HLJLp{)}@*)
+\end{lstlisting}
+
+\includegraphics[width=\linewidth]{/figures/Chapter2_Exercises_Solutions_2_1.pdf}
+
+For the forward-difference-Fourier method, we have $e_i \approx 100 i \tau^2$, however $e_i$ grows explosively after roughly $t = 1$.  For the central-difference-Fourier method, $e_i \approx 600 i \tau^3$.  Later in this module, we'll see where these error models come from, however you might be able to derive these using Taylor expansions.
+
+
+
+\end{document}

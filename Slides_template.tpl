@@ -57,6 +57,7 @@
 \def\E{ {\rm e} }
 \def\C{ {\mathbb C} }
 \def\R{ {\mathbb R} }
+\def\bbR{ {\mathbb R} }
 \def\H{ {\mathbb H} }
 \def\Z{ {\mathbb Z} }
 \def\CC{ {\cal C} }

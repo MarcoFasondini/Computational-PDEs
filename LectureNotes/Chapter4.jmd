@@ -208,7 +208,7 @@ Then there exists constants $a_n$, $b_n \neq 0$ and $c_n \neq 0$ such that
 $$
 \begin{align*}
 x p_0(x) = a_0 p_0(x) + b_0 p_1(x) \\
-x p_n(x) = c_n p_{n-1}(x) + a_n p_n(x) + b_n p_{n+1}(x)
+x p_n(x) = c_{n-1} p_{n-1}(x) + a_n p_n(x) + b_n p_{n+1}(x)
 \end{align*}
 $$
 

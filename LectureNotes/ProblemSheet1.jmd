@@ -1,0 +1,61 @@
+
+# Problem Sheet 1
+
+1. **[5 marks]** What are the Fourier coefficients $c_k$ of $\sin^4 x$?
+
+2. **[5 marks]** Show for $0 \leq k,\ell \leq n-1$
+$$
+{1 \over n} \sum_{j=1}^n \cos k \theta_j \cos \ell \theta_j = \begin{cases} 1 & k = \ell = 0 \\
+                                                  1/2 & k = \ell \\
+                                                  0 & \hbox{otherwise}
+                                                  \end{cases}
+$$
+   for $\theta_j = \pi (j-1/2)/n$. Hint: 
+   You may consider replacing $\cos$ with 
+   complex exponentials:
+$$
+\cos \theta = {{\rm e}^{{\rm i}\theta} + {\rm e}^{-{\rm i}\theta} \over 2}.
+$$
+
+3. **[5 marks]** Consider the Discrete Cosine Transform (DCT)
+$$
+C_n := \begin{bmatrix}
+\sqrt{1/n} \\
+ & \sqrt{2/n} \\ 
+ && \ddots \\
+ &&& \sqrt{2/n}
+ \end{bmatrix}
+\begin{bmatrix}
+    1 & \cdots & 1\\
+    \cos \theta_1 & \cdots & \cos \theta_n \\
+    \vdots & \ddots & \vdots \\
+    \cos (n-1)\theta_1 & \cdots & \cos (n-1)\theta_n
+\end{bmatrix}
+$$
+for $\theta_j = \pi(j-1/2)/n$. Prove that $C_n$ is orthogonal: $C_n^{\top} C_n = C_n C_n^{\top} = I$.
+Hint: $C_n C_n^{\top} = I$ might be easier to show than $C_n^{\top} C_n = I$ using the previous problem.
+
+4. **[10 marks]**  Consider the variable-coefficient advection equation
+$$
+   u_t + c(x)u_x = 0, \qquad c(x) = \frac{1}{5} + \sin^2(x-1), \qquad x \in [0, 2\pi), \qquad t \in [0, T],
+$$
+   with $u(x,0) = f(x) = {\rm e}^{-100(x-1)^2}$, which we approximate with the leapfrog method
+$$
+\mathbf{u}^{i+1} = \mathbf{u}^{i-1} - 2\tau c(\mathbf{x})\cdot\mathcal{F}^{-1}\left\lbrace {\rm i}(-m\!:\!m)\cdot\mathcal{F}\lbrace \mathbf{u}^{i} \rbrace\right\rbrace, \qquad i = 0, \ldots, n_t-1.
+$$
+   Note that one needs $\mathbf{u}^{-1}$ to initialise the leapfrog method.  Let the entries of $\mathbf{u}^{-1}$ be $u^{-1}_j = f(x_j + \tau/5)$, $j = 0, \ldots, n_x-1$.  The exact solution is periodic in time, i.e.,
+$$
+   u(x,t+T) = u(x,t)
+$$
+   where
+$$
+   T = \int_{0}^{2\pi}\frac{1}{c(x)}{\rm d}x = 12.8254983016186\ldots
+$$
+   Compute $T$ using the Trapezoidal rule and confirm that you get the value stated above.  Then compute
+$$
+   e(n_x) = \max_{j = 0, \ldots, n_x-1} \vert u^{0}_j - u^{n_t}_{j} \vert
+$$
+where $n_t = 8n_x$ and $\tau n_t = T$  and plot $e(n_x)$ for $n_x = 2^k + 1$, with $k = 5, 6, \ldots, 10$.  Comment on the behaviour of $e(n_x)$.
+
+```julia
+```

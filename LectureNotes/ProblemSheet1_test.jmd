@@ -1,0 +1,42 @@
+
+# Problem Sheet 1
+
+1. **[5 marks]** What are the Fourier coefficients $c_k$ of $\sin^4 x$?
+
+2. **[5 marks]** Show for $0 \leq k,\ell \leq n-1$
+$$
+{1 \over n} \sum_{j=1}^n \cos k \theta_j \cos \ell \theta_j = \begin{cases} 1 & k = \ell = 0 \\
+                                                  1/2 & k = \ell \\
+                                                  0 & \hbox{otherwise}
+                                                  \end{cases}
+$$
+   for $\theta_j = \pi (j-1/2)/n$. Hint: 
+   You may consider replacing $\cos$ with 
+   complex exponentials:
+$$
+\cos \theta = {{\rm e}^{{\rm i}\theta} + {\rm e}^{-{\rm i}\theta} \over 2}.
+$$
+
+3. **[5 marks]** Consider the Discrete Cosine Transform (DCT)
+$$
+C_n := \begin{bmatrix}
+\sqrt{1/n} \\
+ & \sqrt{2/n} \\ 
+ && \ddots \\
+ &&& \sqrt{2/n}
+ \end{bmatrix}
+\begin{bmatrix}
+    1 & \cdots & 1\\
+    \cos \theta_1 & \cdots & \cos \theta_n \\
+    \vdots & \ddots & \vdots \\
+    \cos (n-1)\theta_1 & \cdots & \cos (n-1)\theta_n
+\end{bmatrix}
+$$
+for $\theta_j = \pi(j-1/2)/n$. Prove that $C_n$ is orthogonal: $C_n^{\top} C_n = C_n C_n^{\top} = I$.
+Hint: $C_n C_n^{\top} = I$ might be easier to show than $C_n^{\top} C_n = I$ using the previous problem.
+
+4. **[10 marks]**  Consider the variable-coefficient advection equation
+$$
+   u_t + c(x)u_x = 0, \qquad c(x) = \frac{1}{5} + \sin^2(x-1), \qquad x \in [0, 2\pi), \qquad t \in [0, T],
+$$
+   
