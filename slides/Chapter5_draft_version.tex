@@ -1,0 +1,1627 @@
+\documentclass[12pt,landscape]{article}
+
+%\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage{microtype}
+\usepackage{hyperref}
+\pagestyle{empty}
+\usepackage{titlesec}
+\titleformat*{\section}{\LARGE\bfseries}
+\titleformat*{\subsection}{\LARGE\bfseries}
+\titleformat*{\subsubsection}{\LARGE\bfseries}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1.2ex}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1.2ex}
+
+\setlength{\oddsidemargin}{-16mm}
+\setlength{\textwidth}{260mm}
+\setlength{\columnsep}{0.5in}
+\setlength{\columnseprule}{1pt}
+\setlength{\textheight}{202mm}
+\setlength{\topmargin}{-32mm}
+\setlength{\headsep}{0.25in}
+
+\hypersetup
+       {   pdfauthor = { Marco Fasondini },
+           pdftitle={ foo },
+           colorlinks=TRUE,
+           linkcolor=black,
+           citecolor=blue,
+           urlcolor=blue
+       }
+
+
+
+
+\usepackage{upquote}
+\usepackage{listings}
+\usepackage{xcolor}
+\lstset{
+    basicstyle=\ttfamily\footnotesize,
+    upquote=true,
+    breaklines=true,
+    breakindent=0pt,
+    keepspaces=true,
+    showspaces=false,
+    columns=fullflexible,
+    showtabs=false,
+    showstringspaces=false,
+    escapeinside={(*@}{@*)},
+    extendedchars=true,
+}
+\newcommand{\HLJLt}[1]{#1}
+\newcommand{\HLJLw}[1]{#1}
+\newcommand{\HLJLe}[1]{#1}
+\newcommand{\HLJLeB}[1]{#1}
+\newcommand{\HLJLo}[1]{#1}
+\newcommand{\HLJLk}[1]{\textcolor[RGB]{148,91,176}{\textbf{#1}}}
+\newcommand{\HLJLkc}[1]{\textcolor[RGB]{59,151,46}{\textit{#1}}}
+\newcommand{\HLJLkd}[1]{\textcolor[RGB]{214,102,97}{\textit{#1}}}
+\newcommand{\HLJLkn}[1]{\textcolor[RGB]{148,91,176}{\textbf{#1}}}
+\newcommand{\HLJLkp}[1]{\textcolor[RGB]{148,91,176}{\textbf{#1}}}
+\newcommand{\HLJLkr}[1]{\textcolor[RGB]{148,91,176}{\textbf{#1}}}
+\newcommand{\HLJLkt}[1]{\textcolor[RGB]{148,91,176}{\textbf{#1}}}
+\newcommand{\HLJLn}[1]{#1}
+\newcommand{\HLJLna}[1]{#1}
+\newcommand{\HLJLnb}[1]{#1}
+\newcommand{\HLJLnbp}[1]{#1}
+\newcommand{\HLJLnc}[1]{#1}
+\newcommand{\HLJLncB}[1]{#1}
+\newcommand{\HLJLnd}[1]{\textcolor[RGB]{214,102,97}{#1}}
+\newcommand{\HLJLne}[1]{#1}
+\newcommand{\HLJLneB}[1]{#1}
+\newcommand{\HLJLnf}[1]{\textcolor[RGB]{66,102,213}{#1}}
+\newcommand{\HLJLnfm}[1]{\textcolor[RGB]{66,102,213}{#1}}
+\newcommand{\HLJLnp}[1]{#1}
+\newcommand{\HLJLnl}[1]{#1}
+\newcommand{\HLJLnn}[1]{#1}
+\newcommand{\HLJLno}[1]{#1}
+\newcommand{\HLJLnt}[1]{#1}
+\newcommand{\HLJLnv}[1]{#1}
+\newcommand{\HLJLnvc}[1]{#1}
+\newcommand{\HLJLnvg}[1]{#1}
+\newcommand{\HLJLnvi}[1]{#1}
+\newcommand{\HLJLnvm}[1]{#1}
+\newcommand{\HLJLl}[1]{#1}
+\newcommand{\HLJLld}[1]{\textcolor[RGB]{148,91,176}{\textit{#1}}}
+\newcommand{\HLJLs}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsa}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsb}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsc}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsd}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsdB}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsdC}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLse}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLsh}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsi}[1]{#1}
+\newcommand{\HLJLso}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsr}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLss}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLssB}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLnB}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLnbB}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLnfB}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLnh}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLni}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLnil}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLnoB}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLoB}[1]{\textcolor[RGB]{102,102,102}{\textbf{#1}}}
+\newcommand{\HLJLow}[1]{\textcolor[RGB]{102,102,102}{\textbf{#1}}}
+\newcommand{\HLJLp}[1]{#1}
+\newcommand{\HLJLc}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLch}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLcm}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLcp}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLcpB}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLcs}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLcsB}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLg}[1]{#1}
+\newcommand{\HLJLgd}[1]{#1}
+\newcommand{\HLJLge}[1]{#1}
+\newcommand{\HLJLgeB}[1]{#1}
+\newcommand{\HLJLgh}[1]{#1}
+\newcommand{\HLJLgi}[1]{#1}
+\newcommand{\HLJLgo}[1]{#1}
+\newcommand{\HLJLgp}[1]{#1}
+\newcommand{\HLJLgs}[1]{#1}
+\newcommand{\HLJLgsB}[1]{#1}
+\newcommand{\HLJLgt}[1]{#1}
+
+
+
+\def\qqand{\qquad\hbox{and}\qquad}
+\def\qqfor{\qquad\hbox{for}\qquad}
+\def\qqas{\qquad\hbox{as}\qquad}
+\def\half{ {1 \over 2} }
+\def\D{ {\rm d} }
+\def\I{ {\rm i} }
+\def\E{ {\rm e} }
+\def\C{ {\mathbb C} }
+\def\R{ {\mathbb R} }
+\def\bbR{ {\mathbb R} }
+\def\H{ {\mathbb H} }
+\def\Z{ {\mathbb Z} }
+\def\CC{ {\cal C} }
+\def\FF{ {\cal F} }
+\def\HH{ {\cal H} }
+\def\LL{ {\cal L} }
+\def\vc#1{ {\mathbf #1} }
+\def\bbC{ {\mathbb C} }
+
+
+
+\def\fR{ f_{\rm R} }
+\def\fL{ f_{\rm L} }
+
+\def\qqqquad{\qquad\qquad}
+\def\qqwhere{\qquad\hbox{where}\qquad}
+\def\Res_#1{\underset{#1}{\rm Res}\,}
+\def\sech{ {\rm sech}\, }
+\def\acos{ {\rm acos}\, }
+\def\asin{ {\rm asin}\, }
+\def\atan{ {\rm atan}\, }
+\def\Ei{ {\rm Ei}\, }
+\def\upepsilon{\varepsilon}
+
+
+\def\Xint#1{ \mathchoice
+   {\XXint\displaystyle\textstyle{#1} }%
+   {\XXint\textstyle\scriptstyle{#1} }%
+   {\XXint\scriptstyle\scriptscriptstyle{#1} }%
+   {\XXint\scriptscriptstyle\scriptscriptstyle{#1} }%
+   \!\int}
+\def\XXint#1#2#3{ {\setbox0=\hbox{$#1{#2#3}{\int}$}
+     \vcenter{\hbox{$#2#3$}}\kern-.5\wd0} }
+\def\ddashint{\Xint=}
+\def\dashint{\Xint-}
+% \def\dashint
+\def\infdashint{\dashint_{-\infty}^\infty}
+
+
+
+
+\def\addtab#1={#1\;&=}
+\def\ccr{\\\addtab}
+\def\ip<#1>{\left\langle{#1}\right\rangle}
+\def\dx{\D x}
+\def\dt{\D t}
+\def\dz{\D z}
+\def\ds{\D s}
+
+\def\rR{ {\rm R} }
+\def\rL{ {\rm L} }
+
+\def\norm#1{\left\| #1 \right\|}
+
+\def\pr(#1){\left({#1}\right)}
+\def\br[#1]{\left[{#1}\right]}
+
+\def\abs#1{\left|{#1}\right|}
+\def\fpr(#1){\!\pr({#1})}
+
+\def\sopmatrix#1{ \begin{pmatrix}#1\end{pmatrix} }
+
+\def\endash{–}
+\def\emdash{—}
+\def\mdblksquare{\blacksquare}
+\def\lgblksquare{\blacksquare}
+\def\scre{\E}
+\def\mapengine#1,#2.{\mapfunction{#1}\ifx\void#2\else\mapengine #2.\fi }
+
+\def\map[#1]{\mapengine #1,\void.}
+
+\def\mapenginesep_#1#2,#3.{\mapfunction{#2}\ifx\void#3\else#1\mapengine #3.\fi }
+
+\def\mapsep_#1[#2]{\mapenginesep_{#1}#2,\void.}
+
+
+\def\vcbr[#1]{\pr(#1)}
+
+
+\def\bvect[#1,#2]{
+{
+\def\dots{\cdots}
+\def\mapfunction##1{\ | \  ##1}
+	\sopmatrix{
+		 \,#1\map[#2]\,
+	}
+}
+}
+
+
+
+\def\vect[#1]{
+{\def\dots{\ldots}
+	\vcbr[{#1}]
+} }
+
+\def\vectt[#1]{
+{\def\dots{\ldots}
+	\vect[{#1}]^{\top}
+} }
+
+\def\Vectt[#1]{
+{
+\def\mapfunction##1{##1 \cr}
+\def\dots{\vdots}
+	\begin{pmatrix}
+		\map[#1]
+	\end{pmatrix}
+} }
+
+\def\addtab#1={#1\;&=}
+\def\ccr{\\\addtab}
+
+\def\questionequals{= \!\!\!\!\!\!{\scriptstyle ? \atop }\,\,\,}
+
+\def\cent#1{\begin{center}#1\end{center} }
+
+\def\Ei{\rm Ei\,}
+
+\lstset{
+    basicstyle=\ttfamily,
+	}
+
+\begin{document}
+{\Huge
+\sf
+\section{Chapter 5: Consistency, stability and convergence of methods for evolutionary PDEs}
+\subsubsection{A finite difference method for the diffusion equation}
+Consider the $(1+1)$-dimensional diffusion equation,
+
+\[
+\frac{\partial u}{\partial t}=\frac{\partial^2 u}{\partial x^2}, \qquad x \in (0, 1),\qquad t \in (0, T]
+\]
+subject to the initial and boundary data
+
+\[
+u(x,0) = f(x), \qquad 0 \leq x \leq 1, \qquad u(0,t) = \varphi_0(t), \qquad u(1,t) = \varphi_1(t), \qquad t \geq 0.
+\]
+We shall analyse a finite difference method for this PDE initial / boundary value problem.
+
+We discretise the spatial variable as follows,
+
+\[
+x_j = j h, \qquad h = \frac{1}{n_x + 1}, \qquad j = 0, \ldots, n_x + 1,
+\]
+and the temporal variable,
+
+\[
+t_i = i\tau, \qquad \tau = \frac{T}{n_t}, \qquad i = 0, 1, 2, \ldots, n_t.
+\]
+Let 
+
+\[
+u(x_j, t_i) := \tilde{u}^i_j \approx u^{i}_j.
+\]
+We set
+
+\[
+u(x_j, 0) = \tilde{u}^0_j =  f(x_j) =  u^{0}_j, \qquad j = 1, \ldots, n_x
+\]
+and
+
+\[
+u(0,t_i)  = \tilde{u}^i_0 = \varphi_0(t_i) =  u^i_0, \qquad u(1,t_i) =  \tilde{u}^i_{n_x + 1} = \varphi_1(t_i) =  u^i_{n_x +1}, \qquad i \geq 0.
+\]
+\subsubsection{Order and convergence}
+Let's replace the time derivative with a (first-order) forward difference and the second spatial derivative with a (second-order) central difference approximation: from Taylor's theorem (see Chapter 1), there exists a $\xi \in [t_i, t_{i+1}]$ such that
+
+\[
+\frac{u(x_j,t_{i+1}) - u(x_j,t_{i})}{\tau} =\frac{\tilde{u}^{i+1}_j - \tilde{u}^i_j}{\tau} = u_t(x_j,t_i) + \frac{\tau}{2}u_{tt}(x_j,\xi).
+\]
+Let's assume that $u_{tt}(x,t)$ exists and is bounded on $(x,t) \in [0,1]\times[0,T]$, then we have
+
+\[
+\frac{\tilde{u}^{i+1}_j - \tilde{u}^i_j}{\tau} = u_t(x_j,t_i) + \mathcal{O}(\tau), \qquad \tau \to 0.
+\]
+Similarly, if we assume that $u_{xxxx}(x,t)$ exists and is bounded on $(x,t) \in [0,1]\times[0,T]$, then we have (see Chapter 1 Exercises)
+
+\[
+\frac{\tilde{u}^{i}_{j+1} - 2\tilde{u}^i_j + \tilde{u}^i_{j-1}}{h^2} = u_{xx}(x_j,t_i) + \mathcal{O}(h^2), \qquad h \to 0.
+\]
+We define
+
+\[
+\mu = \frac{\tau}{h^2},
+\]
+which is known as the Courant number and specify that $\mu$ be held constant as $\tau, h \to 0$. Hence, we have that
+
+\[
+\frac{\tilde{u}^{i+1}_j - \tilde{u}^i_j}{\tau} - \frac{\tilde{u}^{i}_{j+1} - 2\tilde{u}^i_j + \tilde{u}^i_{j-1}}{h^2} = u_t(x_j,t_i) - u_{xx}(x_j,t_i) + \mathcal{O}(h^2) =  \mathcal{O}(h^2), \qquad h \to 0.
+\]
+We shall approximate the solution to the diffusion equation with the finite difference method
+
+\[
+\frac{u^{i+1}_j - u^i_j}{\tau} - \frac{u^{i}_{j+1} - 2u^i_j + u^i_{j-1}}{h^2} = 0
+\]
+or
+
+\[
+u^{i+1}_j = u^i_j + \mu \left( u^{i}_{j+1} - 2u^i_j + u^i_{j-1}  \right).
+\]
+This method is known as \textbf{Euler's method}. Notice we have shown that if the exact solution is substituted into the finite difference method, then the PDE is recovered exactly and the local error tends to zero as the discretisation parameters tend to zero.  The method is \textbf{second order} since the local error approaches zero at the rate $\mathcal{O}(h^2)$ as $h \to 0$. A finite difference method of order $p \geq 1$ is said to be \textbf{consistent}.  Notice that for consistency, we only require the error at $(x_j,t_i)$  to go to zero as the discretisation parameters tend to zero, hence the order of a method measures the local error.  A method is said to be \textbf{convergent} if the \emph{global} error tends to zero as the discretisation parameters tend to zero, i.e., if
+
+\[
+\lim_{h \to 0}\left[\lim_{j \to x/h}\left( \lim_{i \to t/\tau} u^i_j \right)   \right] = u(x,t), \qquad x \in [0, 1], \qquad t \in [0, T],
+\]
+where $\mu = \tau/h^2$ is kept constant as $h \to 0$.
+
+\subsubsection{Numerical experiments with Euler's method}
+Before we analyse the convergence or otherwise of Euler's method, let's perform some numerical experiments.  First, we note that we can express Euler's method as
+
+\[
+\underbrace{\begin{bmatrix}
+u^{i+1}_{1} \\
+\vdots \\
+\vdots \\
+\vdots \\
+u^{i+1}_{n_x}
+\end{bmatrix}}_{\mathbf{u}^{i+1}} = 
+\underbrace{\begin{bmatrix}
+1 - 2\mu & \mu & & & \\
+\mu  & 1-2\mu & \mu  & & \\
+      & \ddots & \ddots & \ddots & \\
+      &        & \mu    & 1- 2\mu & \mu \\
+      &        &        &\mu      & 1-2\mu
+\end{bmatrix}}_{A}
+\underbrace{\begin{bmatrix}
+u^{i}_{1} \\
+\vdots \\
+\vdots \\
+\vdots \\
+u^{i}_{n_x}
+\end{bmatrix}}_{\mathbf{u}^i}
++
+\underbrace{\begin{bmatrix}
+\mu\varphi_0(t_i) \\
+0 \\
+\vdots \\
+0 \\
+\mu \varphi_1(t_i)
+\end{bmatrix}}_{\mathbf{k}^i}
+\]
+i.e., 
+
+\[
+\mathbf{u}^{i+1} = A\mathbf{u}^i + \mathbf{k}^i, \qquad i = 0, \ldots, n_t-1.
+\]
+
+\begin{lstlisting}
+(*@\HLJLk{using}@*) (*@\HLJLn{LinearAlgebra}@*)(*@\HLJLp{,}@*) (*@\HLJLn{Plots}@*)(*@\HLJLp{,}@*) (*@\HLJLn{SparseArrays}@*)(*@\HLJLp{,}@*) (*@\HLJLn{OrdinaryDiffEq}@*)(*@\HLJLp{,}@*) (*@\HLJLn{Printf}@*)
+\end{lstlisting}
+
+
+\begin{lstlisting}
+(*@\HLJLk{function}@*) (*@\HLJLnf{Euler}@*)(*@\HLJLp{(}@*)(*@\HLJLn{f}@*)(*@\HLJLp{,}@*)(*@\HLJLn{\ensuremath{\phi}0}@*)(*@\HLJLp{,}@*)(*@\HLJLn{\ensuremath{\phi}1}@*)(*@\HLJLp{,}@*)(*@\HLJLn{nx}@*)(*@\HLJLp{,}@*)(*@\HLJLn{\ensuremath{\mu}}@*)(*@\HLJLp{,}@*)(*@\HLJLn{T}@*)(*@\HLJLp{)}@*)
+    
+    (*@\HLJLn{x}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{range}@*)(*@\HLJLp{(}@*)(*@\HLJLni{0}@*)(*@\HLJLp{,}@*)(*@\HLJLni{1}@*)(*@\HLJLp{,}@*)(*@\HLJLn{nx}@*) (*@\HLJLoB{+}@*) (*@\HLJLni{2}@*)(*@\HLJLp{)}@*)
+    (*@\HLJLn{h}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{1}@*)(*@\HLJLoB{/}@*)(*@\HLJLp{(}@*)(*@\HLJLn{nx}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{)}@*)
+    (*@\HLJLn{\ensuremath{\tau}}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{\ensuremath{\mu}}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{h}@*)(*@\HLJLoB{{\textasciicircum}}@*)(*@\HLJLni{2}@*)
+    (*@\HLJLn{t}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{0}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{\ensuremath{\tau}}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{T}@*)
+    (*@\HLJLn{nt}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{length}@*)(*@\HLJLp{(}@*)(*@\HLJLn{t}@*)(*@\HLJLp{)}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)
+    (*@\HLJLn{A}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{SymTridiagonal}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{fill}@*)(*@\HLJLp{((}@*)(*@\HLJLni{1}@*) (*@\HLJLoB{-}@*) (*@\HLJLni{2}@*)(*@\HLJLn{\ensuremath{\mu}}@*)(*@\HLJLp{),}@*)(*@\HLJLn{nx}@*)(*@\HLJLp{),}@*)(*@\HLJLnf{fill}@*)(*@\HLJLp{(}@*)(*@\HLJLn{\ensuremath{\mu}}@*)(*@\HLJLp{,}@*)(*@\HLJLn{nx}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)(*@\HLJLp{))}@*)
+    (*@\HLJLn{u}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{zeros}@*)(*@\HLJLp{(}@*)(*@\HLJLn{nt}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{,}@*)(*@\HLJLn{nx}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{2}@*)(*@\HLJLp{)}@*)
+    (*@\HLJLn{u}@*)(*@\HLJLp{[}@*)(*@\HLJLoB{:}@*)(*@\HLJLp{,}@*)(*@\HLJLni{1}@*)(*@\HLJLp{]}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{\ensuremath{\phi}0}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{t}@*)(*@\HLJLp{)}@*)
+    (*@\HLJLn{u}@*)(*@\HLJLp{[}@*)(*@\HLJLoB{:}@*)(*@\HLJLp{,}@*)(*@\HLJLn{nx}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{2}@*)(*@\HLJLp{]}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{\ensuremath{\phi}1}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{t}@*)(*@\HLJLp{)}@*)
+    (*@\HLJLn{u}@*)(*@\HLJLp{[}@*)(*@\HLJLni{1}@*)(*@\HLJLp{,}@*)(*@\HLJLni{2}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{nx}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{]}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{f}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{[}@*)(*@\HLJLni{2}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{nx}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{])}@*)
+
+    (*@\HLJLk{for}@*) (*@\HLJLn{i}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{nt}@*)
+        (*@\HLJLn{u}@*)(*@\HLJLp{[}@*)(*@\HLJLn{i}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{,}@*)(*@\HLJLni{2}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{nx}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{]}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{A}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{u}@*)(*@\HLJLp{[}@*)(*@\HLJLn{i}@*)(*@\HLJLp{,}@*)(*@\HLJLni{2}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{nx}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{]}@*) 
+        (*@\HLJLn{u}@*)(*@\HLJLp{[}@*)(*@\HLJLn{i}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{,}@*)(*@\HLJLni{2}@*)(*@\HLJLp{]}@*) (*@\HLJLoB{+=}@*) (*@\HLJLn{\ensuremath{\mu}}@*)(*@\HLJLoB{*}@*)(*@\HLJLnf{\ensuremath{\phi}0}@*)(*@\HLJLp{(}@*)(*@\HLJLn{t}@*)(*@\HLJLp{[}@*)(*@\HLJLn{i}@*)(*@\HLJLp{])}@*)
+        (*@\HLJLn{u}@*)(*@\HLJLp{[}@*)(*@\HLJLn{i}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{,}@*)(*@\HLJLn{nx}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{]}@*) (*@\HLJLoB{+=}@*) (*@\HLJLn{\ensuremath{\mu}}@*)(*@\HLJLoB{*}@*)(*@\HLJLnf{\ensuremath{\phi}1}@*)(*@\HLJLp{(}@*)(*@\HLJLn{t}@*)(*@\HLJLp{[}@*)(*@\HLJLn{i}@*)(*@\HLJLp{])}@*)
+    (*@\HLJLk{end}@*)
+    
+    (*@\HLJLn{u}@*)(*@\HLJLp{,}@*) (*@\HLJLn{x}@*)(*@\HLJLp{,}@*) (*@\HLJLn{t}@*)
+(*@\HLJLk{end}@*)
+\end{lstlisting}
+
+\begin{lstlisting}
+Euler (generic function with 1 method)
+\end{lstlisting}
+
+
+The diffusion initial / boundary value problem with 
+
+\[
+u(x,0) = f(x) = \sin \frac{1}{2}\pi x + \frac{1}{2}\sin 2\pi x, \qquad 0 \leq x \leq 1, 
+\]
+and
+
+\[
+u(0,t) = \varphi_0(t) = 0, \qquad  u(1,t) = \varphi_1(t) = {\rm e}^{-\pi^2 t/4}, \qquad t \geq 0,
+\]
+has the exact solution
+
+\[
+u(x,t) = {\rm e}^{-\pi^2 t/4}\sin \frac{1}{2}\pi x + \frac{1}{2}{\rm e}^{-4\pi^2 t}\sin 2\pi x, \qquad 0 \leq x \leq 1, \qquad t \geq 0.
+\]
+
+\begin{lstlisting}
+(*@\HLJLn{f}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{x}@*) (*@\HLJLoB{->}@*) (*@\HLJLnf{sin}@*)(*@\HLJLp{(}@*)(*@\HLJLn{\ensuremath{\pi}}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{x}@*)(*@\HLJLoB{/}@*)(*@\HLJLni{2}@*)(*@\HLJLp{)}@*) (*@\HLJLoB{+}@*) (*@\HLJLnfB{0.5}@*)(*@\HLJLoB{*}@*)(*@\HLJLnf{sin}@*)(*@\HLJLp{(}@*)(*@\HLJLni{2}@*)(*@\HLJLn{\ensuremath{\pi}}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{x}@*)(*@\HLJLp{)}@*)
+(*@\HLJLn{\ensuremath{\phi}1}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{t}@*) (*@\HLJLoB{->}@*) (*@\HLJLnf{exp}@*)(*@\HLJLp{(}@*)(*@\HLJLoB{-}@*)(*@\HLJLn{\ensuremath{\pi}}@*)(*@\HLJLoB{{\textasciicircum}}@*)(*@\HLJLni{2}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{t}@*)(*@\HLJLoB{/}@*)(*@\HLJLni{4}@*)(*@\HLJLp{)}@*)
+(*@\HLJLn{\ensuremath{\phi}0}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{t}@*) (*@\HLJLoB{->}@*) (*@\HLJLni{0}@*)
+(*@\HLJLn{nx}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{50}@*)
+(*@\HLJLn{\ensuremath{\mu}}@*) (*@\HLJLoB{=}@*) (*@\HLJLnfB{0.50}@*)
+(*@\HLJLn{T}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{1}@*)
+(*@\HLJLn{u}@*)(*@\HLJLp{,}@*)(*@\HLJLn{x}@*)(*@\HLJLp{,}@*)(*@\HLJLn{t}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{Euler}@*)(*@\HLJLp{(}@*)(*@\HLJLn{f}@*)(*@\HLJLp{,}@*)(*@\HLJLn{\ensuremath{\phi}0}@*)(*@\HLJLp{,}@*)(*@\HLJLn{\ensuremath{\phi}1}@*)(*@\HLJLp{,}@*)(*@\HLJLn{nx}@*)(*@\HLJLp{,}@*)(*@\HLJLn{\ensuremath{\mu}}@*)(*@\HLJLp{,}@*)(*@\HLJLn{T}@*)(*@\HLJLp{)}@*)
+(*@\HLJLn{nt}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{length}@*)(*@\HLJLp{(}@*)(*@\HLJLn{t}@*)(*@\HLJLp{)}@*) (*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)
+\end{lstlisting}
+
+\begin{lstlisting}
+5202
+\end{lstlisting}
+
+
+\begin{lstlisting}
+(*@\HLJLn{inc}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{100}@*)
+(*@\HLJLnf{surface}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{,}@*)(*@\HLJLn{t}@*)(*@\HLJLp{[}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{inc}@*)(*@\HLJLoB{:}@*)(*@\HLJLk{end}@*)(*@\HLJLp{],}@*)(*@\HLJLn{u}@*)(*@\HLJLp{[}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{inc}@*)(*@\HLJLoB{:}@*)(*@\HLJLk{end}@*)(*@\HLJLp{,}@*)(*@\HLJLoB{:}@*)(*@\HLJLp{],}@*)(*@\HLJLn{seriescolor}@*)(*@\HLJLoB{=:}@*)(*@\HLJLn{redsblues}@*)(*@\HLJLp{,}@*) (*@\HLJLn{camera}@*)(*@\HLJLoB{=}@*)(*@\HLJLp{(}@*)(*@\HLJLni{30}@*)(*@\HLJLp{,}@*)(*@\HLJLni{40}@*)(*@\HLJLp{))}@*)
+\end{lstlisting}
+
+\includegraphics[width=\linewidth]{/figures/Chapter5_draft_version_4_1.pdf}
+
+\begin{lstlisting}
+(*@\HLJLnd{@gif}@*) (*@\HLJLk{for}@*) (*@\HLJLn{i}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{2}@*)(*@\HLJLoB{:}@*)(*@\HLJLni{50}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{nt}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*) 
+    (*@\HLJLnf{plot}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{,}@*) (*@\HLJLn{u}@*)(*@\HLJLp{[}@*)(*@\HLJLni{1}@*)(*@\HLJLp{,}@*)(*@\HLJLoB{:}@*)(*@\HLJLp{],}@*) (*@\HLJLn{size}@*) (*@\HLJLoB{=}@*) (*@\HLJLp{(}@*)(*@\HLJLni{500}@*)(*@\HLJLp{,}@*) (*@\HLJLni{150}@*)(*@\HLJLp{),}@*) (*@\HLJLn{label}@*) (*@\HLJLoB{=}@*) (*@\HLJLs{"{}u0"{}}@*)(*@\HLJLp{)}@*)
+    (*@\HLJLnf{plot!}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{,}@*) (*@\HLJLn{u}@*)(*@\HLJLp{[}@*)(*@\HLJLn{i}@*)(*@\HLJLp{,}@*)(*@\HLJLoB{:}@*)(*@\HLJLp{],}@*) (*@\HLJLn{label}@*) (*@\HLJLoB{=}@*) (*@\HLJLs{"{}t}@*) (*@\HLJLs{=}@*) (*@\HLJLs{"{}}@*) (*@\HLJLoB{*}@*) (*@\HLJLp{(}@*)(*@\HLJLnd{@sprintf}@*)(*@\HLJLp{(}@*)(*@\HLJLs{"{}{\%}.2f"{}}@*)(*@\HLJLp{,}@*) (*@\HLJLn{t}@*)(*@\HLJLp{[}@*)(*@\HLJLn{i}@*)(*@\HLJLp{])),}@*) (*@\HLJLn{legend}@*) (*@\HLJLoB{=}@*) (*@\HLJLsc{:outertopright}@*)(*@\HLJLp{)}@*)
+(*@\HLJLk{end}@*)
+\end{lstlisting}
+
+\begin{lstlisting}
+Plots.AnimatedGif((*@{"{}}@*)C:(*@{{\textbackslash}}@*)(*@{{\textbackslash}}@*)Users(*@{{\textbackslash}}@*)(*@{{\textbackslash}}@*)mfaso(*@{{\textbackslash}}@*)(*@{{\textbackslash}}@*)AppData(*@{{\textbackslash}}@*)(*@{{\textbackslash}}@*)Local(*@{{\textbackslash}}@*)(*@{{\textbackslash}}@*)Temp(*@{{\textbackslash}}@*)(*@{{\textbackslash}}@*)jl(*@{{\_}}@*)0BnnflTgTG.gi
+f(*@{"{}}@*))
+\end{lstlisting}
+
+
+\begin{lstlisting}
+(*@\HLJLn{xx}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{x}@*)(*@\HLJLoB{{\textquotesingle}}@*) (*@\HLJLoB{.*}@*) (*@\HLJLnf{ones}@*)(*@\HLJLp{(}@*)(*@\HLJLn{nt}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{)}@*)
+(*@\HLJLn{tt}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{ones}@*)(*@\HLJLp{(}@*)(*@\HLJLn{nx}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{2}@*)(*@\HLJLp{)}@*)(*@\HLJLoB{{\textquotesingle}}@*) (*@\HLJLoB{.*}@*) (*@\HLJLn{t}@*)
+(*@\HLJLn{ue}@*) (*@\HLJLoB{=}@*) (*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{,}@*)(*@\HLJLn{t}@*)(*@\HLJLp{)}@*) (*@\HLJLoB{->}@*) (*@\HLJLnf{exp}@*)(*@\HLJLp{(}@*)(*@\HLJLoB{-}@*)(*@\HLJLn{\ensuremath{\pi}}@*)(*@\HLJLoB{{\textasciicircum}}@*)(*@\HLJLni{2}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{t}@*)(*@\HLJLoB{/}@*)(*@\HLJLni{4}@*)(*@\HLJLp{)}@*)(*@\HLJLoB{*}@*)(*@\HLJLnf{sin}@*)(*@\HLJLp{(}@*)(*@\HLJLn{\ensuremath{\pi}}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{x}@*)(*@\HLJLoB{/}@*)(*@\HLJLni{2}@*)(*@\HLJLp{)}@*) (*@\HLJLoB{+}@*) (*@\HLJLnfB{0.5}@*)(*@\HLJLoB{*}@*)(*@\HLJLnf{exp}@*)(*@\HLJLp{(}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{4}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{\ensuremath{\pi}}@*)(*@\HLJLoB{{\textasciicircum}}@*)(*@\HLJLni{2}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{t}@*)(*@\HLJLp{)}@*)(*@\HLJLoB{*}@*)(*@\HLJLnf{sin}@*)(*@\HLJLp{(}@*)(*@\HLJLni{2}@*)(*@\HLJLn{\ensuremath{\pi}}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{x}@*)(*@\HLJLp{)}@*)
+(*@\HLJLn{error}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{ue}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{xx}@*)(*@\HLJLp{,}@*)(*@\HLJLn{tt}@*)(*@\HLJLp{)}@*) (*@\HLJLoB{-}@*) (*@\HLJLn{u}@*) 
+(*@\HLJLn{e1}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{maximum}@*)(*@\HLJLp{(}@*)(*@\HLJLn{error}@*)(*@\HLJLp{)}@*)
+\end{lstlisting}
+
+\begin{lstlisting}
+0.00047001331601359553
+\end{lstlisting}
+
+
+If we double $n_x$, the the error decreases by roughly a factor of $4$.
+
+
+\begin{lstlisting}
+(*@\HLJLn{nx}@*) (*@\HLJLoB{*=}@*) (*@\HLJLni{2}@*)
+(*@\HLJLn{u}@*)(*@\HLJLp{,}@*)(*@\HLJLn{x}@*)(*@\HLJLp{,}@*)(*@\HLJLn{t}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{Euler}@*)(*@\HLJLp{(}@*)(*@\HLJLn{f}@*)(*@\HLJLp{,}@*)(*@\HLJLn{\ensuremath{\phi}0}@*)(*@\HLJLp{,}@*)(*@\HLJLn{\ensuremath{\phi}1}@*)(*@\HLJLp{,}@*)(*@\HLJLn{nx}@*)(*@\HLJLp{,}@*)(*@\HLJLn{\ensuremath{\mu}}@*)(*@\HLJLp{,}@*)(*@\HLJLn{T}@*)(*@\HLJLp{)}@*)
+(*@\HLJLnd{@show}@*) (*@\HLJLn{nt}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{length}@*)(*@\HLJLp{(}@*)(*@\HLJLn{t}@*)(*@\HLJLp{)}@*) (*@\HLJLoB{-}@*) (*@\HLJLni{1}@*)
+(*@\HLJLn{xx}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{x}@*)(*@\HLJLoB{{\textquotesingle}}@*) (*@\HLJLoB{.*}@*) (*@\HLJLnf{ones}@*)(*@\HLJLp{(}@*)(*@\HLJLn{nt}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{)}@*)
+(*@\HLJLn{tt}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{ones}@*)(*@\HLJLp{(}@*)(*@\HLJLn{nx}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{2}@*)(*@\HLJLp{)}@*)(*@\HLJLoB{{\textquotesingle}}@*) (*@\HLJLoB{.*}@*) (*@\HLJLn{t}@*)
+(*@\HLJLn{error}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{ue}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{xx}@*)(*@\HLJLp{,}@*)(*@\HLJLn{tt}@*)(*@\HLJLp{)}@*) (*@\HLJLoB{-}@*) (*@\HLJLn{u}@*)
+(*@\HLJLn{e2}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{maximum}@*)(*@\HLJLp{(}@*)(*@\HLJLn{error}@*)(*@\HLJLp{)}@*)
+(*@\HLJLn{e1}@*)(*@\HLJLoB{/}@*)(*@\HLJLn{e2}@*)
+\end{lstlisting}
+
+\begin{lstlisting}
+nt = length(t) - 1 = 20402
+3.929469183388294
+\end{lstlisting}
+
+
+This suggests the error decays as $\mathcal{O}(n_x^{-2})$, $n_x \to \infty$.
+
+
+\begin{lstlisting}
+(*@\HLJLn{nx}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{30}@*)
+(*@\HLJLn{\ensuremath{\mu}}@*) (*@\HLJLoB{=}@*) (*@\HLJLnfB{0.51}@*)
+(*@\HLJLn{u}@*)(*@\HLJLp{,}@*)(*@\HLJLn{x}@*)(*@\HLJLp{,}@*)(*@\HLJLn{t}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{Euler}@*)(*@\HLJLp{(}@*)(*@\HLJLn{f}@*)(*@\HLJLp{,}@*)(*@\HLJLn{\ensuremath{\phi}0}@*)(*@\HLJLp{,}@*)(*@\HLJLn{\ensuremath{\phi}1}@*)(*@\HLJLp{,}@*)(*@\HLJLn{nx}@*)(*@\HLJLp{,}@*)(*@\HLJLn{\ensuremath{\mu}}@*)(*@\HLJLp{,}@*)(*@\HLJLn{T}@*)(*@\HLJLp{);}@*)
+\end{lstlisting}
+
+
+\begin{lstlisting}
+(*@\HLJLnf{surface}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{,}@*)(*@\HLJLn{t}@*)(*@\HLJLp{[}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLni{30}@*)(*@\HLJLoB{:}@*)(*@\HLJLk{end}@*)(*@\HLJLp{],}@*)(*@\HLJLn{u}@*)(*@\HLJLp{[}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLni{30}@*)(*@\HLJLoB{:}@*)(*@\HLJLk{end}@*)(*@\HLJLp{,}@*)(*@\HLJLoB{:}@*)(*@\HLJLp{],}@*)(*@\HLJLn{seriescolor}@*)(*@\HLJLoB{=:}@*)(*@\HLJLn{redsblues}@*)(*@\HLJLp{,}@*) (*@\HLJLn{camera}@*)(*@\HLJLoB{=}@*)(*@\HLJLp{(}@*)(*@\HLJLni{30}@*)(*@\HLJLp{,}@*)(*@\HLJLni{40}@*)(*@\HLJLp{))}@*)
+\end{lstlisting}
+
+\includegraphics[width=\linewidth]{/figures/Chapter5_draft_version_9_1.pdf}
+
+\begin{lstlisting}
+(*@\HLJLn{nt}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{length}@*)(*@\HLJLp{(}@*)(*@\HLJLn{t}@*)(*@\HLJLp{)}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)
+(*@\HLJLnd{@gif}@*) (*@\HLJLk{for}@*) (*@\HLJLn{i}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{2}@*)(*@\HLJLoB{:}@*)(*@\HLJLni{4}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{nt}@*)(*@\HLJLoB{\ensuremath{\div}}@*)(*@\HLJLni{2}@*) 
+    (*@\HLJLnf{plot}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{,}@*) (*@\HLJLn{u}@*)(*@\HLJLp{[}@*)(*@\HLJLni{1}@*)(*@\HLJLp{,}@*)(*@\HLJLoB{:}@*)(*@\HLJLp{],}@*) (*@\HLJLn{size}@*) (*@\HLJLoB{=}@*) (*@\HLJLp{(}@*)(*@\HLJLni{500}@*)(*@\HLJLp{,}@*) (*@\HLJLni{150}@*)(*@\HLJLp{),}@*) (*@\HLJLn{label}@*) (*@\HLJLoB{=}@*) (*@\HLJLs{"{}u0"{}}@*)(*@\HLJLp{)}@*)
+    (*@\HLJLnf{plot!}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{,}@*) (*@\HLJLn{u}@*)(*@\HLJLp{[}@*)(*@\HLJLn{i}@*)(*@\HLJLp{,}@*)(*@\HLJLoB{:}@*)(*@\HLJLp{],}@*) (*@\HLJLn{label}@*) (*@\HLJLoB{=}@*) (*@\HLJLs{"{}t}@*) (*@\HLJLs{=}@*) (*@\HLJLs{"{}}@*) (*@\HLJLoB{*}@*) (*@\HLJLp{(}@*)(*@\HLJLnd{@sprintf}@*)(*@\HLJLp{(}@*)(*@\HLJLs{"{}{\%}.2f"{}}@*)(*@\HLJLp{,}@*) (*@\HLJLn{t}@*)(*@\HLJLp{[}@*)(*@\HLJLn{i}@*)(*@\HLJLp{])),}@*) (*@\HLJLn{legend}@*) (*@\HLJLoB{=}@*) (*@\HLJLsc{:outertopright}@*)(*@\HLJLp{)}@*)
+(*@\HLJLk{end}@*)
+\end{lstlisting}
+
+\begin{lstlisting}
+Plots.AnimatedGif((*@{"{}}@*)C:(*@{{\textbackslash}}@*)(*@{{\textbackslash}}@*)Users(*@{{\textbackslash}}@*)(*@{{\textbackslash}}@*)mfaso(*@{{\textbackslash}}@*)(*@{{\textbackslash}}@*)AppData(*@{{\textbackslash}}@*)(*@{{\textbackslash}}@*)Local(*@{{\textbackslash}}@*)(*@{{\textbackslash}}@*)Temp(*@{{\textbackslash}}@*)(*@{{\textbackslash}}@*)jl(*@{{\_}}@*)1npospyALm.gi
+f(*@{"{}}@*))
+\end{lstlisting}
+
+
+Based on these experiments, we conjecture that Euler's method converges if $\mu \leq \frac{1}{2}$.
+
+The initial condition is "smoothed out" by the diffusion equation.  Here is another example:
+
+
+\begin{lstlisting}
+(*@\HLJLn{f}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{x}@*) (*@\HLJLoB{->}@*) (*@\HLJLn{x}@*) (*@\HLJLoB{<=}@*) (*@\HLJLnfB{0.5}@*) (*@\HLJLoB{?}@*) (*@\HLJLni{2}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{x}@*) (*@\HLJLoB{:}@*) (*@\HLJLni{2}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{2}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{x}@*)
+(*@\HLJLn{\ensuremath{\phi}1}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{t}@*) (*@\HLJLoB{->}@*) (*@\HLJLni{0}@*)
+(*@\HLJLn{\ensuremath{\phi}0}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{t}@*) (*@\HLJLoB{->}@*) (*@\HLJLni{0}@*)
+(*@\HLJLn{nx}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{19}@*)
+(*@\HLJLn{\ensuremath{\mu}}@*) (*@\HLJLoB{=}@*) (*@\HLJLnfB{0.50}@*)
+(*@\HLJLn{T}@*) (*@\HLJLoB{=}@*) (*@\HLJLnfB{0.25}@*)
+(*@\HLJLn{u}@*)(*@\HLJLp{,}@*)(*@\HLJLn{x}@*)(*@\HLJLp{,}@*)(*@\HLJLn{t}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{Euler}@*)(*@\HLJLp{(}@*)(*@\HLJLn{f}@*)(*@\HLJLp{,}@*)(*@\HLJLn{\ensuremath{\phi}0}@*)(*@\HLJLp{,}@*)(*@\HLJLn{\ensuremath{\phi}1}@*)(*@\HLJLp{,}@*)(*@\HLJLn{nx}@*)(*@\HLJLp{,}@*)(*@\HLJLn{\ensuremath{\mu}}@*)(*@\HLJLp{,}@*)(*@\HLJLn{T}@*)(*@\HLJLp{);}@*)
+\end{lstlisting}
+
+
+\begin{lstlisting}
+(*@\HLJLnf{surface}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{,}@*)(*@\HLJLn{t}@*)(*@\HLJLp{[}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLni{30}@*)(*@\HLJLoB{:}@*)(*@\HLJLk{end}@*)(*@\HLJLp{],}@*)(*@\HLJLn{u}@*)(*@\HLJLp{[}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLni{30}@*)(*@\HLJLoB{:}@*)(*@\HLJLk{end}@*)(*@\HLJLp{,}@*)(*@\HLJLoB{:}@*)(*@\HLJLp{],}@*)(*@\HLJLn{seriescolor}@*)(*@\HLJLoB{=:}@*)(*@\HLJLn{redsblues}@*)(*@\HLJLp{,}@*) (*@\HLJLn{camera}@*)(*@\HLJLoB{=}@*)(*@\HLJLp{(}@*)(*@\HLJLni{30}@*)(*@\HLJLp{,}@*)(*@\HLJLni{40}@*)(*@\HLJLp{))}@*)
+\end{lstlisting}
+
+\includegraphics[width=\linewidth]{/figures/Chapter5_draft_version_12_1.pdf}
+
+\begin{lstlisting}
+(*@\HLJLn{nt}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{length}@*)(*@\HLJLp{(}@*)(*@\HLJLn{t}@*)(*@\HLJLp{)}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)
+(*@\HLJLnd{@gif}@*) (*@\HLJLk{for}@*) (*@\HLJLn{i}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{2}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{nt}@*) 
+    (*@\HLJLnf{plot}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{,}@*) (*@\HLJLn{u}@*)(*@\HLJLp{[}@*)(*@\HLJLni{1}@*)(*@\HLJLp{,}@*)(*@\HLJLoB{:}@*)(*@\HLJLp{],}@*) (*@\HLJLn{size}@*) (*@\HLJLoB{=}@*) (*@\HLJLp{(}@*)(*@\HLJLni{500}@*)(*@\HLJLp{,}@*) (*@\HLJLni{150}@*)(*@\HLJLp{),}@*) (*@\HLJLn{label}@*) (*@\HLJLoB{=}@*) (*@\HLJLs{"{}u0"{}}@*)(*@\HLJLp{)}@*)
+    (*@\HLJLnf{plot!}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{,}@*) (*@\HLJLn{u}@*)(*@\HLJLp{[}@*)(*@\HLJLn{i}@*)(*@\HLJLp{,}@*)(*@\HLJLoB{:}@*)(*@\HLJLp{],}@*) (*@\HLJLn{label}@*) (*@\HLJLoB{=}@*) (*@\HLJLs{"{}t}@*) (*@\HLJLs{=}@*) (*@\HLJLs{"{}}@*) (*@\HLJLoB{*}@*) (*@\HLJLp{(}@*)(*@\HLJLnd{@sprintf}@*)(*@\HLJLp{(}@*)(*@\HLJLs{"{}{\%}.2f"{}}@*)(*@\HLJLp{,}@*) (*@\HLJLn{t}@*)(*@\HLJLp{[}@*)(*@\HLJLn{i}@*)(*@\HLJLp{])),}@*) (*@\HLJLn{legend}@*) (*@\HLJLoB{=}@*) (*@\HLJLsc{:outertopright}@*)(*@\HLJLp{)}@*)
+(*@\HLJLk{end}@*)
+\end{lstlisting}
+
+\begin{lstlisting}
+Plots.AnimatedGif((*@{"{}}@*)C:(*@{{\textbackslash}}@*)(*@{{\textbackslash}}@*)Users(*@{{\textbackslash}}@*)(*@{{\textbackslash}}@*)mfaso(*@{{\textbackslash}}@*)(*@{{\textbackslash}}@*)AppData(*@{{\textbackslash}}@*)(*@{{\textbackslash}}@*)Local(*@{{\textbackslash}}@*)(*@{{\textbackslash}}@*)Temp(*@{{\textbackslash}}@*)(*@{{\textbackslash}}@*)jl(*@{{\_}}@*)jwZLqzjAkY.gi
+f(*@{"{}}@*))
+\end{lstlisting}
+
+
+\subsubsection{Convergence of Euler's method}
+\textbf{Proposition} If $\mu \leq \frac{1}{2}$, then Euler's method converges.
+
+\textbf{Proof} Recall that
+
+\[
+\frac{\tilde{u}^{i+1}_j - \tilde{u}^i_j}{\tau} - \frac{\tilde{u}^{i}_{j+1} - 2\tilde{u}^i_j + \tilde{u}^i_{j-1}}{h^2}  =  \mathcal{O}(h^2), \qquad h \to 0,
+\]
+which implies
+
+\[
+\tilde{u}^{i+1}_j = \tilde{u}^i_j + \mu \left(\tilde{u}^{i}_{j+1} - 2\tilde{u}^i_j + \tilde{u}^i_{j-1}\right)  +  \mathcal{O}(h^4), \qquad h \to 0.
+\]
+Let $e^i_j = \tilde{u}^i_j - u^i_j$, then since
+
+\[
+u^{i+1}_j = u^i_j + \mu \left( u^{i}_{j+1} - 2u^i_j + u^i_{j-1}  \right),
+\]
+we have
+
+\[
+e^{i+1}_j = e^i_j + \mu \left( e^{i}_{j+1} - 2e^i_j + e^i_{j-1}  \right) + \mathcal{O}(h^4), \qquad h \to 0.
+\]
+This means that for sufficiently small $h > 0$, there exists a constant $c$ such that 
+
+\[
+\left\vert e^{i+1}_j -  e^i_j - \mu \left( e^{i}_{j+1} - 2e^i_j + e^i_{j-1}  \right) \right\vert  \leq ch^4.
+\]
+Hence, for sufficiently small $h$, we have
+
+
+\begin{eqnarray*}
+\vert e^{i+1}_j \vert &\leq& \left\vert e^i_j + \mu ( e^{i}_{j+1} - 2e^i_j + e^i_{j-1} ) \right\vert + ch^4\\
+ & \leq & \mu \vert e^i_{j-1} \vert + \vert 1 - 2\mu \vert \vert e^i_{j} \vert  + \mu \vert e^i_{j+1} \vert + ch^4  \\
+ & \leq & \left(2\mu  + \vert 1 - 2\mu \vert \right) \eta^i  + ch^4  
+\end{eqnarray*}
+where 
+
+\[
+\eta^{i} = \max_{j = 0, \ldots, n_x+1}\vert e^i_j \vert.
+\]
+The above inequality holds for $\vert e^{i+1}_j \vert$, with $j = 0, \ldots, n_x+1$ and therefore it also holds for $\vert  \eta^{i+1} \vert$. Since $0 < \mu \leq 1/2$ and $u^0_j = \tilde{u}^0_j$, which implies that $\eta^0$, we have that
+
+\[
+\eta^{i+1} \leq \eta^i  + ch^4 \leq \eta^{i-1} + 2ch^4 \leq \cdots \leq \eta^{0} + (i+1)ch^4 = (i+1)ch^4.
+\]
+Therefore
+
+\[
+\eta^{n_t} \leq c n_th^4 = \frac{c}{\mu} n_t\mu h^4 = \frac{c}{\mu} n_t\tau h^2 = \frac{c}{\mu}T h^2 
+\]
+We conclude that $\eta^i \to 0$ for $i = 0, \ldots, n_t$ as $h \to 0$ and therefore $e^i_j \to 0$ as $h \to 0$ for $j = 0, \ldots, n_x + 1$ and $i = 0, \ldots, n_t$ as $h \to 0$, which implies that the method converges.   $\blacksquare$
+
+\textbf{Remark:} Notice that the maximum error of the Euler method (assuming all relevant partial derivatives exist and are bounded) is bounded by $\frac{c}{\mu}T h^2$ for sufficiently small $h$. This confirms our numerical observation above that the method converges at the rate $\mathcal{O}(h^2)$ as $h \to 0$, or equivalently, at the rate $\mathcal{O}(n_x^{-2})$ as $n_x \to \infty$ (i.e., the method is second order).
+
+\subsubsection{Well-posedness and ill-posedness of PDE problems}
+A PDE intial and / or boundary value problem is \textbf{well-posed} if there exists a unique solution that depends continuously on the initial and boundary data.  Otherwise, the PDE problem is said to be \textbf{ill-posed}.
+
+\textbf{Example:}  Suppose $\varphi_0(t) = \varphi_1(t) = 0$ (i.e., zero Dirichlet boundary conditions), then using the method of separation of variables, it can be shown that if
+
+\[
+u(x,0) = f(x) = \sum_{m = 1}^{\infty}\alpha_m \sin \pi m x, \qquad 0 \leq x \leq 1,
+\]
+then the solution to the diffusion equation is
+
+\[
+u(x,t) = \sum_{m = 1}^{\infty}\alpha_m {\rm e}^{-\pi^2m^2 t} \sin \pi m x, \qquad 0 \leq x \leq 1, \qquad t \geq 0.
+\]
+The $2$-norm of a function $g$ on $[0, 1]$, or $L^2$ norm, is defined as
+
+\[
+\| g \|_2 = \left( \int_0^1 \left[g(x)\right]^2\,{\rm d}x   \right)^{1/2}
+\]
+Hence,
+
+
+\begin{eqnarray*}
+\|u(x,t)\|_2^2 &=& \int_0^1 \left[u(x,t)\right]^2\,{\rm d}x  = \int_0^1 \left(\sum_{m = 1}^{\infty}\alpha_m {\rm e}^{-\pi^2m^2 t} \sin \pi m x  \right)^2\,{\rm d}x \\
+&=& \sum_{m=1}^{\infty}\sum_{j=1}^{\infty} \alpha_m \alpha_j{\rm e}^{-\pi^2(m^2 + j^2) t}\int_0^1 \sin\pi m x\sin \pi j x\, {\rm d}x
+\end{eqnarray*}
+and since
+
+\[
+\int_0^1 \sin \pi m x \sin \pi j x\, {\rm d}x = \begin{cases}
+\frac{1}{2}, & m  = j, \\
+0, & \text{otherwise}
+\end{cases}
+\]
+we have
+
+\[
+\|u(x,t)\|_2^2 =  \frac{1}{2}\sum_{m=1}^{\infty} \alpha_m^2 {\rm e}^{-2\pi^2 m^2 t} \leq \frac{1}{2}\sum_{m=1}^{\infty} \alpha_m^2 = \| u(x,0) \|_2^2.
+\]
+Suppose that $\tilde{u}(x,t)$ is the solution to the diffusion equation with zero boundary conditions and a slightly perturbed initial condition, i.e.,
+
+\[
+\tilde{u}(x,0) = \tilde{f}(x) = \sum_{m = 1}^{\infty}\tilde{\alpha}_m \sin \pi m x, \qquad 0 \leq x \leq 1,
+\]
+where
+
+\[
+\| \tilde{u}(x,0) - u(x,0) \|_2^2 = \| \tilde{f}(x) - f(x) \|_2^2 = \frac{1}{2}\sum_{m=1}^{\infty} \left(  \tilde{\alpha}_m -    \alpha_m  \right)^2   \leq \epsilon^2 \ll 1
+\]
+then
+
+\[
+\tilde{u}(x,t) = \sum_{m = 1}^{\infty}\tilde{\alpha}_m {\rm e}^{-\pi^2m^2 t} \sin \pi m x, \qquad 0 \leq x \leq 1, \qquad t \geq 0
+\]
+and therefore
+
+\[
+\|\tilde{u}(x,t) - u(x,t)\|_2^2   \leq  \| \tilde{u}(x,0) -  u(x,0) \|_2^2 = \epsilon^2.
+\]
+This shows that if $\| \tilde{u}(x,0) -  u(x,0) \|_2$ is small, then $\|\tilde{u}(x,t) - u(x,t)\|_2$ is also small, which shows that the solution depends continuously on the initial data, i.e., the diffusion equation with zero Dirichlet boundary conditions is well-posed.
+
+As an example of an ill-posed problem, consider the reversed-time diffusion equation:
+
+\[
+\frac{\partial u}{\partial t}=-\frac{\partial^2 u}{\partial x^2}, \qquad x \in (0, 1),\qquad t \in (0, T],
+\]
+subject to zero Dirichlet boundary conditions. If
+
+\[
+u(x,0) = f(x) = \sum_{m = 1}^{\infty}\alpha_m \sin \pi m x, \qquad 0 \leq x \leq 1,
+\]
+then
+
+\[
+u(x,t) = \sum_{m = 1}^{\infty}\alpha_m {\rm e}^{\pi^2m^2 t} \sin \pi m x, \qquad 0 \leq x \leq 1, \qquad t \geq 0.
+\]
+Now suppose we have initial data such that
+
+\[
+\alpha_m, \tilde{\alpha}_m = 0, \qquad m > N
+\]
+and
+
+\[
+\tilde{\alpha}_m -    \alpha_m  = \epsilon\sqrt{\frac{2}{N}}
+\]
+so that
+
+\[
+\| \tilde{u}(x,0) - u(x,0) \|_2^2 = \frac{1}{2}\sum_{m=1}^{N} \left(  \tilde{\alpha}_m -    \alpha_m  \right)^2     = \epsilon^2
+\]
+then for $t > 0$
+
+\[
+\|\tilde{u}(x,t) - u(x,t)\|_2^2 =  \frac{1}{2}\sum_{m=1}^{N} \left(\tilde{\alpha}_m - \alpha_m\right)^2 {\rm e}^{2\pi^2 m^2 t} = \frac{\epsilon^2}{N}\sum_{m=1}^{N} {\rm e}^{2\pi^2 m^2 t} \to \infty, \qquad N\to \infty.
+\]
+This shows that for an arbitrarily small perturbation of the initial data ($\|\tilde{u}(x,t) - u(x,t)\|_2 \leq \epsilon$) and for any $t > 0$, the difference between the solutions $u$ and $\tilde{u}$ at time $t$ can be made arbitrarily large by taking $N$ large enough. This shows that reversed-time diffusion equation is ill-posed because the solution does not depend continuously on the initial data.  In physics, the ill-posedness of the reversed-time diffusion equation is related to the impossibility of deducing the thermal history of an object from it present temperature distribution, which is studied in thermodynamics.
+
+\subsubsection{Stability of numerical methods for PDEs}
+A method is \textbf{stable} if, as $h \to 0$ and with $\mu$ constant,
+
+\[
+\vert u^i_j \vert < \infty, \qquad    j = 0, \ldots, n_x+1, \qquad i = 0, \ldots, n_t.
+\]
+The "Fundamental theorem of numerical analysis of differential equations" relates consistency, stability and convergence.
+
+\textbf{Theorem (Lax equivalence theorem)} If a PDE problem is well posed, then a numerical method is convergent if and only if it is stable and consistent.
+
+\paragraph{The von Neumann method for stability analysis}
+The von Neumann method for the stability analysis of numerical methods for PDEs is applicable to linear PDEs and in its simplest form, it ignores boundary conditions. The method is essentially a discretised Fourier analysis.  The method proceeds as follows: given a numerical method for a PDE (e.g., a finite difference method), use the ansatz
+
+\[
+u^i_j = \lambda^i {\rm e}^{{\rm i}k x_j},
+\]
+where $k \in \mathbb{Z}$, $x_j = j h$, $j \in \mathbb{Z}$ and $h > 0$. 
+
+\textbf{Note:} For the symbol $u^i_j$, $i$ is an index (a superscript), whereas $\lambda^i$ means $\lambda$ raised to the $i$-th power, where $i$ is a non-negative integer.  
+
+Then for stability, we require
+
+\[
+\vert \lambda \vert \leq 1, \qquad  k \in \mathbb{Z}, \qquad h > 0
+\]
+because
+
+\[
+\vert u^i_j \vert = \vert \lambda^i {\rm e}^{{\rm i}k x_j} \vert = \vert \lambda^i \vert = \vert \lambda \vert^i.
+\]
+We only need to consider the one wave $u^i_j = \lambda^i {\rm e}^{{\rm i}k x_j}$ because we assume the PDE and thus also the discretised equations are linear and hence the principle of superposition holds. 
+
+\textbf{Example} Here we illustrate the von Neumann method (or von Neumann stability analysis) for Euler's method:
+
+\[
+u^{i+1}_j = u^i_j + \mu \left( u^{i}_{j+1} - 2u^i_j + u^i_{j-1}  \right).
+\]
+Setting $u^i_j = \lambda^i {\rm e}^{{\rm i}k x_j}$, it follows that
+
+
+\begin{eqnarray*}
+\lambda &=& 1 + \mu\left({\rm e}^{{\rm i}kh} - 2 +  {\rm e}^{-{\rm i}kh}  \right)  \\
+&=& 1 + \mu\left({\rm e}^{{\rm i}kh/2}  -  {\rm e}^{-{\rm i}kh/2}  \right)^2  \\
+&=& 1 - 4\mu \sin^2(kh/2).
+\end{eqnarray*}
+For stability, we require
+
+\[
+\vert \lambda \vert \leq 1 \qquad \Leftrightarrow \qquad  -1 \leq  1 - 4\mu \sin^2(kh/2) \leq 1, \qquad h>0, \qquad k \in \mathbb{Z}.
+\]
+Since $0 \leq \sin^2(kh/2) \leq 1$ and $\mu > 0$, we conclude that Euler's method is stable if and only if $\mu \leq \frac{1}{2}$.
+
+Earlier we proved from first principles that if $\mu \leq \frac{1}{2}$, then Euler's method converges. An alternative proof relies on the Lax equivalence theorem: first we show that Euler's method is consistent (which we've done already), then we show (using the von Neumann method) that the method is stable iff $\mu \leq \frac{1}{2}$ and then we can conclude that the method is convergent if $\mu \leq \frac{1}{2}$.
+
+\paragraph{Stability analysis via matrix analysis}
+We saw earlier that Euler's method can be formulated as
+
+\[
+\mathbf{u}^{i+1} = A\mathbf{u}^i + \mathbf{k}^i, \qquad i = 0, \ldots, n_t-1.
+\]
+where
+
+\[
+\mathbf{u}^i = \begin{bmatrix}
+u^{i}_{1} \\
+\vdots \\
+u^{i}_{n_x}
+\end{bmatrix}, \quad A = \begin{bmatrix}
+1 - 2\mu & \mu & & & \\
+\mu  & 1-2\mu & \mu  & & \\
+      & \ddots & \ddots & \ddots & \\
+      &        & \mu    & 1- 2\mu & \mu \\
+      &        &        &\mu      & 1-2\mu
+\end{bmatrix} \in \mathbb{R}^{n_x \times n_x}, \quad \mathbf{k}^i=
+\begin{bmatrix}
+\mu\varphi_0(t_i) \\
+0 \\
+\vdots \\
+0 \\
+\mu \varphi_1(t_i)
+\end{bmatrix} \in \mathbb{R}^{n_x}.
+\]
+A large class of methods for the diffusion equation (and other linear PDEs) can be put into this form.  Before we analyse the stability of these methods using matrix methods, we recall some facts from linear algebra.
+
+Recall the definition of the Euclidean inner product: let
+
+\[
+\mathbf{x} = \begin{bmatrix}
+x_1 \\
+\vdots \\
+x_{n_x}
+\end{bmatrix},  \mathbf{y} = \begin{bmatrix}
+y_1 \\
+\vdots \\
+y_{n_x}
+\end{bmatrix}  \in \mathbb{R}^{n_x}
+\]
+then
+
+\[
+\langle \mathbf{x}, \mathbf{y}\rangle = \mathbf{x}^{\top}\mathbf{y}
+\]
+If $\mathbf{x}, \mathbf{y} \in \mathbb{C}^{n_x}$, then
+
+\[
+\langle \mathbf{x}, \mathbf{y}\rangle = \overline{\mathbf{x}}^{\top}\mathbf{y}.
+\]
+This inner product induces the Euclidean or $\ell_2$ norm:
+
+\[
+\| \mathbf{x} \| = \left(\vert x_1\vert^2 + \cdots + \vert x_{n_x}\vert^2  \right)^{1/2}  = \left(\langle\mathbf{x},\mathbf{x}\rangle\right)^{1/2}.
+\]
+We shall also use a scaled Euclidean inner product and $\ell_2$ norm:
+
+\[
+\langle \mathbf{x}, \mathbf{y}\rangle_{h} := h\langle \mathbf{x}, \mathbf{y}\rangle
+\]
+and hence
+
+\[
+\| \mathbf{x} \|_h = \left(h\langle\mathbf{x},\mathbf{x}\rangle\right)^{1/2} = \sqrt{h}\,\| \mathbf{x}\|.
+\]
+where $h = \frac{1}{n_x+1}$ and $\mathbf{x}, \mathbf{y} \in \mathbb{C}^{n_x}$ or $\mathbf{x}, \mathbf{y} \in \mathbb{R}^{n_x}$.  One reason for using this inner product is the following: suppose the entries of $\mathbf{f} \in \mathbb{R}^{n_x}$ are the function values $f(x_j)$, $x_j = jh$, $j = 1, \ldots, n_x$, then from the Riemann sum definition of the integral of a function, it follows that as $h \to 0$
+
+\[
+\| \mathbf{f} \|_h = \left(h\sum_{j=1}^{n_x} [f(x_j)]^2  \right)^{1/2} \to \left( \int_0^1 [f(x)]^2 \,{\rm d}x  \right)^{1/2} = \| f\|_2.
+\]
+i.e., the scaled $\ell_2$ vector norm $\|\cdot \|_h$ tends to the $L^2$ function norm. There is another reason for using the scaled norm $\|\cdot \|_h$: suppose $\mathbf{x} \in \mathbb{R}^{n_x}$ is a vector such that each entry $x_j$ satisfies $x_j = \mathcal{O}(h^p)$, $h \to 0$, i.e., for sufficiently small $h$ (say $0 < h < h_0\ll 1$), there's a constant $c>0$ such that $\vert x_j \vert \leq c h^p$ for $j = 1, \ldots, n_x$, then for sufficiently small $h$,
+
+\[
+\| \mathbf{x} \|_h = \left(h\sum_{j=1}^{n_x} x_j^2  \right)^{1/2} \leq \left(hn_x c^2h^{2p}  \right)^{1/2} \leq ch^p
+\]
+i.e., $\| \mathbf{x} \|_h = \mathcal{O}(h^p)$, as $h \to 0$.
+
+Let $A \in \mathbb{R}^{n_x \times n_x}$, then the matrix 2-norm or matrix Euclidean norm induced by the Euclidean or $\ell_2$ vector norm is
+
+\[
+\| A \| = \max_{\mathbf{x} \in \mathbb{R}^n, \mathbf{x}\neq \mathbf{0}} \frac{\| A\mathbf{x} \|}{\| \mathbf{x}\|} = \max_{\|\mathbf{x}\| =1} \| A\mathbf{x} \|.
+\]
+Since
+
+\[
+\frac{\| A\mathbf{x} \|}{\| \mathbf{x}\|} = \frac{\sqrt{h}\| A\mathbf{x} \|}{\sqrt{h}\| \mathbf{x}\|} =  \frac{\| A\mathbf{x} \|_h}{\| \mathbf{x}\|_h},
+\]
+if follows that 
+
+\[
+\| A \|_h = \| A \|.
+\]
+It follows from the definition of the matrix norm that
+
+\[
+\| A \mathbf{x}\| \leq \| A \| \| \mathbf{x} \|, \qquad \| A B\| \leq \| A\| \|B\|
+\]
+and the same is true in the norm $\| \cdot \|_h$.
+
+The eigenvalues or \emph{spectrum} of a square matrix $A \in \mathbb{C}^{n_x \times n_x}$ is
+
+\[
+\sigma(A) = \left\lbrace \lambda \in \mathbb{C} : \det(A - \lambda I)= 0  \right\rbrace.
+\]
+The \emph{spectral radius} of a square matrix $A \in \mathbb{C}^{n_x \times n_x}$ is
+
+\[
+\rho(A) = \max\left\lbrace \vert \lambda \vert : \lambda \in \sigma(A)\right\rbrace
+\]
+A square matrix $A \in \mathbb{C}^{n_x \times n_x}$ is \textbf{normal} if $AA^{*} = A^{*}A$.  Recall that $A^*$ is the conjugate transpose of $A$, hence for  $A \in \mathbb{R}^{n_x \times n_x}$, $A^{*} = A^{\top}$ and thus for a real matrix is normal if $AA^{\top} = A^{\top}A$.
+
+If a matrix is normal, then
+
+\[
+\| A \|_h =\| A \| = \rho(A).
+\]
+A numerical method for the diffusion equation on $(x,t)\in [0, 1]\times[0, T]$ that takes the form
+
+\[
+\mathbf{u}^{i+1} = A\mathbf{u}^i + \mathbf{k}^i, \qquad i = 0, \ldots, n_t-1.
+\]
+where $\mathbf{u}^i \in \mathbb{R}^{n_x}$ and $A \in \mathbb{R}^{n_x \times n_x}$ is \textbf{stable} if there exists a $0 < c < \infty$ such that
+
+\[
+\lim_{h \to 0}\left( \max_{n = 0, 1, \ldots, n_t} \| A^n \|_h  \right) \leq c
+\]
+where, as before, $n_t\tau = T$, $h = 1/(n_x + 1)$, $\mu = \tau/h^2$ and $\mu$ is held constant.
+
+\textbf{Theorem (stability for methods with normal matrices)} Suppose $A$ is normal, where $A \in \mathbb{R}^{n_x \times n_x}$ or $A \in \mathbb{C}^{n_x \times n_x}$,  then the method 
+
+\[
+\mathbf{u}^{i+1} = A\mathbf{u}^i + \mathbf{k}^i, \qquad i = 0, \ldots, n_t-1.
+\]
+is stable if there exists a $\nu \geq 0$ such that
+
+\[
+\rho(A) \leq {\rm e}^{\nu \tau}, \qquad h \to 0,
+\]
+where $\tau = \mu h^2$. 
+
+\textbf{Proof}  For simplicity, let us assume that $A \in \mathbb{R}^{n_x \times n_x}$.  Using the definition of the scaled inner product $\langle \cdot, \cdot \rangle_h$, the normalcy of $A$ and the Cauchy-Schwarz inequality, it follows that for a $\mathbf{w} \in \mathbb{R}^{n_x}$, $\mathbf{w} \neq \mathbf{0}$,
+
+
+\begin{eqnarray*}
+\| A^n \mathbf{w} \|_h^2 &=& \langle A^n\mathbf{w}, A^n\mathbf{w}\rangle_h \\
+&=& \langle \mathbf{w},  \left(A^n\right)^{\top}A^n\mathbf{w}\rangle_h \\
+&=&  \langle \mathbf{w},  \left(A^{\top}A\right)^n\mathbf{w}\rangle_h \\ 
+&\leq & \|  \mathbf{w}\|_h \|\left(A^{\top}A\right)^n\mathbf{w}\|_h \\
+&\leq & \|  \mathbf{w}\|_h^2 \|\left(A^{\top}A\right)^n\|_h \\
+&\leq & \|  \mathbf{w}\|_h^2 \|A\|_h^{2n}.
+\end{eqnarray*}
+Therefore, since $A$ is normal and $0 \leq  n \leq n_t$,
+
+\[
+\frac{\| A^n \mathbf{w} \|_h}{\|  \mathbf{w}\|_h} \leq \|A\|_h^{n} = \left[\rho(A)\right]^n \leq {\rm e}^{\nu n\tau}\leq  {\rm e}^{\nu n_t\tau} = {\rm e}^{\nu T}.
+\]
+Since 
+
+\[
+\|A^n \|_h = \max_{\mathbf{w}\in \mathbb{R}^{n_x}, \mathbf{w}\neq 0}\frac{\| A^n \mathbf{w} \|_h}{\|  \mathbf{w}\|_h},
+\]
+the result follows since we've shown that $\|A^n \|_h \leq c$ for $n = 0, \ldots, n_t$ with $c = {\rm e}^{\nu T}$ as $h \to 0$.  $\blacksquare$
+
+\textbf{Example (Stability of Euler's method via matrix analysis)} For Euler's method, 
+
+\[
+ A = \begin{bmatrix}
+1 - 2\mu & \mu & & & \\
+\mu  & 1-2\mu & \mu  & & \\
+      & \ddots & \ddots & \ddots & \\
+      &        & \mu    & 1- 2\mu & \mu \\
+      &        &        &\mu      & 1-2\mu
+\end{bmatrix} \in \mathbb{R}^{n_x \times n_x}.
+\]
+Since $A$ is symmetric, it is a normal matrix.  However, $A$ is not just symmetric, it is a TST matrix (tridiagonal, symmetric and Toeplitz) and the eigenvalues of TST matrices are known explicitly: 
+
+\textbf{Lemma (eigenvalues of TST matrices)} The eigenvalues of an $n_x \times n_x$ TST matrix with $\alpha$ on the main diagonal and $\beta$ on the first super- and sub-diagonal are
+
+\[
+\lambda_j = \alpha + 2\beta\cos\left( \frac{\pi j}{n_x+1}  \right), \qquad j = 1, \ldots, n_x.
+\]
+\textbf{Proof} See \emph{A First Course in the Numerical Analysis of Differential Equations} by A. Iserles, 2nd Edition, p. 264.
+
+Returning to Euler's method, since $h = 1/(n_x+1)$ and $x_j = jh$, the eigenvalues of the matrix $A$ are
+
+\[
+\lambda_j = 1-2\mu + 2\mu\cos(\pi x_j) = 1-2\mu +2\mu(1 - 2\sin^2(\pi x_j/2)) = 1 - 4\mu\sin^2(\pi x_j/2) 
+\]
+for $j = 1, \ldots, n_x$.  If $0 < \mu \leq 1/2$, then $\rho(A) \leq 1$ as $h \to 0$ and hence the above theorem holds with $\nu = 0$ and we conclude that Euler's method is stable, whereas if $\mu > 1/2$, then $\rho(A) > 1$ as $h \to 0$ and there isn't a $\nu > 0$ such that the above theorem holds.
+
+
+\begin{lstlisting}
+(*@\HLJLn{nx}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{11}@*)
+(*@\HLJLn{\ensuremath{\mu}}@*) (*@\HLJLoB{=}@*) (*@\HLJLnfB{0.5}@*)
+(*@\HLJLn{A}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{SymTridiagonal}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{fill}@*)(*@\HLJLp{((}@*)(*@\HLJLni{1}@*) (*@\HLJLoB{-}@*) (*@\HLJLni{2}@*)(*@\HLJLn{\ensuremath{\mu}}@*)(*@\HLJLp{),}@*)(*@\HLJLn{nx}@*)(*@\HLJLp{),}@*)(*@\HLJLnf{fill}@*)(*@\HLJLp{(}@*)(*@\HLJLn{\ensuremath{\mu}}@*)(*@\HLJLp{,}@*)(*@\HLJLn{nx}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)(*@\HLJLp{))}@*)
+(*@\HLJLn{h}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{1}@*)(*@\HLJLoB{/}@*)(*@\HLJLp{(}@*)(*@\HLJLn{nx}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{)}@*)
+(*@\HLJLn{x}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{h}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{h}@*)(*@\HLJLoB{:}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{-}@*)(*@\HLJLn{h}@*)
+(*@\HLJLp{[}@*)(*@\HLJLnf{eigvals}@*)(*@\HLJLp{(}@*)(*@\HLJLn{A}@*)(*@\HLJLp{)}@*) (*@\HLJLni{1}@*) (*@\HLJLoB{.-}@*) (*@\HLJLni{4}@*)(*@\HLJLn{\ensuremath{\mu}}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{sin}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{\ensuremath{\pi}}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{x}@*)(*@\HLJLp{[}@*)(*@\HLJLk{end}@*)(*@\HLJLoB{:-}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLni{1}@*)(*@\HLJLp{]}@*)(*@\HLJLoB{/}@*)(*@\HLJLni{2}@*)(*@\HLJLp{)}@*)(*@\HLJLoB{.{\textasciicircum}}@*)(*@\HLJLni{2}@*)(*@\HLJLp{]}@*)
+\end{lstlisting}
+
+\begin{lstlisting}
+11(*@\ensuremath{\times}@*)2 Matrix(*@{{\{}}@*)Float64(*@{{\}}}@*):
+ -0.965926     -0.965926
+ -0.866025     -0.866025
+ -0.707107     -0.707107
+ -0.5          -0.5
+ -0.258819     -0.258819
+ -2.68965e-16   2.22045e-16
+  0.258819      0.258819
+  0.5           0.5
+  0.707107      0.707107
+  0.866025      0.866025
+  0.965926      0.965926
+\end{lstlisting}
+
+
+\subsection{Implicit Euler method}
+Recall that we arrived at Euler's method for the diffusion equation by combining a (first-order) forward difference approximation to the time derivative with a (second-order) central difference approximation to the second spatial derivative.  Suppose now that we approximate the time derivative with a (first-order) \emph{backward} difference approximation 
+
+\[
+u_t(x_j,t_i) \approx \frac{u^{i}_j - u^{i-1}_j}{\tau}
+\]
+and again use a second-order central difference approximation to $u_{xx}$, then we arrive at the method
+
+\[
+\frac{u^{i}_j - u^{i-1}_j}{\tau} - \frac{u^{i}_{j+1} - 2u^i_j + u^i_{j-1}}{h^2} = 0
+\]
+or
+
+\[
+u^{i}_j = u^{i+1}_j - \mu \left( u^{i+1}_{j+1} - 2u^{i+1}_j + u^{i+1}_{j-1}  \right), \qquad j = 1, \ldots, n_x,
+\]
+which is known is the backward Euler method, or the implicit Euler method.
+
+In linear algebra notation, the method becomes
+
+\[
+B\mathbf{u}^{i+1} = \mathbf{u}^i + \mathbf{k}^{i+1}
+\]
+where
+
+\[
+\mathbf{u}^i = \begin{bmatrix}
+u^{i}_{1} \\
+\vdots \\
+u^{i}_{n_x}
+\end{bmatrix}, \quad  B = \begin{bmatrix}
+1 + 2\mu & -\mu & & & \\
+-\mu  & 1+2\mu & -\mu  & & \\
+      & \ddots & \ddots & \ddots & \\
+      &        & -\mu    & 1+ 2\mu & -\mu \\
+      &        &        &-\mu      & 1+2\mu
+\end{bmatrix} \in \mathbb{R}^{n_x \times n_x}, \quad \mathbf{k}^i=
+\begin{bmatrix}
+\mu\varphi_0(t_i) \\
+0 \\
+\vdots \\
+0 \\
+\mu \varphi_1(t_i)
+\end{bmatrix} \in \mathbb{R}^{n_x}.
+\]
+As with the (explicit) Euler method, the local truncation error is second order
+
+\[
+\frac{\tilde{u}^{i}_j - \tilde{u}^{i-1}_j}{\tau} - \frac{\tilde{u}^{i}_{j+1} - 2\tilde{u}^i_j + \tilde{u}^i_{j-1}}{h^2} =  \mathcal{O}(h^2), \qquad h \to 0,
+\]
+and therefore the method is consistent.  There appears to prefer the implicit Euler method over the explicit Euler method because it has the same order and it is computationally more expensive.   Now, let's consider the stability of the implicit Euler method. 
+
+\subsubsection{Von Neumann stability analysis}
+Setting
+
+\[
+u^i_j = \lambda^i{\rm e}^{{\rm i}k x_j}
+\]
+in the implicit Euler method, we deduce that
+
+
+\begin{eqnarray*}
+1 &=& \lambda\left[1 - \mu\left({\rm e}^{{\rm i}kh} - 2 + {\rm e}^{-{\rm i}kh} \right)\right] \\
+&=& \lambda\left[1 - \mu\left({\rm e}^{{\rm i}kh/2} - {\rm e}^{-{\rm i}kh/2} \right)^2\right] \\
+&=& \lambda\left[1 + 4\mu\sin^2(kh/2)\right].
+\end{eqnarray*}
+For stability, we require
+
+\[
+\vert \lambda \vert \leq 1 \qquad \Leftrightarrow \qquad 1 + 4\mu\sin^2(kh/2) \geq 1, \qquad h>0, \qquad k \in \mathbb{Z}.
+\]
+We conclude that the backward Euler method is stable for all $\mu > 0$.  We say that the backward Euler method is unconditionally stable.  Hence, compared to the explicit Euler method, we can take much larger step sizes while maintaining stability.   However, larger step sizes lead to larger errors.   The ideal method would be high order and unconditionally stable.
+
+\subsubsection{Stability analysis via matrix analysis}
+The implicit Euler method can be formulated as
+
+\[
+\mathbf{u}^{i+1} = A\mathbf{u}^i + \mathbf{b}^i
+\]
+where $A = B^{-1}$ and $\mathbf{b}^i = B^{-1}\mathbf{k}^{i+1}$.  
+
+The matrix $A$ is normal because
+
+\[
+AA^{\top} = B^{-1}B^{-\top} = \left(B^{\top}B  \right)^{-1} = \left(B B^T  \right)^{-1} = B^{-\top}B^{-1} = A^{\top}A.
+\]
+Since $B$ is a TST matrix, its eigenvalues are
+
+\[
+\lambda_j = 1 + 2\mu - 2\mu\cos\left(\pi x_j  \right) = 1 + 2\mu -2\mu(1 - 2\sin^2(\pi x_j/2)) = 1 + 4\mu\sin^2(\pi x_j/2).
+\]
+Since $\lambda \in \sigma(B)$ iff $\lambda^{-1} \in \sigma(B^{-1})$, we conclude that for any $\mu > 0$ and $h > 0$ 
+
+\[
+\rho(A) = \max_{j = 1, \ldots, n_x} \frac{1}{1 + 4\mu \sin^2(\pi x_j/2)} < 1, 
+\]
+and therefore the implicit Euler method is stable for any $\mu > 0$.
+
+
+\begin{lstlisting}
+(*@\HLJLn{nx}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{11}@*)
+(*@\HLJLn{\ensuremath{\mu}}@*) (*@\HLJLoB{=}@*) (*@\HLJLnfB{0.5}@*)
+(*@\HLJLn{B}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{SymTridiagonal}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{fill}@*)(*@\HLJLp{((}@*)(*@\HLJLni{1}@*) (*@\HLJLoB{+}@*) (*@\HLJLni{2}@*)(*@\HLJLn{\ensuremath{\mu}}@*)(*@\HLJLp{),}@*)(*@\HLJLn{nx}@*)(*@\HLJLp{),}@*)(*@\HLJLnf{fill}@*)(*@\HLJLp{(}@*)(*@\HLJLoB{-}@*)(*@\HLJLn{\ensuremath{\mu}}@*)(*@\HLJLp{,}@*)(*@\HLJLn{nx}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)(*@\HLJLp{))}@*)
+(*@\HLJLn{h}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{1}@*)(*@\HLJLoB{/}@*)(*@\HLJLp{(}@*)(*@\HLJLn{nx}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{)}@*)
+(*@\HLJLn{x}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{h}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{h}@*)(*@\HLJLoB{:}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{-}@*)(*@\HLJLn{h}@*)
+(*@\HLJLnf{norm}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{eigvals}@*)(*@\HLJLp{(}@*)(*@\HLJLn{B}@*)(*@\HLJLp{)}@*) (*@\HLJLoB{-}@*) (*@\HLJLp{(}@*)(*@\HLJLni{1}@*) (*@\HLJLoB{.+}@*) (*@\HLJLni{4}@*)(*@\HLJLn{\ensuremath{\mu}}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{sin}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{\ensuremath{\pi}}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{x}@*)(*@\HLJLoB{/}@*)(*@\HLJLni{2}@*)(*@\HLJLp{)}@*)(*@\HLJLoB{.{\textasciicircum}}@*)(*@\HLJLni{2}@*)(*@\HLJLp{),}@*)(*@\HLJLn{Inf}@*)(*@\HLJLp{)}@*)
+\end{lstlisting}
+
+\begin{lstlisting}
+1.3322676295501878e-15
+\end{lstlisting}
+
+
+\subsubsection{Numerical experiment}
+
+\begin{lstlisting}
+(*@\HLJLk{function}@*) (*@\HLJLnf{BackwardEuler}@*)(*@\HLJLp{(}@*)(*@\HLJLn{f}@*)(*@\HLJLp{,}@*)(*@\HLJLn{\ensuremath{\phi}0}@*)(*@\HLJLp{,}@*)(*@\HLJLn{\ensuremath{\phi}1}@*)(*@\HLJLp{,}@*)(*@\HLJLn{nx}@*)(*@\HLJLp{,}@*)(*@\HLJLn{\ensuremath{\mu}}@*)(*@\HLJLp{,}@*)(*@\HLJLn{T}@*)(*@\HLJLp{)}@*)
+    
+    (*@\HLJLn{x}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{range}@*)(*@\HLJLp{(}@*)(*@\HLJLni{0}@*)(*@\HLJLp{,}@*)(*@\HLJLni{1}@*)(*@\HLJLp{,}@*)(*@\HLJLn{nx}@*) (*@\HLJLoB{+}@*) (*@\HLJLni{2}@*)(*@\HLJLp{)}@*)
+    (*@\HLJLn{h}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{1}@*)(*@\HLJLoB{/}@*)(*@\HLJLp{(}@*)(*@\HLJLn{nx}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{)}@*)
+    (*@\HLJLn{\ensuremath{\tau}}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{\ensuremath{\mu}}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{h}@*)(*@\HLJLoB{{\textasciicircum}}@*)(*@\HLJLni{2}@*)
+    (*@\HLJLn{t}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{0}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{\ensuremath{\tau}}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{T}@*)
+    (*@\HLJLn{nt}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{length}@*)(*@\HLJLp{(}@*)(*@\HLJLn{t}@*)(*@\HLJLp{)}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)
+    (*@\HLJLn{B}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{SymTridiagonal}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{fill}@*)(*@\HLJLp{((}@*)(*@\HLJLni{1}@*) (*@\HLJLoB{+}@*) (*@\HLJLni{2}@*)(*@\HLJLn{\ensuremath{\mu}}@*)(*@\HLJLp{),}@*)(*@\HLJLn{nx}@*)(*@\HLJLp{),}@*)(*@\HLJLnf{fill}@*)(*@\HLJLp{(}@*)(*@\HLJLoB{-}@*)(*@\HLJLn{\ensuremath{\mu}}@*)(*@\HLJLp{,}@*)(*@\HLJLn{nx}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)(*@\HLJLp{))}@*)
+    (*@\HLJLn{u}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{zeros}@*)(*@\HLJLp{(}@*)(*@\HLJLn{nt}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{,}@*)(*@\HLJLn{nx}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{2}@*)(*@\HLJLp{)}@*)
+    (*@\HLJLn{u}@*)(*@\HLJLp{[}@*)(*@\HLJLoB{:}@*)(*@\HLJLp{,}@*)(*@\HLJLni{1}@*)(*@\HLJLp{]}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{\ensuremath{\phi}0}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{t}@*)(*@\HLJLp{)}@*)
+    (*@\HLJLn{u}@*)(*@\HLJLp{[}@*)(*@\HLJLoB{:}@*)(*@\HLJLp{,}@*)(*@\HLJLn{nx}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{2}@*)(*@\HLJLp{]}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{\ensuremath{\phi}1}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{t}@*)(*@\HLJLp{)}@*)
+    (*@\HLJLn{u}@*)(*@\HLJLp{[}@*)(*@\HLJLni{1}@*)(*@\HLJLp{,}@*)(*@\HLJLni{2}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{nx}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{]}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{f}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{[}@*)(*@\HLJLni{2}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{nx}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{])}@*)
+
+    (*@\HLJLk{for}@*) (*@\HLJLn{i}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{nt}@*)
+        (*@\HLJLn{b}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{u}@*)(*@\HLJLp{[}@*)(*@\HLJLn{i}@*)(*@\HLJLp{,}@*)(*@\HLJLni{2}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{nx}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{]}@*) 
+        (*@\HLJLn{b}@*)(*@\HLJLp{[}@*)(*@\HLJLni{1}@*)(*@\HLJLp{]}@*) (*@\HLJLoB{+=}@*) (*@\HLJLn{\ensuremath{\mu}}@*)(*@\HLJLoB{*}@*)(*@\HLJLnf{\ensuremath{\phi}0}@*)(*@\HLJLp{(}@*)(*@\HLJLn{t}@*)(*@\HLJLp{[}@*)(*@\HLJLn{i}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{])}@*)
+        (*@\HLJLn{b}@*)(*@\HLJLp{[}@*)(*@\HLJLn{nx}@*)(*@\HLJLp{]}@*) (*@\HLJLoB{+=}@*) (*@\HLJLn{\ensuremath{\mu}}@*)(*@\HLJLoB{*}@*)(*@\HLJLnf{\ensuremath{\phi}1}@*)(*@\HLJLp{(}@*)(*@\HLJLn{t}@*)(*@\HLJLp{[}@*)(*@\HLJLn{i}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{])}@*)
+        (*@\HLJLn{u}@*)(*@\HLJLp{[}@*)(*@\HLJLn{i}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{,}@*)(*@\HLJLni{2}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{nx}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{]}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{B}@*)(*@\HLJLoB{{\textbackslash}}@*)(*@\HLJLn{b}@*)
+    (*@\HLJLk{end}@*)
+    
+    (*@\HLJLn{u}@*)(*@\HLJLp{,}@*) (*@\HLJLn{x}@*)(*@\HLJLp{,}@*) (*@\HLJLn{t}@*)
+(*@\HLJLk{end}@*)
+\end{lstlisting}
+
+\begin{lstlisting}
+BackwardEuler (generic function with 1 method)
+\end{lstlisting}
+
+
+\begin{lstlisting}
+(*@\HLJLn{f}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{x}@*) (*@\HLJLoB{->}@*) (*@\HLJLnf{sin}@*)(*@\HLJLp{(}@*)(*@\HLJLn{\ensuremath{\pi}}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{x}@*)(*@\HLJLoB{/}@*)(*@\HLJLni{2}@*)(*@\HLJLp{)}@*) (*@\HLJLoB{+}@*) (*@\HLJLnfB{0.5}@*)(*@\HLJLoB{*}@*)(*@\HLJLnf{sin}@*)(*@\HLJLp{(}@*)(*@\HLJLni{2}@*)(*@\HLJLn{\ensuremath{\pi}}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{x}@*)(*@\HLJLp{)}@*)
+(*@\HLJLn{\ensuremath{\phi}1}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{t}@*) (*@\HLJLoB{->}@*) (*@\HLJLnf{exp}@*)(*@\HLJLp{(}@*)(*@\HLJLoB{-}@*)(*@\HLJLn{\ensuremath{\pi}}@*)(*@\HLJLoB{{\textasciicircum}}@*)(*@\HLJLni{2}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{t}@*)(*@\HLJLoB{/}@*)(*@\HLJLni{4}@*)(*@\HLJLp{)}@*)
+(*@\HLJLn{\ensuremath{\phi}0}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{t}@*) (*@\HLJLoB{->}@*) (*@\HLJLni{0}@*)
+(*@\HLJLn{nx}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{50}@*)
+(*@\HLJLn{\ensuremath{\mu}}@*) (*@\HLJLoB{=}@*) (*@\HLJLnfB{0.50}@*)
+(*@\HLJLn{T}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{1}@*)
+(*@\HLJLnf{Euler}@*)(*@\HLJLp{(}@*)(*@\HLJLn{f}@*)(*@\HLJLp{,}@*)(*@\HLJLn{\ensuremath{\phi}0}@*)(*@\HLJLp{,}@*)(*@\HLJLn{\ensuremath{\phi}1}@*)(*@\HLJLp{,}@*)(*@\HLJLn{nx}@*)(*@\HLJLp{,}@*)(*@\HLJLn{\ensuremath{\mu}}@*)(*@\HLJLp{,}@*)(*@\HLJLn{T}@*)(*@\HLJLp{)}@*)
+(*@\HLJLnd{@time}@*) (*@\HLJLnf{Euler}@*)(*@\HLJLp{(}@*)(*@\HLJLn{f}@*)(*@\HLJLp{,}@*)(*@\HLJLn{\ensuremath{\phi}0}@*)(*@\HLJLp{,}@*)(*@\HLJLn{\ensuremath{\phi}1}@*)(*@\HLJLp{,}@*)(*@\HLJLn{nx}@*)(*@\HLJLp{,}@*)(*@\HLJLn{\ensuremath{\mu}}@*)(*@\HLJLp{,}@*)(*@\HLJLn{T}@*)(*@\HLJLp{)}@*)
+(*@\HLJLnf{BackwardEuler}@*)(*@\HLJLp{(}@*)(*@\HLJLn{f}@*)(*@\HLJLp{,}@*)(*@\HLJLn{\ensuremath{\phi}0}@*)(*@\HLJLp{,}@*)(*@\HLJLn{\ensuremath{\phi}1}@*)(*@\HLJLp{,}@*)(*@\HLJLn{nx}@*)(*@\HLJLp{,}@*)(*@\HLJLn{\ensuremath{\mu}}@*)(*@\HLJLp{,}@*)(*@\HLJLn{T}@*)(*@\HLJLp{)}@*)
+(*@\HLJLn{u}@*)(*@\HLJLp{,}@*)(*@\HLJLn{x}@*)(*@\HLJLp{,}@*)(*@\HLJLn{t}@*) (*@\HLJLoB{=}@*) (*@\HLJLnd{@time}@*) (*@\HLJLnf{BackwardEuler}@*)(*@\HLJLp{(}@*)(*@\HLJLn{f}@*)(*@\HLJLp{,}@*)(*@\HLJLn{\ensuremath{\phi}0}@*)(*@\HLJLp{,}@*)(*@\HLJLn{\ensuremath{\phi}1}@*)(*@\HLJLp{,}@*)(*@\HLJLn{nx}@*)(*@\HLJLp{,}@*)(*@\HLJLn{\ensuremath{\mu}}@*)(*@\HLJLp{,}@*)(*@\HLJLn{T}@*)(*@\HLJLp{)}@*)
+(*@\HLJLn{nt}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{length}@*)(*@\HLJLp{(}@*)(*@\HLJLn{t}@*)(*@\HLJLp{)}@*) (*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)
+\end{lstlisting}
+
+\begin{lstlisting}
+0.006578 seconds (10.42 k allocations: 7.067 MiB)
+  0.012303 seconds (20.82 k allocations: 11.750 MiB)
+5202
+\end{lstlisting}
+
+
+\begin{lstlisting}
+(*@\HLJLn{xx}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{x}@*)(*@\HLJLoB{{\textquotesingle}}@*) (*@\HLJLoB{.*}@*) (*@\HLJLnf{ones}@*)(*@\HLJLp{(}@*)(*@\HLJLn{nt}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{)}@*)
+(*@\HLJLn{tt}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{ones}@*)(*@\HLJLp{(}@*)(*@\HLJLn{nx}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{2}@*)(*@\HLJLp{)}@*)(*@\HLJLoB{{\textquotesingle}}@*) (*@\HLJLoB{.*}@*) (*@\HLJLn{t}@*)
+(*@\HLJLn{error}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{ue}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{xx}@*)(*@\HLJLp{,}@*)(*@\HLJLn{tt}@*)(*@\HLJLp{)}@*) (*@\HLJLoB{-}@*) (*@\HLJLn{u}@*) 
+(*@\HLJLn{e1}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{maximum}@*)(*@\HLJLp{(}@*)(*@\HLJLn{error}@*)(*@\HLJLp{)}@*)
+\end{lstlisting}
+
+\begin{lstlisting}
+0.00091223286366926
+\end{lstlisting}
+
+
+\begin{lstlisting}
+(*@\HLJLn{\ensuremath{\mu}}@*) (*@\HLJLoB{=}@*) (*@\HLJLnfB{0.50}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{nx}@*)
+(*@\HLJLn{u}@*)(*@\HLJLp{,}@*)(*@\HLJLn{x}@*)(*@\HLJLp{,}@*)(*@\HLJLn{t}@*) (*@\HLJLoB{=}@*) (*@\HLJLnd{@time}@*) (*@\HLJLnf{BackwardEuler}@*)(*@\HLJLp{(}@*)(*@\HLJLn{f}@*)(*@\HLJLp{,}@*)(*@\HLJLn{\ensuremath{\phi}0}@*)(*@\HLJLp{,}@*)(*@\HLJLn{\ensuremath{\phi}1}@*)(*@\HLJLp{,}@*)(*@\HLJLn{nx}@*)(*@\HLJLp{,}@*)(*@\HLJLn{\ensuremath{\mu}}@*)(*@\HLJLp{,}@*)(*@\HLJLn{T}@*)(*@\HLJLp{)}@*)
+(*@\HLJLn{nt}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{length}@*)(*@\HLJLp{(}@*)(*@\HLJLn{t}@*)(*@\HLJLp{)}@*) (*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)
+\end{lstlisting}
+
+\begin{lstlisting}
+0.000282 seconds (429 allocations: 242.906 KiB)
+104
+\end{lstlisting}
+
+
+\begin{lstlisting}
+(*@\HLJLn{xx}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{x}@*)(*@\HLJLoB{{\textquotesingle}}@*) (*@\HLJLoB{.*}@*) (*@\HLJLnf{ones}@*)(*@\HLJLp{(}@*)(*@\HLJLn{nt}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{)}@*)
+(*@\HLJLn{tt}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{ones}@*)(*@\HLJLp{(}@*)(*@\HLJLn{nx}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{2}@*)(*@\HLJLp{)}@*)(*@\HLJLoB{{\textquotesingle}}@*) (*@\HLJLoB{.*}@*) (*@\HLJLn{t}@*)
+(*@\HLJLn{error}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{ue}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{xx}@*)(*@\HLJLp{,}@*)(*@\HLJLn{tt}@*)(*@\HLJLp{)}@*) (*@\HLJLoB{-}@*) (*@\HLJLn{u}@*) 
+(*@\HLJLn{e1}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{maximum}@*)(*@\HLJLp{(}@*)(*@\HLJLn{error}@*)(*@\HLJLp{)}@*)
+\end{lstlisting}
+
+\begin{lstlisting}
+0.029907965385205237
+\end{lstlisting}
+
+
+\subsection{Semi-discretisation / Method of lines}
+We have seen one approach to designing numerical methods for the diffusion equation: replacing derivatives with finite difference approximations.  Another approach, as the name semi-discretisation implies, is to discretise only the spatial variable.   For example, let
+
+\[
+u(x_j,t) \approx v_j(t), \qquad j  = 0, \ldots, n_x + 1, \qquad x_j = jh, \qquad h = \frac{1}{n_x + 1},
+\]
+and suppose we approximate $u_{xx}$ with a second-order central difference:
+
+\[
+u_{xx}(x_j,t) \approx  \frac{1}{h^2}\left(v_{j+1} - 2v_j + v_{j-1}   \right).
+\]
+The temporal derivative is approximated by setting $u_t(x_j,t) \approx v_j'(t)$,  hence we approximate the solution to the diffusion equation by solving
+
+\[
+v'_j(t) = \frac{1}{h^2}\left(v_{j+1} - 2v_j + v_{j-1}   \right), \qquad j  = 1, \ldots, n_x.
+\]
+That is, we approximate the solution to the diffusion equation by the solution to a linear system of ODEs.   This semi-discretisation approach is also known as the \emph{method of lines} because we are approximating the solution by functions $v_j(t)$ on the lines $(x,t) = (x_j,t)$, $t \geq 0$, $j = 1, \ldots, n_x$.
+
+Setting $\tilde{v}_j(t) = u(x_j,t)$ and assuming $\tilde{v}_j(t) = v_j(t)$, it follows that if $u_{xxxx}(x,t)$ is bounded on $(x,t) \in [0,1]\times[0,T]$, then
+
+\[
+\tilde{v}'_j(t) = u_t(x_j,t) = \frac{1}{h^2}\left(\tilde{v}_{j+1} - 2\tilde{v}_j + \tilde{v}_{j-1}   \right) = u_{xx}(x_j,t) + \mathcal{O}(h^2), \qquad h \to 0,
+\]
+and therefore
+
+\[
+\tilde{v}'_j(t) - \frac{1}{h^2}\left(\tilde{v}_{j+1} - 2\tilde{v}_j + \tilde{v}_{j-1}   \right) = \mathcal{O}(h^2), \qquad h \to 0,
+\]
+hence the semi-discrete method is second order and consistent.
+
+\subsubsection{Von Neumann stability analysis of semi-discrete methods}
+The von Neumann method for the stability analysis of semi-discrete methods is completely analogous to the method for fully discretised methods: we use the ansatz
+
+\[
+v_j(t) = \lambda(t){\rm e}^{{\rm i}kx_j}
+\]
+ignore boundary conditions and since $\vert v_j \vert = \vert\lambda(t) \vert$, for stability we require that
+
+\[
+\left\vert \lambda(t)\right \vert \leq c < \infty, \qquad t \in [0, T], \qquad h>0, \qquad k \in \mathbb{Z}.
+\]
+\textbf{Example} For the semi-discrete method above,
+
+\[
+v'_j(t) = \frac{1}{h^2}\left(v_{j+1} - 2v_j + v_{j-1}   \right),
+\]
+if we set $v_j(t) = \lambda(t){\rm e}^{{\rm i}kx_j}$, then we obtain
+
+\[
+\lambda'(t) = \frac{1}{h^2}\left({\rm e}^{{\rm i}kh} - 2 +   ({\rm e}^{-{\rm i}kh} \right)\lambda(t) = -\frac{4\sin^2(kh/2)}{h^2}\lambda(t)
+\]
+and therefore
+
+\[
+\lambda(t) = {\rm e}^{-4t\sin^2(kh/2)/h^2}\lambda(0) 
+\]
+and the method is stable because for all $h > 0$, $k \in \mathbb{Z}$,
+
+\[
+\vert \lambda(t) \vert \leq  \vert \lambda(0) \vert < \infty, \qquad   t \in [0, T].
+\]
+By the Lax equivalence theorem, we conclude the method is convergent because we have showed that it is consistent and stable.
+
+\subsubsection{Stability analysis via matrix analysis for semi-discrete methods}
+All semi-discrete methods for the diffusion equation can be cast in the form
+
+\[
+\mathbf{v}'(t) = A\mathbf{v}(t) + \mathbf{h}(t), \qquad \mathbf{v}(0) = \mathbf{f}, 
+\]
+where $\mathbf{v}(t), \mathbf{h}(t) \in \mathbb{R}^{n_x}$ and  $A \in \mathbb{R}^{n_x \times n_x}$.  For example, the method derived above,
+
+\[
+v'_j(t) = \frac{1}{h^2}\left(v_{j+1} - 2v_j + v_{j-1}   \right), \qquad j  = 1, \ldots, n_x,
+\]
+can be expressed as
+
+\[
+\underbrace{\begin{bmatrix}
+v'_{1} \\
+\vdots \\
+\vdots \\
+\vdots \\
+v'_{n_x}
+\end{bmatrix}}_{\mathbf{v}'} = 
+\underbrace{\frac{1}{h^2}\begin{bmatrix}
+- 2 & 1 & & & \\
+1  & -2 & 1  & & \\
+      & \ddots & \ddots & \ddots & \\
+      &        & 1    & -2 & 1 \\
+      &        &        & 1 & -2
+\end{bmatrix}}_{A}
+\underbrace{\begin{bmatrix}
+v_{1} \\
+\vdots \\
+\vdots \\
+\vdots \\
+v_{n_x}
+\end{bmatrix}}_{\mathbf{v}}
++ 
+\underbrace{\frac{1}{h^2}\begin{bmatrix}
+\varphi_0(t) \\
+0 \\
+\vdots \\
+0 \\
+ \varphi_1(t)
+\end{bmatrix}}_{\mathbf{h}(t)}
+\]
+subject to the initial condition
+
+\[
+v_j(0) = u(x_j,0) = f(x_j), \qquad j = 1, \ldots, n_x.
+\]
+The exact solution to the coupled ODE system \$ {\textbackslash}mathbf\{v\}'(t) = A{\textbackslash}mathbf\{v\}(t) + {\textbackslash}mathbf\{h\}(t)  \$ is
+
+\[
+\mathbf{v}(t) = {\rm e}^{tA}\mathbf{v}(0) + \int_0^t {\rm e}^{(t - \tau)A}\mathbf{h}(\tau)\,{\rm d}\tau
+\]
+where the matrix exponential for a square matrix $B \in \mathbb{R}^{n_x \times n_x}$ or $B \in \mathbb{C}^{n_x \times n_x}$ is defined as
+
+\[
+    {\rm e}^{B} = \sum_{k=0}^{\infty}\frac{B^k}{k!}.
+\]
+Therefore we have that a semi-discrete method for the diffusion equation is \textbf{stable} if there exists a constant $0 <c < \infty$ such that
+
+\[
+\lim_{h \to 0}\left(\max_{t \in [0, T]}\| {\rm e}^{tA}\|_h \right) \leq c.
+\]
+\textbf{Example} Let's consider the method above, for which 
+
+\[
+A = \frac{1}{h^2}\begin{bmatrix}
+- 2 & 1 & & & \\
+1  & -2 & 1  & & \\
+      & \ddots & \ddots & \ddots & \\
+      &        & 1    & -2 & 1 \\
+      &        &        & 1 & -2
+\end{bmatrix} \in \mathbb{R}^{n_x \times n_x}.
+\]
+Since $A$ is a TST matrix, its eigenvalues are
+
+\[
+\lambda_j = \frac{1}{h^2}\left[-2 + 2\cos\left(\pi x_j  \right)  \right] = \frac{1}{h^2}\left[-2 + 2\left(1 - 2\sin^2\left(\pi x_j/2  \right)\right)  \right] = -\frac{4}{h^2}\sin^2(\pi x_j/2), \qquad j = 1, \ldots, n_x.
+\]
+Let's check this:
+
+
+\begin{lstlisting}
+(*@\HLJLn{nx}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{11}@*)
+(*@\HLJLn{h}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{1}@*)(*@\HLJLoB{/}@*)(*@\HLJLp{(}@*)(*@\HLJLn{nx}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{)}@*)
+(*@\HLJLn{A}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{SymTridiagonal}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{fill}@*)(*@\HLJLp{(}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{2}@*)(*@\HLJLp{,}@*)(*@\HLJLn{nx}@*)(*@\HLJLp{),}@*)(*@\HLJLnf{fill}@*)(*@\HLJLp{(}@*)(*@\HLJLni{1}@*)(*@\HLJLp{,}@*)(*@\HLJLn{nx}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)(*@\HLJLp{))}@*)(*@\HLJLoB{/}@*)(*@\HLJLn{h}@*)(*@\HLJLoB{{\textasciicircum}}@*)(*@\HLJLni{2}@*)
+(*@\HLJLn{x}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{h}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{h}@*)(*@\HLJLoB{:}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{-}@*)(*@\HLJLn{h}@*)
+(*@\HLJLp{[}@*)(*@\HLJLnf{eigvals}@*)(*@\HLJLp{(}@*)(*@\HLJLn{A}@*)(*@\HLJLp{)}@*) (*@\HLJLoB{-}@*)(*@\HLJLni{4}@*)(*@\HLJLoB{/}@*)(*@\HLJLn{h}@*)(*@\HLJLoB{{\textasciicircum}}@*)(*@\HLJLni{2}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{sin}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{\ensuremath{\pi}}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{x}@*)(*@\HLJLp{[}@*)(*@\HLJLk{end}@*)(*@\HLJLoB{:-}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLni{1}@*)(*@\HLJLp{]}@*)(*@\HLJLoB{/}@*)(*@\HLJLni{2}@*)(*@\HLJLp{)}@*)(*@\HLJLoB{.{\textasciicircum}}@*)(*@\HLJLni{2}@*)(*@\HLJLp{]}@*)
+\end{lstlisting}
+
+\begin{lstlisting}
+11(*@\ensuremath{\times}@*)2 Matrix(*@{{\{}}@*)Float64(*@{{\}}}@*):
+ -566.187    -566.187
+ -537.415    -537.415
+ -491.647    -491.647
+ -432.0      -432.0
+ -362.54     -362.54
+ -288.0      -288.0
+ -213.46     -213.46
+ -144.0      -144.0
+  -84.3532    -84.3532
+  -38.5847    -38.5847
+   -9.81336    -9.81336
+\end{lstlisting}
+
+
+To make more sense of the meaning of the matrix exponential we'll need the following.
+
+\textbf{Lemma (eigenvectors of TST matrices)}  Let $\lambda_j$, $j = 1, \ldots, n_x$ be the eigenvalues of an $n_x \times n_x$ TST matrix with $\alpha$ on the main diagonal and $\beta$ on the first super- and sub-diagonal.  The entries of the corresponding orthogonal eigenvector $\mathbf{q}_j \in \mathbb{R}^{n_x}$ are
+
+\[
+q_{j,\ell} = \sqrt{\frac{2}{n_x+1}}\sin\left(\frac{\pi j \ell}{n_x+1}   \right), \qquad \ell = 1, \ldots, n_x,
+\]
+for $j = 1, \ldots, n_x$.
+
+\textbf{Proof} See \emph{A First Course in the Numerical Analysis of Differential Equations} by A. Iserles, 2nd Edition, p. 264.
+
+Hence, we have
+
+\[
+A\mathbf{q}_j = \lambda_j\mathbf{q}_j, \qquad j = 1, \ldots, n_x.
+\]
+Let
+
+\[
+Q = \left[\mathbf{q}_1 |  \mathbf{q}_2 | \cdots | \mathbf{q}_{n_x}  \right] \in \mathbb{R}^{n_x \times n_x},
+\]
+then
+
+\[
+AQ = Q\Lambda
+\]
+where
+
+\[
+\Lambda = \begin{bmatrix}
+\lambda_1 & & & \\
+& \lambda_2 & & \\
+ & & \ddots &  \\
+&  & & \lambda_{n_x}
+\end{bmatrix},
+\]
+and since the vectors $\mathbf{q}_j$ are orthogonal, the matrix $Q$ is orthogonal, i.e.,  $Q^{\top}Q = I$. Therefore, the spectral factorisation (eigendecomposition) of $A$ is
+
+\[
+A = Q\Lambda Q^{-1} =  Q\Lambda Q^{\top}.
+\]
+
+\begin{lstlisting}
+(*@\HLJLn{Q}@*) (*@\HLJLoB{=}@*) (*@\HLJLp{[}@*)(*@\HLJLnf{sqrt}@*)(*@\HLJLp{(}@*)(*@\HLJLni{2}@*)(*@\HLJLoB{/}@*)(*@\HLJLp{(}@*)(*@\HLJLn{nx}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{))}@*)(*@\HLJLoB{*}@*)(*@\HLJLnf{sin}@*)(*@\HLJLp{(}@*)(*@\HLJLn{\ensuremath{\pi}}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{j}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{l}@*)(*@\HLJLoB{/}@*)(*@\HLJLp{(}@*)(*@\HLJLn{nx}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{))}@*) (*@\HLJLk{for}@*) (*@\HLJLn{l}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{nx}@*)(*@\HLJLp{,}@*) (*@\HLJLn{j}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{nx}@*)(*@\HLJLp{]}@*)
+(*@\HLJLn{Q}@*)(*@\HLJLoB{{\textquotesingle}*}@*)(*@\HLJLn{Q}@*) (*@\HLJLoB{\ensuremath{\approx}}@*) (*@\HLJLn{I}@*)
+\end{lstlisting}
+
+\begin{lstlisting}
+true
+\end{lstlisting}
+
+
+\begin{lstlisting}
+(*@\HLJLn{\ensuremath{\Lambda}}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{diagm}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{eigvals}@*)(*@\HLJLp{(}@*)(*@\HLJLn{A}@*)(*@\HLJLp{)[}@*)(*@\HLJLk{end}@*)(*@\HLJLoB{:-}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLni{1}@*)(*@\HLJLp{])}@*)
+(*@\HLJLn{Q}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{\ensuremath{\Lambda}}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{Q}@*)(*@\HLJLoB{{\textquotesingle}}@*) (*@\HLJLoB{\ensuremath{\approx}}@*) (*@\HLJLn{A}@*)
+\end{lstlisting}
+
+\begin{lstlisting}
+true
+\end{lstlisting}
+
+
+We have that
+
+
+\begin{eqnarray*}
+{\rm e}^{tA} &=& \sum_{k = 0}^{\infty} \frac{(tA)^k}{k!} \\
+&=& \sum_{k = 0}^{\infty}\frac{t^k}{k!} Q \Lambda^k Q^{\top} \\
+&=& \sum_{k = 0}^{\infty} Q \frac{t^k}{k!}\Lambda^k Q^{\top} \\
+&=& Q \left(\sum_{k = 0}^{\infty}  \frac{t^k}{k!}\Lambda^k\right) Q^{\top} \\
+&=&  Q
+\begin{bmatrix}
+\sum_{k = 0}^{\infty}  \frac{t^k\lambda_1^k}{k!} & & & \\
+& \sum_{k = 0}^{\infty}  \frac{t^k\lambda_2^k}{k!} & & \\
+ & & \ddots &  \\
+&  & & \sum_{k = 0}^{\infty}  \frac{t^k\lambda_{n_x}^k}{k!}
+\end{bmatrix} Q^{\top}, \\
+&=&  Q
+\begin{bmatrix}
+ {\rm e}^{t\lambda_1}& & & \\
+& {\rm e}^{t\lambda_2} & & \\
+ & & \ddots &  \\
+&  & & {\rm e}^{t\lambda_{n_x}}
+\end{bmatrix} Q^{\top} \\
+&=& Q{\rm e}^{t\Lambda}Q^{\top}
+\end{eqnarray*}
+Notice that
+
+\[
+\sigma({\rm e}^{tA}) = \left\lbrace {\rm e}^{t\lambda_j} : \lambda_j \in \sigma(A)   \right\rbrace
+\]
+The matrix ${\rm e}^{tA}$ is symmetric
+
+\[
+\left({\rm e}^{tA}\right)^{\top} = \left(Q{\rm e}^{t\Lambda}Q^{\top}\right)^{\top} = Q{\rm e}^{t\Lambda}Q^{\top} = {\rm e}^{tA}
+\]
+and therefore it's a normal matrix and thus
+
+\[
+\| {\rm e}^{tA} \|_h = \| {\rm e}^{tA} \| = \rho({\rm e}^{tA}) = \max \left\lbrace \left\vert {\rm e}^{t\lambda_j} \right\vert : \lambda_j \in \sigma(A)   \right\rbrace.
+\]
+Since $\lambda_j < 0$ for $j = 1, \ldots, n_x$, it follows that
+
+\[
+\lim_{h \to 0}\left(\max_{t \in [0, T]}\| {\rm e}^{tA}\|_h \right) \leq 1
+\]
+and therefore we have proved that the method is stable.
+
+In the above example, we have proven the stability of a method by finding an upper bound on the spectral radius of $A$, which implied an upper bound on the norm of ${\rm e}^{tA}$.  This method of proving stability can be generalised to all semi-discrete methods with a normal matrix $A$ because normal matrices are \emph{unitarily diagonalisable}, meaning that if $A \in \mathbb{C}^{n_x \times n_x}$ is a normal matrix then,
+
+\[
+A = U \Lambda U^*
+\]
+where, $U, \Lambda \in \mathbb{C}^{n_x \times n_x}$, $\Lambda$ is a diagonal matrix containing the eigenvalues of $A$ and $U$ is unitary, i.e., $UU^* = I$.
+
+\textbf{Theorem (stability of semidiscrete methods for the diffusion equation with normal matrices)} The semi-discrete method for the diffusion equation given by  
+
+\[
+\mathbf{v}'(t) = A\mathbf{v}(t) + \mathbf{h}(t), \qquad \mathbf{v}(0) = \mathbf{f}, 
+\]
+where $\mathbf{v}(t), \mathbf{h}(t) \in \mathbb{R}^{n_x}$ and  $A \in \mathbb{R}^{n_x \times n_x}$ is a normal matrix is stable if there exists an $\eta \in \mathbb{R}$ such that as $h \to 0$,
+
+\[
+\text{Re } \lambda \leq \eta \quad \text{for every} \quad \lambda \in \sigma(A).
+\]
+\textbf{Proof}  See \emph{A First Course in the Numerical Analysis of Differential Equations} by A. Iserles, p. 370.
+
+\textbf{Remark} In the example above, the conditions of this theorem hold for $\eta = 0$.
+
+In the example above, we showed that $A$ had the factorisation
+
+\[
+A = Q\Lambda Q^{\top}.
+\]
+This can be used to 'diagonalise' the ODE system
+
+\[
+\mathbf{v}' = A\mathbf{v} + \mathbf{h}(t),
+\]
+because if we set $\mathbf{w} = Q^{\top}\mathbf{v}$ and $\mathbf{b}(t) = Q^{\top}\mathbf{h}(t)$, then
+
+\[
+\mathbf{w}' = \Lambda \mathbf{w} + \mathbf{b}(t), 
+\]
+i.e., if we let $w_j(t)$, $b_j(t)$ be the entries of $\mathbf{w}$ and $\mathbf{b}(t)$ for $j = 1, \ldots, n_x$, then
+
+\[
+w_j' = \lambda_j w_j + b_j(t), \qquad j = 1, \ldots, n_x.
+\]
+Hence, the coupled system of ODEs is reduced to $n_x$ decoupled scalar ODEs which we know how to solve exactly:
+
+\[
+w_j(t) = {\rm e}^{t\lambda_j}w_j(0) + \int_0^t {\rm e}^{(t - \tau)\lambda_j}b_j(\tau)\,{\rm d}\tau.
+\]
+\subsubsection{Time discretisation of semi-discrete methods}
+In general, we won't know the exact solution of the semi-discretised system of equations, so we approximate the solution by discretising time.  For example, consider consider again the semi-discretised method 
+
+\[
+v'_j(t) = \frac{1}{h^2}\left(v_{j+1} - 2v_j + v_{j-1}   \right).
+\]
+If we approximate the derivative with a (first-order) forward difference by letting $v_j(t_i) \approx u^i_j$, $t_i = i\tau$, $\tau = t/n_t$ and 
+
+\[
+v'_j(t_i) \approx \frac{v_j(t_{i+1}) - v_j(t_i)}{\tau} \approx \frac{u^{i+1}_j - u^i_j}{\tau}, \qquad i = 0, \ldots, n_t,
+\]
+then we obtain the fully discretised method
+
+\[
+u^{i+1}_j = u^i_j + \mu\left(u^i_{j+1} - 2u^i_j + u^i_{j-1}   \right), \qquad \mu = \frac{\tau}{h^2},
+\]
+which is just the (explicit) Euler method.   Similarly, if we approximate the time derivative with a first order backward difference, then we obtain the backward, or implicit Euler method. 
+
+Alternatively, we can solve the semidiscretised system (the system of ODEs) using a 'black box' ODE integrator / solver.
+
+
+\begin{lstlisting}
+(*@\HLJLn{nx}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{50}@*)
+(*@\HLJLn{h}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{1}@*)(*@\HLJLoB{/}@*)(*@\HLJLp{(}@*)(*@\HLJLn{nx}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{)}@*)
+(*@\HLJLn{f}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{x}@*) (*@\HLJLoB{->}@*) (*@\HLJLnf{sin}@*)(*@\HLJLp{(}@*)(*@\HLJLn{\ensuremath{\pi}}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{x}@*)(*@\HLJLoB{/}@*)(*@\HLJLni{2}@*)(*@\HLJLp{)}@*) (*@\HLJLoB{+}@*) (*@\HLJLnfB{0.5}@*)(*@\HLJLoB{*}@*)(*@\HLJLnf{sin}@*)(*@\HLJLp{(}@*)(*@\HLJLni{2}@*)(*@\HLJLn{\ensuremath{\pi}}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{x}@*)(*@\HLJLp{)}@*)
+(*@\HLJLn{\ensuremath{\phi}1}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{t}@*) (*@\HLJLoB{->}@*) (*@\HLJLnf{exp}@*)(*@\HLJLp{(}@*)(*@\HLJLoB{-}@*)(*@\HLJLn{\ensuremath{\pi}}@*)(*@\HLJLoB{{\textasciicircum}}@*)(*@\HLJLni{2}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{t}@*)(*@\HLJLoB{/}@*)(*@\HLJLni{4}@*)(*@\HLJLp{)}@*)
+(*@\HLJLn{\ensuremath{\phi}0}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{t}@*) (*@\HLJLoB{->}@*) (*@\HLJLni{0}@*)
+(*@\HLJLn{T}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{1}@*)
+(*@\HLJLn{A}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{SymTridiagonal}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{fill}@*)(*@\HLJLp{(}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{2}@*)(*@\HLJLp{,}@*)(*@\HLJLn{nx}@*)(*@\HLJLp{),}@*)(*@\HLJLnf{fill}@*)(*@\HLJLp{(}@*)(*@\HLJLni{1}@*)(*@\HLJLp{,}@*)(*@\HLJLn{nx}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)(*@\HLJLp{))}@*)(*@\HLJLoB{/}@*)(*@\HLJLn{h}@*)(*@\HLJLoB{{\textasciicircum}}@*)(*@\HLJLni{2}@*)
+(*@\HLJLn{F}@*) (*@\HLJLoB{=}@*) (*@\HLJLp{(}@*)(*@\HLJLn{v}@*)(*@\HLJLp{,}@*)(*@\HLJLn{p}@*)(*@\HLJLp{,}@*)(*@\HLJLn{t}@*)(*@\HLJLp{)}@*) (*@\HLJLoB{->}@*) (*@\HLJLn{A}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{v}@*) (*@\HLJLoB{+}@*) (*@\HLJLp{[}@*)(*@\HLJLnf{\ensuremath{\phi}0}@*)(*@\HLJLp{(}@*)(*@\HLJLn{t}@*)(*@\HLJLp{);}@*)(*@\HLJLnf{zeros}@*)(*@\HLJLp{(}@*)(*@\HLJLn{nx}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{2}@*)(*@\HLJLp{);}@*)(*@\HLJLnf{\ensuremath{\phi}1}@*)(*@\HLJLp{(}@*)(*@\HLJLn{t}@*)(*@\HLJLp{)]}@*)(*@\HLJLoB{/}@*)(*@\HLJLn{h}@*)(*@\HLJLoB{{\textasciicircum}}@*)(*@\HLJLni{2}@*)
+(*@\HLJLn{x}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{range}@*)(*@\HLJLp{(}@*)(*@\HLJLni{0}@*)(*@\HLJLp{,}@*)(*@\HLJLni{1}@*)(*@\HLJLp{,}@*)(*@\HLJLn{nx}@*) (*@\HLJLoB{+}@*) (*@\HLJLni{2}@*)(*@\HLJLp{)}@*)
+(*@\HLJLn{prob}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{ODEProblem}@*)(*@\HLJLp{(}@*)(*@\HLJLn{F}@*)(*@\HLJLp{,}@*) (*@\HLJLn{f}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{[}@*)(*@\HLJLni{2}@*)(*@\HLJLoB{:}@*)(*@\HLJLk{end}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)(*@\HLJLp{]),}@*) (*@\HLJLp{(}@*)(*@\HLJLnfB{0.0}@*)(*@\HLJLp{,}@*) (*@\HLJLn{T}@*)(*@\HLJLp{));}@*)
+(*@\HLJLn{soln}@*) (*@\HLJLoB{=}@*)  (*@\HLJLnf{solve}@*)(*@\HLJLp{(}@*)(*@\HLJLn{prob}@*)(*@\HLJLp{,}@*) (*@\HLJLnf{RK4}@*)(*@\HLJLp{(),}@*)(*@\HLJLn{abstol}@*)(*@\HLJLoB{=}@*)(*@\HLJLnfB{1e-4}@*)(*@\HLJLp{);}@*)
+(*@\HLJLn{tv}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{soln}@*)(*@\HLJLoB{.}@*)(*@\HLJLn{t}@*)
+(*@\HLJLn{nt}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{length}@*)(*@\HLJLp{(}@*)(*@\HLJLn{tv}@*)(*@\HLJLp{)}@*)
+\end{lstlisting}
+
+\begin{lstlisting}
+3728
+\end{lstlisting}
+
+
+\begin{lstlisting}
+(*@\HLJLn{errs}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{zeros}@*)(*@\HLJLp{(}@*)(*@\HLJLn{nt}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)(*@\HLJLp{)}@*)
+(*@\HLJLk{for}@*) (*@\HLJLn{i}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{2}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{nt}@*)
+    (*@\HLJLn{errs}@*)(*@\HLJLp{[}@*)(*@\HLJLn{i}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)(*@\HLJLp{]}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{norm}@*)(*@\HLJLp{(}@*)(*@\HLJLn{ue}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{[}@*)(*@\HLJLni{2}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{nx}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{],}@*)(*@\HLJLn{tv}@*)(*@\HLJLp{[}@*)(*@\HLJLn{i}@*)(*@\HLJLp{])}@*) (*@\HLJLoB{-}@*) (*@\HLJLn{soln}@*)(*@\HLJLoB{.}@*)(*@\HLJLn{u}@*)(*@\HLJLp{[}@*)(*@\HLJLn{i}@*)(*@\HLJLp{],}@*)(*@\HLJLn{Inf}@*)(*@\HLJLp{)}@*)
+(*@\HLJLk{end}@*)
+(*@\HLJLnf{norm}@*)(*@\HLJLp{(}@*)(*@\HLJLn{errs}@*)(*@\HLJLp{,}@*)(*@\HLJLn{Inf}@*)(*@\HLJLp{)}@*)
+\end{lstlisting}
+
+\begin{lstlisting}
+0.0002743087401239075
+\end{lstlisting}
+
+
+\begin{lstlisting}
+(*@\HLJLcs{{\#}}@*) (*@\HLJLcs{Let{\textquotesingle}s}@*) (*@\HLJLcs{analyze}@*) (*@\HLJLcs{the}@*) (*@\HLJLcs{numerical}@*) (*@\HLJLcs{solution}@*) (*@\HLJLcs{a}@*) (*@\HLJLcs{bit...}@*)
+(*@\HLJLn{dt}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{diff}@*)(*@\HLJLp{(}@*)(*@\HLJLn{soln}@*)(*@\HLJLoB{.}@*)(*@\HLJLn{t}@*)(*@\HLJLp{)}@*)
+(*@\HLJLn{plt1}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{plot}@*)(*@\HLJLp{(}@*)(*@\HLJLn{soln}@*)(*@\HLJLoB{.}@*)(*@\HLJLn{t}@*)(*@\HLJLp{[}@*)(*@\HLJLni{2}@*)(*@\HLJLoB{:}@*)(*@\HLJLk{end}@*)(*@\HLJLp{],}@*) (*@\HLJLn{dt}@*)(*@\HLJLp{,}@*) (*@\HLJLn{yscale}@*) (*@\HLJLoB{=}@*) (*@\HLJLsc{:log10}@*)(*@\HLJLp{,}@*) (*@\HLJLn{size}@*) (*@\HLJLoB{=}@*) (*@\HLJLp{(}@*)(*@\HLJLni{500}@*)(*@\HLJLp{,}@*) (*@\HLJLni{300}@*)(*@\HLJLp{),}@*) (*@\HLJLn{lw}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{3}@*)(*@\HLJLp{,}@*) (*@\HLJLn{label}@*) (*@\HLJLoB{=}@*) (*@\HLJLs{"{}\ensuremath{\Delta}t"{}}@*)(*@\HLJLp{,}@*) 
+     (*@\HLJLn{legend}@*) (*@\HLJLoB{=}@*) (*@\HLJLsc{:outertopright}@*)(*@\HLJLp{,}@*) (*@\HLJLn{title}@*) (*@\HLJLoB{=}@*) (*@\HLJLs{"{}{\#}}@*) (*@\HLJLs{steps}@*) (*@\HLJLs{=}@*) (*@\HLJLsi{{\$}}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{length}@*)(*@\HLJLp{(}@*)(*@\HLJLn{soln}@*)(*@\HLJLoB{.}@*)(*@\HLJLn{t}@*)(*@\HLJLp{))}@*)(*@\HLJLs{"{}}@*)(*@\HLJLp{)}@*)
+\end{lstlisting}
+
+\includegraphics[width=\linewidth]{/figures/Chapter5_draft_version_26_1.pdf}
+
+\begin{lstlisting}
+(*@\HLJLn{soln}@*) (*@\HLJLoB{=}@*)  (*@\HLJLnf{solve}@*)(*@\HLJLp{(}@*)(*@\HLJLn{prob}@*)(*@\HLJLp{,}@*) (*@\HLJLnf{Rodas4}@*)(*@\HLJLp{(),}@*)(*@\HLJLn{abstol}@*)(*@\HLJLoB{=}@*)(*@\HLJLnfB{1e-4}@*)(*@\HLJLp{);}@*)
+(*@\HLJLn{tv}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{soln}@*)(*@\HLJLoB{.}@*)(*@\HLJLn{t}@*)
+(*@\HLJLn{nt}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{length}@*)(*@\HLJLp{(}@*)(*@\HLJLn{tv}@*)(*@\HLJLp{)}@*)
+\end{lstlisting}
+
+\begin{lstlisting}
+22
+\end{lstlisting}
+
+
+\begin{lstlisting}
+(*@\HLJLn{errs}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{zeros}@*)(*@\HLJLp{(}@*)(*@\HLJLn{nt}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)(*@\HLJLp{)}@*)
+(*@\HLJLk{for}@*) (*@\HLJLn{i}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{2}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{nt}@*)
+    (*@\HLJLn{errs}@*)(*@\HLJLp{[}@*)(*@\HLJLn{i}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)(*@\HLJLp{]}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{norm}@*)(*@\HLJLp{(}@*)(*@\HLJLn{ue}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{[}@*)(*@\HLJLni{2}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{nx}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{],}@*)(*@\HLJLn{tv}@*)(*@\HLJLp{[}@*)(*@\HLJLn{i}@*)(*@\HLJLp{])}@*) (*@\HLJLoB{-}@*) (*@\HLJLn{soln}@*)(*@\HLJLoB{.}@*)(*@\HLJLn{u}@*)(*@\HLJLp{[}@*)(*@\HLJLn{i}@*)(*@\HLJLp{],}@*)(*@\HLJLn{Inf}@*)(*@\HLJLp{)}@*)
+(*@\HLJLk{end}@*)
+(*@\HLJLnf{norm}@*)(*@\HLJLp{(}@*)(*@\HLJLn{errs}@*)(*@\HLJLp{,}@*)(*@\HLJLn{Inf}@*)(*@\HLJLp{)}@*)
+\end{lstlisting}
+
+\begin{lstlisting}
+0.00023693854401607428
+\end{lstlisting}
+
+
+\begin{lstlisting}
+(*@\HLJLcs{{\#}}@*) (*@\HLJLcs{Let{\textquotesingle}s}@*) (*@\HLJLcs{analyze}@*) (*@\HLJLcs{the}@*) (*@\HLJLcs{numerical}@*) (*@\HLJLcs{solution}@*) (*@\HLJLcs{a}@*) (*@\HLJLcs{bit...}@*)
+(*@\HLJLn{dt}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{diff}@*)(*@\HLJLp{(}@*)(*@\HLJLn{soln}@*)(*@\HLJLoB{.}@*)(*@\HLJLn{t}@*)(*@\HLJLp{)}@*)
+(*@\HLJLn{plt1}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{plot}@*)(*@\HLJLp{(}@*)(*@\HLJLn{soln}@*)(*@\HLJLoB{.}@*)(*@\HLJLn{t}@*)(*@\HLJLp{[}@*)(*@\HLJLni{2}@*)(*@\HLJLoB{:}@*)(*@\HLJLk{end}@*)(*@\HLJLp{],}@*) (*@\HLJLn{dt}@*)(*@\HLJLp{,}@*) (*@\HLJLn{yscale}@*) (*@\HLJLoB{=}@*) (*@\HLJLsc{:log10}@*)(*@\HLJLp{,}@*) (*@\HLJLn{size}@*) (*@\HLJLoB{=}@*) (*@\HLJLp{(}@*)(*@\HLJLni{500}@*)(*@\HLJLp{,}@*) (*@\HLJLni{300}@*)(*@\HLJLp{),}@*) (*@\HLJLn{lw}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{3}@*)(*@\HLJLp{,}@*) (*@\HLJLn{label}@*) (*@\HLJLoB{=}@*) (*@\HLJLs{"{}\ensuremath{\Delta}t"{}}@*)(*@\HLJLp{,}@*) 
+     (*@\HLJLn{legend}@*) (*@\HLJLoB{=}@*) (*@\HLJLsc{:outertopright}@*)(*@\HLJLp{,}@*) (*@\HLJLn{title}@*) (*@\HLJLoB{=}@*) (*@\HLJLs{"{}{\#}}@*) (*@\HLJLs{steps}@*) (*@\HLJLs{=}@*) (*@\HLJLsi{{\$}}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{length}@*)(*@\HLJLp{(}@*)(*@\HLJLn{soln}@*)(*@\HLJLoB{.}@*)(*@\HLJLn{t}@*)(*@\HLJLp{))}@*)(*@\HLJLs{"{}}@*)(*@\HLJLp{)}@*)
+\end{lstlisting}
+
+\includegraphics[width=\linewidth]{/figures/Chapter5_draft_version_29_1.pdf}
+
+}
+\end{document}

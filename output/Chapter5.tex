@@ -381,7 +381,7 @@ i.e.,
 \]
 
 \begin{lstlisting}
-(*@\HLJLk{using}@*) (*@\HLJLn{LinearAlgebra}@*)(*@\HLJLp{,}@*) (*@\HLJLn{Plots}@*)
+(*@\HLJLk{using}@*) (*@\HLJLn{LinearAlgebra}@*)(*@\HLJLp{,}@*) (*@\HLJLn{Plots}@*)(*@\HLJLp{,}@*) (*@\HLJLn{SparseArrays}@*)(*@\HLJLp{,}@*) (*@\HLJLn{OrdinaryDiffEq}@*)(*@\HLJLp{,}@*) (*@\HLJLn{Printf}@*)
 \end{lstlisting}
 
 
@@ -454,6 +454,19 @@ u(x,t) = {\rm e}^{-\pi^2 t/4}\sin \frac{1}{2}\pi x + \frac{1}{2}{\rm e}^{-4\pi^2
 \includegraphics[width=\linewidth]{/figures/Chapter5_4_1.pdf}
 
 \begin{lstlisting}
+(*@\HLJLnd{@gif}@*) (*@\HLJLk{for}@*) (*@\HLJLn{i}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{2}@*)(*@\HLJLoB{:}@*)(*@\HLJLni{50}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{nt}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*) 
+    (*@\HLJLnf{plot}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{,}@*) (*@\HLJLn{u}@*)(*@\HLJLp{[}@*)(*@\HLJLni{1}@*)(*@\HLJLp{,}@*)(*@\HLJLoB{:}@*)(*@\HLJLp{],}@*) (*@\HLJLn{size}@*) (*@\HLJLoB{=}@*) (*@\HLJLp{(}@*)(*@\HLJLni{500}@*)(*@\HLJLp{,}@*) (*@\HLJLni{150}@*)(*@\HLJLp{),}@*) (*@\HLJLn{label}@*) (*@\HLJLoB{=}@*) (*@\HLJLs{"{}u0"{}}@*)(*@\HLJLp{)}@*)
+    (*@\HLJLnf{plot!}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{,}@*) (*@\HLJLn{u}@*)(*@\HLJLp{[}@*)(*@\HLJLn{i}@*)(*@\HLJLp{,}@*)(*@\HLJLoB{:}@*)(*@\HLJLp{],}@*) (*@\HLJLn{label}@*) (*@\HLJLoB{=}@*) (*@\HLJLs{"{}t}@*) (*@\HLJLs{=}@*) (*@\HLJLs{"{}}@*) (*@\HLJLoB{*}@*) (*@\HLJLp{(}@*)(*@\HLJLnd{@sprintf}@*)(*@\HLJLp{(}@*)(*@\HLJLs{"{}{\%}.2f"{}}@*)(*@\HLJLp{,}@*) (*@\HLJLn{t}@*)(*@\HLJLp{[}@*)(*@\HLJLn{i}@*)(*@\HLJLp{])),}@*) (*@\HLJLn{legend}@*) (*@\HLJLoB{=}@*) (*@\HLJLsc{:outertopright}@*)(*@\HLJLp{)}@*)
+(*@\HLJLk{end}@*)
+\end{lstlisting}
+
+\begin{lstlisting}
+Plots.AnimatedGif((*@{"{}}@*)C:(*@{{\textbackslash}}@*)(*@{{\textbackslash}}@*)Users(*@{{\textbackslash}}@*)(*@{{\textbackslash}}@*)mfaso(*@{{\textbackslash}}@*)(*@{{\textbackslash}}@*)AppData(*@{{\textbackslash}}@*)(*@{{\textbackslash}}@*)Local(*@{{\textbackslash}}@*)(*@{{\textbackslash}}@*)Temp(*@{{\textbackslash}}@*)(*@{{\textbackslash}}@*)jl(*@{{\_}}@*)914oTatqjn.gi
+f(*@{"{}}@*))
+\end{lstlisting}
+
+
+\begin{lstlisting}
 (*@\HLJLn{xx}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{x}@*)(*@\HLJLoB{{\textquotesingle}}@*) (*@\HLJLoB{.*}@*) (*@\HLJLnf{ones}@*)(*@\HLJLp{(}@*)(*@\HLJLn{nt}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{)}@*)
 (*@\HLJLn{tt}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{ones}@*)(*@\HLJLp{(}@*)(*@\HLJLn{nx}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{2}@*)(*@\HLJLp{)}@*)(*@\HLJLoB{{\textquotesingle}}@*) (*@\HLJLoB{.*}@*) (*@\HLJLn{t}@*)
 (*@\HLJLn{ue}@*) (*@\HLJLoB{=}@*) (*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{,}@*)(*@\HLJLn{t}@*)(*@\HLJLp{)}@*) (*@\HLJLoB{->}@*) (*@\HLJLnf{exp}@*)(*@\HLJLp{(}@*)(*@\HLJLoB{-}@*)(*@\HLJLn{\ensuremath{\pi}}@*)(*@\HLJLoB{{\textasciicircum}}@*)(*@\HLJLni{2}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{t}@*)(*@\HLJLoB{/}@*)(*@\HLJLni{4}@*)(*@\HLJLp{)}@*)(*@\HLJLoB{*}@*)(*@\HLJLnf{sin}@*)(*@\HLJLp{(}@*)(*@\HLJLn{\ensuremath{\pi}}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{x}@*)(*@\HLJLoB{/}@*)(*@\HLJLni{2}@*)(*@\HLJLp{)}@*) (*@\HLJLoB{+}@*) (*@\HLJLnfB{0.5}@*)(*@\HLJLoB{*}@*)(*@\HLJLnf{exp}@*)(*@\HLJLp{(}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{4}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{\ensuremath{\pi}}@*)(*@\HLJLoB{{\textasciicircum}}@*)(*@\HLJLni{2}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{t}@*)(*@\HLJLp{)}@*)(*@\HLJLoB{*}@*)(*@\HLJLnf{sin}@*)(*@\HLJLp{(}@*)(*@\HLJLni{2}@*)(*@\HLJLn{\ensuremath{\pi}}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{x}@*)(*@\HLJLp{)}@*)
@@ -500,7 +513,21 @@ This suggests the error decays as $\mathcal{O}(n_x^{-2})$, $n_x \to \infty$.
 (*@\HLJLnf{surface}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{,}@*)(*@\HLJLn{t}@*)(*@\HLJLp{[}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLni{30}@*)(*@\HLJLoB{:}@*)(*@\HLJLk{end}@*)(*@\HLJLp{],}@*)(*@\HLJLn{u}@*)(*@\HLJLp{[}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLni{30}@*)(*@\HLJLoB{:}@*)(*@\HLJLk{end}@*)(*@\HLJLp{,}@*)(*@\HLJLoB{:}@*)(*@\HLJLp{],}@*)(*@\HLJLn{seriescolor}@*)(*@\HLJLoB{=:}@*)(*@\HLJLn{redsblues}@*)(*@\HLJLp{,}@*) (*@\HLJLn{camera}@*)(*@\HLJLoB{=}@*)(*@\HLJLp{(}@*)(*@\HLJLni{30}@*)(*@\HLJLp{,}@*)(*@\HLJLni{40}@*)(*@\HLJLp{))}@*)
 \end{lstlisting}
 
-\includegraphics[width=\linewidth]{/figures/Chapter5_8_1.pdf}
+\includegraphics[width=\linewidth]{/figures/Chapter5_9_1.pdf}
+
+\begin{lstlisting}
+(*@\HLJLn{nt}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{length}@*)(*@\HLJLp{(}@*)(*@\HLJLn{t}@*)(*@\HLJLp{)}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)
+(*@\HLJLnd{@gif}@*) (*@\HLJLk{for}@*) (*@\HLJLn{i}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{2}@*)(*@\HLJLoB{:}@*)(*@\HLJLni{4}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{nt}@*)(*@\HLJLoB{\ensuremath{\div}}@*)(*@\HLJLni{2}@*) 
+    (*@\HLJLnf{plot}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{,}@*) (*@\HLJLn{u}@*)(*@\HLJLp{[}@*)(*@\HLJLni{1}@*)(*@\HLJLp{,}@*)(*@\HLJLoB{:}@*)(*@\HLJLp{],}@*) (*@\HLJLn{size}@*) (*@\HLJLoB{=}@*) (*@\HLJLp{(}@*)(*@\HLJLni{500}@*)(*@\HLJLp{,}@*) (*@\HLJLni{150}@*)(*@\HLJLp{),}@*) (*@\HLJLn{label}@*) (*@\HLJLoB{=}@*) (*@\HLJLs{"{}u0"{}}@*)(*@\HLJLp{)}@*)
+    (*@\HLJLnf{plot!}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{,}@*) (*@\HLJLn{u}@*)(*@\HLJLp{[}@*)(*@\HLJLn{i}@*)(*@\HLJLp{,}@*)(*@\HLJLoB{:}@*)(*@\HLJLp{],}@*) (*@\HLJLn{label}@*) (*@\HLJLoB{=}@*) (*@\HLJLs{"{}t}@*) (*@\HLJLs{=}@*) (*@\HLJLs{"{}}@*) (*@\HLJLoB{*}@*) (*@\HLJLp{(}@*)(*@\HLJLnd{@sprintf}@*)(*@\HLJLp{(}@*)(*@\HLJLs{"{}{\%}.2f"{}}@*)(*@\HLJLp{,}@*) (*@\HLJLn{t}@*)(*@\HLJLp{[}@*)(*@\HLJLn{i}@*)(*@\HLJLp{])),}@*) (*@\HLJLn{legend}@*) (*@\HLJLoB{=}@*) (*@\HLJLsc{:outertopright}@*)(*@\HLJLp{)}@*)
+(*@\HLJLk{end}@*)
+\end{lstlisting}
+
+\begin{lstlisting}
+Plots.AnimatedGif((*@{"{}}@*)C:(*@{{\textbackslash}}@*)(*@{{\textbackslash}}@*)Users(*@{{\textbackslash}}@*)(*@{{\textbackslash}}@*)mfaso(*@{{\textbackslash}}@*)(*@{{\textbackslash}}@*)AppData(*@{{\textbackslash}}@*)(*@{{\textbackslash}}@*)Local(*@{{\textbackslash}}@*)(*@{{\textbackslash}}@*)Temp(*@{{\textbackslash}}@*)(*@{{\textbackslash}}@*)jl(*@{{\_}}@*)44ptADN5ZE.gi
+f(*@{"{}}@*))
+\end{lstlisting}
+
 
 Based on these experiments, we conjecture that Euler's method converges if $\mu \leq \frac{1}{2}$.
 
@@ -522,7 +549,21 @@ The initial condition is "smoothed out" by the diffusion equation.  Here is anot
 (*@\HLJLnf{surface}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{,}@*)(*@\HLJLn{t}@*)(*@\HLJLp{[}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLni{30}@*)(*@\HLJLoB{:}@*)(*@\HLJLk{end}@*)(*@\HLJLp{],}@*)(*@\HLJLn{u}@*)(*@\HLJLp{[}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLni{30}@*)(*@\HLJLoB{:}@*)(*@\HLJLk{end}@*)(*@\HLJLp{,}@*)(*@\HLJLoB{:}@*)(*@\HLJLp{],}@*)(*@\HLJLn{seriescolor}@*)(*@\HLJLoB{=:}@*)(*@\HLJLn{redsblues}@*)(*@\HLJLp{,}@*) (*@\HLJLn{camera}@*)(*@\HLJLoB{=}@*)(*@\HLJLp{(}@*)(*@\HLJLni{30}@*)(*@\HLJLp{,}@*)(*@\HLJLni{40}@*)(*@\HLJLp{))}@*)
 \end{lstlisting}
 
-\includegraphics[width=\linewidth]{/figures/Chapter5_10_1.pdf}
+\includegraphics[width=\linewidth]{/figures/Chapter5_12_1.pdf}
+
+\begin{lstlisting}
+(*@\HLJLn{nt}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{length}@*)(*@\HLJLp{(}@*)(*@\HLJLn{t}@*)(*@\HLJLp{)}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)
+(*@\HLJLnd{@gif}@*) (*@\HLJLk{for}@*) (*@\HLJLn{i}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{2}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{nt}@*) 
+    (*@\HLJLnf{plot}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{,}@*) (*@\HLJLn{u}@*)(*@\HLJLp{[}@*)(*@\HLJLni{1}@*)(*@\HLJLp{,}@*)(*@\HLJLoB{:}@*)(*@\HLJLp{],}@*) (*@\HLJLn{size}@*) (*@\HLJLoB{=}@*) (*@\HLJLp{(}@*)(*@\HLJLni{500}@*)(*@\HLJLp{,}@*) (*@\HLJLni{150}@*)(*@\HLJLp{),}@*) (*@\HLJLn{label}@*) (*@\HLJLoB{=}@*) (*@\HLJLs{"{}u0"{}}@*)(*@\HLJLp{)}@*)
+    (*@\HLJLnf{plot!}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{,}@*) (*@\HLJLn{u}@*)(*@\HLJLp{[}@*)(*@\HLJLn{i}@*)(*@\HLJLp{,}@*)(*@\HLJLoB{:}@*)(*@\HLJLp{],}@*) (*@\HLJLn{label}@*) (*@\HLJLoB{=}@*) (*@\HLJLs{"{}t}@*) (*@\HLJLs{=}@*) (*@\HLJLs{"{}}@*) (*@\HLJLoB{*}@*) (*@\HLJLp{(}@*)(*@\HLJLnd{@sprintf}@*)(*@\HLJLp{(}@*)(*@\HLJLs{"{}{\%}.2f"{}}@*)(*@\HLJLp{,}@*) (*@\HLJLn{t}@*)(*@\HLJLp{[}@*)(*@\HLJLn{i}@*)(*@\HLJLp{])),}@*) (*@\HLJLn{legend}@*) (*@\HLJLoB{=}@*) (*@\HLJLsc{:outertopright}@*)(*@\HLJLp{)}@*)
+(*@\HLJLk{end}@*)
+\end{lstlisting}
+
+\begin{lstlisting}
+Plots.AnimatedGif((*@{"{}}@*)C:(*@{{\textbackslash}}@*)(*@{{\textbackslash}}@*)Users(*@{{\textbackslash}}@*)(*@{{\textbackslash}}@*)mfaso(*@{{\textbackslash}}@*)(*@{{\textbackslash}}@*)AppData(*@{{\textbackslash}}@*)(*@{{\textbackslash}}@*)Local(*@{{\textbackslash}}@*)(*@{{\textbackslash}}@*)Temp(*@{{\textbackslash}}@*)(*@{{\textbackslash}}@*)jl(*@{{\_}}@*)l2jmFT2Rv6.gi
+f(*@{"{}}@*))
+\end{lstlisting}
+
 
 \subsubsection{Convergence of Euler's method}
 \textbf{Proposition} If $\mu \leq \frac{1}{2}$, then Euler's method converges.
@@ -1109,8 +1150,8 @@ BackwardEuler (generic function with 1 method)
 \end{lstlisting}
 
 \begin{lstlisting}
-0.007395 seconds (10.42 k allocations: 7.067 MiB)
-  0.014749 seconds (20.82 k allocations: 11.750 MiB)
+0.002525 seconds (10.42 k allocations: 7.067 MiB)
+  0.007663 seconds (20.82 k allocations: 11.750 MiB)
 5202
 \end{lstlisting}
 
@@ -1134,7 +1175,7 @@ BackwardEuler (generic function with 1 method)
 \end{lstlisting}
 
 \begin{lstlisting}
-0.000271 seconds (429 allocations: 242.906 KiB)
+0.000174 seconds (429 allocations: 242.906 KiB)
 104
 \end{lstlisting}
 
@@ -1429,6 +1470,13 @@ Since $\lambda_j < 0$ for $j = 1, \ldots, n_x$, it follows that
 \]
 and therefore we have proved that the method is stable.
 
+In the above example, we have proven the stability of a method by finding an upper bound on the spectral radius of $A$, which implied an upper bound on the norm of ${\rm e}^{tA}$.  This method of proving stability can be generalised to all semi-discrete methods with a normal matrix $A$ because normal matrices are \emph{unitarily diagonalisable}, meaning that if $A \in \mathbb{C}^{n_x \times n_x}$ is a normal matrix then,
+
+\[
+A = U \Lambda U^*
+\]
+where, $U, \Lambda \in \mathbb{C}^{n_x \times n_x}$, $\Lambda$ is a diagonal matrix containing the eigenvalues of $A$ and $U$ is unitary, i.e., $UU^* = I$.
+
 \textbf{Theorem (stability of semidiscrete methods for the diffusion equation with normal matrices)} The semi-discrete method for the diffusion equation given by  
 
 \[
@@ -1439,6 +1487,184 @@ where $\mathbf{v}(t), \mathbf{h}(t) \in \mathbb{R}^{n_x}$ and  $A \in \mathbb{R}
 \[
 \text{Re } \lambda \leq \eta \quad \text{for every} \quad \lambda \in \sigma(A).
 \]
+\textbf{Proof}  See \emph{A First Course in the Numerical Analysis of Differential Equations} by A. Iserles, p. 370.
+
+\textbf{Remark} In the example above, the conditions of this theorem hold for $\eta = 0$.
+
+In the example above, we showed that $A$ had the factorisation
+
+\[
+A = Q\Lambda Q^{\top}.
+\]
+This can be used to 'diagonalise' the ODE system
+
+\[
+\mathbf{v}' = A\mathbf{v} + \mathbf{h}(t),
+\]
+because if we set $\mathbf{w} = Q^{\top}\mathbf{v}$ and $\mathbf{b}(t) = Q^{\top}\mathbf{h}(t)$, then
+
+\[
+\mathbf{w}' = \Lambda \mathbf{w} + \mathbf{b}(t), 
+\]
+i.e., if we let $w_j(t)$, $b_j(t)$ be the entries of $\mathbf{w}$ and $\mathbf{b}(t)$ for $j = 1, \ldots, n_x$, then
+
+\[
+w_j' = \lambda_j w_j + b_j(t), \qquad j = 1, \ldots, n_x.
+\]
+Hence, the coupled system of ODEs is reduced to $n_x$ decoupled scalar ODEs which we know how to solve exactly:
+
+\[
+w_j(t) = {\rm e}^{t\lambda_j}w_j(0) + \int_0^t {\rm e}^{(t - \tau)\lambda_j}b_j(\tau)\,{\rm d}\tau.
+\]
+\subsubsection{Time discretisation of semi-discrete methods}
+In general, we won't know the exact solution of the semi-discretised system of equations, so we approximate the solution by discretising time.  For example, consider consider again the semi-discretised method 
+
+\[
+v'_j(t) = \frac{1}{h^2}\left(v_{j+1} - 2v_j + v_{j-1}   \right).
+\]
+If we approximate the derivative with a (first-order) forward difference by letting $v_j(t_i) \approx u^i_j$, $t_i = i\tau$, $\tau = t/n_t$ and 
+
+\[
+v'_j(t_i) \approx \frac{v_j(t_{i+1}) - v_j(t_i)}{\tau} \approx \frac{u^{i+1}_j - u^i_j}{\tau}, \qquad i = 0, \ldots, n_t,
+\]
+then we obtain the fully discretised method
+
+\[
+u^{i+1}_j = u^i_j + \mu\left(u^i_{j+1} - 2u^i_j + u^i_{j-1}   \right), \qquad \mu = \frac{\tau}{h^2},
+\]
+which is just the (explicit) Euler method.   Similarly, if we approximate the time derivative with a first order backward difference, then we obtain the backward, or implicit Euler method. 
+
+Alternatively, we can solve the semidiscretised system (the system of ODEs) using a 'black box' ODE integrator / solver.
+
+
+\begin{lstlisting}
+(*@\HLJLn{nx}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{50}@*)
+(*@\HLJLn{h}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{1}@*)(*@\HLJLoB{/}@*)(*@\HLJLp{(}@*)(*@\HLJLn{nx}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{)}@*)
+(*@\HLJLn{f}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{x}@*) (*@\HLJLoB{->}@*) (*@\HLJLnf{sin}@*)(*@\HLJLp{(}@*)(*@\HLJLn{\ensuremath{\pi}}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{x}@*)(*@\HLJLoB{/}@*)(*@\HLJLni{2}@*)(*@\HLJLp{)}@*) (*@\HLJLoB{+}@*) (*@\HLJLnfB{0.5}@*)(*@\HLJLoB{*}@*)(*@\HLJLnf{sin}@*)(*@\HLJLp{(}@*)(*@\HLJLni{2}@*)(*@\HLJLn{\ensuremath{\pi}}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{x}@*)(*@\HLJLp{)}@*)
+(*@\HLJLn{\ensuremath{\phi}1}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{t}@*) (*@\HLJLoB{->}@*) (*@\HLJLnf{exp}@*)(*@\HLJLp{(}@*)(*@\HLJLoB{-}@*)(*@\HLJLn{\ensuremath{\pi}}@*)(*@\HLJLoB{{\textasciicircum}}@*)(*@\HLJLni{2}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{t}@*)(*@\HLJLoB{/}@*)(*@\HLJLni{4}@*)(*@\HLJLp{)}@*)
+(*@\HLJLn{\ensuremath{\phi}0}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{t}@*) (*@\HLJLoB{->}@*) (*@\HLJLni{0}@*)
+(*@\HLJLn{T}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{1}@*)
+(*@\HLJLn{A}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{SymTridiagonal}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{fill}@*)(*@\HLJLp{(}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{2}@*)(*@\HLJLp{,}@*)(*@\HLJLn{nx}@*)(*@\HLJLp{),}@*)(*@\HLJLnf{fill}@*)(*@\HLJLp{(}@*)(*@\HLJLni{1}@*)(*@\HLJLp{,}@*)(*@\HLJLn{nx}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)(*@\HLJLp{))}@*)(*@\HLJLoB{/}@*)(*@\HLJLn{h}@*)(*@\HLJLoB{{\textasciicircum}}@*)(*@\HLJLni{2}@*)
+(*@\HLJLn{F}@*) (*@\HLJLoB{=}@*) (*@\HLJLp{(}@*)(*@\HLJLn{v}@*)(*@\HLJLp{,}@*)(*@\HLJLn{p}@*)(*@\HLJLp{,}@*)(*@\HLJLn{t}@*)(*@\HLJLp{)}@*) (*@\HLJLoB{->}@*) (*@\HLJLn{A}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{v}@*) (*@\HLJLoB{+}@*) (*@\HLJLp{[}@*)(*@\HLJLnf{\ensuremath{\phi}0}@*)(*@\HLJLp{(}@*)(*@\HLJLn{t}@*)(*@\HLJLp{);}@*)(*@\HLJLnf{zeros}@*)(*@\HLJLp{(}@*)(*@\HLJLn{nx}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{2}@*)(*@\HLJLp{);}@*)(*@\HLJLnf{\ensuremath{\phi}1}@*)(*@\HLJLp{(}@*)(*@\HLJLn{t}@*)(*@\HLJLp{)]}@*)(*@\HLJLoB{/}@*)(*@\HLJLn{h}@*)(*@\HLJLoB{{\textasciicircum}}@*)(*@\HLJLni{2}@*)
+(*@\HLJLn{x}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{range}@*)(*@\HLJLp{(}@*)(*@\HLJLni{0}@*)(*@\HLJLp{,}@*)(*@\HLJLni{1}@*)(*@\HLJLp{,}@*)(*@\HLJLn{nx}@*) (*@\HLJLoB{+}@*) (*@\HLJLni{2}@*)(*@\HLJLp{)}@*)
+(*@\HLJLn{prob}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{ODEProblem}@*)(*@\HLJLp{(}@*)(*@\HLJLn{F}@*)(*@\HLJLp{,}@*) (*@\HLJLn{f}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{[}@*)(*@\HLJLni{2}@*)(*@\HLJLoB{:}@*)(*@\HLJLk{end}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)(*@\HLJLp{]),}@*) (*@\HLJLp{(}@*)(*@\HLJLnfB{0.0}@*)(*@\HLJLp{,}@*) (*@\HLJLn{T}@*)(*@\HLJLp{));}@*)
+(*@\HLJLn{soln}@*) (*@\HLJLoB{=}@*)  (*@\HLJLnf{solve}@*)(*@\HLJLp{(}@*)(*@\HLJLn{prob}@*)(*@\HLJLp{,}@*) (*@\HLJLnf{RK4}@*)(*@\HLJLp{(),}@*)(*@\HLJLn{abstol}@*)(*@\HLJLoB{=}@*)(*@\HLJLnfB{1e-4}@*)(*@\HLJLp{);}@*)
+(*@\HLJLn{tv}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{soln}@*)(*@\HLJLoB{.}@*)(*@\HLJLn{t}@*)
+(*@\HLJLn{nt}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{length}@*)(*@\HLJLp{(}@*)(*@\HLJLn{tv}@*)(*@\HLJLp{)}@*)
+\end{lstlisting}
+
+\begin{lstlisting}
+3728
+\end{lstlisting}
+
+
+\begin{lstlisting}
+(*@\HLJLn{errs}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{zeros}@*)(*@\HLJLp{(}@*)(*@\HLJLn{nt}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)(*@\HLJLp{)}@*)
+(*@\HLJLk{for}@*) (*@\HLJLn{i}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{2}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{nt}@*)
+    (*@\HLJLn{errs}@*)(*@\HLJLp{[}@*)(*@\HLJLn{i}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)(*@\HLJLp{]}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{norm}@*)(*@\HLJLp{(}@*)(*@\HLJLn{ue}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{[}@*)(*@\HLJLni{2}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{nx}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{],}@*)(*@\HLJLn{tv}@*)(*@\HLJLp{[}@*)(*@\HLJLn{i}@*)(*@\HLJLp{])}@*) (*@\HLJLoB{-}@*) (*@\HLJLn{soln}@*)(*@\HLJLoB{.}@*)(*@\HLJLn{u}@*)(*@\HLJLp{[}@*)(*@\HLJLn{i}@*)(*@\HLJLp{],}@*)(*@\HLJLn{Inf}@*)(*@\HLJLp{)}@*)
+(*@\HLJLk{end}@*)
+(*@\HLJLnf{norm}@*)(*@\HLJLp{(}@*)(*@\HLJLn{errs}@*)(*@\HLJLp{,}@*)(*@\HLJLn{Inf}@*)(*@\HLJLp{)}@*)
+\end{lstlisting}
+
+\begin{lstlisting}
+0.0002743087401239075
+\end{lstlisting}
+
+
+\begin{lstlisting}
+(*@\HLJLcs{{\#}}@*) (*@\HLJLcs{Let{\textquotesingle}s}@*) (*@\HLJLcs{analyze}@*) (*@\HLJLcs{the}@*) (*@\HLJLcs{numerical}@*) (*@\HLJLcs{solution}@*) (*@\HLJLcs{a}@*) (*@\HLJLcs{bit...}@*)
+(*@\HLJLn{dt}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{diff}@*)(*@\HLJLp{(}@*)(*@\HLJLn{soln}@*)(*@\HLJLoB{.}@*)(*@\HLJLn{t}@*)(*@\HLJLp{)}@*)
+(*@\HLJLn{plt1}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{plot}@*)(*@\HLJLp{(}@*)(*@\HLJLn{soln}@*)(*@\HLJLoB{.}@*)(*@\HLJLn{t}@*)(*@\HLJLp{[}@*)(*@\HLJLni{2}@*)(*@\HLJLoB{:}@*)(*@\HLJLk{end}@*)(*@\HLJLp{],}@*) (*@\HLJLn{dt}@*)(*@\HLJLp{,}@*) (*@\HLJLn{yscale}@*) (*@\HLJLoB{=}@*) (*@\HLJLsc{:log10}@*)(*@\HLJLp{,}@*) (*@\HLJLn{size}@*) (*@\HLJLoB{=}@*) (*@\HLJLp{(}@*)(*@\HLJLni{500}@*)(*@\HLJLp{,}@*) (*@\HLJLni{300}@*)(*@\HLJLp{),}@*) (*@\HLJLn{lw}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{3}@*)(*@\HLJLp{,}@*) (*@\HLJLn{label}@*) (*@\HLJLoB{=}@*) (*@\HLJLs{"{}\ensuremath{\Delta}t"{}}@*)(*@\HLJLp{,}@*) 
+     (*@\HLJLn{legend}@*) (*@\HLJLoB{=}@*) (*@\HLJLsc{:outertopright}@*)(*@\HLJLp{,}@*) (*@\HLJLn{title}@*) (*@\HLJLoB{=}@*) (*@\HLJLs{"{}{\#}}@*) (*@\HLJLs{steps}@*) (*@\HLJLs{=}@*) (*@\HLJLsi{{\$}}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{length}@*)(*@\HLJLp{(}@*)(*@\HLJLn{soln}@*)(*@\HLJLoB{.}@*)(*@\HLJLn{t}@*)(*@\HLJLp{))}@*)(*@\HLJLs{"{}}@*)(*@\HLJLp{)}@*)
+\end{lstlisting}
+
+\includegraphics[width=\linewidth]{/figures/Chapter5_26_1.pdf}
+
+\begin{lstlisting}
+(*@\HLJLn{soln}@*) (*@\HLJLoB{=}@*)  (*@\HLJLnf{solve}@*)(*@\HLJLp{(}@*)(*@\HLJLn{prob}@*)(*@\HLJLp{,}@*) (*@\HLJLnf{Rodas4}@*)(*@\HLJLp{(),}@*)(*@\HLJLn{abstol}@*)(*@\HLJLoB{=}@*)(*@\HLJLnfB{1e-4}@*)(*@\HLJLp{);}@*)
+(*@\HLJLn{tv}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{soln}@*)(*@\HLJLoB{.}@*)(*@\HLJLn{t}@*)
+(*@\HLJLn{nt}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{length}@*)(*@\HLJLp{(}@*)(*@\HLJLn{tv}@*)(*@\HLJLp{)}@*)
+\end{lstlisting}
+
+\begin{lstlisting}
+22
+\end{lstlisting}
+
+
+\begin{lstlisting}
+(*@\HLJLn{errs}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{zeros}@*)(*@\HLJLp{(}@*)(*@\HLJLn{nt}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)(*@\HLJLp{)}@*)
+(*@\HLJLk{for}@*) (*@\HLJLn{i}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{2}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{nt}@*)
+    (*@\HLJLn{errs}@*)(*@\HLJLp{[}@*)(*@\HLJLn{i}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)(*@\HLJLp{]}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{norm}@*)(*@\HLJLp{(}@*)(*@\HLJLn{ue}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{[}@*)(*@\HLJLni{2}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{nx}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{],}@*)(*@\HLJLn{tv}@*)(*@\HLJLp{[}@*)(*@\HLJLn{i}@*)(*@\HLJLp{])}@*) (*@\HLJLoB{-}@*) (*@\HLJLn{soln}@*)(*@\HLJLoB{.}@*)(*@\HLJLn{u}@*)(*@\HLJLp{[}@*)(*@\HLJLn{i}@*)(*@\HLJLp{],}@*)(*@\HLJLn{Inf}@*)(*@\HLJLp{)}@*)
+(*@\HLJLk{end}@*)
+(*@\HLJLnf{norm}@*)(*@\HLJLp{(}@*)(*@\HLJLn{errs}@*)(*@\HLJLp{,}@*)(*@\HLJLn{Inf}@*)(*@\HLJLp{)}@*)
+\end{lstlisting}
+
+\begin{lstlisting}
+0.00023693854401607428
+\end{lstlisting}
+
+
+\begin{lstlisting}
+(*@\HLJLcs{{\#}}@*) (*@\HLJLcs{Let{\textquotesingle}s}@*) (*@\HLJLcs{analyze}@*) (*@\HLJLcs{the}@*) (*@\HLJLcs{numerical}@*) (*@\HLJLcs{solution}@*) (*@\HLJLcs{a}@*) (*@\HLJLcs{bit...}@*)
+(*@\HLJLn{dt}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{diff}@*)(*@\HLJLp{(}@*)(*@\HLJLn{soln}@*)(*@\HLJLoB{.}@*)(*@\HLJLn{t}@*)(*@\HLJLp{)}@*)
+(*@\HLJLn{plt1}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{plot}@*)(*@\HLJLp{(}@*)(*@\HLJLn{soln}@*)(*@\HLJLoB{.}@*)(*@\HLJLn{t}@*)(*@\HLJLp{[}@*)(*@\HLJLni{2}@*)(*@\HLJLoB{:}@*)(*@\HLJLk{end}@*)(*@\HLJLp{],}@*) (*@\HLJLn{dt}@*)(*@\HLJLp{,}@*) (*@\HLJLn{yscale}@*) (*@\HLJLoB{=}@*) (*@\HLJLsc{:log10}@*)(*@\HLJLp{,}@*) (*@\HLJLn{size}@*) (*@\HLJLoB{=}@*) (*@\HLJLp{(}@*)(*@\HLJLni{500}@*)(*@\HLJLp{,}@*) (*@\HLJLni{300}@*)(*@\HLJLp{),}@*) (*@\HLJLn{lw}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{3}@*)(*@\HLJLp{,}@*) (*@\HLJLn{label}@*) (*@\HLJLoB{=}@*) (*@\HLJLs{"{}\ensuremath{\Delta}t"{}}@*)(*@\HLJLp{,}@*) 
+     (*@\HLJLn{legend}@*) (*@\HLJLoB{=}@*) (*@\HLJLsc{:outertopright}@*)(*@\HLJLp{,}@*) (*@\HLJLn{title}@*) (*@\HLJLoB{=}@*) (*@\HLJLs{"{}{\#}}@*) (*@\HLJLs{steps}@*) (*@\HLJLs{=}@*) (*@\HLJLsi{{\$}}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{length}@*)(*@\HLJLp{(}@*)(*@\HLJLn{soln}@*)(*@\HLJLoB{.}@*)(*@\HLJLn{t}@*)(*@\HLJLp{))}@*)(*@\HLJLs{"{}}@*)(*@\HLJLp{)}@*)
+\end{lstlisting}
+
+\includegraphics[width=\linewidth]{/figures/Chapter5_29_1.pdf}
+
+\begin{lstlisting}
+(*@\HLJLcs{{\#}}@*) (*@\HLJLcs{Let{\textquotesingle}s}@*) (*@\HLJLcs{analyze}@*) (*@\HLJLcs{the}@*) (*@\HLJLcs{numerical}@*) (*@\HLJLcs{solution}@*) (*@\HLJLcs{a}@*) (*@\HLJLcs{bit...}@*)
+(*@\HLJLn{dt}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{diff}@*)(*@\HLJLp{(}@*)(*@\HLJLn{soln}@*)(*@\HLJLoB{.}@*)(*@\HLJLn{t}@*)(*@\HLJLp{)}@*)
+(*@\HLJLn{plt1}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{scatter}@*)(*@\HLJLp{(}@*)(*@\HLJLn{soln}@*)(*@\HLJLoB{.}@*)(*@\HLJLn{t}@*)(*@\HLJLp{[}@*)(*@\HLJLni{2}@*)(*@\HLJLoB{:}@*)(*@\HLJLk{end}@*)(*@\HLJLp{],}@*) (*@\HLJLn{dt}@*)(*@\HLJLp{,}@*) (*@\HLJLn{yscale}@*) (*@\HLJLoB{=}@*) (*@\HLJLsc{:log10}@*)(*@\HLJLp{,}@*) (*@\HLJLn{size}@*) (*@\HLJLoB{=}@*) (*@\HLJLp{(}@*)(*@\HLJLni{500}@*)(*@\HLJLp{,}@*) (*@\HLJLni{300}@*)(*@\HLJLp{),}@*)  (*@\HLJLn{label}@*) (*@\HLJLoB{=}@*) (*@\HLJLs{"{}\ensuremath{\Delta}t"{}}@*)(*@\HLJLp{,}@*) 
+     (*@\HLJLn{legend}@*) (*@\HLJLoB{=}@*) (*@\HLJLsc{:outertopright}@*)(*@\HLJLp{,}@*) (*@\HLJLn{title}@*) (*@\HLJLoB{=}@*) (*@\HLJLs{"{}{\#}}@*) (*@\HLJLs{steps}@*) (*@\HLJLs{=}@*) (*@\HLJLsi{{\$}}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{length}@*)(*@\HLJLp{(}@*)(*@\HLJLn{soln}@*)(*@\HLJLoB{.}@*)(*@\HLJLn{t}@*)(*@\HLJLp{))}@*)(*@\HLJLs{"{}}@*)(*@\HLJLp{)}@*)
+\end{lstlisting}
+
+\includegraphics[width=\linewidth]{/figures/Chapter5_30_1.pdf}
+
+\begin{lstlisting}
+(*@\HLJLn{soln}@*) (*@\HLJLoB{=}@*)  (*@\HLJLnf{solve}@*)(*@\HLJLp{(}@*)(*@\HLJLn{prob}@*)(*@\HLJLp{,}@*) (*@\HLJLnf{Rodas4}@*)(*@\HLJLp{(),}@*)(*@\HLJLn{abstol}@*)(*@\HLJLoB{=}@*)(*@\HLJLnfB{1e-4}@*)(*@\HLJLp{);}@*)
+\end{lstlisting}
+
+
+\begin{lstlisting}
+(*@\HLJLk{using}@*) (*@\HLJLn{SparseArrays}@*)
+(*@\HLJLn{t}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{1}@*)
+(*@\HLJLnf{Vector}@*)(*@\HLJLp{([}@*)(*@\HLJLnf{\ensuremath{\phi}0}@*)(*@\HLJLp{(}@*)(*@\HLJLn{t}@*)(*@\HLJLp{);}@*)(*@\HLJLnf{spzeros}@*)(*@\HLJLp{(}@*)(*@\HLJLn{nx}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{2}@*)(*@\HLJLp{);}@*)(*@\HLJLnf{\ensuremath{\phi}1}@*)(*@\HLJLp{(}@*)(*@\HLJLn{t}@*)(*@\HLJLp{)])}@*)
+\end{lstlisting}
+
+\begin{lstlisting}
+50-element Vector(*@{{\{}}@*)Float64(*@{{\}}}@*):
+ 0.0
+ 0.0
+ 0.0
+ 0.0
+ 0.0
+ 0.0
+ 0.0
+ 0.0
+ 0.0
+ 0.0
+ (*@\ensuremath{\vdots}@*)
+ 0.0
+ 0.0
+ 0.0
+ 0.0
+ 0.0
+ 0.0
+ 0.0
+ 0.0
+ 0.0848049724711138
+\end{lstlisting}
+
+
+\begin{lstlisting}
+
+\end{lstlisting}
+
+
+At the end, revisit the numerical experiments we performed in Chapter 2 \& 3
+
 We can recover the explicit and implicit Euler methods from the semidiscrete formulation
 
 \textbf{Remark} For the example above, the matrix $A$ satisfy the conditions of the above theorem with $\eta = 0$.
@@ -1461,7 +1687,7 @@ diagonalise the ODE system
 (*@\HLJLnf{plot}@*)(*@\HLJLp{(}@*)(*@\HLJLn{X}@*)(*@\HLJLp{,}@*) (*@\HLJLn{U0}@*)(*@\HLJLp{,}@*) (*@\HLJLn{size}@*) (*@\HLJLoB{=}@*) (*@\HLJLp{(}@*)(*@\HLJLni{400}@*)(*@\HLJLp{,}@*) (*@\HLJLni{150}@*)(*@\HLJLp{))}@*)
 \end{lstlisting}
 
-\includegraphics[width=\linewidth]{/figures/Chapter5_21_1.pdf}
+\includegraphics[width=\linewidth]{/figures/Chapter5_34_1.pdf}
 
 \begin{lstlisting}
 (*@\HLJLk{using}@*) (*@\HLJLn{OrdinaryDiffEq}@*)(*@\HLJLp{,}@*) (*@\HLJLn{Printf}@*)
@@ -1480,7 +1706,7 @@ diagonalise the ODE system
 \end{lstlisting}
 
 \begin{lstlisting}
-Plots.AnimatedGif((*@{"{}}@*)C:(*@{{\textbackslash}}@*)(*@{{\textbackslash}}@*)Users(*@{{\textbackslash}}@*)(*@{{\textbackslash}}@*)mfaso(*@{{\textbackslash}}@*)(*@{{\textbackslash}}@*)AppData(*@{{\textbackslash}}@*)(*@{{\textbackslash}}@*)Local(*@{{\textbackslash}}@*)(*@{{\textbackslash}}@*)Temp(*@{{\textbackslash}}@*)(*@{{\textbackslash}}@*)jl(*@{{\_}}@*)bU3Iviy4ZR.gi
+Plots.AnimatedGif((*@{"{}}@*)C:(*@{{\textbackslash}}@*)(*@{{\textbackslash}}@*)Users(*@{{\textbackslash}}@*)(*@{{\textbackslash}}@*)mfaso(*@{{\textbackslash}}@*)(*@{{\textbackslash}}@*)AppData(*@{{\textbackslash}}@*)(*@{{\textbackslash}}@*)Local(*@{{\textbackslash}}@*)(*@{{\textbackslash}}@*)Temp(*@{{\textbackslash}}@*)(*@{{\textbackslash}}@*)jl(*@{{\_}}@*)uFFiR2kK1a.gi
 f(*@{"{}}@*))
 \end{lstlisting}
 
@@ -1670,7 +1896,7 @@ A^n =  Q\Lambda^{-n}Q^{\top}
 
 \begin{lstlisting}
 Error: DimensionMismatch((*@{"{}}@*)arrays could not be broadcast to a common size; g
-ot a dimension with lengths 11 and 8(*@{"{}}@*))
+ot a dimension with lengths 52 and 8(*@{"{}}@*))
 \end{lstlisting}
 
 
@@ -1681,7 +1907,8 @@ ot a dimension with lengths 11 and 8(*@{"{}}@*))
 \end{lstlisting}
 
 \begin{lstlisting}
-0.000042 seconds (76 allocations: 8.969 KiB)
+0.171328 seconds (330.89 k allocations: 17.291 MiB, 99.96(*@{{\%}}@*) compilation ti
+me)
 16
 \end{lstlisting}
 

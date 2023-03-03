@@ -125,7 +125,7 @@ $$
 $$
 
 ```julia
-using LinearAlgebra, Plots
+using LinearAlgebra, Plots, SparseArrays, OrdinaryDiffEq, Printf
 ```
 
 ```julia
@@ -182,6 +182,13 @@ surface(x,t[1:inc:end],u[1:inc:end,:],seriescolor=:redsblues, camera=(30,40))
 ```
 
 ```julia
+@gif for i = 2:50:nt+1 
+    plot(x, u[1,:], size = (500, 150), label = "u0")
+    plot!(x, u[i,:], label = "t = " * (@sprintf("%.2f", t[i])), legend = :outertopright)
+end
+```
+
+```julia
 xx = x' .* ones(nt+1)
 tt = ones(nx+2)' .* t
 ue = (x,t) -> exp(-π^2*t/4)*sin(π*x/2) + 0.5*exp(-4*π^2*t)*sin(2π*x)
@@ -214,6 +221,14 @@ u,x,t = Euler(f,ϕ0,ϕ1,nx,μ,T);
 surface(x,t[1:30:end],u[1:30:end,:],seriescolor=:redsblues, camera=(30,40))
 ```
 
+```julia
+nt = length(t)-1
+@gif for i = 2:4:nt÷2 
+    plot(x, u[1,:], size = (500, 150), label = "u0")
+    plot!(x, u[i,:], label = "t = " * (@sprintf("%.2f", t[i])), legend = :outertopright)
+end
+```
+
 Based on these experiments, we conjecture that Euler's method converges if $\mu \leq \frac{1}{2}$.
 
 The initial condition is "smoothed out" by the diffusion equation.  Here is another example:
@@ -230,6 +245,14 @@ u,x,t = Euler(f,ϕ0,ϕ1,nx,μ,T);
 
 ```julia
 surface(x,t[1:30:end],u[1:30:end,:],seriescolor=:redsblues, camera=(30,40))
+```
+
+```julia
+nt = length(t)-1
+@gif for i = 2:nt 
+    plot(x, u[1,:], size = (500, 150), label = "u0")
+    plot!(x, u[i,:], label = "t = " * (@sprintf("%.2f", t[i])), legend = :outertopright)
+end
 ```
 
 ### Convergence of Euler's method
@@ -991,6 +1014,12 @@ $$
 $$
 and therefore we have proved that the method is stable.
 
+In the above example, we have proven the stability of a method by finding an upper bound on the spectral radius of $A$, which implied an upper bound on the norm of ${\rm e}^{tA}$.  This method of proving stability can be generalised to all semi-discrete methods with a normal matrix $A$ because normal matrices are *unitarily diagonalisable*, meaning that if $A \in \mathbb{C}^{n_x \times n_x}$ is a normal matrix then,
+$$
+A = U \Lambda U^*
+$$
+where, $U, \Lambda \in \mathbb{C}^{n_x \times n_x}$, $\Lambda$ is a diagonal matrix containing the eigenvalues of $A$ and $U$ is unitary, i.e., $UU^* = I$.
+
 **Theorem (stability of semidiscrete methods for the diffusion equation with normal matrices)** The semi-discrete method for the diffusion equation given by  
 $$
 \mathbf{v}'(t) = A\mathbf{v}(t) + \mathbf{h}(t), \qquad \mathbf{v}(0) = \mathbf{f}, 
@@ -1000,7 +1029,124 @@ $$
 \text{Re } \lambda \leq \eta \quad \text{for every} \quad \lambda \in \sigma(A).
 $$
 
+**Proof**  See *A First Course in the Numerical Analysis of Differential Equations* by A. Iserles, p. 370.
 
+**Remark** In the example above, the conditions of this theorem hold for $\eta = 0$.
+
+In the example above, we showed that $A$ had the factorisation
+$$
+A = Q\Lambda Q^{\top}.
+$$
+This can be used to 'diagonalise' the ODE system
+$$
+\mathbf{v}' = A\mathbf{v} + \mathbf{h}(t),
+$$
+because if we set $\mathbf{w} = Q^{\top}\mathbf{v}$ and $\mathbf{b}(t) = Q^{\top}\mathbf{h}(t)$, then
+$$
+\mathbf{w}' = \Lambda \mathbf{w} + \mathbf{b}(t), 
+$$
+i.e., if we let $w_j(t)$, $b_j(t)$ be the entries of $\mathbf{w}$ and $\mathbf{b}(t)$ for $j = 1, \ldots, n_x$, then
+$$
+w_j' = \lambda_j w_j + b_j(t), \qquad j = 1, \ldots, n_x.
+$$
+Hence, the coupled system of ODEs is reduced to $n_x$ decoupled scalar ODEs which we know how to solve exactly:
+$$
+w_j(t) = {\rm e}^{t\lambda_j}w_j(0) + \int_0^t {\rm e}^{(t - \tau)\lambda_j}b_j(\tau)\,{\rm d}\tau.
+$$
+
+### Time discretisation of semi-discrete methods
+
+In general, we won't know the exact solution of the semi-discretised system of equations, so we approximate the solution by discretising time.  For example, consider consider again the semi-discretised method 
+$$
+v'_j(t) = \frac{1}{h^2}\left(v_{j+1} - 2v_j + v_{j-1}   \right).
+$$
+If we approximate the derivative with a (first-order) forward difference by letting $v_j(t_i) \approx u^i_j$, $t_i = i\tau$, $\tau = t/n_t$ and 
+$$
+v'_j(t_i) \approx \frac{v_j(t_{i+1}) - v_j(t_i)}{\tau} \approx \frac{u^{i+1}_j - u^i_j}{\tau}, \qquad i = 0, \ldots, n_t,
+$$
+then we obtain the fully discretised method
+$$
+u^{i+1}_j = u^i_j + \mu\left(u^i_{j+1} - 2u^i_j + u^i_{j-1}   \right), \qquad \mu = \frac{\tau}{h^2},
+$$
+which is just the (explicit) Euler method.   Similarly, if we approximate the time derivative with a first order backward difference, then we obtain the backward, or implicit Euler method. 
+
+Alternatively, we can solve the semidiscretised system (the system of ODEs) using a 'black box' ODE integrator / solver.
+
+
+
+```julia
+nx = 50
+h = 1/(nx+1)
+f = x -> sin(π*x/2) + 0.5*sin(2π*x)
+ϕ1 = t -> exp(-π^2*t/4)
+ϕ0 = t -> 0
+T = 1
+A = SymTridiagonal(fill(-2,nx),fill(1,nx-1))/h^2
+F = (v,p,t) -> A*v + [ϕ0(t);zeros(nx-2);ϕ1(t)]/h^2
+x = range(0,1,nx + 2)
+prob = ODEProblem(F, f.(x[2:end-1]), (0.0, T));
+soln =  solve(prob, RK4(),abstol=1e-4);
+tv = soln.t
+nt = length(tv)
+```
+
+```julia
+errs = zeros(nt-1)
+for i = 2:nt
+    errs[i-1] = norm(ue.(x[2:nx+1],tv[i]) - soln.u[i],Inf)
+end
+norm(errs,Inf)
+```
+
+```julia
+# Let's analyze the numerical solution a bit...
+dt = diff(soln.t)
+plt1 = plot(soln.t[2:end], dt, yscale = :log10, size = (500, 300), lw = 3, label = "Δt", 
+     legend = :outertopright, title = "# steps = $(length(soln.t))")
+```
+
+```julia
+soln =  solve(prob, Rodas4(),abstol=1e-4);
+tv = soln.t
+nt = length(tv)
+```
+
+```julia
+errs = zeros(nt-1)
+for i = 2:nt
+    errs[i-1] = norm(ue.(x[2:nx+1],tv[i]) - soln.u[i],Inf)
+end
+norm(errs,Inf)
+```
+
+```julia
+# Let's analyze the numerical solution a bit...
+dt = diff(soln.t)
+plt1 = plot(soln.t[2:end], dt, yscale = :log10, size = (500, 300), lw = 3, label = "Δt", 
+     legend = :outertopright, title = "# steps = $(length(soln.t))")
+```
+
+```julia
+# Let's analyze the numerical solution a bit...
+dt = diff(soln.t)
+plt1 = scatter(soln.t[2:end], dt, yscale = :log10, size = (500, 300),  label = "Δt", 
+     legend = :outertopright, title = "# steps = $(length(soln.t))")
+```
+
+```julia
+soln =  solve(prob, Rodas4(),abstol=1e-4);
+```
+
+```julia
+using SparseArrays
+t = 1
+Vector([ϕ0(t);spzeros(nx-2);ϕ1(t)])
+```
+
+```julia
+```
+
+At the end, revisit the numerical experiments we performed in Chapter 2 & 3
 
 We can recover the explicit and implicit Euler methods from the semidiscrete formulation
 
