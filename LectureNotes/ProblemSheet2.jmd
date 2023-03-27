@@ -1,0 +1,54 @@
+
+# Problem sheet 2
+
+Consider the following finite difference method for the diffusion equation
+$$
+-\frac{1}{2}\mu u^{i+1}_{j-1} + (1 + \mu)u^{i+1}_j -\frac{1}{2}\mu u^{i+1}_{j+1} = 
+\frac{1}{2}\mu u^{i}_{j-1} + (1 - \mu)u^{i}_j +\frac{1}{2}\mu u^{i}_{j+1} 
+$$
+where $\mu = \tau/h^2$.
+
+1. **[5 marks]** Show that the method has a second-order local truncation error. That is, let $\tilde{u}^i_j = u(x_j,t_i)$, where $x_j = jh$, $t_i = i\tau$, show that the method can be expressed as
+$$
+\frac{u^{i+1}_j - u^i_j}{\tau} = \frac{1}{2}\left( \frac{u^{i+1}_{j+1} - 2u^{i+1}_{j} + u^{i+1}_{j-1}}{h^2} + \frac{u^{i}_{j+1} - 2u^{i}_{j} + u^{i}_{j-1}}{h^2}   \right)
+$$
+   and then show that for $\tau, h \to 0$ (assuming all the relevant partial derivatives are bounded),
+$$
+\begin{eqnarray*}
+&& \frac{\tilde{u}^{i+1}_j - \tilde{u}^i_j}{\tau} - \frac{1}{2}\left( \frac{\tilde{u}^{i+1}_{j+1} - 2\tilde{u}^{i+1}_{j} + \tilde{u}^{i+1}_{j-1}}{h^2} + \frac{\tilde{u}^{i}_{j+1} - 2\tilde{u}^{i}_{j} + \tilde{u}^{i}_{j-1}}{h^2}   \right) = \mathcal{O}(\tau^2) + \mathcal{O}(h^2).
+\end{eqnarray*}
+$$
+   Hint: use Taylor's theorem to expand the exact solution about $(x,t) = (x_j,t_{i+1/2})$, where $t_{i+1/2} = (i + 1/2)\tau = t_i + \tau/2$.
+
+2. **[5 marks]** Use the Von Neumann method to show that the method is unconditionally stable.
+
+3. **[5 marks]** Suppose the finite difference method is used to approximate the solution to the diffusion equation $u_t = u_{xx}$ for $(x, t) \in (0,1) \times (0,T)$ subject to $u(0,t) = \varphi_0(t)$, $u(1,t) = \varphi_1(t)$ for $t \in [0, T]$ and $u(x,0) = f(x)$ for $x \in [0, 1]$.  Let $u(x_j,t_i) \approx u^i_j$, where $x_j = jh$, $h = 1/(n_x + 1)$, $j = 0, \ldots, n_x+1$, $t_i = i\tau$, $\tau = \mu h^2$ and set
+$$
+\mathbf{u}^i = \begin{bmatrix}
+u^{i}_{1} \\
+\vdots \\
+u^{i}_{n_x}
+\end{bmatrix} \in \mathbb{R}^{n_x}.
+$$
+   The finite difference method can be expressed as
+$$
+L\mathbf{u}^{i+1} = R\mathbf{u}^{i} + \mathbf{k}^{i},
+$$
+   where $L, R \in \mathbb{R}^{n_x \times n_x}$ and $\mathbf{k}^{i} \in \mathbb{R}^{n_x}$.  Give the matrices $L$ and $R$ and the vector $\mathbf{k}^{i}$.
+
+4.  **[5 marks]** What are the eigenvalues of the matrix $A := L^{-1}R$? Find a bound on the spectral radius of $A$. 
+    Hint: consider the eigendecomposition (spectral factorisation) of $L$ and $R$.
+
+5. **[10 marks]** Let 
+$$
+u(x,0) = f(x) = \sin \frac{1}{2}\pi x + \frac{1}{2}\sin 2\pi x, \qquad 0 \leq x \leq 1, 
+$$
+   and
+$$
+u(0,t) = \varphi_0(t) = 0, \qquad  u(1,t) = \varphi_1(t) = {\rm e}^{-\pi^2 t/4}, \qquad t \geq 0,
+$$
+   then the exact solution to the diffusion equation is
+$$
+u(x,t) = {\rm e}^{-\pi^2 t/4}\sin \frac{1}{2}\pi x + \frac{1}{2}{\rm e}^{-4\pi^2 t}\sin 2\pi x, \qquad 0 \leq x \leq 1, \qquad t \geq 0.
+$$
+   Using the method in question 3 and the backward Euler method, approximate the exact solution for $T = 1$, $\mu = n_x$ and plot the maximum error of the two methods for $n_x = 2^k$, $k = 4, 5, \ldots, 12$.  Comment on your results.

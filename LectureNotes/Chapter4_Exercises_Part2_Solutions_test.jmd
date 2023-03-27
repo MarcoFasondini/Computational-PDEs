@@ -1,0 +1,239 @@
+
+Consider the Laguerre polynomials
+$$
+L_n^{(\alpha)}(x) = {(-1)^n \over n! } x^n + O(x^{n-1})
+$$
+   where $\alpha > -1$, which are orthogonal with respect to
+$$
+\langle f,g\rangle_\alpha = \int_0^\infty f(x) g(x) x^\alpha {\rm e}^{-x}\,{\rm d}x.
+$$
+
+1. Show that the Rodrigues formula holds:
+$$
+L_n^{(\alpha)}(x) = {x^{-\alpha} {\rm e}^x \over n!} {{\rm d}^n \over \,{\rm d}x^n}\left[x^{\alpha+n}{\rm e}^{-x}\right].
+$$
+   In other words, prove that $L_n^{(\alpha)}(x)$ (defined by the Rodrigues formula) is
+   
+   (i) a polynomial of degree exactly $n$
+   
+   (ii) orthogonal to all lower degree polynomials 
+   
+   (iii) has leading coefficient $\frac{(-1)^n}{n!}$
+   
+   Hints: For (i) and (iii), it may be helpful first to prove that
+$$
+{{\rm d} \over \,{\rm d}x}\left[x^{\alpha+1} {\rm e}^{-x} L_n^{(\alpha+1)}(x) \right]  = (n+1)x^{\alpha} {\rm e}^{-x}L_{n+1}^{(\alpha)}(x)
+$$
+   For (ii), use integration by parts.
+
+
+Following the hint, we have that
+$$
+\begin{eqnarray*}
+{{\rm d} \over \,{\rm d}x}\left[x^{\alpha+1} {\rm e}^{-x} L_n^{(\alpha+1)}(x) \right]  &=& {{\rm d} \over \,{\rm d}x}\left[ {1 \over n!} {{\rm d}^n \over \,{\rm d}x^n}\left[x^{\alpha+1+n}{\rm e}^{-x}\right] \right] \\
+&=& (n+1) {1 \over (n+1)!} {{\rm d}^{n+1} \over \,{\rm d}x^{n+1}}\left[x^{\alpha+n+1}{\rm e}^{-x}\right] \\
+&=& (n+1)x^{\alpha} {\rm e}^{-x}L_{n+1}^{(\alpha)}(x),
+\end{eqnarray*}
+$$
+hence, differentiating, we find that
+$$
+\left[(\alpha + 1) - x   \right]x^{\alpha} {\rm e}^{-x} L_n^{(\alpha+1)}(x) + x^{\alpha+1} {\rm e}^{-x} \left(L_n^{(\alpha+1)}\right)'(x) = (n+1)x^{\alpha} {\rm e}^{-x}L_{n+1}^{(\alpha)}(x)
+$$
+or 
+$$
+(\alpha+1 -x)L_n^{(\alpha+1)}(x) + x(L_n^{(\alpha+1)})'(x) = (n+1) L_{n+1}^{(\alpha)}(x).
+$$
+By induction with the fact $L_0^{(\alpha)}(x) = 1$, we therefore get that
+$$
+L_n^{(\alpha)}(x) = {(\alpha+1 -x)L_{n-1}^{(\alpha+1)}(x) + x(L_{n-1}^{(\alpha+1)})'(x) \over n}
+$$
+is a degree $n$ polynomial, which proves (i). 
+
+To prove (iii), we note that the leading coefficient (coefficient of the highest degree term) is
+$$
+\begin{align*}
+L_n^{(\alpha)}(x) &= -{x \over n} L_{n-1}^{(\alpha+1)}(x) +O(x^{n-1}) =   {x^2 \over n(n-1)} L_{n-2}^{(\alpha+2)}(x) +O(x^{n-1}) = \cdots 
+= {(-1)^n x^n \over n!} L_0^{(\alpha+n)}(x) +O(x^{n-1}) \\
+&= {(-1)^n x^n \over n!} +O(x^{n-1})
+\end{align*}
+$$
+
+We now prove (ii) using integration by parts: let $p_m(x)$ denote a polynomial of degree $m <n$, then integrating by parts $n$ times,
+$$
+\begin{eqnarray*}
+\langle  L_n^{(\alpha)}, p_m \rangle_{\alpha} &=& \int_0^\infty L_n^{(\alpha)}(x) p_m(x) x^\alpha {\rm e}^{-x} {\rm d} x \\
+&=&
+\int_0^\infty  {1 \over n!} {{\rm d}^n \over {\rm d} x^n}\left[x^{\alpha+n}{\rm e}^{-x}\right]  p_m(x)  {\rm d} x \\
+&=&
+-\int_0^\infty  {1 \over n!} {{\rm d}^{n-1} \over {\rm d} x^{n-1}}\left[x^{\alpha+n}{\rm e}^{-x}\right]  p_m'(x)  {\rm d} x \\
+&\vdots & \\
+&=& (-1)^n \int_0^\infty  {1 \over n!} \left[x^{\alpha+n}{\rm e}^{-x}\right]  p_m^{(n)}(x)  {\rm d} x = 0
+\end{eqnarray*}
+$$
+since $p_m^{(n)}(x) = 0$.
+Note we used the fact that
+$$
+{{\rm d}^k \over {\rm d} x^k}\left[x^{\alpha+n}{\rm e}^{-x}\right]
+$$
+vanishes at $x = 0$ and as $x \to \infty$ to ignore the boundary terms in integration by parts.
+
+
+2. Show that
+$$
+(n+1) L_{n+1}^{(\alpha)}(x) = (\alpha+n+1)L_n^{(\alpha)}(x) -   xL_n^{(\alpha+1)}(x)
+$$
+
+Applying the product rule once, we find that
+$$
+\begin{align*}
+(n+1) L_{n+1}^{(\alpha)}(x) &= {x^{-\alpha}{\rm e}^x \over n!} {{\rm d}^{n} \over {\rm d} x^{n}} {{\rm d} \over {\rm d} x} \left[x^{\alpha+n+1} {\rm e}^{-x}\right] \\
+  &= {x^{-\alpha}{\rm e}^x \over n!} {{\rm d}^{n} \over {\rm d} x^{n}}  \left[(\alpha+n+1)x^{\alpha+n} {\rm e}^{-x}-x^{\alpha+n+1} {\rm e}^{-x}\right]  \\
+    &= (\alpha+n+1)L_n^{(\alpha)}(x) -   xL_n^{(\alpha+1)}(x)
+\end{align*}
+$$
+
+3. Show that 
+$$
+L_{n}^{(\alpha+1)}(x) = L_{n-1}^{(\alpha+1)}(x) + L_n^{(\alpha)}(x).
+$$
+
+Applying the product rule $n$ times, we find that
+$$
+\begin{align*}
+L_{n}^{(\alpha+1)}(x) &= {x^{-1-\alpha}{\rm e}^x \over n!} {{\rm d}^{n-1} \over {\rm d} x^{n-1}} {{\rm d} \over {\rm d} x} \left[x x^{\alpha+n} {\rm e}^{-x}\right] \\
+&= {x^{-1-\alpha}{\rm e}^x \over n!} {{\rm d}^{n-1} \over {\rm d} x^{n-1}} \left[ x^{\alpha+n} {\rm e}^{-x}\right]  + {x^{-1-\alpha}{\rm e}^x \over n!} {{\rm d}^{n-1} \over {\rm d} x^{n-1}} x {{\rm d} \over {\rm d} x} \left[ x^{\alpha+n} {\rm e}^{-x}\right]  \\
+&= {2 \over n}L_{n-1}^{(\alpha+1)}(x)   + {x^{-1-\alpha}{\rm e}^x \over n!} {{\rm d}^{n-2} \over {\rm d} x^{n-2}} x {{\rm d}^2 \over {\rm d} x^2} \left[ x^{\alpha+n} {\rm e}^{-x}\right]  \\
+&= {3 \over n}L_{n-1}^{(\alpha+1)}(x)   + {x^{-1-\alpha}{\rm e}^x \over n!} {{\rm d}^{n-3} \over {\rm d} x^{n-3}} x {{\rm d}^3 \over {\rm d} x^3} \left[ x^{\alpha+n} {\rm e}^{-x}\right]  \\
+&\vdots\\
+&={n \over n}L_{n-1}^{(\alpha+1)}(x)   + {x^{-\alpha}{\rm e}^x \over n!} {{\rm d}^{n} \over {\rm d} x^{n}}  \left[ x^{\alpha+n} {\rm e}^{-x}\right] \\
+&=L_{n-1}^{(\alpha+1)}(x) + L_n^{(\alpha)}(x)
+\end{align*}
+$$
+
+4. Show that the Laguerre polynomials satisfy the following three-term recurrence:
+$$
+x L_n^{(\alpha)}(x) = - (n+\alpha)L_{n-1}^{(\alpha)}(x) + (2n+\alpha+1) L_n^{(\alpha)}(x) -(n+1)L_{n+1}^{(\alpha)}(x)
+$$
+Using the results in questions 2 and 3, we have that
+$$
+\begin{align*}
+x L_n^{(\alpha)}(x) &= -(n+1)L_{n+1}^{(\alpha-1)}(x) +(n+\alpha)L_n^{(\alpha-1)}(x) \\
+  &= -(n+1)L_{n+1}^{(\alpha)}(x) + (n+1)L_{n}^{(\alpha)}(x) +(n+\alpha)L_{n}^{(\alpha)}(x) - (n+\alpha)L_{n-1}^{(\alpha)}(x) \\
+  &= - (n+\alpha)L_{n-1}^{(\alpha)}(x) + (2n+\alpha+1) L_n^{(\alpha)}(x) -(n+1)L_{n+1}^{(\alpha)}(x)
+\end{align*}
+$$
+
+
+5. Prove that 
+$$
+{{\rm d} L_n^{(\alpha)} \over \,{\rm d}x}  = -L_{n-1}^{(\alpha+1)}(x)
+$$
+
+First we show that ${{\rm d} L_n^{(\alpha)} \over \,{\rm d}x}$ is orthogonal wrt $\langle \cdot, \cdot \rangle_{\alpha + 1}$ to polynomials of degree $\leq n-2$ using integration by parts: let $p_m(x)$ be a polynomial of degree $m \leq n-2$, then
+$$
+\begin{eqnarray*}
+\langle \left(L_n^{(\alpha)}\right)', p_m  \rangle_{\alpha+1}  &=&\int_0^\infty {{\rm d} L_n^{(\alpha)}(x) \over {\rm d} x} p_m(x) x^{\alpha+1} {\rm e}^{-x} {\rm d} x  \\
+&=& -\int_0^\infty L_n^{(\alpha)}(x) (x p_m'(x) + (\alpha+1) p_m(x) - x p_m(x)) x^{\alpha} {\rm e}^{-x} {\rm d} x  \\
+&=& \langle L_n^{(\alpha)}, x p_m + (\alpha+1) p_m - x p_m \rangle_{\alpha} \\
+&=& 0 
+\end{eqnarray*}
+$$
+since $(x p_m' + (\alpha+1) p_m - x p_m) $ has degree $m+1 < n$.  We conclude that ${{\rm d} L_n^{(\alpha)} \over \,{\rm d}x} = C L^{(\alpha+1)}_{n-1}$, for some constant $C$ which we can determine by matching leading terms: we have that
+$$
+{{\rm d} L_n^{(\alpha)} \over \,{\rm d}x} = \frac{(-1)^n}{(n-1)!}x^{n-1} + \mathcal{O}(x^{n-2}) = CL^{(\alpha+1)}_{n-1} = C \frac{(-1)^{n-1}}{(n-1)!}x^{n-1} + \mathcal{O}(x^{n-2}),
+$$
+which implies that $C = -1$.
+
+6. Let 
+$$
+L^{(\alpha)}(x) = \left[L_0^{(\alpha)}(x) |  L_1^{(\alpha)}(x) | \cdots  \right].
+$$
+   Give matrices $D_{\alpha}$ and $S_{\alpha}$ such that
+$$
+\frac{{\rm d}}{{\rm d}x}L^{(\alpha)}(x) = L^{(\alpha+1)}(x)\mathcal{D}_{\alpha} \quad \text{and} \quad L^{(\alpha)}(x) = L^{(\alpha+1)}(x)S_{\alpha}
+$$
+
+It follows from the formulas in questions 5 and 3 that
+$$
+\mathcal{D}_{\alpha} = \begin{pmatrix}
+0 & -1 \\
+  &&-1 \\
+  &&&\ddots
+\end{pmatrix}
+$$
+and
+$$
+\mathcal{S}_{\alpha} = \begin{pmatrix}
+        1 & -1 \\ & 1 & -1 \\&&\ddots & \ddots
+\end{pmatrix}
+$$
+
+7. Consider the advection equation on the half line:
+$$
+u_t + u_x = 0, \qquad x \in [0, \infty), \qquad t \geq 0.
+$$
+   Suppose the solution has an expansion of the form
+   $$
+u(x,t) =  {\rm e}^{-x/2}\sum_{k=0}^{\infty}u_k(t) L_k^{(0)}(x) = {\rm e}^{-x/2}L^{(0)}(x)\mathbf{u}(t)
+$$
+   where
+$$
+\mathbf{u}(t) = \begin{bmatrix}   
+u_0(t) \\
+u_1(t) \\
+\vdots
+\end{bmatrix}.
+$$
+     Show that 
+$$
+\mathbf{u}'(t) = A\mathbf{u}(t),
+$$
+    where $A$ is a matrix that is expressible in terms of $\mathcal{D}_0$ and $\mathcal{S}_0$ (defined in question 6).   Use software of your choice to build a $10 \times 10$ version of the matrix $A$.
+
+Since
+$$
+\begin{eqnarray*}
+\frac{\partial}{\partial x}u(x,t) &=& -\frac{1}{2}{\rm e}^{-x/2}L^{(0)}(x)\mathbf{u}(t)  + {\rm e}^{-x/2}\frac{{\rm d}}{{\rm d}x}L^{(0)}(x)\mathbf{u}(t) \\
+&=& -\frac{1}{2}{\rm e}^{-x/2}L^{(1)}(x)\mathcal{S}_0\mathbf{u}(t)  + {\rm e}^{-x/2}L^{(1)}(x)\mathcal{D}_0\mathbf{u}(t) \\
+&=& {\rm e}^{-x/2}L^{(1)}(x)\left[-\frac{1}{2}\mathcal{S}_0 + \mathcal{D}_0   \right]\mathbf{u}(t) \\
+\end{eqnarray*}
+$$
+and
+$$
+\begin{eqnarray*}
+\frac{\partial}{\partial t}u(x,t) &=& {\rm e}^{-x/2}L^{(0)}(x)\mathbf{u}'(t)  \\
+&=& {\rm e}^{-x/2}L^{(1)}(x)\mathcal{S}_0\mathbf{u}'(t)
+\end{eqnarray*}
+$$
+the advection equation implies that
+$$
+u_t + u_x =
+{\rm e}^{-x/2}L^{(1)}(x)\left[\mathcal{S}_0\mathbf{u}'(t)+  \left(-\frac{1}{2}\mathcal{S}_0 + \mathcal{D}_0\right)\mathbf{u}(t)  \right] = 0
+$$
+hence
+$$
+\mathcal{S}_0\mathbf{u}'(t) = \left(\frac{1}{2}\mathcal{S}_0 - \mathcal{D}_0\right)\mathbf{u}(t)
+$$
+or
+$$
+\mathbf{u}'(t) = A\mathbf{u}(t)
+$$
+where $A = \frac{1}{2}\mathcal{I} - \mathcal{S}_0^{-1}\mathcal{D}_0$ and $\mathcal{I}$ is an infinite identity matrix.
+
+```julia
+using ApproxFun, LinearAlgebra
+```
+
+```julia
+D0 = Derivative() :  Laguerre(0) → Laguerre(1)
+real(D0)
+```
+
+```julia
+S0 = I : Laguerre(0) → Laguerre(1)
+```
+
+```julia
+n = 10
+A = I/2 - S0[1:n,1:n]\real(D0[1:n,1:n])
+```

@@ -1,16 +1,7 @@
 
 # Chapter 5: Consistency, stability and convergence of methods for evolutionary PDEs
 
-In this chapter we 
-1.    
-2.    
-3.   
-4. 
-5.   
-
-Before we looked at function approximation methods... here we analyse methods for PDEs directly
-
-## Parabolic equations?
+In this chapter we analyse and implement finite difference and spectral methods for the diffusion equation, the (variable coefficient) advection equation and the wave equation.   
 
 ### A finite difference method for the diffusion equation
 
@@ -125,7 +116,7 @@ $$
 $$
 
 ```julia
-using LinearAlgebra, Plots, SparseArrays, OrdinaryDiffEq, Printf
+using LinearAlgebra, Plots, SparseArrays, OrdinaryDiffEq, Printf, SparseArrays, FFTW, ApproxFun
 ```
 
 ```julia
@@ -229,6 +220,8 @@ nt = length(t)-1
 end
 ```
 
+**Note:** The gif animations don't appear in the PDF version of this chapter, however they can be viewed in the html version, which is available on Blackboard.
+
 Based on these experiments, we conjecture that Euler's method converges if $\mu \leq \frac{1}{2}$.
 
 The initial condition is "smoothed out" by the diffusion equation.  Here is another example:
@@ -291,7 +284,7 @@ where
 $$
 \eta^{i} = \max_{j = 0, \ldots, n_x+1}\vert e^i_j \vert.
 $$
-The above inequality holds for $\vert e^{i+1}_j \vert$, with $j = 0, \ldots, n_x+1$ and therefore it also holds for $\vert  \eta^{i+1} \vert$. Since $0 < \mu \leq 1/2$ and $u^0_j = \tilde{u}^0_j$, which implies that $\eta^0$, we have that
+The above inequality holds for $\vert e^{i+1}_j \vert$, with $j = 0, \ldots, n_x+1$ and therefore it also holds for $\vert  \eta^{i+1} \vert$. Since $0 < \mu \leq 1/2$ and $u^0_j = \tilde{u}^0_j$, which implies that $\eta^0=0$, we have that
 $$
 \eta^{i+1} \leq \eta^i  + ch^4 \leq \eta^{i-1} + 2ch^4 \leq \cdots \leq \eta^{0} + (i+1)ch^4 = (i+1)ch^4.
 $$
@@ -383,7 +376,7 @@ then for $t > 0$
 $$
 \|\tilde{u}(x,t) - u(x,t)\|_2^2 =  \frac{1}{2}\sum_{m=1}^{N} \left(\tilde{\alpha}_m - \alpha_m\right)^2 {\rm e}^{2\pi^2 m^2 t} = \frac{\epsilon^2}{N}\sum_{m=1}^{N} {\rm e}^{2\pi^2 m^2 t} \to \infty, \qquad N\to \infty.
 $$
-This shows that for an arbitrarily small perturbation of the initial data ($\|\tilde{u}(x,t) - u(x,t)\|_2 \leq \epsilon$) and for any $t > 0$, the difference between the solutions $u$ and $\tilde{u}$ at time $t$ can be made arbitrarily large by taking $N$ large enough. This shows that reversed-time diffusion equation is ill-posed because the solution does not depend continuously on the initial data.  In physics, the ill-posedness of the reversed-time diffusion equation is related to the impossibility of deducing the thermal history of an object from it present temperature distribution, which is studied in thermodynamics.
+This shows that for an arbitrarily small perturbation of the initial data ($\|\tilde{u}(x,0) - u(x,0)\|_2 \leq \epsilon$) and for any $t > 0$, the difference between the solutions $u$ and $\tilde{u}$ at time $t$ can be made arbitrarily large by taking $N$ large enough. This shows that reversed-time diffusion equation is ill-posed because the solution does not depend continuously on the initial data.  In physics, the ill-posedness of the reversed-time diffusion equation is related to the impossibility of deducing the thermal history of an object from it present temperature distribution, which is studied in thermodynamics.
 
 ### Stability of numerical methods for PDEs
 
@@ -483,8 +476,9 @@ $$
 $$
 If $\mathbf{x}, \mathbf{y} \in \mathbb{C}^{n_x}$, then
 $$
-\langle \mathbf{x}, \mathbf{y}\rangle = \overline{\mathbf{x}}^{\top}\mathbf{y}.
+\langle \mathbf{x}, \mathbf{y}\rangle = \overline{\mathbf{x}}^{\top}\mathbf{y} = \mathbf{x}^*\mathbf{y},
 $$
+i.e., $\mathbf{x}^*$ denotes the conjugate transpose of $\mathbf{x}$.
 This inner product induces the Euclidean or $\ell_2$ norm:
 $$
 \| \mathbf{x} \| = \left(\vert x_1\vert^2 + \cdots + \vert x_{n_x}\vert^2  \right)^{1/2}  = \left(\langle\mathbf{x},\mathbf{x}\rangle\right)^{1/2}.
@@ -533,7 +527,7 @@ The *spectral radius* of a square matrix $A \in \mathbb{C}^{n_x \times n_x}$ is
 $$
 \rho(A) = \max\left\lbrace \vert \lambda \vert : \lambda \in \sigma(A)\right\rbrace
 $$
-A square matrix $A \in \mathbb{C}^{n_x \times n_x}$ is **normal** if $AA^{*} = A^{*}A$.  Recall that $A^*$ is the conjugate transpose of $A$, hence for  $A \in \mathbb{R}^{n_x \times n_x}$, $A^{*} = A^{\top}$ and thus for a real matrix is normal if $AA^{\top} = A^{\top}A$.
+A square matrix $A \in \mathbb{C}^{n_x \times n_x}$ is **normal** if $AA^{*} = A^{*}A$.  Recall that $A^*$ is the conjugate transpose of $A$, hence for  $A \in \mathbb{R}^{n_x \times n_x}$, $A^{*} = A^{\top}$ and thus a real matrix is normal if $AA^{\top} = A^{\top}A$.
 
 If a matrix is normal, then
 $$
@@ -663,7 +657,7 @@ As with the (explicit) Euler method, the local truncation error is second order
 $$
 \frac{\tilde{u}^{i}_j - \tilde{u}^{i-1}_j}{\tau} - \frac{\tilde{u}^{i}_{j+1} - 2\tilde{u}^i_j + \tilde{u}^i_{j-1}}{h^2} =  \mathcal{O}(h^2), \qquad h \to 0,
 $$
-and therefore the method is consistent.  There appears to prefer the implicit Euler method over the explicit Euler method because it has the same order and it is computationally more expensive.   Now, let's consider the stability of the implicit Euler method. 
+and therefore the method is consistent.  There appears to be no reason to prefer the implicit Euler method over the explicit Euler method because it has the same order but it is computationally more expensive.   Now, let's consider the stability of the implicit Euler method. 
 
 ### Von Neumann stability analysis
 
@@ -794,7 +788,7 @@ The temporal derivative is approximated by setting $u_t(x_j,t) \approx v_j'(t)$,
 $$
 v'_j(t) = \frac{1}{h^2}\left(v_{j+1} - 2v_j + v_{j-1}   \right), \qquad j  = 1, \ldots, n_x.
 $$
-That is, we approximate the solution to the diffusion equation by the solution to a linear system of ODEs.   This semi-discretisation approach is also known as the *method of lines* because we are approximating the solution by functions $v_j(t)$ on the lines $(x,t) = (x_j,t)$, $t \geq 0$, $j = 1, \ldots, n_x$.
+That is, we approximate the solution to the diffusion equation (a linear PDE) by the solution to a linear system of ODEs.   This semi-discretisation approach is also known as the *method of lines* because we are approximating the solution by functions $v_j(t)$ on the lines $(x,t) = (x_j,t)$, $t \geq 0$, $j = 1, \ldots, n_x$.
 
 Setting $\tilde{v}_j(t) = u(x_j,t)$ and assuming $\tilde{v}_j(t) = v_j(t)$, it follows that if $u_{xxxx}(x,t)$ is bounded on $(x,t) \in [0,1]\times[0,T]$, then
 $$
@@ -814,7 +808,7 @@ v_j(t) = \lambda(t){\rm e}^{{\rm i}kx_j}
 $$
 ignore boundary conditions and since $\vert v_j \vert = \vert\lambda(t) \vert$, for stability we require that
 $$
-\left\vert \lambda(t)\right \vert \leq c < \infty, \qquad t \in [0, T], \qquad h>0, \qquad k \in \mathbb{Z}.
+\lim_{h \to 0}\left\vert \lambda(t)\right \vert \leq c < \infty, \qquad t \in [0, T], \qquad k \in \mathbb{Z}.
 $$
 
 **Example** For the semi-discrete method above,
@@ -827,11 +821,15 @@ $$
 $$
 and therefore
 $$
-\lambda(t) = {\rm e}^{-4t\sin^2(kh/2)/h^2}\lambda(0) 
+\lambda(t) = {\rm e}^{-4t\sin^2(kh/2)/h^2}\lambda(0). 
 $$
-and the method is stable because for all $h > 0$, $k \in \mathbb{Z}$,
+As $h \to 0$, 
 $$
-\vert \lambda(t) \vert \leq  \vert \lambda(0) \vert < \infty, \qquad   t \in [0, T].
+\frac{4\sin^2(kh/2)}{h^2} = k^2 + \mathcal{O}(h^2).
+$$
+Hence the method is stable because for $k \in \mathbb{Z}$,
+$$
+\lim_{h \to 0} \vert \lambda(t) \vert = {\rm e}^{-k^2t}\vert \lambda(0) \vert \leq  \vert \lambda(0) \vert < \infty, \qquad   t \in [0, T].
 $$
 By the Lax equivalence theorem, we conclude the method is convergent because we have showed that it is consistent and stable.
 
@@ -883,9 +881,7 @@ $$
 v_j(0) = u(x_j,0) = f(x_j), \qquad j = 1, \ldots, n_x.
 $$
 
-The exact solution to the coupled ODE system $
-\mathbf{v}'(t) = A\mathbf{v}(t) + \mathbf{h}(t) 
-$ is
+The exact solution to the coupled ODE system $\mathbf{v}'(t) = A\mathbf{v}(t) + \mathbf{h}(t)$ is
 $$
 \mathbf{v}(t) = {\rm e}^{tA}\mathbf{v}(0) + \int_0^t {\rm e}^{(t - \tau)A}\mathbf{h}(\tau)\,{\rm d}\tau
 $$
@@ -1054,6 +1050,42 @@ $$
 w_j(t) = {\rm e}^{t\lambda_j}w_j(0) + \int_0^t {\rm e}^{(t - \tau)\lambda_j}b_j(\tau)\,{\rm d}\tau.
 $$
 
+Suppose for simplicity that $b_j(t) = 0$ and we approximate the solution to 
+$$
+w_j' = \lambda_j w_j, \qquad j = 1, \ldots, n_x,
+$$
+with Euler's method, i.e., we set
+$$
+w_j(t_i) \approx w_j^i, \qquad t_i = i\tau, \qquad \tau = \frac{T}{n_t}, \qquad i = 0, \ldots, n_t,
+$$
+and approximate the derivative with a forward difference
+$$
+w_j'(t_i) \approx \frac{w^{i+1}_j - w^i_j}{\tau},
+$$
+then Euler's method for the ODE problems is
+$$
+w^{i+1}_j = \left(1 + \tau \lambda_j\right)w_j^i = \left(1 + \tau \lambda_j\right)^2w_j^{i-1} = \cdots = \left(1 + \tau \lambda_j\right)^{i+1}w_j^{0}.
+$$
+We require that the $w^{i}_j$ be bounded as $\tau \to 0$ (or, equivalently, as $n_t \to \infty$), which will occur if and only if
+$$
+\vert 1 + \tau \lambda_j \vert \leq 1.
+$$
+Recall that for $j = 1, \ldots, n_x$
+$$
+\lambda_j = -\frac{4}{h^2}\sin^2\left(\frac{\pi x_j}{2} \right) = -4(n_x+1)^2\sin^2\left(\frac{\pi j}{2(n_x +1)} \right) 
+$$
+i.e., the eigenvalues are real and strictly negative, hence the above condition is equivalent to
+$$
+\tau \leq -\frac{2}{\lambda_j}, \qquad j = 1, \ldots, n_x,
+$$
+that is, we require that
+$$
+\tau  \leq \min_{j = 1, \ldots, n_x}\left\lbrace  -\frac{2}{\lambda_j}  \right\rbrace = \frac{2}{\rho(A)} = \frac{1}{2(n_x+1)^2\sin^2\left(\frac{\pi n_x}{2(n_x +1)} \right)}
+$$
+This shows that the larger the spectral radius, the smaller the step size $\tau$ has to be to ensure that Euler's method is stable.  
+
+This observation generalises to a large class of methods: the step size restriction is determined by the spectral radius of the matrix representing the (linearised) system of ODEs.  It is also generally true that, compared to explicit methods, implicit methods allow for larger step sizes, as we saw earlier in this chapter when we analysed the stability of the (explicit) Euler method and the implicit Euler method.  
+
 ### Time discretisation of semi-discrete methods
 
 In general, we won't know the exact solution of the semi-discretised system of equations, so we approximate the solution by discretising time.  For example, consider consider again the semi-discretised method 
@@ -1126,427 +1158,1333 @@ plt1 = plot(soln.t[2:end], dt, yscale = :log10, size = (500, 300), lw = 3, label
      legend = :outertopright, title = "# steps = $(length(soln.t))")
 ```
 
-```julia
-# Let's analyze the numerical solution a bit...
-dt = diff(soln.t)
-plt1 = scatter(soln.t[2:end], dt, yscale = :log10, size = (500, 300),  label = "Δt", 
-     legend = :outertopright, title = "# steps = $(length(soln.t))")
-```
+## Spectral methods for the diffusion equation
 
-```julia
-soln =  solve(prob, Rodas4(),abstol=1e-4);
-```
+In the previous sections, we used finite differences (studied in Chapter 1) to approximate the solution to the diffusion equation. Here we use the approximation methods we studied in Chapters 2-4 (Fourier methods, Chebyshev methods, orthogonal polynomial methods) to design spectral methods for the diffusion equation.
 
-```julia
-using SparseArrays
-t = 1
-Vector([ϕ0(t);spzeros(nx-2);ϕ1(t)])
-```
+### Fourier spectral method
 
-```julia
-```
-
-At the end, revisit the numerical experiments we performed in Chapter 2 & 3
-
-We can recover the explicit and implicit Euler methods from the semidiscrete formulation
-
-**Remark** For the example above, the matrix $A$ satisfy the conditions of the above theorem with $\eta = 0$.
-
-State the theorem in Iserles's book without proof but say that what we've done above is a sketch of the proof.
-
-**Remark** The above can be generalised easily to all normal matrices, state the fact that normal matrices are unitarily diagonalisable
-
+Let's briefly recall some facts from Chapter 2: the trigonometric interpolant
 $$
-{\rm e}^{tA}\left({\rm e}^{tA}\right)^{T} = Q{\rm e}^{t\Lambda}Q^{\top}
+f(s) \approx p_n(s) = \sum_{k=-m}^{m}\tilde{c}^n_k {\rm e}^{{\rm i}ks}, \qquad n = 2m + 1, 
 $$
-
-diagonalise the ODE system
-
-
-
-```julia
-N = 50; 
-L = Tridiagonal(ones(N-2), -2*ones(N-1), ones(N-2)) * N^2
-X = range(0, 1, length=N+1)
-U0 = X .* (1 .- X) .* exp.(3 * X)
-plot(X, U0, size = (400, 150))
-```
-
-```julia
-using OrdinaryDiffEq, Printf
-Tf = 1.0
-prob = ODEProblem((U, p, t) -> L * U, U0[2:end-1], (0.0, Tf));
-soln = solve(prob, RK4());
-```
-
-```julia
-@gif for t in 0.0:0.01:Tf 
-    U = [[0.0]; soln(t); [0.0]]
-    plot(X, U0, size = (500, 150), label = "u0")
-    plot!(X, U, label = "t = " * (@sprintf("%.2f", t)), legend = :outertopright)
-end
-```
-
-
-
+interpolates $f$ at the following evenly spaced points on the interval $[0, 2\pi)$:
 $$
-u_{xx}(x_j,t) = \frac{u(x_{j+1},t_{i}) - 2u(x_j,t_{i}) + u(x_{j-1},t_{i})}{h^2} = u_{xx}(x_j,t_i) + \mathcal{O}(h^2)
+s_j = j h,\qquad j = 0, \ldots, n-1, \qquad h = \frac{2\pi}{n}
+$$
+and the approximate Fourier coefficients
+$$
+\tilde{c}^n_k   =\frac{1}{n}\sum_{j = 0}^{n-1} f(s_j)\mathrm{e}^{-\mathrm{i}ks_j} 
+$$
+can be computed with the FFT.
+
+Let's return to the diffusion equation $u_t = u_{xx}$ for $(x,t) \in (0,1)\times(0,T]$ subject to the following initial and boundary data:
+$$
+u(x,0) = f(x), \qquad x \in [0, 1], \qquad u(0,t) = \varphi_0(t), \qquad u(1,t) = \varphi_1(t).
+$$
+Since $x \in [0, 1]$ and $s \in [0, 2\pi]$, the variables are related according to $s = 2\pi x$.
+
+Let's approximate the solution to the diffusion equation for each $t \in [0, T]$ by a trigonometric interpolant in $x$: 
+$$
+u(x,t) \approx u_n(x,t) = \sum_{k=-m}^{m} \tilde{u}_k(t) {\rm e}^{2\pi{\rm i}kx}.
+$$
+We have that
+$$
+\frac{\partial}{\partial t}u(x,t) \approx \frac{\partial}{\partial t} u_n(x,t) = \sum_{k=-m}^{m} \tilde{u}_k'(t) {\rm e}^{2\pi{\rm i}kx}
+$$
+and
+$$
+\frac{\partial^2}{\partial x^2}u(x,t) \approx \frac{\partial^2}{\partial x^2} u_n(x,t) = -4\pi^2\sum_{k=-m}^{m} k^2\tilde{u}_k(t) {\rm e}^{2\pi{\rm i}kx}.
+$$
+We require that $u_n(x,t)$ satisfy the diffusion equation, which implies that
+$$
+\tilde{u}_k'(t)  = -4\pi^2 k^2 \tilde{u}_k(t), \qquad k = -m, \ldots, m.
+$$
+This is a diagonal system of ODEs, which has the solution
+$$
+\tilde{u}_k(t) = {\rm e}^{-4\pi^2 k^2 t}\tilde{u}_k(0), \qquad k = -m, \ldots, m.
 $$
 
+We can compute $\tilde{u}_k(0)$ with the FFT by requiring that $u_n(x,0)$ interpolates $u(x,0) = f(x)$ at equally spaced points:
 $$
-v'_j(t) = \frac{1}{h^2}\left(v_{j+1} - 2v_j + v_{j-1}   \right), \qquad j  = 1, \ldots, n_x 
+u(x_j,0) = f(x_j) = u_n(x_j,0) = \sum_{k=-m}^{m} \tilde{u}_k(0) {\rm e}^{2\pi{\rm i}x_j}, \qquad x_j = \frac{j}{n}, \qquad j = 0, \ldots, n-1.
 $$
-
+We also require that the boundary conditions be satisfied:
 $$
-\mathbf{v}'(t) = A \mathbf{v}(t) + \mathbf{h}(t)
+u(0,t) = \varphi_0(t) = u_n(0,t) = \sum_{k=-m}^{m}\tilde{u}_k(t) = \sum_{k=-m}^{m}{\rm e}^{-4\pi^2 k^2 t}\tilde{u}_k(0)
 $$
-
+and
 $$
-\mathbf{v}'(t) = \mathbf{f}(t,\mathbf{v}) \qquad 
-$$
-
-$$
-\underbrace{\begin{bmatrix}
-v'_{1} \\
-\vdots \\
-\vdots \\
-\vdots \\
-v'_{n_x}
-\end{bmatrix}}_{\mathbf{v}'} = 
-\underbrace{\frac{1}{h^2}\begin{bmatrix}
-- 2 & 1 & & & \\
-1  & -2 & 1  & & \\
-      & \ddots & \ddots & \ddots & \\
-      &        & 1    & -2 & 1 \\
-      &        &        & 1 & -2
-\end{bmatrix}}_{A}
-\underbrace{\begin{bmatrix}
-v_{1} \\
-\vdots \\
-\vdots \\
-\vdots \\
-v_{n_x}
-\end{bmatrix}}_{\mathbf{v}}
-+ 
-\underbrace{\frac{1}{h^2}\begin{bmatrix}
-\varphi_0(t) \\
-0 \\
-\vdots \\
-0 \\
- \varphi_1(t)
-\end{bmatrix}}_{\mathbf{h}(t)}
+u(1,t) = \varphi_1(t) = u_n(1,t) = \sum_{k=-m}^{m}\tilde{u}_k(t) = \sum_{k=-m}^{m}{\rm e}^{-4\pi^2 k^2 t}\tilde{u}_k(0).
 $$
 
-matrix exponential and diagonalisation
-
-explicit solution of a linear ODE system
-
-Diagonalisation of a system of ODEs
-
-coefficient space
-
-value space
-
-```julia
-```
-
-For stability, we require 
+These conditions cannot be satsfied unless $u(0,t) = u(1,t)$, i.e., unless periodic boundary conditions are specified, in which case the approximate solution is
 $$
-\lim_{h \to 0}\left( \max_{n = 0, 1, \ldots, n_t} \| A^n \|_h  \right) \leq c
+u_n(x,t) = \sum_{k=-m}^{m}  {\rm e}^{2\pi{\rm i}kx-4\pi^2 k^2 t} \tilde{u}_k(0)
 $$
-
-We'll show that $A$ is a normal matrix but first we recall that $B$ is a TST matrix and therefore its eigenvalues are
+and the exact solution is
 $$
-\lambda_j = 1 + 2\mu - 2\mu\cos\left(\pi x_j  \right) = 1 + 2\mu -2\mu(1 - 2\sin^2(\pi x_j/2)) = 1 + 4\mu\sin^2(\pi x_j/2).
-$$
-
-
-
-
-
-Hence, we have
-$$
-B\mathbf{q}_j = \lambda_j\mathbf{q}_j, \qquad j = 1, \ldots, n_x.
-$$
-Let
-$$
-Q = \left[\mathbf{q}_1 |  \mathbf{q}_2 | \cdots | \mathbf{q}_{n_x}  \right] \in \mathbb{R}^{n_x \times n_x},
-$$
-then
-$$
-BQ = Q\Lambda
+u(x,t) = \sum_{k=-\infty}^{\infty}  {\rm e}^{2\pi{\rm i}kx-4\pi^2 k^2 t} u_k(0)
 $$
 where
 $$
-\Lambda = \begin{bmatrix}
-\lambda_1 & & & \\
-& \lambda_2 & & \\
- & & \ddots &  \\
-&  & & \lambda_{n_x}
-\end{bmatrix}.
+u(x,0) = f(x) = \sum_{k=-\infty}^{\infty}u_k(0) {\rm e}^{2\pi{\rm i}kx },
 $$
-That is, the spectral factorisation (eigendecomposition) of $B$ is
+that is,
 $$
-B = Q\Lambda Q^{-1} =  Q\Lambda Q^{\top}.
+u_k(0) = \int_{0}^{1} f(x){\rm e}^{-2\pi{\rm i}kx}\,{\rm d}x.
 $$
 
-```julia
-```
+Notice that the Fourier spectral method is a "coefficient space" method because we re-formulated the PDE problem as a system of ODEs satisfied by the (approximate) Fourier coefficients of the solution.  We'll now consider a "value space" method.  
 
-```julia
-```
+### Fourier collocation method (Fourier pseudospectral method)
 
-```julia
-nx = 6
-μ = 2
-B = SymTridiagonal(fill((1 + 2μ),nx),fill(-μ,nx-1))
-A = inv(B)
-A*A' - A'*A
-```
-
-```julia
-```
-
-Stability analysis via matrix analysis
-
+Let's again recall some facts from Chapter 2: the value space representation of the $2\pi$-periodic trigonometric interpolant is
 $$
-\lambda_j = 1 + 2\mu - 2\mu\cos\left(\pi x_j  \right) = 1 + 2\mu -2\mu(1 - 2\sin^2(\pi x_j/2)) = 1 + 4\mu\sin^2(\pi x_j/2)
+p_n(s) = \sum_{k=0}^{n-1}\ell_0(s-s_k)f(s_k), 
 $$
-
-
-
-
-
-
-
-
+where $n$ is odd with $n = 2m + 1$, the $s_k$ are evenly spaced points on the interval $[0, 2\pi)$ and
 $$
-A = B^{-1} = Q\Lambda^{-1}Q^{\top}
+\ell_0(s) = \begin{cases}
+\displaystyle{\frac{1}{n}\frac{\sin((m+1/2)s)}{\sin(s/2)}} & \text{if } s \neq 0, \pm 2\pi, \pm 4\pi, \ldots \\
+1 & \text{otherwise}
+\end{cases}.
 $$
+Since the basis functions $\ell_0(s-s_k)$ have the periodic delta interpolation property, namely
 $$
-A^2 =  Q\Lambda^{-2}Q^{\top}
+\ell_0(s_j-s_k) = \begin{cases}
+1 & \text{if } j = k, k \pm n, k \pm 2n, \ldots \\
+0 & \text{otherwise}
+\end{cases}
 $$
+it follows that
+$p_n(s_j) = f(s_j)$, $j = 0, \ldots, n-1$, where the points $s_j$ are evenly spaced on the interval $[0, 2\pi)$.
+
+We can use this interpolant to approximate the solution to the diffusion equation on $(x,t) \in (0,1)\times (0, T]$ as follows: 
 $$
-A^n =  Q\Lambda^{-n}Q^{\top}
+u(x,t) \approx u_n(x,t) = \sum_{k=0}^{n-1}\ell_0(2\pi (x- x_k))v_k(t), \qquad x_k = \frac{k}{n},
 $$
+where, from the periodic delta interpolation property,
 $$
-\|A^n\| \leq  \|Q\|  \|\Lambda^{-n}\| \|Q^{\top}\| =   \|\Lambda^{-n}\| = \max_{j=1, \ldots, n_x}\vert \lambda^{-n}_j\vert = \left[\max_{j=1, \ldots, n_x}\vert \lambda^{-1}_j\vert\right]^n = \left[\rho(A)\right]^n
+u(x_j,t) \approx u_n(x_j,t) = v_j(t), \qquad j = 0, \ldots, n-1.
 $$
 
-
+We require that $u_n(x,t)$ satisfies the diffusion equation at the points $x_j$ (known as the collocation points). We have that
 $$
-\| B \mathbf{x}\|^2 = \langle B \mathbf{x}, B \mathbf{x} \rangle = \left( B \mathbf{x} \right)^{\top}B \mathbf{x} 
+\frac{\partial}{\partial t}u_n(x_j,t) = v_j'(t), \qquad j = 0, \ldots, n-1,
 $$
-
+and
 $$
-\| B \mathbf{x}\|^2 = \langle B \mathbf{x}, B \mathbf{x} \rangle = \left( B \mathbf{x} \right)^{\top}B \mathbf{x} = \mathbf{x}^{\top} Q\Lambda Q^{\top} Q \Lambda Q^{\top}\mathbf{x} =  \mathbf{x}^{\top} Q\Lambda^2  Q^{\top}\mathbf{x}
+\frac{\partial^2}{\partial x^2}u_n(x_j,t) = 4\pi^2 \sum_{k=0}^{n-1}\ell_0''(2\pi (x_j- x_k))v_k(t).
 $$
-
+From the initial data, we have that
 $$
-\| Q\mathbf{x}\|^2 = \langle Q \mathbf{x}, Q \mathbf{x} \rangle = \left( Q \mathbf{x} \right)^{\top}Q \mathbf{x}  = \| \mathbf{x} \|^2
+u(x_j,0) = f(x_j) = u_n(x_j,0) = v_j(0), \qquad j = 0, \ldots, n-1,
 $$
-
-```julia
-```
-
-```julia
-```
-
-```julia
-```
-
-```julia
-xx = x' .* ones(nt+1)
-tt = ones(nx+2)' .* t
-error = ue.(xx,tt) - u 
-e1 = maximum(error)
-```
-
-```julia
-μ = 0.50*nx
-u,x,t = @time BackwardEuler(f,ϕ0,ϕ1,nx,μ,T)
-nt = length(t) -1
-```
-
-```julia
-xx = x' .* ones(nt+1)
-tt = ones(nx+2)' .* t
-error = ue.(xx,tt) - u 
-e1 = maximum(error)
-```
-
-Renam Euler's method as explicit Euler's method?
-
-state the bound on the norm for the case in which $A$ has a complete eigendecomposition
-
-$\mu \leq \frac{1}{2}$ is quite restrictive
-
-Numerical experiments: instability depending on the value of $\mu$, how the diffusion equation smooths things out and the equilibrium solution is an ODE BVP
-
+and from the boundary data,
 $$
-\mathbf{u}^i = 
-\begin{bmatrix}
-u^i_{1} \\
+u(0,t) = \varphi_0(t) = u_n(0,t) = v_0(t)
+$$
+and because $u_n(x,t)$ is $1$-periodic in $x$,
+$$
+u(1,t) = \varphi_1(t) = u_n(1,t) = v_0(t),
+$$
+which can only be satisfied if
+$$
+u(1,t) = u(0,t)
+$$
+i.e., if periodic boundary conditions are imposed.
+
+Hence a Fourier pseudospectral / Fourier collocation method for the diffusion equation with periodic boundary conditions is
+$$
+\mathbf{v}'(t) = D_2 \mathbf{v}(t)
+$$
+where
+$$
+\mathbf{v}(t) = \begin{bmatrix}
+v_0(t) \\
 \vdots \\
-u^i_{n_x}
-\end{bmatrix}, \qquad
-\tilde{\mathbf{u}}^i = 
-\begin{bmatrix}
-\tilde{u}^i_{1} \\
-\vdots \\
-\tilde{u}^i_{n_x}
+v_{n-1}(t)
 \end{bmatrix}
 $$
-
-
-
-
-
-Note here we can just replace the FD matrix $A$ with the collocation matrix and/or the ultraspherical equivalent
-
-(forward) Euler method
+and the entries of the second-order differentiation matrix $D_2$ are
 $$
-\mathbf{v}'(t_i) \approx \frac{\mathbf{u}^{i+1} - \mathbf{u}^{i}}{\tau}
+\begin{eqnarray*}
+\left(D_2\right)_{j,k} &=& 4\pi^2\ell_0''(2\pi (x_j- x_k)) \\
+&=& \begin{cases}
+-\frac{\pi^2}{3}\left(n^2 - 1    \right)  & \text{if } j = k\\
+\displaystyle{2\pi^2(-1)^{j-k+1}\frac{\cos [\pi (j-k)/n] }{ \sin^2 [\pi (j-k)/n] }} & \text{if } j \neq k
+\end{cases}
+\end{eqnarray*}
 $$
-set
-$$
-\frac{\mathbf{u}^{i+1} - \mathbf{u}^{i}}{\tau} = \mathbf{f}(t_i,\mathbf{u}^{i})
-$$
-$$
-\mathbf{u}^{i+1} = \mathbf{u}^{i} + \tau \mathbf{f}(t_i,\mathbf{u}^{i})
-$$
-Setting 
-$$
-\mathbf{f}(t,\mathbf{x}) = A\mathbf{x} + \mathbf{h}(t) 
-$$
-we recover Euler's method from before
+for $j,k = 0, \ldots, n-1$.
 
-## Implicit methods
-
-Backward Euler method:
-$$
-\mathbf{v}'(t_i) \approx \frac{\mathbf{u}^{i} - \mathbf{u}^{i-1}}{\tau}
-$$
-hence
-$$
-\mathbf{u}^{i} = \mathbf{u}^{i-1} + \tau\mathbf{f}(t_i,\mathbf{u}^{i})
-$$
-or
-$$
-\mathbf{u}^{i+1} = \mathbf{u}^{i} + \tau\mathbf{f}(t_{i+1},\mathbf{u}^{i+1})
-$$
-This is an implicit method
-$$
-\left( I - \tau A   \right)\mathbf{u}^{i+1}= \mathbf{u}^{i} + \tau\mathbf{h}(t_{i+1})
-$$
-
-$$
-I - \tau A = \begin{bmatrix}
-1 + 2\mu & -\mu & & & \\
--\mu  & 1+2\mu & -\mu  & & \\
-      & \ddots & \ddots & \ddots & \\
-      &        & -\mu    & 1+2\mu & -\mu \\
-      &        &        & -\mu & 1+2\mu
-\end{bmatrix}   \in \mathbb{R}^{n_x \times n_x}
-$$
-
-
-
-## Chebyshev collocation method
-
-## Chebyshev method
-
-See Manolis's discussion on the computational cost of the method
-
-**Order:** It is left as an exercise to show that the Backward Euler method is second order.
-
-**Stability:** In the von Neumann analysis, we consider the problem on the whole real line, then the Backward Euler method is
-$$
--\mu u^{i+1}_{j-1} + (1 + 2\mu)u^{i+1}_j - \mu u^{i+1}_{j+1} = u^{i}_j
-$$
-Setting $u^{i}_j = \lambda^i {\rm e}^{{\rm i} k x_j}$, then we find that
-$$
-\lambda = \frac{1}{1 + 4\mu \sin^2(kh/2)}
-$$
-and therefore $\vert \lambda \vert \leq 1$ for all $\mu > 0$, hence we say that the Backward Euler method for the diffusion equation is unconditionally stable.  The implications of this for time stepping restrictions
-
-Give an intutive feeling of what the solution to the diffusion equation does and how it differs from the solution to the advection equation.
-
-Look at the excellent exercises in Iserles's book
-
-Semi-discrete methods also have an order
-
-An equation with a variable coefficient
-
-Von Neumann stability analysis of a semi-discrete scheme
-
-Matrix stability analysis for a Fourier spectral and Chebyshev method.  For Fourier, show how the method performs on a solution that is periodic and one that is not periodic.
-
-Backward Euler, Crank-Nicholson
-
-The above $v$ equation is a linear system whose exact solution is known... matrix exponentials and diagonalisation
-
-Approximate a PDE by a system of ODEs
-
-The Fourier and Chebyshev methods we looked at before fit into this framework, these methods are ideally suited to the matrix stability analysis approach.
-
-von Neumann stability analysis
-
-Multistep method, e.g., leap frog method
-
-How to do order analysis
-
-How to do stability analysis, matrix methods and Fourier methods
-
-Explicit and implicit
-
-Method of lines with well-known ODE integrators and black box integrators
-
-Go into matrix and operator norms?
-
-Order, stability and convergence
-
-How the value of $\mu$ relates to step size restrictions
-
-In this chapter we discuss:
-1. 
-2. 
-3. 
-
-1. Finite difference method for 2-point boundary value problems and consistency and stability and convergence
-2. Compare FD, collocation and ultraspherical and Fourier for periodic problems, convergence analysis for collocation and ultraspherical is beyond the scope 
-3. The next step is boundary value problems in two dimensions
-4. In the next chapter do stability analysis for time dependent problems and do method of lines
-
-One method to design FD methods is to use FD operators, see Iserles's book
-
-Method of separation of variables
-
-In the large-time limit, $u_t \to 0$, steady state or equilibrium solution
-
-explicit and implicit
-
-Lax equivalence theorem
-
-2-point BVPs
-
-Well-posed and ill-posed equations
-
-There is more to numerical methods than order and stability, these are only necessary conditions for good methods but they are not sufficient.  There is also structure preservation.
-
-Nonlinear equations
-
-Must include automatic differentiation for nonlinear equations
-
-exponential integrators
-
-Hermite method on the line?
-
-Look at Christoph Ortner's notes
-
-The Fourier transform approach to stability of semi-discrete methods
-
-Distinguish semi-discrete methods and fully discretised methods
+Let's check this:
 
 ```julia
+n = 29
+D2m(n) = [j == k ? 
+    -π^2/3*(n^2 - 1) : 
+    2π^2*(-1)^(j-k+1)*cos(π*(j-k)/n)/(sin(π*(j-k)/n))^2 
+    for j = 0:n-1, k = 0:n-1]
+f = x -> exp(sin(2π*x))
+df = x -> f(x)*2π*cos(2π*x)
+d2f = x -> f(x)*(2π*cos(2π*x))^2 - 4π^2*f(x)*sin(2π*x)
+xx = range(0,1,n+1)[1:end-1]
+norm(d2f.(xx) - D2m(n)*f.(xx), Inf)
 ```
+
+The differentiation matrix $D_2$ is a normal matrix because it is symmetric:
+
+```julia
+D2m(5)
+```
+
+From the results we proved above, to show that the semi-discrete method $\mathbf{v}'(t) = D_2 \mathbf{v}(t)$ is stable, we need to prove that the real part of the eigenvalues of $D_2 \in \mathbb{R}^{n \times n}$ are bounded above as $n \to \infty$.  To find the eigenvalues of $D_2$, we'll use some facts we learned in Chapter 2 to find its eigendecomposition (spectral factorisation) using the FFT.
+
+The matrix $D_2$ is also circulant and all circulant matrices can be diagonalised with the FFT matrix, as we'll see shortly, which also implies that matrix-vector multiplication with a circulant marix can be computed with the FFT.
+
+Recall that we showed that derivates can be computed with the FFT instead of differentiation matrices:
+
+```julia
+m = (n-1)÷2
+norm(d2f.(xx) - ifft(ifftshift(-4π^2*(-m:m).^2) .*fft(f.(xx))), Inf)
+```
+
+We also learned that the FFT is equivalent to a certain matrix-vector multiplication.  That is, the FFT applied to a vector $\mathbf{f}$ performs the matrix-vector multiplication $Q_n \mathbf{f}$, where $Q_n$ is an $n\times n$ unitary matrix that was defined in Chapter 2. Here is a reminder of the matrix $Q_n$:
+
+```julia
+Qm(n) = [exp(-2π*im*(k-1)*j/n) for k = 1:n, j=1:n]/sqrt(n)
+n = 5
+Qm(5)'*Qm(5) ≈ I
+```
+
+We also learned that the ``ifftshift`` command is equivalent to multiplication by a permutation matrix $P$, where
+$$
+P = \left(
+\begin{array}{c c}
+   & I_{m} \\
+I_{m+1} & 
+\end{array}
+\right).
+$$
+ From the results of Chapter 2, it follows that the command ``ifft(ifftshift(-(-m:m).^2)fft(f(xx)))`` used above for approximating the second derivative on an equispaced grid is equivalent to multipilication by the matrix
+$$
+Q_n^*P^*\Lambda PQ_n, \qquad \Lambda = -4\pi^2\mathrm{diag}(m^2, (m-1)^2, \ldots, 0, 1^2, \ldots, m^2),
+$$
+and moreover
+$$
+D_2 = Q_n^*P^*\Lambda PQ_n.
+$$
+Let's check this:
+
+```julia
+n = 11
+m = (n-1)÷2
+P = sparse(1:n, [m+2:n;1:m+1], fill(1,n))
+Q = Qm(n)
+D2 = D2m(n)
+-4π^2*Q'*P'diagm((-m:m).^2)*P*Q ≈ D2
+```
+
+This is the spectral factorisation of $D_2$ and it shows that its eigenvalues are $-4\pi^2k^2$ for $k = 0, \ldots, m$.  Since the eigenvalues are bounded above by $0$, we conclude that the Fourier pseudospectral / Fourier collocation semidiscrete method $\mathbf{v}' = D_2\mathbf{v}$ is stable.  If the solution to the diffusion equation is continuous and $1$-periodic, then we know from Chapter 2 that the trigonometric interpolant will converge (for a fixed time $t$) to the exact solution as $n \to \infty$, hence the method is consistent and therefore (by the Lax equivalence theorem) convergent.
+
+If we were to use Euler's method for time stepping, then the step size restriction would be
+$$
+\tau \leq \frac{2}{\rho(A)} = \frac{1}{2\pi^2 m^2} = \frac{2}{\pi^2 (n-1)^2}.
+$$
+
+```julia
+n = 91
+m = (n-1)÷2
+f = x -> sin(π*x/2) + 0.5*sin(2π*x)
+T = 0.01
+F = (v,p,t) -> real(ifft(ifftshift(-4π^2*(-m:m).^2) .*fft(v)))
+x = range(0,1,n+1)[1:end-1]
+prob = ODEProblem(F, f.(x), (0.0, T))
+soln =  solve(prob,RK4(),abstol=1e-2);
+```
+
+In the code above, we used an explicit fourth-order Runge-Kutta method as time stepper / integrator.  Let's compare the maximum step size of the Runge-Kutta method with the step size restriction of Euler's method:
+
+```julia
+[maximum(diff(soln.t)) 2/(π^2*(n-1)^2)]
+```
+
+```julia
+t = soln.t
+u = soln.u
+nt = length(soln.t)
+@gif for i = 1:nt 
+    plot(x, u[1], size = (700, 150), label = "u0")
+    plot!(x, u[i], label = "Fourier collocation,t = " * (@sprintf("%.4f", t[i])), legend = :outertopright)
+    plot!(x, ue.(x,t[i]), label = "exact solution")
+end
+```
+
+Of course, for a problem that doesn't have periodic boundary conditions, Fourier methods won't be accurate.  We saw this in Chapter 2 when we approximated a non-periodic function with a trigonometric interpolant and observed the Gibbs phenomenon. 
+
+### Chebyshev collocation method
+
+Recall from Chapter 3 the formula for the Lagrange interpolating polynomial at the Chebyshev points:
+$$
+p_{n}(s) = \sum_{k = 0}^{n}\ell_k(s)f(s_k), \qquad \ell_k(s) = \prod_{\substack{j=0\\ j \neq k}}^{n}\frac{s-s_j}{s_k-s_j}
+$$
+where the Chebyshev points are
+$$
+s_k = \cos\left(\frac{\pi k}{n} \right), \qquad k = 0, \ldots, n.
+$$
+Since we let $s \in [-1, 1]$ and in the diffusion equation we let $x \in [0, 1]$, the variables are related according to
+$$
+s = 2x - 1,
+$$
+and we set
+$$
+x_k = \frac{s_k+1}{2}, \qquad k = 0, \ldots, n.
+$$
+
+We approximate the solution to the diffusion equation using an interpolant at the Chebyshev points:
+$$
+u(x,t) \approx u_n(x,t) = \sum_{k=0}^n \ell_k(2x - 1)v_k(t)
+$$
+
+The Lagrange basis polynomials $\ell_k(s)$ have the delta interpolation property,
+$$
+\ell_k(s_j) = \delta_{j,k} = \begin{cases}
+1 & \text{if } k = j \\
+0 & \text{otherwise}
+\end{cases}
+$$
+and thus for $j = 0, \ldots, n$
+$$
+u(x_j,t) \approx u_n(x_j,t)= \sum_{k=0}^n \ell_k(2x_j - 1)v_k(t) = \sum_{k=0}^n \ell_k(s_j)v_k(t) = v_j(t).
+$$
+
+The boundary data imply that
+$$
+u(0,t) = \varphi_0(t) = u_n(0,t) = v_n(t)
+$$
+and
+$$
+u(1,t) = \varphi_1(t) = u_n(1,t) = v_0(t)
+$$
+while the initial data imply
+$$
+u(x_j,0) = u_n(x_j,0) = f(x_j) = v_j(0), \qquad j = 0, \ldots, n.
+$$
+
+We approximate the solution to the diffusion equation by requiring that $u_n(x,t)$ satisfy the diffusion equation at the Chebyshev points (the collocation points). Since
+$$
+\frac{\partial}{\partial t}u(x_j,t) \approx \frac{\partial}{\partial t} u_n(x_j,t)  = v_j'(t)
+$$
+
+and
+$$
+\frac{\partial^2}{\partial x^2}u(x_j,t) \approx \frac{\partial^2}{\partial x^2} u_n(x_j,t) = 4\sum_{k=0}^n \ell_k''(2x_j - 1)v_k(t) = 4\sum_{k=0}^n \ell_k''(s_j)v_k(t)
+$$
+
+we approximate the solution to the diffusion equation as follows
+$$
+\begin{eqnarray*}
+\left(
+\begin{array}{c}
+v_1'(t) \\
+v_2'(t) \\
+\vdots \\
+v_{n-1}'(t)
+\end{array}
+\right) &=& 4
+\left(
+\begin{array}{c c c c c}
+\ell''_0(s_1) &\ell''_1(s_1) & \cdots &\ell''_{n-1}(s_1) & \ell''_{n}(s_1) \\
+\ell''_0(s_2) &\ell''_1(s_2) & \cdots &\ell''_{n-1}(s_2) & \ell''_{n}(s_2)  \\
+     \vdots  & \vdots & \vdots & \vdots & \vdots  \\
+\ell''_0(s_{n-1}) &\ell''_1(s_{n-1}) & \cdots &\ell''_{n-1}(s_{n-1}) & \ell''_{n}(s_{n-1})
+\end{array} 
+\right)
+\left(
+\begin{array}{c}
+v_0(t) \\
+v_1(t) \\
+\vdots \\
+v_{n-1}(t) \\
+v_n(t)
+\end{array}
+\right) \\
+&=&4 \left(
+\begin{array}{ c c c }
+\ell''_1(s_1) & \cdots &\ell''_{n-1}(s_1)  \\
+\ell''_1(s_2) & \cdots &\ell''_{n-1}(s_2)   \\
+   \vdots & \vdots & \vdots   \\
+\ell''_1(s_{n-1}) & \cdots &\ell''_{n-1}(s_{n-1}) 
+\end{array} 
+\right)
+\left(
+\begin{array}{c}
+v_1(t) \\
+\vdots \\
+v_{n-1}(t)
+\end{array}
+\right) \\
+& &
++ 4\varphi_1(t)\left(
+\begin{array}{c}
+\ell''_0(s_1)  \\
+\ell''_0(s_2)  \\
+     \vdots    \\
+\ell''_0(s_{n-1}) 
+\end{array} 
+\right)
++ 4\varphi_0(t)\left(
+\begin{array}{c}
+\ell''_n(s_1)  \\
+\ell''_n(s_2)  \\
+     \vdots    \\
+\ell''_n(s_{n-1}) 
+\end{array} 
+\right)\\
+&:=& A \mathbf{v}(t) + \mathbf{h}(t).
+\end{eqnarray*}
+$$
+
+#### Spectral factorisation of the second-order Chebyshev differentiation matrix
+
+Recall from Chapter 3 that the following function builds the (first-order) Chebyshev differentiation matrix, i.e., the  $(n+1) \times (n+1)$ matrix given by
+$$
+D_1 = \left(
+\begin{array}{c c c c}
+\ell'_0(s_1) &\ell'_1(s_1) & \cdots  & \ell'_{n}(s_1) \\
+\ell'_0(s_2) &\ell'_1(s_2) & \cdots  & \ell'_{n}(s_2)  \\
+     \vdots  & \vdots & \vdots &  \vdots  \\
+\ell'_0(s_{n-1}) &\ell'_1(s_{n-1}) & \cdots & \ell'_{n}(s_{n-1})
+\end{array} 
+\right)
+$$
+
+```julia
+function cheb(n)
+
+    x = cos.(π*(0:n)/n)
+    c = [2; ones(n-1,1); 2].*(-1).^(0:n)
+    X = repeat(x,1,n+1)
+    dX = X-X'
+    D = (c*(1 ./c)')./( dX + I ) # off-diagonal entries
+    D = D - diagm(vec(sum(D';dims=1)))# diagonal entries
+    
+    D, x
+
+end
+```
+
+We can obtain the second-order differentiation matrix by squaring the first order differentiation matrix.  Let's consider the matrix $A$ defined above, which consists of the second to $n$-th rows and columns of the second order differentiation matrix:
+
+```julia
+n = 7
+D,~ = cheb(n)
+D2 = D^2
+A = D2[2:n,2:n]
+```
+
+Unfortunately, $A$ is not a normal matrix:
+
+```julia
+A*A' ≈ A'*A
+```
+
+However, $A$ has a spectral factorisation, i.e., there exists a nonsingular matrix $W \in \mathbb{R}^{(n-1)\times (n-1)}$ and a diagonal matrix $\Lambda \in \mathbb{R}^{(n-1)\times (n-1)}$ such that
+$$
+A = W\Lambda W^{-1}.
+$$
+Let's see an example:
+
+```julia
+fact = eigen(A)
+Λ = diagm(fact.values)
+```
+
+```julia
+W = fact.vectors
+@show A ≈ W*Λ/W
+@show A ≈  W*Λ*inv(W);
+```
+
+To prove the stability of the method, we need to show that
+$$
+\lim_{n \to \infty}\| {\rm e}^{tA} \| < \infty, \qquad t \in [0, T].
+$$
+
+We have that
+$$
+{\rm e}^{tA} = W{\rm e}^{t\Lambda}W^{-1}
+$$
+and thus, since we assume the spectrum / eigenvalues of $A$ are real,
+$$
+\| {\rm e}^{tA} \| \leq \| W \| \| W^{-1} \| \| {\rm e}^{t\Lambda} \| = \kappa(W)\max\lbrace {\rm e}^{t\lambda} : \lambda \in \sigma(A)  \rbrace
+$$
+where
+$$
+\kappa(W) = \| W \| \| W^{-1} \|
+$$
+is known as the (2-norm) spectral condition number of $A$.  
+
+If $A$ were a normal matrix, then the spectral factorisation would be
+$$
+A = U\Lambda U^*
+$$
+where $U$ is unitary and thus
+$$
+{\rm e}^{tA} = U{\rm e}^{t\Lambda}U^*.
+$$
+We have that
+$$
+\kappa(U) = \| U \| \| U^{-1} \| = \| U \| \| U^* \| = 1
+$$
+because
+$$
+\| U\mathbf{x} \|^2 = \langle U\mathbf{x},  U\mathbf{x} \rangle = \left( U\mathbf{x} \right)^* U\mathbf{x} = \mathbf{x}^*U^*U\mathbf{x} = \mathbf{x}^*\mathbf{x} = \| \mathbf{x} \|^2,
+$$
+it follows from the definition of the matrix $2$-norm that $\| U \| = 1$ and similarly it follows that $\| U^* \| = 1$.  This shows that for normal matrices, the spectral condition number is one. This is not true of non-normal matrices and therefore we need to take into account how the spectral condition number grows as the dimension of the matrix grows.
+
+Let's return to the non-normal matrix $A$ (consisting of the second to $n$-th columns of the second order Chebyshev differentiation matrix) and investigate the eigenvalues of $A$ and the spectral condition number $\kappa(W)$ and see what happens when $n$ becomes large.
+
+First we consider a continuous eigenvalue problem and then show that the eigenvalues of the matrix $A$ approximate those of the continuous problem.  The solutions to the following ODE eigenvalue problem
+$$
+u''(s) = \lambda u(s),\qquad s \in (-1, 1), \qquad u(-1) = u(1) = 0,
+$$
+are
+$$
+u(s)  = \sin\left(\frac{n\pi(s+1)}{2}\right), \qquad \lambda = -\frac{\pi^2 n^2}{4}, \qquad n = 1, 2, \ldots
+$$
+Suppose now that we approximate the solutions to the problem with an interpolant at the Chebyshev points, i.e., we set
+$$
+u(s) \approx u_{n}(s) = \sum_{k = 0}^{n}\ell_k(s)w_k, \qquad \ell_k(s) = \prod_{\substack{j=0\\ j \neq k}}^{n}\frac{s-s_j}{s_k-s_j}
+$$
+where the Chebyshev points are
+$$
+s_k = \cos\left(\frac{\pi k}{n} \right), \qquad k = 0, \ldots, n,
+$$
+and $w_k \approx u(s_k)$.   We set 
+$$
+u_n(-1) = w_n = u(-1) = 0
+$$
+and
+$$
+u_n(1) = w_0 = u(1) = 0
+$$
+and specify that $u_n(s)$ satisfies the ODE at the collocation points, i.e., we require
+$$
+u_n''(s_j) = \lambda u_n(s_j), \qquad j = 1, \ldots, n-1.
+$$
+Since $u_n(s_j) = w_j$, these equations are equivalent to
+$$
+\left(
+\begin{array}{c c c c c}
+\ell''_0(s_1) &\ell''_1(s_1) & \cdots &\ell''_{n-1}(s_1) & \ell''_{n}(s_1) \\
+\ell''_0(s_2) &\ell''_1(s_2) & \cdots &\ell''_{n-1}(s_2) & \ell''_{n}(s_2)  \\
+     \vdots  & \vdots & \vdots & \vdots & \vdots  \\
+\ell''_0(s_{n-1}) &\ell''_1(s_{n-1}) & \cdots &\ell''_{n-1}(s_{n-1}) & \ell''_{n}(s_{n-1})
+\end{array} 
+\right)\left(
+\begin{array}{c}
+w_0 \\
+w_1 \\
+\vdots \\
+w_{n-1} \\
+w_n
+\end{array}
+\right) = \lambda
+\left(
+\begin{array}{c}
+w_1 \\
+\vdots \\
+w_{n-1} 
+\end{array}
+\right).
+$$
+Since $w_0=w_n=0$, this can be reduced to
+$$
+\left(
+\begin{array}{ c c c }
+\ell''_1(s_1) & \cdots &\ell''_{n-1}(s_1)  \\
+\ell''_1(s_2) & \cdots &\ell''_{n-1}(s_2)   \\
+    \vdots & \vdots & \vdots  \\
+\ell''_1(s_{n-1}) & \cdots &\ell''_{n-1}(s_{n-1}) 
+\end{array} 
+\right)\left(
+\begin{array}{c}
+w_1 \\
+\vdots \\
+w_{n-1} 
+\end{array}
+\right) = \lambda
+\left(
+\begin{array}{c}
+w_1 \\
+\vdots \\
+w_{n-1} 
+\end{array}
+\right),
+$$
+i.e., we have the matrix eigenvalue problem $A\mathbf{w} = \lambda\mathbf{w}$, where $A$ is the matrix we encountered above when we applied the Chebyshev collocation method to the diffusion equation. We'll see that $A$ has $n-1$ distinct eigenvalues and eigenvectors, say $A\mathbf{w}_j = \lambda_j \mathbf{w}_j$, $j = 1, \ldots, n-1$ and $\lambda_j$ approximates the $j$-th eigenvalue of the ODE eigenvalue problem (namely, $-\pi^2j^2/4$) and the eigenvector $\mathbf{w}_j$ approximates the $j$-th eigenfunction of the ODE eigenvalue problem (namely, $\sin(\pi n(s +1)/2)$ at the Chebyshev points.  The eigenvectors $\mathbf{w}_j$ form the columns of the matrix $W$ in the eigendecomposition of $A$, i.e., $A = W\Lambda W^{-1}$.
+
+
+Let's compare the eigenvalues of $A$ to those of the ODE eigenvalue problem:
+
+```julia
+n = 61
+D,s = cheb(n)
+D2 = D^2
+A = D2[2:n,2:n]
+λ = eigvals(A)
+scatter(1:n-1,abs.(λ[end:-1:1]);yscale=:log10,ms=6,
+label="approximate eigenvalues",legend=:topleft)
+scatter!(1:n-1,π^2*(1:n-1).^2/4,label="exact eigenvalues")
+```
+
+Here are some of the eigenvectors of $A$:
+
+```julia
+fact = eigen(A)
+W = fact.vectors
+p1 = plot(s[2:n],W[:,n-5];legend=false)
+scatter!(s[2:n],W[:,n-5])
+p2 = plot(s[2:n],W[:,n-10];legend=false)
+scatter!(s[2:n],W[:,n-10])
+p3 = plot(s[2:n],W[:,20];legend=false)
+scatter!(s[2:n],W[:,20])
+p4 = plot(s[2:n],W[:,1];legend=false)
+scatter!(s[2:n],W[:,1])
+plot(p1,p2,p3,p4)
+```
+
+Let's investigate how the spectral radius grows with $n$:
+
+```julia
+nmax = 81; nvc = 5:nmax
+ρc = [( (D,~) = cheb(n); D2 = D^2; A = D2[2:n,2:n]; λ = eigvals(A);
+    norm(λ,Inf)) for n = nvc];
+```
+
+```julia
+scatter(nvc.-1,ρc;yscale=:log10,legend=:topleft,label="spectral radius")
+plot!(nvc.-1,0.05*(nvc.-1).^4;label="0.05n⁴")
+```
+
+Here's how the spectral condition number $\kappa(W)$ grows with $n$:
+
+```julia
+nmax = 300
+nv = 10:10:nmax
+κ = [( (D,~) = cheb(n); D2 = D^2; A = D2[2:n,2:n]; fact = eigen(A);
+        cond(fact.vectors)) for n = nv];
+```
+
+```julia
+scatter(nv,κ,label="spectral condition number")
+plot!(nv,0.825*nv.^(1/4);label="model")
+```
+
+Returning to the bound we derived above,
+$$
+\| {\rm e}^{tA} \| \leq \| W \| \| W^{-1} \| \| {\rm e}^{t\Lambda} \| = \kappa(W)\max\lbrace {\rm e}^{t\lambda} : \lambda \in \sigma(A)  \rbrace,
+$$
+from our numerical results we have the following estimate for an upper bound on $\| {\rm e}^{tA} \|$, namely,
+$$
+0.825 n^{1/4}{\rm e}^{-\pi^2 t/4}.
+$$
+It turns out this bound is completely too pessimistic:
+
+```julia
+t = 0.1
+nmax = 50
+nv = 4:nmax
+mexpb = [( (D,~) = cheb(n); D2 = D^2; A = D2[2:n,2:n];
+          opnorm(exp(t*A),2))  for n = nv]
+scatter(nv,mexpb;label="|| exp(tA) ||")
+plot!(nv,0.825*nv.^(1/4)*exp(-π^2*t/4);label="upper bound")
+```
+
+Let's return to the linear ODE system we derived for the diffusion equation with the Chebyshev collocation method:
+$$
+\mathbf{v}'(t) = A\mathbf{v}(t) + \mathbf{h}(t), \qquad \mathbf{v}(t) \in \mathbb{R}^{n-1}, \qquad A \in \mathbb{R}^{(n-1)\times (n-1)}.
+$$
+Earlier in this chapter, we showed that if $A$ has an eigendecomposition, then this system can be diagonalised (i.e., the coupled system of ODEs can be expressed as $n-1$ decoupled scalar ODEs) and we derived the following step size restriction for Euler's method to be stable:
+$$
+\tau \leq \frac{2}{\rho(A)}.
+$$
+Based on our numerical results above, we estimate that
+$$
+\tau \leq \frac{2}{\rho(A)} \approx \frac{2}{4(0.05n^4)} = \frac{10}{n^4}.
+$$
+Let's test this:
+
+```julia
+n = 24
+f = x -> sin(π*x/2) + 0.5*sin(2π*x)
+ϕ1 = t -> exp(-π^2*t/4)
+ϕ0 = t -> 0
+T = 0.25
+D,s = cheb(n)
+x = (s .+ 1)/2
+D2 = D^2
+F = (t,v) -> 4D2[2:n,2:n]*v + 4*ϕ1(t)*D2[2:n,1] + 4*ϕ0(t)*D2[2:n,n+1]
+τest =  10/n^4
+τ =  2/(4*norm(eigvals(D2[2:n,2:n]),Inf))
+@show [τ τest]
+
+# Euler's method
+
+t = 0:τ:T
+nt = length(t)-1
+@show nt
+u = zeros(n-1,nt+1); u[:,1] = f.(x[2:n])
+@time begin
+for i = 1:nt
+    u[:,i+1] = u[:,i] + τ*F(t[i],u[:,i])
+end
+end
+
+@gif for i = 1:100:nt+1
+    plot(x[2:n], u[:,1], size = (700, 150), label = "u0")
+    plot!(x[2:n], u[:,i], lw=2, label = "Chebyshev collocation,t = " * (@sprintf("%.4f", t[i])), legend = :outertopright)
+    plot!(xx, ue.(xx,t[i]), label = "exact solution")
+end
+```
+
+```julia
+τ += 1E-7
+t = 0:τ:T; nt = length(t)-1
+@show nt
+u = zeros(n-1,nt+1); u[:,1] = f.(x[2:n])
+@time begin
+for i = 1:nt
+    u[:,i+1] = u[:,i] + τ*F(t[i],u[:,i])
+end
+end
+
+@gif for i = 1:100:nt+1
+    plot(x[2:n], u[:,1], size = (700, 150), label = "u0")
+    plot!(x[2:n], u[:,i], lw=2, label = "Chebyshev collocation,t = " * (@sprintf("%.4f", t[i])), legend = :outertopright)
+    plot!(xx, ue.(xx,t[i]), label = "exact solution")
+end
+```
+
+Notice that the (spurious) exponentially growing solution produced by Euler's method appears to resemble the high-frequency eigenfunctions we plotted before.
+
+Of course, there are much better time stepping methods than Euler's method:
+
+```julia
+F = (v,p,t) -> 4D2[2:n,2:n]*v + 4*ϕ1(t)*D2[2:n,1] + 4*ϕ0(t)*D2[2:n,n+1]
+prob = ODEProblem(F, f.(x[2:n]), (0.0, T))
+soln =  solve(prob,Rodas4(),abstol=1e-4);
+length(soln.t)
+```
+
+### Chebyshev / ultraspherical spectral method
+
+Here we use the orthogonal polynomials we learnt about in Chapter 4 to approximate the solution to the diffusion equation in coefficient space.  Specifically, we assume the solution has an expansion in Chebyshev polynomials with time-dependent expansion coefficients, i.e., we assume
+$$
+u(x,t) = \sum_{k = 0}^{\infty}u_k(t)T_k(2x-1), \qquad x \in [0, 1], \qquad t \in [0, T].
+$$
+Setting
+$$
+T(2x-1) = \left[T_0(2x-1) | T_1(2x-1) | \cdots \right]
+$$
+and
+$$
+\mathbf{u}(t) = \left(
+\begin{array}{c}
+u_0(t) \\
+u_1(t) \\
+\vdots
+\end{array}
+\right)
+$$
+we can write
+$$
+u(x,t) = T(2x-1)\mathbf{u}(t).
+$$
+Recall from Chapter 4 that
+$$
+\frac{{\rm d}}{{\rm d}s} T(s) = C^{(1)}(s)\mathcal{D}_0, \qquad s \in [-1, 1],
+$$
+where
+$$
+C^{(1)}(s) = \left[C_0^{(1)}(s) | C_1^{(1)}(s) | \cdots \right]
+$$
+and $\mathcal{D}_0$ is a banded matrix with bandwidths $(-1, 1)$.  Also,
+$$
+\frac{{\rm d}^2}{{\rm d}s^2} T(s) = \frac{{\rm d}}{{\rm d}s}C^{(1)}(s)\mathcal{D}_0 = C^{(2)}(s)\mathcal{D}_1\mathcal{D}_0
+$$
+where $\mathcal{D}_1$ is an infinite matrix with bandwidths $(-1, 1)$ and therefore, setting $s = 2x -1$, we have
+$$
+\frac{\partial^2}{\partial x^2} u(x,t) = \frac{{\rm d}^2}{{\rm d}x^2} T(2x-1)\mathbf{u}(t) = 4C^{(2)}(2x-1)\mathcal{D}_1\mathcal{D}_0 \mathbf{u}(t).
+$$
+We therefore need to express the time derivative in the $C^{(2)}$ basis:
+$$
+\frac{\partial}{\partial t} u(x,t) = T(2x-1)\mathbf{u}'(t) = C^{(1)}(2x-1)\mathcal{S}_0\mathbf{u}'(t)  = C^{(2)}(2x-1)\mathcal{S}_1\mathcal{S}_0\mathbf{u}'(t),
+$$
+where $\mathcal{S}_0$ and $\mathcal{S}_1$ are infinite banded matrices with bandwidths $(0, 2)$ (see chapter 4). 
+Setting $u_t=u_{xx}$, we conclude that
+$$
+\mathcal{S}_1\mathcal{S}_0\mathbf{u}'(t) = 4\mathcal{D}_1\mathcal{D}_0 \mathbf{u}(t)
+$$
+
+From the initial data, we require
+$$
+u(x,0) = T(2x-1)\mathbf{u}(0) = \sum_{k=0}^{\infty}T_k(2x-1)u_k(0) = f(x).
+$$
+
+
+As we know from Chapter 3, we can approximate the Chebyshev coefficients $u_k(0)$ of $f(x)$ using the FFT or, in Julia we can use ApproxFun.jl, in Matlab we can use Chebfun and in Python, ChebyPy.
+
+```julia
+f = x -> sin(π*x/2) + 0.5*sin(2π*x)
+fs = s -> f((s+1)/2)
+g = θ -> fs(cos(θ))
+n = 30
+θ = range(0,2π;length= 2n+2)[1:end-1] # the points θ_j
+ct = fft(g.(θ))/(2n+1) # compute approximate Fourier coefficients of g
+# approximate Chebyshev coefficients
+ut = [ct[1];2ct[2:n+1]] 
+fc = Fun(f,Chebyshev(0..1))
+n = @show length(fc.coefficients)
+norm(fc.coefficients - ut[1:n],Inf)
+```
+
+Let's compute the solution to the system of ODEs
+$$
+\mathcal{S}_1\mathcal{S}_0\mathbf{u}'(t) = 4\mathcal{D}_1\mathcal{D}_0 \mathbf{u}(t),
+$$
+where we truncate the infinite system and $\mathbf{u}(0)$ is replaced with a finite vector of approximate Chebyshev coefficients of $f(x)$. 
+
+```julia
+S10 = Conversion(Chebyshev(),Ultraspherical(2))
+D10 = Derivative(Chebyshev(),2)
+L = S10[1:n,1:n]
+R = 4*D10[1:n,1:n]
+T = 0.1
+F = (u,p,t) -> L\(R*u)
+prob = ODEProblem(F, fc.coefficients, (0.0, T))
+soln =  solve(prob,RK4(),reltol=1E-6);
+```
+
+```julia
+xx = range(0,1;length=301)
+t = soln.t
+u = soln.u
+S = Chebyshev(0..1)
+nt = length(soln.t)
+@gif for i = 1:nt
+    plot(xx, Fun(S,u[1]).(xx), size = (700, 150), label = "u0")
+    plot!(xx, Fun(S,u[i]).(xx), lw=2, label = "Chebyshev spectral 
+    method,t = " * (@sprintf("%.4f", t[i])), legend = :outertopright)
+    plot!(xx, ue.(xx,t[i]), label = "exact solution")
+end
+```
+
+The problem is that we have not imposed the boundary conditions.  From the boundary data, we require
+$$
+u(0,t) = \varphi_0(t) = T(-1)\mathbf{u}(t) = \left(1 \:\: -1 \:\: 1 \:\: -1 \:\: \cdots    \right)\mathbf{u}(t)
+$$
+and
+$$
+u(1,t) = \varphi_1(t) = T(1)\mathbf{u}(t) = \left(1 \:\: 1 \:\: 1 \:\: 1 \:\: \cdots    \right)\mathbf{u}(t).
+$$
+
+Suppose we approximate the solution to the ODE system with Euler's method, then
+$$
+\mathcal{S}_1\mathcal{S}_0\left(\frac{\mathbf{u}^{i+1} - \mathbf{u}^i}{\tau}  \right) = 4 \mathcal{D}_1\mathcal{D}_0\mathbf{u}^i
+$$
+where
+$$
+\mathbf{u}(t_i) \approx \mathbf{u}^i, \qquad t_i = i\tau, \qquad i = 0, 1, \ldots, n_t. 
+$$
+Then, imposing the time-dependent boundary conditions on the approximate solution, the method becomes
+$$
+\left(
+\begin{array}{c c c c c}
+1 & -1 & 1 & -1 & \cdots \\
+1 & 1  & 1 &  1 & \cdots \\
+ & &\mathcal{S}_1\mathcal{S}_0 & &
+\end{array}
+\right)
+\mathbf{u}^{i+1} = 
+\left(
+\begin{array}{c}
+\varphi_0(t_{i+1}) \\
+\varphi_1(t_{i+1}) \\
+\left(\mathcal{S}_1\mathcal{S}_0 +4\tau \mathcal{D}_1\mathcal{D}_0 \right)\mathbf{u}^i
+\end{array}
+\right).
+$$
+
+Let's experiment to see what step size we need for Euler's method to be stable and compare it to the upper bound on the step size we found for the Chebyshev collocation method (approximately $10/n^4$).
+
+```julia
+T = 2
+n = length(fc.coefficients)
+@show τcollocation = 10/n^4
+τ = @show 0.000123
+t = 0:τ:T
+Le = [(-1).^(0:n-1)';ones(1,n);S10[1:n-2,1:n]]
+Re = (S10 + 4τ*D10)[1:n-2,1:n]
+nt = @show length(t)-1
+u = zeros(n,nt+1)
+u[:,1] = fc.coefficients
+
+@time begin
+for i = 1:nt
+    u[:,i+1] = Le\[ϕ0(t[i+1]);ϕ1(t[i+1]);Re*u[:,i]]
+end
+end
+```
+
+```julia
+xx = range(0,1;length=301)
+@gif for i = 1:100:nt+1
+    plot(xx, Fun(S,u[:,1]).(xx), size = (700, 150), label = "u0")
+    plot!(xx, Fun(S,u[:,i]).(xx), lw=2, label = "Chebyshev spectral method,t = " * (@sprintf("%.4f", t[i])), legend = :outertopright)
+    plot!(xx, ue.(xx,t[i]), label = "exact solution")
+end
+```
+
+```julia
+τ = 0.000122 
+Re = (S10 + 4τ*D10)[1:n-2,1:n]
+t = 0:τ:T
+nt = @show length(t)-1
+u = zeros(n,nt+1)
+u[:,1] = fc.coefficients
+
+for i = 1:nt
+    u[:,i+1] = Le\[ϕ0(t[i+1]);ϕ1(t[i+1]);Re*u[:,i]]
+end
+```
+
+```julia
+xx = range(0,1;length=301)
+@gif for i = 1:100:nt+1
+    plot(xx, Fun(S,u[:,1]).(xx), size = (700, 150), label = "u0")
+    plot!(xx, Fun(S,u[:,i]).(xx), lw=2, label = "Chebyshev spectral method,t = " * (@sprintf("%.4f", t[i])), legend = :outertopright)
+    plot!(xx, ue.(xx,t[i]), label = "exact solution")
+end
+```
+
+Let's compare the matrix $2$-norms of the matrix $A$ that we constructed for the Chebyshev collocation method (i.e., the matrix consisting of the second to $n$-th columns of the second-order differentiation matrix) and the matrix $(\mathcal{S}_1\mathcal{S}_0)^{-1}\mathcal{D}_1\mathcal{D}_0$
+
+```julia
+nmax = 81; nvc = 5:nmax
+collnorms = [( (D,~) = cheb(n); D2 = D^2; A = D2[2:n,2:n];
+    opnorm(A)) for n = nvc];
+nv = 6:82 
+specnorms = [opnorm((S10[1:n,1:n]\D10[1:n,1:n])[1:n-2,3:n],2) for n = nv]
+plot(nvc.-1,collnorms;yscale=:log10,lw=4,label="Chebyshev collocation matrix norm",legend=:bottomright)
+plot!(nv.-2,specnorms,lw=4,label="Chebyshev spectral method matrix norm")
+plot!(nv.-2,0.15(nv.-2).^4,label="0.15n⁴")
+plot!(nv.-2,0.05(nv.-2).^4,label="0.05n⁴")
+```
+
+## Spectral methods from Chapters 2 & 3 revisited
+
+### Advection equation
+
+In Chapter 2, we considered the variable coefficient advection equation,
+$$
+u_t + c(x)u_x = 0, \qquad x \in [0, 2\pi), \qquad t \in [0, T],
+$$
+with 
+$$
+c(x) = \frac{1}{5} + \sin^2(x-1)
+$$
+and the initial data  $u(x,0) = f(x) = {\rm e}^{-100(x-1)^2}$. Since the initial data decay  rapidly to zero away from $x = 1$, we approximated the solution in the $x$ direction with a periodic trigonometric interpolant and we replaced the time derivative with a central difference approximation to obtain the following Fourier pseudospectral / Fourier collocation method:
+
+$$
+\mathbf{u}^{i+1} = \mathbf{u}^{i-1} - 2\tau c(\mathbf{x})\cdot \mathcal{F}^{-1}\left\lbrace {\rm i}(-m\!:\!m)\cdot\mathcal{F}\lbrace \mathbf{u}^{i} \rbrace\right\rbrace, \qquad i = 0, \ldots, n_t-1, \qquad \mathbf{u}^0 = \mathbf{f},
+$$
+
+where $\mathcal{F}$ and $\mathcal{F}^{-1}$ denote the application of the FFT and inverse FFT, the entries of $\mathbf{x} \in \mathbb{R}^{n_x}$ are $x_j$ and the entries of $\mathbf{u}^{i} \in \mathbb{R}^{n_x}$ are $u^{i}_j \approx u(x_j, t_i)$, with $x_j = jh$, $h = 2\pi/n_x$, $j = 0, \ldots, n_x -1$, $n_x = 2m + 1$ and $t_i = i\tau$, $i = 0, \ldots, n_t$ with $n_t\tau = T$.
+
+To analyse the stability of this method, we recall from earlier in this chapter that the FFT can be diagonalised via unitary matrix, i.e., 
+$$
+\mathcal{F}^{-1}\left\lbrace {\rm i}(-m\!:\!m)\cdot\mathcal{F}\lbrace \mathbf{u}^{i} \rbrace\right\rbrace = 
+Q_{n_x}^*P^*\Lambda PQ_{n_x} \mathbf{u}^{i}, \qquad \Lambda = {\rm i}\,\mathrm{diag}(-m, -(m-1), \ldots, 0, 1, \ldots, m).
+$$
+If we replace $c(\mathbf{x}) \in \mathbb{R}^{n_x}$ with $c_{\max} = \max\lbrace c(x) : x \in [0, 2\pi)\rbrace = 6/5$ and set $\mathbf{w}^{i} = PQ_{n_x}\mathbf{u}^{i}$, then the method decouples into $n_x$ scalar equations,
+
+$$
+w^{i+1}_j = w^{i-1}_j - 2{\rm i}\tau c_{\max} \lambda_j w^i_j, \qquad \lambda_j = j-m, \qquad j = 0, \ldots, n_x-1.
+$$
+
+Using the Von Neumann method of stability analysis, we use the ansatz $w_j^i = \rho^i {\rm e}^{{\rm i}kx_j}$ and conclude that
+$$
+\rho - \rho^{-1} = -2i\tau c_{max}\lambda_j
+$$
+
+Call the solutions to this equation $\rho_+$ and $\rho_-$. Note that if $\rho_+$ satisfies this equation, then so does $-\rho^{-1}_+$, which implies that $\rho_- = -\rho_+^{-1}$. For the method to be stable, it is necessary and sufficient that $\vert \rho_{\pm} \vert \leq 1$ and if $\vert \rho_{\pm} \vert = 1$, we additionally require that $\rho_{+} \neq \rho_{-}$ (this is known as the root condition, see *A First Course in the Numerical Analysis of Differential Equations* by A. Iserles, p. 25).  If $\vert \rho_+ \vert < 1$, then $\vert \rho_- \vert > 1$, therefore we require $\vert \rho_+ \vert = 1$ and $\rho_+ \neq \rho_- = -\rho_+^{-1}$, i.e., $\rho_+ \neq \pm i$.
+
+Using the quadratic formula, it follows that
+$$
+\rho_{\pm} = -{\rm i}\tau c_{\max} \lambda_j \pm \left(-\tau^2 c^2_{\max}\lambda_j^2 + 1   \right)^{1/2}
+$$
+and hence the method will be stable if and only if $\tau^2 c_{\max}^2 \lambda^2_j < 1$ or 
+$$
+\tau < \min_{j = 0, \ldots, n_x-1} \left\lbrace \frac{ 1}{c_{\max}\vert\lambda_j\vert}\right\rbrace = \frac{ 1}{c_{\max}m} = \frac{2}{c_{\max}(n-1)},
+$$
+because then
+$$
+\vert \rho_{\pm} \vert^2 = 1, \qquad \rho_+ \neq \rho_-.
+$$
+If there's a $j$ such that $\tau^2 c_{\max}^2 \lambda_j^2 \geq 1$, then these conditions are not satisfied.
+
+Let's test the upper bound on the step size with $c(x) = 1$. First, we determine how many approximate Fourier coefficients we need to resolve the initial data to machine precision accuracy:
+
+```julia
+nₓ = 301
+m = (nₓ-1)÷2
+f = x -> exp(-100*(x-1)^2)
+x = range(0,2π;length=nₓ+1)[1:end-1]
+c = fftshift(fft(f.(x)))/nₓ
+scatter(-m:m,abs.(c);yscale=:log10,legend=false)
+```
+
+```julia
+T = 2
+cmax = 1
+τ = @show 1/(cmax*m)+1e-4
+t = 0:τ:T
+nₜ = @show length(t)-1
+u = zeros(nₜ + 2,nₓ)
+u[2,:] = f.(x)  # initial data
+u[1,:] = f.(x .+ τ)
+for n = 2:nₜ
+    u[n+1,:] = real.(u[n-1,:] - 2τ*ifft(ifftshift(im*(-m:m)).*fft(u[n,:])))
+end
+```
+
+```julia
+@gif for i = 2:2:nₜ+1
+    plot(x, u[2,:], size = (700, 150), label = "u0")
+    plot!(x, f.(x .- mod2pi((i-1)*τ*cmax)), lw=2, size = (700, 150),label="exact solution")
+    plot!(x, u[i,:], label = "Fourier pseudospectral method,t = " * (@sprintf("%.4f", t[i])), legend = :outertopright)
+end
+```
+
+```julia
+τ -= 2E-4
+T = 2π
+t = 0:τ:T
+nₜ = @show length(t)-1
+@show τ
+u = zeros(nₜ + 2,nₓ)
+u[2,:] = f.(x)  # initial data
+u[1,:] = f.(x .+ τ)
+for n = 2:nₜ
+    u[n+1,:] = real.(u[n-1,:] - 2τ*ifft(ifftshift(im*(-m:m)).*fft(u[n,:])))
+end
+```
+
+```julia
+@gif for i = 2:10:nₜ+1
+    plot(x, u[2,:], size = (700, 150), label = "u0")
+    plot!(x, f.(mod2pi.(x .- (i-1)*τ*cmax)), lw=2, size = (700, 150),label="exact solution")
+    plot!(x, u[i,:], label = "Fourier pseudospectral method,t = " * (@sprintf("%.4f", t[i])), legend = :outertopright)
+end
+```
+
+Now let's consider the case when $c(x) = 1/5 + \sin^2(x-1)$
+
+```julia
+c = x -> 0.2 + sin(x - 1)^2
+nₓ = 401
+cmax = 6/5
+m = (nₓ-1)÷2
+x = range(0,2π;length=nₓ+1)[1:end-1] 
+τ = @show 1/(m*cmax)
+τ = 0.0044 # no blow up
+#τ = 0.00441 #blow up
+T = 12.825
+t = 0:τ:T
+nₜ = @show length(t)-1
+u = zeros(nₜ + 2,nₓ)
+u[2,:] = f.(x) 
+u[1,:] = f.(x .+ 0.2*τ)
+
+for n = 2:nₜ-1
+    u[n+1,:] = real.(u[n-1,:] - 2τ*c.(x).*ifft(ifftshift(im*(-m:m)).*fft(u[n,:])))
+end
+```
+
+```julia
+@gif for i = 2:20:nₜ+1
+    plot(x, u[2,:], size = (700, 150), label = "u0")
+    plot!(x, u[i,:], lw=2, label = "Fourier collocation,t = " * (@sprintf("%.4f", t[i])), legend = :outertopright)
+end
+```
+
+```julia
+τ = 0.00441 #blow up
+t = 0:τ:T
+nₜ = @show length(t)-1
+u = zeros(nₜ + 2,nₓ)
+u[2,:] = f.(x) 
+u[1,:] = f.(x .+ 0.2*τ) 
+for n = 2:nₜ-1
+    u[n+1,:] = real.(u[n-1,:] - 2τ*c.(x).*ifft(ifftshift(im*(-m:m)).*fft(u[n,:])))
+end
+```
+
+```julia
+@gif for i = 2:20:nₜ+1
+    plot(x, u[2,:], size = (700, 150), label = "u0")
+    plot!(x, u[i,:], lw=2, label = "Fourier collocation,t = " * (@sprintf("%.4f", t[i])), legend = :outertopright)
+end
+```
+
+### Wave equation
+
+In Chapter 3, we considered the wave equation
+$$
+u_{tt} = u_{xx}, \qquad t > 0, \qquad -1 < x < 1, \qquad ,
+$$
+subject to zero boundary conditions $u(\pm 1, t) = 0$ and the initial data
+$$
+u(x,0) = f(x) = {\rm e}^{-200x^2}.
+$$
+Rather than specifying $u_t(x,0)$, we imposed the condition
+$$
+u(x,-\tau) = f(x - \tau) = {\rm e}^{-200(x-\tau)^2}.
+$$
+
+We approximated the solution with a Chebyshev interpolant in $x$, i.e., 
+$$
+u(x,t) \approx u_{n_x}(x,t) = \sum_{k=0}^{n_x} \ell_k(x)v_k(t), \quad \ell_k(x) = \prod_{\substack{j=0\\ j \neq k}}^{n_x}\frac{x-x_j}{x_k-x_j}, \quad x_k = \cos\left(\frac{\pi k}{n_x} \right),
+$$
+where $u(x_j,t) \approx v_j(t)$.  Due to the zero boundary data, we set $v_0(t) = v_{n_x}(t)$. We specify that $u_{n_x}(x,t)$ satisfy the wave equation at the collocation points, i.e., 
+$$
+\frac{\partial^2}{\partial t^2}u_{n_x}(x_j,t) = \frac{\partial^2}{\partial x^2} u_{n_x}(x_j,t),
+$$
+which is equivalent to the second-order system of ODEs:
+$$
+\begin{eqnarray*}
+\left(
+\begin{array}{c}
+v_1''(t) \\
+v_2''(t) \\
+\vdots \\
+v_{n_x-1}''(t)
+\end{array}
+\right) &=& 
+\left(
+\begin{array}{c c c c c}
+\ell''_0(x_1) &\ell''_1(x_1) & \cdots &\ell''_{n_x-1}(x_1) & \ell''_{n_x}(x_1) \\
+\ell''_0(x_2) &\ell''_1(x_2) & \cdots &\ell''_{n_x-1}(x_2) & \ell''_{n_x}(x_2)  \\
+     \vdots  & \vdots & \vdots & \vdots & \vdots  \\
+\ell''_0(x_{n_x-1}) &\ell''_1(x_{n_x-1}) & \cdots &\ell''_{n_x-1}(x_{n_x-1}) & \ell''_{n_x}(x_{n_x-1})
+\end{array} 
+\right)
+\left(
+\begin{array}{c}
+v_0(t) \\
+v_1(t) \\
+\vdots \\
+v_{n_x-1}(t) \\
+v_{n_x}(t)
+\end{array}
+\right) \\
+&=& \left(
+\begin{array}{ c c c }
+\ell''_1(x_1) & \cdots &\ell''_{n_x-1}(x_1)  \\
+\ell''_1(x_2) & \cdots &\ell''_{n_x-1}(x_2)   \\
+   \vdots & \vdots & \vdots   \\
+\ell''_1(x_{n_x-1}) & \cdots &\ell''_{n_x-1}(x_{n_x-1}) 
+\end{array} 
+\right)
+\left(
+\begin{array}{c}
+v_1(t) \\
+\vdots \\
+v_{n_x-1}(t)
+\end{array}
+\right)  := A\mathbf{v}(t).
+\end{eqnarray*}
+$$
+Note that the matrix $A$ is the same as the matrix we encountered when we solved the diffusion equation with a Chebyshev collocation method earlier in this chapter; it is the second to $n$-th columns of the second-order Chebyshev differentiation matrix.
+
+We approximated the second time derivative with a central difference, hence we set
+$$
+v_j(t_i) \approx u^{i}_j, \qquad t_i = i\tau, \qquad i = 0, \ldots, n_t,
+$$
+and
+$$
+v_j''(t_i) \approx \frac{u^{i+1}_j - 2u^i_j + u^{i-1}_j}{\tau^2}.
+$$
+Substituting this into the second-order ODE system, we obtain the leap frog method
+$$
+\mathbf{u}^{i+1} = 2\mathbf{u}^{i} - \mathbf{u}^{i-1} + \tau^2 A\mathbf{u}^{i}, \qquad i = 0, \ldots, n_t-1.
+$$
+and from the initial data, we set
+$$
+\mathbf{u}^{0} = f(\mathbf{x}), \qquad \mathbf{u}^{-1} = f(\mathbf{x}-\tau).
+$$
+
+To analyse the stability of the method, we recall from earlier in this chapter that $A$ has the eigendecomposition $A = W\Lambda W^{-1}$. Setting $\mathbf{w}^i = W^{-1}\mathbf{u}^{i}$, the leap frog method becomes
+$$
+\mathbf{w}^{i+1} = 2\mathbf{w}^{i} - \mathbf{w}^{i-1} +  \tau^2\Lambda \mathbf{w}^{i},
+$$
+i.e.,
+$$
+w^{i+1}_j = 2w^{i}_j - w^{i-1}_j +  \tau^2\lambda_j w^{i}_j, \qquad j = 1, \ldots, n_x-1,
+$$
+where the $\lambda_j$ are the eigenvalues of $A$.  We learnt earlier in this chapter that the $\lambda_j$ are negative real numbers and that 
+$$
+\rho(A) = \max_{j = 1, \ldots, n_x-1} \lbrace \vert \lambda_j \vert  \rbrace \approx \frac{(n_x-1)^4}{20}.
+$$
+Using the Von Neumann method of stability analysis, we set $w^i_j = \rho^i {\rm e}^{{\rm i}kx_j}$ and find that
+
+$$
+\rho  + \rho^{-1} =  2\left(1 - \frac{\tau^2}{2} \vert \lambda_j \vert\right)
+$$
+
+Call the solutions to this equation $\rho_+$ and $\rho_-$. Note that if $\rho_+$ satisfies this equation, then so does $\rho^{-1}_+$, which implies that $\rho_- = \rho_+^{-1}$. For the method to be stable, it is necessary and sufficient that $\vert \rho_{\pm} \vert \leq 1$ and if $\vert \rho_{\pm} \vert = 1$, we additionally require that $\rho_{+} \neq \rho_{-}$.  If $\vert \rho_+ \vert < 1$, then $\vert \rho_- \vert > 1$, therefore we require $\vert \rho_+ \vert = 1$ and $\rho_+ \neq \rho_- = \rho_+^{-1}$, i.e., $\rho_+ \neq \pm 1$.
+
+Using the quadratic formula and assuming $\tau^4\vert \lambda_j \vert^2/4 - \tau^2\vert \lambda_j \vert < 0$ or $\tau < 2/\sqrt{\vert \lambda_j \vert}$ for $j = 1, \ldots, n_x-1$, it follows that
+$$
+\begin{eqnarray*}
+\rho_{\pm}
+&=& 1 - \frac{\tau^2}{2}\vert \lambda_j \vert  \pm i\left( \tau^2\vert \lambda_j \vert -\frac{\tau^4}{4}\vert \lambda_j \vert^2   \right)^{1/2}
+\end{eqnarray*}
+$$
+and hence the method is stable because $\vert \rho_{\pm} \vert^2 = 1$  and $\rho_+ \neq \rho_-$.  It also follows that if there's a $j$ such that $\tau \geq 2/\sqrt{\vert \lambda_j \vert}$, then these conditions are not satisfied and the method is unstable.
+
+We estimate the step size restriction to be
+$$
+\tau < \min_{j = 1, \ldots, n_x-1}\left\lbrace \frac{2}{\sqrt{\vert \lambda_j \vert}}\right\rbrace \approx \frac{4\sqrt{5}}{(n_x-1)^2}
+$$
+
+Let's test this: First, we shall use the following function to compute the matrix-vector product $A\mathbf{u}^{i}$ via the FFT.
+
+```julia
+function chebfft(f)
+    n = length(f)-1
+    x = cos.((0:n)*π/n) # Chebyshev points
+    ii = 0:n-1
+    q = [f; f[n:-1:2]]      # transform x -> θ    
+    # differentiate the interpolant qₙ in coefficient space and map back to function values
+    cq = real.(fft(q))
+    dq = real.(ifft(im*[ii; 0; 1-n:-1] .*cq))
+    df = zeros(n+1,1)
+    # Compute approximations to f' at the interior points
+    df[2:n] = -dq[2:n] ./sqrt.(1 .- x[2:n].^2)    # transform θ -> x   
+    # At the boundary points
+    df[1] = sum(ii.^2 .*cq[1:n])/n + .5*n*cq[n+1]     
+    df[n+1] = sum((-1) .^(ii .+1) .* ii.^2 .*cq[1:n])/n +
+              .5*(-1)^(n+1)*n*cq[n+1]
+    df
+end
+```
+
+```julia
+N = 80; x = cos.(π*(0:N)/N); 
+@show τest = 4*sqrt(5)/(N-1)^2
+@show dt = 0.001438  
+v = exp.(-200*x.^2);vold = exp.(-200*(x .- dt).^2)
+tmax = 0.275; tplot = 2dt;
+plotgap = Int64(round(tplot/dt)); dt = tplot/plotgap;
+nplots = @show Int64(round(tmax/tplot))
+plotdata = [transpose(v); zeros(nplots,N+1)]; tdata = [0.0];
+@time begin
+for i = 1:nplots
+    for n = 1:plotgap
+        global v
+        global vold
+        w = chebfft(chebfft(v)); w[1]=0; w[N+1] = 0;
+        vnew = 2*v - vold + dt^2*w; vold = v; v = vnew;
+    end
+        global tdata
+    plotdata[i+1,:] = v; tdata = [tdata;dt*i*plotgap]
+end
+end
+```
+
+```julia
+@gif for i = 1:length(tdata)
+    plot(x, plotdata[1,:], size = (700, 150), label = "u0")
+    plot!(x, plotdata[i,:], lw=2, label = "Chebyshev collocation,t = " * (@sprintf("%.4f", tdata[i])), legend = :outertopright)
+end
+```
+
+```julia
+N = 80; x = cos.(π*(0:N)/N); 
+dt = 0.0014
+v = exp.(-200*x.^2);vold = exp.(-200*(x .- dt).^2)
+tmax = 4; tplot = 0.02;
+plotgap = Int64(round(tplot/dt)); dt = tplot/plotgap;
+nplots = @show Int64(round(tmax/tplot))
+plotdata = [transpose(v); zeros(nplots,N+1)]; tdata = [0.0];
+@time begin
+for i = 1:nplots
+    for n = 1:plotgap
+        global v
+        global vold
+        w = chebfft(chebfft(v)); w[1]=0; w[N+1] = 0;
+        vnew = 2*v - vold + dt^2*w; vold = v; v = vnew;
+    end
+        global tdata
+    plotdata[i+1,:] = v; tdata = [tdata;dt*i*plotgap]
+end
+end
+```
+
+```julia
+@gif for i = 1:length(tdata)
+    plot(x, plotdata[1,:], size = (700, 150), label = "u0")
+    plot!(x, plotdata[i,:], lw=2, label = "Chebyshev collocation,t = " * (@sprintf("%.4f", tdata[i])), legend = :outertopright)
+end
+```
+
+## Conclusion
+
+### PDEs in more than one spatial dimension
+
+In this module we've only looked at PDEs involving one spatial variable and one time variable.  One of the simplest PDEs involving more than one spatial variable is the Poisson equation, which in two spatial dimensions is
+$$
+\nabla^2 u(x,y) = \left(\frac{\partial^2}{\partial x^2} + \frac{\partial^2}{\partial y^2}\right)u(x,y) = f(x,y)
+$$
+where $f(x,y)$ is given.  If $f(x,y) = 0$, this is known as the Laplace equation.  This is an example of an elliptic PDE.  In this module, we've seen examples of parabolic PDEs (e.g., the diffusion equation) and hyperbolic PDEs (e.g., the advection equation and the wave equation).
+
+To learn about approximating solutions to PDEs in more than one spatial variable with finite difference methods, see [Ortner, Lecture 12](https://github.com/cortner/math405_2022/blob/main/notes/L12b-FDiff2D.ipynb) and A. Iserles, *A First Course in the Numerical Analysis of Differential Equations*, Chapter 8.  
+
+For examples of applying spectral collocation methods to PDEs in more than one spatial dimension, see L.N. Trefethen, *Spectral Methods in Matlab*.
+
+Examples of applying coefficient space spectral methods in more than one dimension can be found in [Ortner, Lecture 16](https://github.com/cortner/math405_2022/blob/main/notes/L16-SpectralMethods-BVPs.ipynb), in Iserles, Chapter 10 and in [this paper](https://spiral.imperial.ac.uk/bitstream/10044/1/85269/6/OPs.pdf) by Olver, Slevinsky and Townsend.
+
+ODEs and PDEs in one spatial dimension also become equations in two dimensions when the one spatial variable is allowed to be complex-valued.
+
+### Nonlinear PDEs
+
+In these lecture notes, we've only considered linear PDEs.  It is fairly straightforward to apply the finite difference and spectral methods that we've studied to nonlinear PDEs in one spatial dimension, e.g., equations such as
+$$
+u_t = u_{xx} + u^2,
+$$
+which is known as a reaction-diffusion equation / nonlinear heat equation / semilinear parabolic equation and
+$$
+u_t + uu_x + u_{xxx} = 0,
+$$
+which a nonlinear wave / hyperbolic equation known as the Kortweg-de Vries equation.  For more on this topic and examples, see the book by L.N. Trefethen, A. Iserles and [Ortner, Lecture 16](https://github.com/cortner/math405_2022/blob/main/notes/L16-SpectralMethods-BVPs.ipynb).
+
+### Structure preservation
+
+We have learnt that a method for a PDE should only be used if it converges.  Other properties we were interested in were the order of a method and its stability (specifically, the step size restrictions that are required and how larger step sizes could be used).  If we know that the solution to a PDE has certain properties, e.g., its $2$-norm or 'energy'  is preserved over time, i.e.,
+$$
+\frac{{\rm d}}{{\rm d}t} \| u(x,t) \|^2 = \frac{{\rm d}}{{\rm d}t} \int \vert u(x,t)\vert^2 \,{\rm d}x = 0, 
+$$
+then we would also want the $2$-norm of the approximate solution to be preserved as a function of time.  Some convergent methods will preserve the $2$-norm of the approximate solution better than others.  For more on properties of methods other than convergence, order and stability, see [Ortner, Lecture 11](https://github.com/cortner/math405_2022/blob/main/notes/L11-IVPs-Hamiltonian.ipynb), the book by Iserles, Chapter 5 and L.N. Trefethen, Finite Difference and Spectral Methods for Ordinary and Partial Differential Equations, [Chapter 5](https://people.maths.ox.ac.uk/trefethen/pdetext.html). 
+
+### The finite element method
+
+In these notes we've studied finite difference methods, spectral collocation (pseudospectral) methods and spectral (coefficient space) methods. An important method for PDEs that's used in many real-world applications is the finite element method.  For an introduction to this topic, see [M. Georgoulis's notes](http://users.math.uoc.gr/~tsogka/Courses/AEMDE-fall2015/Biblio/Georgoulis_notes_new.pdf), Chapter 7 and Iserles, Chapter 9.   
+
+### Software
+
+For spectral methods, [ApproxFun.jl](https://juliaapproximation.github.io/ApproxFun.jl/latest/) and associated packages are useful; in Matlab, it's [Chebfun](https://www.chebfun.org/) and in Python, it's [Chebpy](https://github.com/chebpy/chebpy) and [Dedalus](https://dedalus-project.org/).  For finite element methods, see [Firedrake](https://www.firedrakeproject.org/) and the [partial differential equation toolbox](https://uk.mathworks.com/products/pde.html) of Matlab. 

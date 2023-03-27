@@ -1,0 +1,80 @@
+
+# Chapter 4: Exercises, Part II
+
+Consider the Laguerre polynomials
+$$
+L_n^{(\alpha)}(x) = {(-1)^n \over n! } x^n + O(x^{n-1})
+$$
+   where $\alpha > -1$, which are orthogonal with respect to
+$$
+\langle f,g\rangle_\alpha = \int_0^\infty f(x) g(x) x^\alpha {\rm e}^{-x}\,{\rm d}x.
+$$
+
+1. Show that the Rodrigues formula holds:
+$$
+L_n^{(\alpha)}(x) = {x^{-\alpha} {\rm e}^x \over n!} {{\rm d}^n \over \,{\rm d}x^n}\left[x^{\alpha+n}{\rm e}^{-x}\right].
+$$
+   In other words, prove that $L_n^{(\alpha)}(x)$ (defined by the Rodrigues formula)
+   
+   (i) is  a polynomial of degree exactly $n$
+   
+   (ii) is orthogonal to all lower degree polynomials 
+   
+   (iii) has leading coefficient $\frac{(-1)^n}{n!}$
+   
+   Hints: For (i) and (iii), it may be helpful first to prove that
+$$
+{{\rm d} \over \,{\rm d}x}\left[x^{\alpha+1} {\rm e}^{-x} L_n^{(\alpha+1)}(x) \right]  = (n+1)x^{\alpha} {\rm e}^{-x}L_{n+1}^{(\alpha)}(x)
+$$
+   For (ii), use integration by parts.
+   
+2. Show that
+$$
+(n+1) L_{n+1}^{(\alpha)}(x) = (\alpha+n+1)L_n^{(\alpha)}(x) -   xL_n^{(\alpha+1)}(x)
+$$
+
+3. Show that 
+$$
+L_{n}^{(\alpha+1)}(x) = L_{n-1}^{(\alpha+1)}(x) + L_n^{(\alpha)}(x).
+$$
+
+4. Show that the Laguerre polynomials satisfy the following three-term recurrence:
+$$
+x L_n^{(\alpha)}(x) = - (n+\alpha)L_{n-1}^{(\alpha)}(x) + (2n+\alpha+1) L_n^{(\alpha)}(x) -(n+1)L_{n+1}^{(\alpha)}(x)
+$$
+
+5. Prove that 
+$$
+{{\rm d} L_n^{(\alpha)} \over \,{\rm d}x}  = -L_{n-1}^{(\alpha+1)}(x)
+$$
+
+6. Let 
+$$
+L^{(\alpha)}(x) = \left[L_0^{(\alpha)}(x) |  L_1^{(\alpha)}(x) | \cdots  \right].
+$$
+   Give matrices $D_{\alpha}$ and $S_{\alpha}$ such that
+$$
+\frac{{\rm d}}{{\rm d}x}L^{(\alpha)}(x) = L^{(\alpha+1)}(x)\mathcal{D}_{\alpha} \quad \text{and} \quad L^{(\alpha)}(x) = L^{(\alpha+1)}(x)S_{\alpha}
+$$
+
+7. Consider the advection equation on the half line:
+$$
+u_t + u_x = 0, \qquad x \in [0, \infty), \qquad t \geq 0.
+$$
+   Suppose the solution has an expansion of the form
+$$
+u(x,t) =  {\rm e}^{-x/2}\sum_{k=0}^{\infty}u_k(t) L_k^{(0)}(x) = {\rm e}^{-x/2}L^{(0)}(x)\mathbf{u}(t)
+$$
+   where
+$$
+\mathbf{u}(t) = \begin{bmatrix}   
+u_0(t) \\
+u_1(t) \\
+\vdots
+\end{bmatrix}.
+$$
+     Show that 
+$$
+\mathbf{u}'(t) = A\mathbf{u}(t),
+$$
+    where $A$ is a matrix that is expressible in terms of $\mathcal{D}_0$ and $\mathcal{S}_0$ (defined in question 6).   Use software of your choice to build a $10 \times 10$ version of the matrix $A$.

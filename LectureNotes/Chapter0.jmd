@@ -156,6 +156,7 @@ I used the following sources for writing the lecture notes (please ask me for re
 5. [Sheehan Olver's Numerical Analysis notes](https://github.com/Imperial-MATH50003/MATH50003NumericalAnalysis2122) (2022)
 6. [Sheehan Olver and M. Fasondini's Applied Complex Analysis notes](https://github.com/MarcoFasondini/M3M6AppliedComplexAnalysis) (2021)
 7. [Christoph Ortner's notes on Numerical Methods for Differential Equations](https://github.com/cortner/math405_2022) (2022)
-8. [*Spectral Methods in Matlab*](https://people.maths.ox.ac.uk/trefethen/spectral.html) (2000), by L.N. Trefethen
-9. [*Approximation Theory and Approximation Practice*](https://people.maths.ox.ac.uk/trefethen/ATAP/) (2019), by L.N. Trefethen
-10. [A MATLAB differentiation matrix suite](https://le.ac.uk/library) (2000), by J.A.C.  Weideman and S.C. Reddy,  *ACM Transactions on Mathematical Software* (TOMS), 26(4), pp.465-519.
+8. [*Finite Difference and Spectral Methods for Ordinary and Partial Differential Equations*](https://people.maths.ox.ac.uk/trefethen/pdetext.html) (1996), by L.N. Trefethen
+9. [*Spectral Methods in Matlab*](https://people.maths.ox.ac.uk/trefethen/spectral.html) (2000), by L.N. Trefethen
+10. [*Approximation Theory and Approximation Practice*](https://people.maths.ox.ac.uk/trefethen/ATAP/) (2019), by L.N. Trefethen
+11. [A MATLAB differentiation matrix suite](https://le.ac.uk/library) (2000), by J.A.C.  Weideman and S.C. Reddy,  *ACM Transactions on Mathematical Software* (TOMS), 26(4), pp.465-519.
