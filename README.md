@@ -9,7 +9,7 @@ Lecture notes for Computational methods for PDEs at University of Leicester, 202
 
 #### Chapter 2: Fourier methods for periodic functions [html](https://rawcdn.githack.com/MarcoFasondini/Computational-PDEs/3f79852366ec4ff161324b576f9d96d107e959e8/output/Chapter2.html) [pdf](output/Chapter2.pdf) [notebook](LectureNotes/Chapter2.ipynb)
 
-##### Chapter 3: Chebyshev methods for non-periodic functions [html](https://rawcdn.githack.com/MarcoFasondini/Computational-PDEs/3f79852366ec4ff161324b576f9d96d107e959e8/output/Chapter3.html) [pdf](output/Chapter3.pdf) [notebook](LectureNotes/Chapter3.ipynb)
+#### Chapter 3: Chebyshev methods for non-periodic functions [html](https://rawcdn.githack.com/MarcoFasondini/Computational-PDEs/3f79852366ec4ff161324b576f9d96d107e959e8/output/Chapter3.html) [pdf](output/Chapter3.pdf) [notebook](LectureNotes/Chapter3.ipynb)
 
 #### Chapter 4: orthogonal polynomial methods for differential equations [html](https://rawcdn.githack.com/MarcoFasondini/Computational-PDEs/3f79852366ec4ff161324b576f9d96d107e959e8/output/Chapter4.html) [pdf](output/Chapter4.pdf) [notebook](LectureNotes/Chapter4.ipynb)
 
