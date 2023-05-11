@@ -10,12 +10,10 @@ Chapter 0: Welcome to Computational Methods for PDEs
 Chapter 1: From finite differences to a spectral method for periodic functions 
  [html](https://rawcdn.githack.com/MarcoFasondini/Computational-PDEs/814956af5fb9d64c2c943a0695a357d63ef3a7f5/output/Chapter1.html) [pdf](output/Chapter1.pdf) [notebook](LectureNotes/Chapter1.ipynb)
 
-Chapter 2: [html](https://rawcdn.githack.com/MarcoFasondini/Computational-PDEs/3f79852366ec4ff161324b576f9d96d107e959e8/output/Chapter2.html)
+Chapter 2: Fourier methods for periodic functions [html](https://rawcdn.githack.com/MarcoFasondini/Computational-PDEs/3f79852366ec4ff161324b576f9d96d107e959e8/output/Chapter2.html)
 
-Chapter 3: [html](https://rawcdn.githack.com/MarcoFasondini/Computational-PDEs/3f79852366ec4ff161324b576f9d96d107e959e8/output/Chapter3.html)
+Chapter 3: Chebyshev methods for non-periodic functions [html](https://rawcdn.githack.com/MarcoFasondini/Computational-PDEs/3f79852366ec4ff161324b576f9d96d107e959e8/output/Chapter3.html)
 
-Chapter 4: [html](https://rawcdn.githack.com/MarcoFasondini/Computational-PDEs/3f79852366ec4ff161324b576f9d96d107e959e8/output/Chapter4.html)
+Chapter 4: orthogonal polynomial methods for differential equations [html](https://rawcdn.githack.com/MarcoFasondini/Computational-PDEs/3f79852366ec4ff161324b576f9d96d107e959e8/output/Chapter4.html)
 
-Chapter 5: [html](https://rawcdn.githack.com/MarcoFasondini/Computational-PDEs/3f79852366ec4ff161324b576f9d96d107e959e8/output/Chapter5.html)
-
- [Welcome to Computational Methods for PDEs](https://nbviewer.org/github/MarcoFasondini/Computational-PDEs/blob/main/LectureNotes/Welcome_Computational_PDEs.ipynb)
+Chapter 5: Consistency, stability and convergence of methods for evolutionary PDEs [html](https://rawcdn.githack.com/MarcoFasondini/Computational-PDEs/3f79852366ec4ff161324b576f9d96d107e959e8/output/Chapter5.html)
