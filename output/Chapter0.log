@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.999992 (MiKTeX 2.9.7440 64-bit) (preloaded format=xelatex 2020.10.21)  12 JAN 2023 12:24
+This is XeTeX, Version 3.14159265-2.6-0.999992 (MiKTeX 2.9.7440 64-bit) (preloaded format=xelatex 2020.10.21)  11 MAY 2023 22:04
 entering extended mode
 **./Chapter0.tex
 (Chapter0.tex
@@ -629,15 +629,15 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 406.
 
 [3] [4]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 506.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 509.
  [5]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 506.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 509.
  (Chapter0.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 506.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 506.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 509.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 509.
 Package rerunfilecheck Info: File `Chapter0.out' has not changed.
 (rerunfilecheck)             Checksum: D82CCDA73BDD58183A0E53D7E6C8D819;534.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 506.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 509.
  ) 
 Here is how much of TeX's memory you used:
  13038 strings out of 414078
