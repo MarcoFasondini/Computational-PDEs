@@ -22,7 +22,7 @@ Lecture notes for Computational methods for PDEs at University of Leicester, 202
 3. [*A First Course in the Numerical Analysis of Differential Equations*](https://le.ac.uk/library) (2009), by A. Iserles 
 4. [Fast algorithms using orthogonal polynomials](https://le.ac.uk/library) (2020), by S. Olver, R.M. Slevinsky and A. Townsend. *Acta Numerica*, 29, pp.573-699. 
 5. [Sheehan Olver's Numerical Analysis notes](https://github.com/Imperial-MATH50003/MATH50003NumericalAnalysis2122) (2022)
-6. [Sheehan Olver and M. Fasondini's Applied Complex Analysis notes](https://github.com/MarcoFasondini/M3M6AppliedComplexAnalysis) (2021)
+6. [Applied Complex Analysis notes](https://github.com/MarcoFasondini/M3M6AppliedComplexAnalysis) (2021)
 7. [Christoph Ortner's notes on Numerical Methods for Differential Equations](https://github.com/cortner/math405_2022) (2022)
 8. [*Finite Difference and Spectral Methods for Ordinary and Partial Differential Equations*](https://people.maths.ox.ac.uk/trefethen/pdetext.html) (1996), by L.N. Trefethen
 9. [*Spectral Methods in Matlab*](https://people.maths.ox.ac.uk/trefethen/spectral.html) (2000), by L.N. Trefethen
