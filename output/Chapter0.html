@@ -659,9 +659,7 @@ div.title {text-align: center;}
         </div>
 
         <h1>Chapter 0: Welcome to Computational methods for partial differential equations</h1>
-
 <p><strong>Lecturer:</strong> Dr Marco Fasondini, <a href="mailto:m.fasondini@leicester.ac.uk">m.fasondini@leicester.ac.uk</a></p>
-
 <p>Here we</p>
 <ol>
 <li><p>Introduce the topic of computational methods for PDEs</p>
@@ -673,14 +671,10 @@ div.title {text-align: center;}
 <li><p>Discuss the sources / reading list</p>
 </li>
 </ol>
-
 <h2>Computational methods for PDEs</h2>
-
 <p>The purpose of this module is to introduce you to the analysis and implementation of computational methods for partial differential equations.  We shall study <strong>finite difference</strong> methods, <strong>spectral collocation</strong> methods, the <strong>ultraspherical spectral</strong> method and, time permitting, the <strong>finite element</strong> method.  </p>
-
 <p>A broader perspective: A quote from <em>An Applied Mathematician&#39;s Apology</em> by L.N. Trefethen, 2022:</p>
 <p>... the language of the laws of nature, partial differential equations or PDEs. When Maxwell discovered that light and radio waves are one, it was because of a PDE. When Einstein predicted gravitational waves, it was because     of a PDE. Chemistry is built on Schrodinger&#39;s equation, fluid mechanics on the Navier-Stokes equations, and civil engineering on the equations of elasticity.</p>
-
 <p>A few important PDEs &#40;there are many variations&#33;&#41;</p>
 <ul>
 <li><p>Laplace equation &#40;<span class="math">$f = 0$</span>&#41; / Poisson equation &#40;<span class="math">$f \neq 0$</span>&#41; </p>
@@ -754,7 +748,6 @@ v_t &= Au  - u^2 v + \alpha \nabla^2 v
 <li><p>...</p>
 </li>
 </ul>
-
 <p>Only in very few cases are we able to solve PDEs exactly, so we use computational methods to approximate solutions to PDEs. Here are some videos of simulations produced by computing solutions to differential equations:</p>
 <ul>
 <li><p>Cahn-Hilliard equation: &#40;<a href="https://www.youtube.com/watch?v&#61;MovUu2DwWvI">phase separation of a binary fluid</a>&#41;</p>
@@ -793,7 +786,6 @@ m_n \ddot{r_n} = - \nabla E(r_1, \dots, r_N)
 <li><p><a href="https://www.youtube.com/watch?v&#61;vOFcHqImXJ8">Another Navier-Stokes simulation</a></p>
 </li>
 </ul>
-
 <h3>Reality <span class="math">$\rightarrow$</span> Model<span class="math">$\rightarrow$</span> Simulation <span class="math">$\rightarrow$</span> Prediction</h3>
 <ul>
 <li><p>Mathematical models of &quot;real-world&quot; processes &#40;physics, chemistry, life sciences, engineering, ...&#41; more often than not take the form of a system of ordinary or partial differential equations, integral equations, or closely related models. &#40;sometimes stochastic, on networks, etc, but this is beyond the scope of this module&#41; </p>
@@ -817,12 +809,9 @@ m_n \ddot{r_n} = - \nabla E(r_1, \dots, r_N)
 </ul>
 </li>
 </ul>
-
 <h2>Module admin</h2>
 <p>See the <a href="https://blackboard.le.ac.uk/">Blackboard page</a> of this module</p>
-
 <h2>Programming / coding</h2>
-
 <p>All the code in the lecture notes are in the <a href="https://julialang.org/">Julia programming language</a>. You are free to use whichever programming language you prefer &#40;e.g., Matlab or Python&#41; and Matlab code will be available on Blackboard.</p>
 <p>If you prefer to do your coding in Matlab and need to refresh your memory, have a look at this <a href="https://matlabacademy.mathworks.com/details/matlab-onramp/gettingstarted">MathWorks tutorial</a> &#40;you may need to create a mathworks account with your student email address to access it&#41;.  For those using Matlab, to perform some of the numerical experiments in this module, you will find it helpful to use the Matlab package called <a href="https://www.chebfun.org/">Chebfun</a> &#40;see Chapter 1: Exercise 2&#41;.  In Julia, the counterpart of Chebfun is <a href="https://github.com/JuliaApproximation/ApproxFun.jl">ApproxFun.jl</a>. </p>
 <ul>
@@ -832,7 +821,6 @@ m_n \ddot{r_n} = - \nabla E(r_1, \dots, r_N)
 </li>
 </ul>
 <p>Back to Julia: it is a modern, compiled, high-level, open-source language developed at MIT. It is becoming increasingly important in high-performance computing and AI and it is used by Astrazeneca, Moderna and Pfizer in drug development and clinical trial accelleration, IBM for medical diagnosis, MIT for robot locomotion, and elsewhere.</p>
-
 <p>Julia is a relatively young programming language, which aims to combine </p>
 <ul>
 <li><p>the simplicity of Matlab,   <em>&#40;not really, but maybe close enough...&#41;</em></p>
@@ -844,11 +832,8 @@ m_n \ddot{r_n} = - \nabla E(r_1, \dots, r_N)
 <li><p>the meta-programming capabilities of Lisp.   <em>&#40;also true; but we won&#39;t need it in this module.&#41;</em></p>
 </li>
 </ul>
-
 <p>For those interested in using Julia, see the notes titled &quot;Julia&quot; on Blackboard, which have instructions for running the Julia code in the notes in a Jupyter notebook.  The Jupyter notebooks are available on Blackboard and have the file extension &quot;.ipynb&quot;.  The notes for this module are Jupyter notebooks that have been converted to PDFs using the package <a href="https://github.com/JunoLab/Weave.jl">Weave.jl</a>.</p>
-
 <h2>Sources</h2>
-
 <p>I used the following sources for writing the lecture notes &#40;please ask me for relevant page numbers / chapters on a particular topic&#41;:</p>
 <ol>
 <li><p><em>A Practical Guide to Pseudospectral Methods</em> &#40;1998&#41;, by B. Fornberg</p>
@@ -865,6 +850,8 @@ m_n \ddot{r_n} = - \nabla E(r_1, \dots, r_N)
 </li>
 <li><p><a href="https://github.com/cortner/math405_2022">Christoph Ortner&#39;s notes on Numerical Methods for Differential Equations</a> &#40;2022&#41;</p>
 </li>
+<li><p><a href="https://people.maths.ox.ac.uk/trefethen/pdetext.html"><em>Finite Difference and Spectral Methods for Ordinary and Partial Differential Equations</em></a> &#40;1996&#41;, by L.N. Trefethen</p>
+</li>
 <li><p><a href="https://people.maths.ox.ac.uk/trefethen/spectral.html"><em>Spectral Methods in Matlab</em></a> &#40;2000&#41;, by L.N. Trefethen</p>
 </li>
 <li><p><a href="https://people.maths.ox.ac.uk/trefethen/ATAP/"><em>Approximation Theory and Approximation Practice</em></a> &#40;2019&#41;, by L.N. Trefethen</p>
@@ -877,8 +864,8 @@ m_n \ddot{r_n} = - \nabla E(r_1, \dots, r_N)
         <HR/>
         <div class="footer">
           <p>
-            Published from <a href="Chapter0.ipynb">Chapter0.ipynb</a>
-            using <a href="http://github.com/JunoLab/Weave.jl">Weave.jl</a> v0.10.11 on 2023-01-27.
+            Published from <a href="Chapter0.jmd">Chapter0.jmd</a>
+            using <a href="http://github.com/JunoLab/Weave.jl">Weave.jl</a> v0.10.12 on 2023-05-11.
           </p>
         </div>
       </div>
