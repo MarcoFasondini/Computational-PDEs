@@ -444,8 +444,8 @@ A central theme: if you know the Jacobi matrix / three-term recurrence, you know
 \begin{lstlisting}
 norm(recurrence(*@{{\_}}@*)Chebyshev(n, 0.1) - trig(*@{{\_}}@*)Chebyshev(n, 0.1), Inf) = 1.110223
 0246251565e-16
-  0.003418 seconds (2 allocations: 7.629 MiB)
-  0.025798 seconds (2 allocations: 7.629 MiB)
+  0.004356 seconds (2 allocations: 7.629 MiB)
+  0.040686 seconds (2 allocations: 7.629 MiB)
 \end{lstlisting}
 
 
@@ -454,7 +454,7 @@ norm(recurrence(*@{{\_}}@*)Chebyshev(n, 0.1) - trig(*@{{\_}}@*)Chebyshev(n, 0.1)
 
 \begin{align*}
 x p_0(x) = a_0 p_0(x) + b_0 p_1(x) \\
-x p_n(x) = c_n p_{n-1}(x) + a_n p_n(x) + b_n p_{n+1}(x)
+x p_n(x) = c_{n-1} p_{n-1}(x) + a_n p_n(x) + b_n p_{n+1}(x)
 \end{align*}
 \textbf{Proof} The first part follows since $p_0(x)$ and $p_1(x)$ span all degree 1 polynomials.
 
@@ -670,13 +670,13 @@ i.e., the expansion coefficients of the polynomial approximation of $xf(x)$ are 
 (*@\HLJLn{n}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{ncoefficients}@*)(*@\HLJLp{(}@*)(*@\HLJLn{f}@*)(*@\HLJLp{)}@*) (*@\HLJLcs{{\#}}@*) (*@\HLJLcs{number}@*) (*@\HLJLcs{of}@*) (*@\HLJLcs{coefficients}@*) (*@\HLJLcs{in}@*) (*@\HLJLcs{the}@*) (*@\HLJLcs{expansion}@*)
 (*@\HLJLn{fn}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{f}@*)(*@\HLJLoB{.}@*)(*@\HLJLn{coefficients}@*)  (*@\HLJLcs{{\#}}@*) (*@\HLJLcs{coefficients}@*)
 (*@\HLJLn{xfn}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{X}@*)(*@\HLJLp{[}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{n}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{,}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{n}@*)(*@\HLJLp{]}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{fn}@*)  (*@\HLJLcs{{\#}}@*) (*@\HLJLcs{coefficients}@*) (*@\HLJLcs{of}@*) (*@\HLJLcs{x*f(x)}@*) (*@\HLJLcs{in}@*) (*@\HLJLcs{the}@*) (*@\HLJLcs{Chebyshev}@*) (*@\HLJLcs{basis}@*)
-(*@\HLJLn{xf}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{Fun}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{Chebyshev}@*)(*@\HLJLp{(),}@*)(*@\HLJLn{fn}@*)(*@\HLJLp{)}@*) (*@\HLJLcs{{\#}}@*) (*@\HLJLcs{construct}@*) (*@\HLJLcs{a}@*) (*@\HLJLcs{Chebyshev}@*) (*@\HLJLcs{expansion}@*) (*@\HLJLcs{with}@*) (*@\HLJLcs{the}@*) (*@\HLJLcs{coefficients}@*) (*@\HLJLcs{X*c}@*)
+(*@\HLJLn{xf}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{Fun}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{Chebyshev}@*)(*@\HLJLp{(),}@*)(*@\HLJLn{xfn}@*)(*@\HLJLp{)}@*) (*@\HLJLcs{{\#}}@*) (*@\HLJLcs{construct}@*) (*@\HLJLcs{a}@*) (*@\HLJLcs{Chebyshev}@*) (*@\HLJLcs{expansion}@*) (*@\HLJLcs{with}@*) (*@\HLJLcs{the}@*) (*@\HLJLcs{coefficients}@*) (*@\HLJLcs{X*c}@*)
 (*@\HLJLn{x}@*) (*@\HLJLoB{=}@*) (*@\HLJLnfB{0.1}@*)
 (*@\HLJLnf{xf}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{)}@*) (*@\HLJLoB{-}@*) (*@\HLJLn{x}@*)(*@\HLJLoB{*}@*)(*@\HLJLnf{f}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{)}@*)
 \end{lstlisting}
 
 \begin{lstlisting}
-0.994653826268083
+-6.938893903907228e-17
 \end{lstlisting}
 
 
@@ -765,7 +765,7 @@ and therefore the coefficients of $a(x)f(x)$ in the OP basis $\{ p_n\}$ are give
 (*@\HLJLnf{spy}@*)(*@\HLJLp{(}@*)(*@\HLJLn{aX}@*)(*@\HLJLp{[}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{n}@*)(*@\HLJLp{,}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{n}@*)(*@\HLJLp{])}@*)
 \end{lstlisting}
 
-\includegraphics[width=\linewidth]{/figures/Chapter4_7_1.pdf}
+\includegraphics[width=\linewidth]{jl_GsbqQZ/Chapter4_7_1.pdf}
 
 \subsection{Ultraspherical orthogonal polynomials}
 Thus far, we've discussed properties of general orthogonal polynomials and illustrated them with Chebyshev polynomials.  Here we introduce the ultraspherical OPs and show how they can be used to represent linear differential operators as banded matrices and thus result in an efficient method for solving boundary value problems.
@@ -1058,7 +1058,7 @@ T_n(x) = \sum_{k=0}^{n} c_k^{(n)} C_k^{(1)}(x),
 and note that $\left(\mathcal{S}_0\right)_{k,n} = c_k^{(n)}$. However, since
 
 \[
-c_k^{(n)} = \langle  T_n,  C^{(1)}_k \rangle_{1} = \langle  T_n,  (1-x^2)C^{(1)}_k \rangle_{0} = 0
+c_k^{(n)} = \frac{\langle  T_n,  C^{(1)}_k \rangle_{1}}{\left\| C^{(1)}_k \right\|^2} = \frac{\langle  T_n,  (1-x^2)C^{(1)}_k \rangle_{0}}{\left\| C^{(1)}_k \right\|^2} = 0
 \]
 for $k \leq n-3$, the result follows.  $\blacksquare$
 
@@ -1476,10 +1476,10 @@ We can solve this system as follows:
 
 \begin{lstlisting}
 ncoefficients(u) = 19
-norm(u(*@{{\textquotesingle}}@*) - u) = 3.7827048342410494e-16
+norm(u(*@{{\textquotesingle}}@*) - u) = 4.173347065336236e-16
 \end{lstlisting}
 
-\includegraphics[width=\linewidth]{/figures/Chapter4_25_1.pdf}
+\includegraphics[width=\linewidth]{jl_GsbqQZ/Chapter4_25_1.pdf}
 
 In the code above, the backslash command invokes some fancy numerical linear algebra: an adaptive QR algorithm that simultaneously solves the infinite linear system and determines the number of coefficients that have to be computed so that the relative error of the solution is on the order of machine epsilon.  Note that the solution to the linear system gives (approximate) Chebyshev coefficients of the solution.  In ApproxFun.jl, these coefficients are used to build a finite Chebyshev expansion of the solution:
 
@@ -1496,7 +1496,7 @@ The approximate solution that was computed in ApproxFun matches the "true" resul
 \end{lstlisting}
 
 \begin{lstlisting}
-(1.1051709180756477, 1.1051709180756477)
+(1.105170918075648, 1.1051709180756477)
 \end{lstlisting}
 
 
@@ -1507,7 +1507,7 @@ Here are the (approximate) Chebyshev coefficients of the solution, which were de
 (*@\HLJLnf{scatter}@*)(*@\HLJLp{(}@*)(*@\HLJLni{0}@*)(*@\HLJLoB{:}@*)(*@\HLJLnf{ncoefficients}@*)(*@\HLJLp{(}@*)(*@\HLJLn{u}@*)(*@\HLJLp{)}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)(*@\HLJLp{,}@*)(*@\HLJLn{abs}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{u}@*)(*@\HLJLoB{.}@*)(*@\HLJLn{coefficients}@*)(*@\HLJLp{);}@*)(*@\HLJLn{yscale}@*)(*@\HLJLoB{=:}@*)(*@\HLJLn{log10}@*)(*@\HLJLp{,}@*)(*@\HLJLn{legend}@*)(*@\HLJLoB{=}@*)(*@\HLJLkc{false}@*)(*@\HLJLp{)}@*)
 \end{lstlisting}
 
-\includegraphics[width=\linewidth]{/figures/Chapter4_27_1.pdf}
+\includegraphics[width=\linewidth]{jl_GsbqQZ/Chapter4_27_1.pdf}
 
 Note we can incorporate right-hand sides as well, for example, to solve $u'(x) - u(x) = f(x)$ we need to express $f(x)$ in the $C^{(1)}$ basis.  Suppose we have the Chebyshev coefficients $f_k$ of $f(x)$, then
 
@@ -1548,10 +1548,10 @@ As with any good software package, ApproxFun.jl is designed in such a way that m
 
 \begin{lstlisting}
 ncoefficients(u) = 20
-norm((u(*@{{\textquotesingle}}@*) - u) - f) = 9.384877612025834e-14
+norm((u(*@{{\textquotesingle}}@*) - u) - f) = 4.6915830239812336e-14
 \end{lstlisting}
 
-\includegraphics[width=\linewidth]{/figures/Chapter4_28_1.pdf}
+\includegraphics[width=\linewidth]{jl_GsbqQZ/Chapter4_28_1.pdf}
 
 \subsubsection{Second-order constant coefficient equations}
 \textbf{Example 2:}   Consider the boundary-value problem
@@ -1638,10 +1638,10 @@ Putting everything together, we get:
 
 \begin{lstlisting}
 ncoefficients(u) = 19
-norm((u(*@{{\textquotesingle}}@*))(*@{{\textquotesingle}}@*) + u(*@{{\textquotesingle}}@*) + u) = 1.2737078300847353e-16
+norm((u(*@{{\textquotesingle}}@*))(*@{{\textquotesingle}}@*) + u(*@{{\textquotesingle}}@*) + u) = 1.2461757862789095e-16
 \end{lstlisting}
 
-\includegraphics[width=\linewidth]{/figures/Chapter4_30_1.pdf}
+\includegraphics[width=\linewidth]{jl_GsbqQZ/Chapter4_30_1.pdf}
 
 Here's a shorter (and more elegant) syntax for solving the same problem:
 
@@ -1695,7 +1695,7 @@ PlusOperator : Chebyshev() (*@\ensuremath{\rightarrow}@*) Ultraspherical(2)
   (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)                      0.0  0.0       (*@\ensuremath{\cdot}@*)                     (*@\ensuremath{\cdot}@*)
   (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)                       (*@\ensuremath{\cdot}@*)   0.0      0.0                    (*@\ensuremath{\cdot}@*)
   (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)                       (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)   (*@\ensuremath{\ldots}@*)   0.0                    (*@\ensuremath{\ddots}@*)
-  (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)                       (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)       6.938893903907228e-18  (*@\ensuremath{\ddots}@*)
+  (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)                       (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)       0.0                    (*@\ensuremath{\ddots}@*)
   (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)                       (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)       0.0                    (*@\ensuremath{\ddots}@*)
   (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)                       (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)      -3.469446951953614e-18  (*@\ensuremath{\ddots}@*)
   (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)                       (*@\ensuremath{\cdot}@*)    (*@\ensuremath{\cdot}@*)       0.0                    (*@\ensuremath{\ddots}@*)
@@ -1727,19 +1727,19 @@ where $\mathcal{L} = \mathcal{D}_1\mathcal{D}_0  - \mathcal{S}_1\mathcal{S}_0X^{
      (*@\HLJLn{B\ensuremath{\_1}}@*) (*@\HLJLp{;}@*)   (*@\HLJLcs{{\#}}@*) (*@\HLJLcs{u(1)}@*)
      (*@\HLJLn{L}@*)(*@\HLJLp{]}@*)   (*@\HLJLcs{{\#}}@*) (*@\HLJLcs{u{\textquotesingle}{\textquotesingle}}@*) (*@\HLJLcs{-}@*) (*@\HLJLcs{x*u}@*)
 
-(*@\HLJLn{u}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{A}@*) (*@\HLJLoB{{\textbackslash}}@*) (*@\HLJLp{[}@*)(*@\HLJLnfB{1.0}@*)(*@\HLJLp{;}@*)(*@\HLJLnfB{0.0}@*)(*@\HLJLp{;}@*)(*@\HLJLnfB{0.0}@*)(*@\HLJLp{]}@*)
+(*@\HLJLn{u}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{A}@*) (*@\HLJLoB{{\textbackslash}}@*) (*@\HLJLp{[}@*)(*@\HLJLnfB{1.0}@*)(*@\HLJLp{,}@*)(*@\HLJLnfB{0.0}@*)(*@\HLJLp{,}@*)(*@\HLJLnfB{0.0}@*)(*@\HLJLp{]}@*)
 (*@\HLJLnd{@show}@*) (*@\HLJLnf{ncoefficients}@*)(*@\HLJLp{(}@*)(*@\HLJLn{u}@*)(*@\HLJLp{)}@*)
-(*@\HLJLnd{@show}@*) (*@\HLJLnf{norm}@*)(*@\HLJLp{(}@*)(*@\HLJLn{u}@*)(*@\HLJLoB{{\textquotesingle}{\textquotesingle}}@*) (*@\HLJLoB{-}@*) (*@\HLJLnf{Fun}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{)}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{u}@*) (*@\HLJLp{)}@*)
+(*@\HLJLnd{@show}@*) (*@\HLJLnf{norm}@*)(*@\HLJLp{(}@*)(*@\HLJLn{u}@*)(*@\HLJLoB{{\textquotesingle}{\textquotesingle}}@*) (*@\HLJLoB{-}@*) (*@\HLJLnf{Fun}@*)(*@\HLJLp{()}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{u}@*) (*@\HLJLp{)}@*)
 (*@\HLJLnf{plot}@*)(*@\HLJLp{(}@*)(*@\HLJLn{u}@*)(*@\HLJLp{;}@*) (*@\HLJLn{legend}@*)(*@\HLJLoB{=}@*)(*@\HLJLkc{false}@*)(*@\HLJLp{)}@*)
 \end{lstlisting}
 
 \begin{lstlisting}
 bandwidths(L) = (1, 5)
 ncoefficients(u) = 22
-norm((u(*@{{\textquotesingle}}@*))(*@{{\textquotesingle}}@*) - Fun(x) * u) = 0.6149018416325156
+norm((u(*@{{\textquotesingle}}@*))(*@{{\textquotesingle}}@*) - Fun() * u) = 2.052539720366069e-16
 \end{lstlisting}
 
-\includegraphics[width=\linewidth]{/figures/Chapter4_33_1.pdf}
+\includegraphics[width=\linewidth]{jl_GsbqQZ/Chapter4_33_1.pdf}
 
 Here's a shorter syntax:
 
@@ -1754,7 +1754,7 @@ Here's a shorter syntax:
 \end{lstlisting}
 
 \begin{lstlisting}
-3.525000599929555e-18
+9.240062508654186e-17
 \end{lstlisting}
 
 
@@ -1780,10 +1780,10 @@ we can see it's pretty hard to compute solutions:
 
 \begin{lstlisting}
 ncoefficients(u) = 740
-norm((*@\ensuremath{\varepsilon}@*) * (u(*@{{\textquotesingle}}@*))(*@{{\textquotesingle}}@*) - x * u) = 5.579831038814324e-12
+norm((*@\ensuremath{\varepsilon}@*) * (u(*@{{\textquotesingle}}@*))(*@{{\textquotesingle}}@*) - x * u) = 5.613771527522326e-12
 \end{lstlisting}
 
-\includegraphics[width=\linewidth]{/figures/Chapter4_35_1.pdf}
+\includegraphics[width=\linewidth]{jl_GsbqQZ/Chapter4_35_1.pdf}
 
 Because of the banded structure, this can be solved fast:
 
@@ -1797,9 +1797,9 @@ Because of the banded structure, this can be solved fast:
 \end{lstlisting}
 
 \begin{lstlisting}
-0.587824 seconds (12.66 M allocations: 285.407 MiB, 9.36(*@{{\%}}@*) gc time)
+1.187465 seconds (12.66 M allocations: 285.405 MiB, 9.39(*@{{\%}}@*) gc time)
 ncoefficients(u) = 62496
-norm((*@\ensuremath{\varepsilon}@*) * (u(*@{{\textquotesingle}}@*))(*@{{\textquotesingle}}@*) - x * u) = 3.911457727216876e-8
+norm((*@\ensuremath{\varepsilon}@*) * (u(*@{{\textquotesingle}}@*))(*@{{\textquotesingle}}@*) - x * u) = 3.911433249102875e-8
 \end{lstlisting}
 
 
@@ -1842,10 +1842,10 @@ where $X^{(0)}$ is the Jacobi matrix of the Chebyshev $T$ polynomials. The infin
 \begin{lstlisting}
 bandwidths(L) = (2, 6)
 ncoefficients(u) = 1182
-norm((*@\ensuremath{\varepsilon}@*) * (u(*@{{\textquotesingle}}@*))(*@{{\textquotesingle}}@*) - a * u) = 1.0526009685242718e-11
+norm((*@\ensuremath{\varepsilon}@*) * (u(*@{{\textquotesingle}}@*))(*@{{\textquotesingle}}@*) - a * u) = 1.050061138807772e-11
 \end{lstlisting}
 
-\includegraphics[width=\linewidth]{/figures/Chapter4_37_1.pdf}
+\includegraphics[width=\linewidth]{jl_GsbqQZ/Chapter4_37_1.pdf}
 
 Here's the shorter syntax:
 
@@ -1857,7 +1857,7 @@ Here's the shorter syntax:
 \end{lstlisting}
 
 \begin{lstlisting}
-1.9064555377217047e-14
+7.023301415344089e-14
 \end{lstlisting}
 
 
@@ -1905,10 +1905,10 @@ In ApproxFun.jl, the polynomial degree $m$ such that the polynomial approximatio
 \begin{lstlisting}
 bandwidths(L) = (13, 17)
 ncoefficients(u) = 1234
-norm((*@\ensuremath{\varepsilon}@*) * (u(*@{{\textquotesingle}}@*))(*@{{\textquotesingle}}@*) + a * u) = 2.7091325947425528e-12
+norm((*@\ensuremath{\varepsilon}@*) * (u(*@{{\textquotesingle}}@*))(*@{{\textquotesingle}}@*) + a * u) = 2.752339672427475e-12
 \end{lstlisting}
 
-\includegraphics[width=\linewidth]{/figures/Chapter4_39_1.pdf}
+\includegraphics[width=\linewidth]{jl_GsbqQZ/Chapter4_39_1.pdf}
 
 \begin{lstlisting}
 (*@\HLJLn{L}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{\ensuremath{\varepsilon}}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{D}@*)(*@\HLJLoB{{\textasciicircum}}@*)(*@\HLJLni{2}@*) (*@\HLJLoB{+}@*) (*@\HLJLn{a}@*)
@@ -1917,7 +1917,7 @@ norm((*@\ensuremath{\varepsilon}@*) * (u(*@{{\textquotesingle}}@*))(*@{{\textquo
 \end{lstlisting}
 
 \begin{lstlisting}
-2.0168626739516105e-13
+6.928889909062075e-14
 \end{lstlisting}
 
 
@@ -1928,7 +1928,7 @@ Here we see the almost banded structure of the coefficient space discretisation 
 (*@\HLJLnf{spy}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{Matrix}@*)(*@\HLJLp{(}@*)(*@\HLJLn{A}@*)(*@\HLJLp{[}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLni{90}@*)(*@\HLJLp{,}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLni{90}@*)(*@\HLJLp{]))}@*)
 \end{lstlisting}
 
-\includegraphics[width=\linewidth]{/figures/Chapter4_41_1.pdf}
+\includegraphics[width=\linewidth]{jl_GsbqQZ/Chapter4_41_1.pdf}
 
 \subsubsection{General linear equations}
 In general, we can represent a $k$-th order linear differential equation with polynomial coefficients $a_{\ell}(x)$, $\ell = 0, \ldots, k$, 

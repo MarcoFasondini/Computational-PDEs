@@ -348,7 +348,7 @@ It can be shown that $V$ is non-singular, hence we can compute the coefficients 
 (*@\HLJLnf{scatter!}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{,}@*)(*@\HLJLn{p}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{);}@*)(*@\HLJLn{label}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}samples"{}}@*)(*@\HLJLp{)}@*)
 \end{lstlisting}
 
-\includegraphics[width=\linewidth]{/figures/Chapter3_1_1.pdf}
+\includegraphics[width=\linewidth]{jl_P71Faz/Chapter3_1_1.pdf}
 
 The oscillations at the ends of the interval become larger as we increase $n$:
 
@@ -363,7 +363,7 @@ The oscillations at the ends of the interval become larger as we increase $n$:
 (*@\HLJLnf{scatter!}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{,}@*)(*@\HLJLn{p}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{);}@*)(*@\HLJLn{label}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}samples"{}}@*)(*@\HLJLp{)}@*)
 \end{lstlisting}
 
-\includegraphics[width=\linewidth]{/figures/Chapter3_2_1.pdf}
+\includegraphics[width=\linewidth]{jl_P71Faz/Chapter3_2_1.pdf}
 
 These oscillations of the interpolant through equally spaced nodes is known as the \emph{Runge phenomenon} (not to be confused with the Gibbs phenomenon in Chapter 2). Equally spaced interpolation nodes is clearly not a good choice for high-degree polynomial interpolation.  Maybe the oscillations at the endpoints can be suppressed if we choose nodes that are clustered at the ends of the interval?
 
@@ -379,7 +379,7 @@ These oscillations of the interpolant through equally spaced nodes is known as t
 (*@\HLJLnf{scatter!}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{,}@*)(*@\HLJLn{p}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{);}@*)(*@\HLJLn{label}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}samples"{}}@*)(*@\HLJLp{)}@*)
 \end{lstlisting}
 
-\includegraphics[width=\linewidth]{/figures/Chapter3_3_1.pdf}
+\includegraphics[width=\linewidth]{jl_P71Faz/Chapter3_3_1.pdf}
 
 In the above figure, we interpolated $f(x)$ at the roots (zeros) of a Chebyshev polynomial, which we'll learn about later.  The interpolants at the roots of the Chebyshev polynomials converge exponentially fast to $f$ on $[-1, 1]$ as $n$ (the number of interpolation nodes) increases.
 
@@ -394,7 +394,7 @@ In the above figure, we interpolated $f(x)$ at the roots (zeros) of a Chebyshev 
 (*@\HLJLnf{scatter!}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{,}@*)(*@\HLJLn{p}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{);}@*)(*@\HLJLn{label}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}samples"{}}@*)(*@\HLJLp{)}@*)
 \end{lstlisting}
 
-\includegraphics[width=\linewidth]{/figures/Chapter3_4_1.pdf}
+\includegraphics[width=\linewidth]{jl_P71Faz/Chapter3_4_1.pdf}
 
 Later we'll learn that interpolants at the roots of Chebyshev polynomials can be computed using the FFT ($\mathcal{O}(n\log n)$ complexity), which is much more efficient than inverting a Vandermonde matrix ($\mathcal{O}(n^3)$ complexity). 
 
@@ -443,7 +443,7 @@ Here are a few Chebyshev polynomials
 (*@\HLJLn{p}@*)
 \end{lstlisting}
 
-\includegraphics[width=\linewidth]{/figures/Chapter3_5_1.pdf}
+\includegraphics[width=\linewidth]{jl_P71Faz/Chapter3_5_1.pdf}
 
 In the example above, we resolved the Runge phenomenon by interpolating the function at the roots of $T_n(x)$, which are at
 
@@ -577,7 +577,7 @@ Recall that the approximate Fourier coefficients $\tilde{c}^{2n+1}_k$ can be com
 (*@\HLJLn{xlabel}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}k"{}}@*)(*@\HLJLp{,}@*) (*@\HLJLn{yscale}@*)(*@\HLJLoB{=:}@*)(*@\HLJLn{log10}@*)(*@\HLJLp{,}@*)(*@\HLJLn{label}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}Approximate}@*) (*@\HLJLs{Chebyshev}@*) (*@\HLJLs{coefficients}@*) (*@\HLJLs{of}@*) (*@\HLJLs{the}@*) (*@\HLJLs{Runge}@*) (*@\HLJLs{function"{}}@*)(*@\HLJLp{)}@*)
 \end{lstlisting}
 
-\includegraphics[width=\linewidth]{/figures/Chapter3_6_1.pdf}
+\includegraphics[width=\linewidth]{jl_P71Faz/Chapter3_6_1.pdf}
 
 The approximate Chebyshev coefficients decay exponentially fast with $k$ because $f(x)$, the Runge function, is analytic on $[-1, 1]$.
 
@@ -713,7 +713,7 @@ which allowed us to leverage Fourier series to compute $\tilde{b}_k^n$ and deriv
 Recall from the formula for the Lagrange interpolating polynomial that
 
 \[
-p_{n+1}(x) = \sum_{k = 0}^{n}\ell_k(x)f(x_k), \qquad \ell_k(x) = \prod_{\substack{j=0\\ j \neq k}}^{k}\frac{x-x_j}{x_k-x_j}
+p_{n+1}(x) = \sum_{k = 0}^{n}\ell_k(x)f(x_k), \qquad \ell_k(x) = \prod_{\substack{j=0\\ j \neq k}}^{n}\frac{x-x_j}{x_k-x_j}
 \]
 here we let $x_k$ be the Chebyshev points 
 
@@ -786,7 +786,7 @@ Let's check that the two methods give the same output (up to rounding errors):
 
 \begin{lstlisting}
 D * f.(x) (*@\ensuremath{\approx}@*) chebfft(f.(x)) = true
-6.061817714453355e-14
+5.88418203051333e-14
 \end{lstlisting}
 
 
@@ -1070,8 +1070,8 @@ u(x,-\tau) = f(x - \tau) = {\rm e}^{-200(x-\tau)^2}.
 
 \begin{lstlisting}
 Int64(round(tmax / tplot)) = 400
-  4.150584 seconds (1.60 M allocations: 249.774 MiB, 18.98(*@{{\%}}@*) compilation tim
-e)
+  3.106897 seconds (2.98 M allocations: 315.532 MiB, 3.81(*@{{\%}}@*) gc time, 55.60(*@{{\%}}@*) 
+compilation time)
 \end{lstlisting}
 
 
@@ -1079,13 +1079,13 @@ e)
 (*@\HLJLnf{surface}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{,}@*)(*@\HLJLn{tdata}@*)(*@\HLJLp{,}@*)(*@\HLJLn{plotdata}@*)(*@\HLJLp{,}@*)(*@\HLJLn{seriescolor}@*)(*@\HLJLoB{=:}@*)(*@\HLJLn{redsblues}@*)(*@\HLJLp{,}@*) (*@\HLJLn{camera}@*)(*@\HLJLoB{=}@*)(*@\HLJLp{(}@*)(*@\HLJLni{10}@*)(*@\HLJLp{,}@*)(*@\HLJLni{40}@*)(*@\HLJLp{))}@*)
 \end{lstlisting}
 
-\includegraphics[width=\linewidth]{/figures/Chapter3_17_1.pdf}
+\includegraphics[width=\linewidth]{jl_P71Faz/Chapter3_17_1.pdf}
 
 \begin{lstlisting}
 (*@\HLJLnf{contour}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{[}@*)(*@\HLJLk{end}@*)(*@\HLJLoB{:-}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLni{1}@*)(*@\HLJLp{],}@*)(*@\HLJLn{tdata}@*)(*@\HLJLp{,}@*)(*@\HLJLn{plotdata}@*)(*@\HLJLp{[}@*)(*@\HLJLoB{:}@*)(*@\HLJLp{,}@*)(*@\HLJLk{end}@*)(*@\HLJLoB{:-}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLni{1}@*)(*@\HLJLp{])}@*)
 \end{lstlisting}
 
-\includegraphics[width=\linewidth]{/figures/Chapter3_18_1.pdf}
+\includegraphics[width=\linewidth]{jl_P71Faz/Chapter3_18_1.pdf}
 
 \subsection{Rate of convergence of Chebyshev interpolants and their derivatives}
 Since Chebyshev interpolants of a generally non-periodic function $f(x)$ on $[-1, 1]$ are trigonometric interpolants of the periodic function $g(\theta) = f(\cos\theta)$, we can deduce the rate of convergence of Chebyshev interpolating polynomials from the rate of convergence of trigonometric interpolants of $g(\theta)$.
@@ -1150,7 +1150,7 @@ Let's check whether the numerics agree with these predictions:
 (*@\HLJLnf{plot!}@*)(*@\HLJLp{(}@*)(*@\HLJLn{nn}@*)(*@\HLJLp{,}@*)(*@\HLJLni{1}@*) (*@\HLJLoB{./}@*)(*@\HLJLn{nn}@*)(*@\HLJLp{;}@*)(*@\HLJLn{label}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}1/n"{}}@*)(*@\HLJLp{)}@*)
 \end{lstlisting}
 
-\includegraphics[width=\linewidth]{/figures/Chapter3_19_1.pdf}
+\includegraphics[width=\linewidth]{jl_P71Faz/Chapter3_19_1.pdf}
 
 \begin{lstlisting}
 (*@\HLJLn{f\ensuremath{\_2}}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{x}@*) (*@\HLJLoB{->}@*) (*@\HLJLnf{abs}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{)}@*)(*@\HLJLoB{{\textasciicircum}}@*)(*@\HLJLni{3}@*)
@@ -1163,7 +1163,7 @@ Let's check whether the numerics agree with these predictions:
 (*@\HLJLnf{plot!}@*)(*@\HLJLp{(}@*)(*@\HLJLn{nn}@*)(*@\HLJLp{,}@*)(*@\HLJLni{1}@*) (*@\HLJLoB{./}@*)(*@\HLJLn{nn}@*)(*@\HLJLoB{.{\textasciicircum}}@*)(*@\HLJLni{2}@*)(*@\HLJLp{;}@*)(*@\HLJLn{label}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}1/n{\textasciicircum}2"{}}@*)(*@\HLJLp{)}@*)
 \end{lstlisting}
 
-\includegraphics[width=\linewidth]{/figures/Chapter3_20_1.pdf}
+\includegraphics[width=\linewidth]{jl_P71Faz/Chapter3_20_1.pdf}
 
 The increase of the error for Chebyshev differentiation is caused by a combination of rounding errors on the order of $10^{-15}$ and the $\mathcal{O}(n^2)$ growth in the formulae for Chebyshev differentiation at $x = \pm 1$ (see the function $\texttt{chebfft}$).
 
@@ -1178,7 +1178,7 @@ The increase of the error for Chebyshev differentiation is caused by a combinati
 (*@\HLJLn{label}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}Chebyshev}@*) (*@\HLJLs{differentiation}@*) (*@\HLJLs{error}@*) (*@\HLJLs{for}@*) (*@\HLJLs{f}@*) (*@\HLJLs{=}@*) (*@\HLJLs{exp(-1/x{\textasciicircum}2)"{}}@*)(*@\HLJLp{)}@*)
 \end{lstlisting}
 
-\includegraphics[width=\linewidth]{/figures/Chapter3_21_1.pdf}
+\includegraphics[width=\linewidth]{jl_P71Faz/Chapter3_21_1.pdf}
 
 \begin{lstlisting}
 (*@\HLJLnf{scatter}@*)(*@\HLJLp{(}@*)(*@\HLJLn{nn}@*)(*@\HLJLp{,}@*)(*@\HLJLn{errs}@*)(*@\HLJLp{;}@*)(*@\HLJLn{yscale}@*)(*@\HLJLoB{=:}@*)(*@\HLJLn{log10}@*)(*@\HLJLp{,}@*)(*@\HLJLn{label}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}Chebyshev}@*) (*@\HLJLs{differentiation}@*) (*@\HLJLs{error}@*) (*@\HLJLs{for}@*) (*@\HLJLs{f}@*) (*@\HLJLs{=}@*) (*@\HLJLs{exp(-1/x\ensuremath{\^2})"{}}@*)(*@\HLJLp{)}@*)
@@ -1196,7 +1196,7 @@ The increase of the error for Chebyshev differentiation is caused by a combinati
 (*@\HLJLnf{scatter!}@*)(*@\HLJLp{(}@*)(*@\HLJLn{nn}@*)(*@\HLJLp{,}@*)(*@\HLJLn{errs}@*)(*@\HLJLp{;}@*)(*@\HLJLn{label}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}Chebyshev}@*) (*@\HLJLs{differentiation}@*) (*@\HLJLs{error}@*) (*@\HLJLs{for}@*) (*@\HLJLs{f}@*) (*@\HLJLs{=}@*) (*@\HLJLs{x\ensuremath{\^2}\ensuremath{\^0}"{}}@*)(*@\HLJLp{)}@*)
 \end{lstlisting}
 
-\includegraphics[width=\linewidth]{/figures/Chapter3_22_1.pdf}
+\includegraphics[width=\linewidth]{jl_P71Faz/Chapter3_22_1.pdf}
 
 Note that this a plot with semi-logarithmic axes whereas the previous plot is a log-log set of axes.
 

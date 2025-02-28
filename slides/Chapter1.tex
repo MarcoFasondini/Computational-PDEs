@@ -141,6 +141,7 @@
 \def\E{ {\rm e} }
 \def\C{ {\mathbb C} }
 \def\R{ {\mathbb R} }
+\def\bbR{ {\mathbb R} }
 \def\H{ {\mathbb H} }
 \def\Z{ {\mathbb Z} }
 \def\CC{ {\cal C} }
@@ -286,7 +287,6 @@ Here we discuss
 \item[5. ] An example of exponentially fast convergence of a spectral method
 
 \end{itemize}
-\newpage
 \subsection{Finite difference approximations to the derivative}
 Throughout this chapter, we consider a function $f(x)$ that is $2\pi$-periodic, i.e., $f(x+2\pi) = f(x)$ for $x \in \mathbb{R}$ and we suppose we have function values at equally spaced points on the interval $[0, 2\pi)$, i.e., we have $f(x_j)$, where
 
@@ -305,9 +305,7 @@ this suggests that for small $h$,
 \[
 f'(x_j) \approx \frac{f(x_j+h)-f(x_j)}{h} = \frac{f(x_{j+1})-f(x_j)}{h}. 
 \]
-This is an example of a \textbf{finite difference} approximation to a derivative of a function.  This particular approximation is known as a \emph{forward difference} approximation (or formula). 
-\newpage 
- Replacing $h$ with $-h$, we obtain a \emph{backward difference} formula
+This is an example of a \textbf{finite difference} approximation to a derivative of a function.  This particular approximation is known as a \emph{forward difference} approximation (or formula).  Replacing $h$ with $-h$, we obtain a \emph{backward difference} formula
 
 \[
 f'(x_j) \approx \frac{f(x_{j})-f(x_{j-1})}{h}.
@@ -322,6 +320,7 @@ f'(x_j) \approx \frac{f(x_{j+1})-f(x_{j-1})}{2h}.
 To analyse the accuracy of finite difference formulae, we recall Taylor's Theorem:
 
 \textbf{Theorem (Taylor's Theorem)}  Let $a<b$, $n$ a positive integer, $x\in[a,b]$ and $f: [a,b]\to\mathbb{R}$ be a continuous function such that the derivatives up to order $n+1$ (inclusive) exist at every point in $[a,b]$. Then, for every $x\in[a,b]$, there exists a $\xi$ between $x$ and $x+h$ with $x+h\in[a,b]$, such that
+
 \[
 f(x+h)=\sum_{k=0}^{n}\frac{h^k}{k!}f^{(k)}(x)+\frac{h^{n+1}}{(n+1)!}f^{(n+1)}(\xi).
 \]
@@ -331,7 +330,7 @@ f(x+h)=\sum_{k=0}^{n}\frac{h^k}{k!}f^{(k)}(x)+\frac{h^{n+1}}{(n+1)!}f^{(n+1)}(\x
 \left\vert\frac{f(x_{j+1})-f(x_{j-1})}{2h} - f'(x_j) \right\vert \leq \frac{M}{6}h^2, 
 \]
 where $M = \sup_{x \in [x_{j-1}, x_{j+1}]} \vert f'''(x) \vert$.
-\newpage
+
 \textbf{Proof}
 
 It follows from Taylor's theorem that there exists an $\xi_1 \in [x_{j}, x_{j+1}]$ such that 
@@ -354,7 +353,6 @@ from which the result follows.
 \[
 \blacksquare
 \]
-\newpage
 Recalling the definition of big O notation, we can write
 
 \[
@@ -394,15 +392,15 @@ Here we use ApproxFun.jl (or Chebfun in Matlab) to construct an interpolant of a
 \includegraphics[width=\linewidth]{/figures/Chapter1_1_1.pdf}
 
 A central idea in approximation methods is to approximate a function (which could be a solution to a differential equation, for example) with an interpolant, which are typically constructed from simple functions (e.g., polynomials, sines, cosines).  Hence, we approximate $f(x) \approx p(x)$ and here the idea is to  construct approximations to $f'(x)$ by differentiating $p(x)$, then we set $f'(x) \approx p'(x)$.
-\newpage
+
 \subsubsection{Lagrange interpolation polynomials}
 We can construct interpolatory polynomials directly. We will use the following polynomials which are equal to $1$ at one grid point and are zero at all the others:
 
 \textbf{Definition (Lagrange basis polynomial)} The \emph{Lagrange basis polynomial} on the grid (or at the nodes)  $x_{j}$, $j = 0, \ldots, n-1$  is defined as
-{\LARGE
+
 \[
-\ensuremath{\ell}_k(x) := \prod_{\substack{j = 0 \\ j \neq k}}^{n-1} {x-x_j \over x_k - x_j} =  {(x-x_1) \ensuremath{\cdots}(x-x_{k-1})(x-x_{k+1}) \ensuremath{\cdots} (x-x_{n-1}) \over (x_k - x_1) \ensuremath{\cdots} (x_k - x_{k-1}) (x_k - x_{k+1}) \ensuremath{\cdots} (x_k - x_{n-1})}
-\]}
+\ensuremath{\ell}_k(x) := \prod_{\substack{j = 0 \\ j \neq k}}^{n-1} {x-x_j \over x_k - x_j} =  {(x-x_0) \ensuremath{\cdots}(x-x_{k-1})(x-x_{k+1}) \ensuremath{\cdots} (x-x_{n-1}) \over (x_k - x_0) \ensuremath{\cdots} (x_k - x_{k-1}) (x_k - x_{k+1}) \ensuremath{\cdots} (x_k - x_{n-1})}
+\]
 Plugging in the grid points verifies the following property:
 
 \textbf{Proposition (delta interpolation)}
@@ -414,7 +412,6 @@ Plugging in the grid points verifies the following property:
 \end{cases}
 \]
 We can use these to construct the interpolatory polynomial:
-\newpage
 
 \textbf{Theorem (Lagrange interpolation)} The unique  polynomial of degree at most $n-1$ that interpolates $f$ at the $n$ distinct points $x_j$ is:
 
@@ -424,28 +421,26 @@ p_n(x) = f(x_0) \ensuremath{\ell}_0(x) + \ensuremath{\cdots} + f(x_{n-1}) \ensur
 \textbf{Proof} Note that
 
 \[
-p_n(x_j) = \sum_{j=0}^{n-1} f(x_j) \ensuremath{\ell}_k(x_j) = f(x_j), \qquad j = 0, \ldots, n-1,
+p_n(x_j) = \sum_{k=0}^{n-1} f(x_k) \ensuremath{\ell}_k(x_j) = f(x_j), \qquad j = 0, \ldots, n-1,
 \]
 and the fact that $p_n(x)$ is of degree $\leq n-1$ follows from the definition of the Lagrange basis polynomials, so we just need to show it is unique. Suppose $\tilde{p}_n(x)$ is a  polynomial of degree at most $n-1$ that also interpolates $f$. Then $\tilde{p}_n - p_n$ vanishes at $n$ distinct points. Thus by the fundamental theorem of algebra it must be zero.
 
 \[
 \blacksquare
 \]
-\newpage
 \textbf{Example} Construct the central difference approximation as follows: (i) construct the polynomial $p_3(x)$ that interpolates $f(x)$  at the three equally spaced points $x_{j-1}, x_j, x_{j+1}$; (ii) use $p_3(x)$ to approximate  $f'$ at $x_j$.
 
 Using the formula for the Lagrange interpolating polynomial given above, it follows that (verify!)
-{\LARGE
+
 \[
 p_3(x) = \frac{(x-x_{j})(x-x_{j+1})}{2h^2}f(x_{j-1}) - \frac{(x-x_{j-1})(x-x_{j+1})}{h^2}f(x_{j}) + \frac{(x-x_{j-1})(x-x_{j})}{2h^2}f(x_{j+1})
-\]}
+\]
 and
 
 \[
 p_3'(x_j) = \frac{f(x_{j+1}) - f(x_{j-1})}{2h}  \approx f'(x_j),
 \]
 which is the central difference approximation we've seen before.
-\newpage
 
 \subsection{Differentiation matrices}
 Collecting the approximations $p_3'(x_j) = \frac{f(x_{j+1}) - f(x_{j-1})}{2h}  \approx f'(x_j)$ for $j = 0, \ldots, n-1$ in a vector and using the fact that $f(x_{j+n}) = f(x_j + 2\pi) = f(x_{j})$, we obtain
@@ -545,14 +540,14 @@ For various values of $n$, let's compute the maximum error of the central differ
 \end{lstlisting}
 
 \begin{lstlisting}
-4.506741 seconds (490.79 k allocations: 3.078 GiB, 42.88(*@{{\%}}@*) gc time, 5.90(*@{{\%}}@*) 
+3.269445 seconds (529.34 k allocations: 3.078 GiB, 15.71(*@{{\%}}@*) gc time, 8.95(*@{{\%}}@*) 
 compilation time)
 \end{lstlisting}
 
 \includegraphics[width=\linewidth]{/figures/Chapter1_3_1.pdf}
 
 The plot shows that the error decays as $\mathcal{O}(n^{-2})$, $n \to \infty$.
-\newpage
+
 To derive a higher order finite difference approximation to the derivative, we can use a higher degree interpolating polynomial.  For example, let $m$ be even, then we can derive an $m$-th order central difference approximation to the derivative by 
 
 \begin{itemize}
@@ -615,7 +610,7 @@ f(x_{n-1})
 \]
 where $h = 2\pi/n$.  In the next chapter we shall derive this differentiation matrix via trigonometric interpolants.   Since this differentiation matrix is derived by letting $m \to \infty$, we expect the error to decay faster than $\mathcal{O}(n^{-m})$ for all $m > 0$, provided $f \in C^{\infty}[0, 2\pi]$.  Let's check this numerically:
 
-\newpage
+
 \begin{lstlisting}
 (*@\HLJLn{nv}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{5}@*)(*@\HLJLoB{:}@*)(*@\HLJLni{2}@*)(*@\HLJLoB{:}@*)(*@\HLJLni{71}@*)(*@\HLJLp{;}@*)
 (*@\HLJLn{errs}@*) (*@\HLJLoB{=}@*) 
@@ -639,7 +634,7 @@ where $h = 2\pi/n$.  In the next chapter we shall derive this differentiation ma
 \end{lstlisting}
 
 \includegraphics[width=\linewidth]{/figures/Chapter1_5_1.pdf}
-\newpage
+
 Note that the error decays linearly on a semi-logarithimc plot (or log-linear plot).  This means that the error decays \emph{exponentially fast} with $n$ (we say that the approximation converges exponentially fast).  That is, the error decays as $\mathcal{O}(c^{-n})$ for $n \to \infty$ with $c > 1$.  Recall that the error of the second-order central difference formula decayed as $\mathcal{O}(n^{-2})$.  This type of converge is  called algebraic convergence.  Note how much faster exponential convergence is compared to algebraic convergence.
 
 To derive finite difference approximations to the derivative, we used low degree polynomials to approximate $f'$ locally.  The idea behind \emph{spectral methods} for differential equations (including PDEs) is to use high degree polynomials (or high accuracy interpolants) to approximate solutions to differential equations.

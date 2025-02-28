@@ -404,7 +404,7 @@ Here is an illustration of aliasing:
 (*@\HLJLnf{scatter!}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{,}@*)(*@\HLJLn{cos}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{((}@*)(*@\HLJLn{k}@*)(*@\HLJLoB{+}@*)(*@\HLJLn{n}@*)(*@\HLJLp{)}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{x}@*)(*@\HLJLp{))}@*)
 \end{lstlisting}
 
-\includegraphics[width=\linewidth]{/figures/Chapter2_1_1.pdf}
+\includegraphics[width=\linewidth]{jl_57uyK5/Chapter2_1_1.pdf}
 
 \subsection{The discrete Fourier transform (DFT)}
 We can express the approximate Fourier coefficients $\tilde{c}^n_k$ as the following matrix-vector product:
@@ -690,7 +690,7 @@ Here's an example illustrating that $p(x)$ interpolates $f$ at $x_{j}$ for $j = 
 (*@\HLJLnf{scatter!}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{,}@*) (*@\HLJLn{f}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{);}@*) (*@\HLJLn{label}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}samples"{}}@*)(*@\HLJLp{)}@*)
 \end{lstlisting}
 
-\includegraphics[width=\linewidth]{/figures/Chapter2_6_1.pdf}
+\includegraphics[width=\linewidth]{jl_57uyK5/Chapter2_6_1.pdf}
 
 \subsection{The Fast Fourier Transform (FFT)}
 We have proved that
@@ -763,11 +763,11 @@ The magic of the FFT is because its complexity is $\mathcal{O}(n \log n)$ (almos
 \end{lstlisting}
 
 \begin{lstlisting}
-0.232238 seconds (141.28 k allocations: 60.822 MiB, 6.62(*@{{\%}}@*) gc time, 22.21(*@{{\%}}@*)
- compilation time)
+0.319538 seconds (169.72 k allocations: 61.878 MiB, 19.89(*@{{\%}}@*) compilation ti
+me)
 \end{lstlisting}
 
-\includegraphics[width=\linewidth]{/figures/Chapter2_8_1.pdf}
+\includegraphics[width=\linewidth]{jl_57uyK5/Chapter2_8_1.pdf}
 
 The FFT allows us to efficiently transform between "space" / "(function) value space" / "physical space" and "dual space" / "coefficient space" / "frequency space".  This is essential in the context of numerical methods for differential equations because we'll see that some operations (e.g. differentiation) can be performed much more efficiently in coefficient space than in value space, while computing nonlinear terms may be performed more efficiently in value space.   
 
@@ -888,7 +888,7 @@ Let's check that $\ell_0(x)$ has the required properties:
 (*@\HLJLnf{scatter!}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{,}@*)(*@\HLJLn{\ensuremath{\ell}\ensuremath{\_0}}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{);}@*)(*@\HLJLn{label}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}samples"{}}@*)(*@\HLJLp{)}@*)
 \end{lstlisting}
 
-\includegraphics[width=\linewidth]{/figures/Chapter2_9_1.pdf}
+\includegraphics[width=\linewidth]{jl_57uyK5/Chapter2_9_1.pdf}
 
 Here is a translated version of $\ell_0(x)$, namely $\ell_0(x-x_{m}) = \ell_{m}(x)$
 
@@ -898,7 +898,7 @@ Here is a translated version of $\ell_0(x)$, namely $\ell_0(x-x_{m}) = \ell_{m}(
 (*@\HLJLnf{scatter!}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{,}@*)(*@\HLJLn{\ensuremath{\ell}\ensuremath{\_0}}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*) (*@\HLJLoB{.-}@*) (*@\HLJLn{x}@*)(*@\HLJLp{[}@*)(*@\HLJLn{m}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{]);}@*)(*@\HLJLn{label}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}samples"{}}@*)(*@\HLJLp{)}@*)
 \end{lstlisting}
 
-\includegraphics[width=\linewidth]{/figures/Chapter2_10_1.pdf}
+\includegraphics[width=\linewidth]{jl_57uyK5/Chapter2_10_1.pdf}
 
 To summarise the results we proved above: the value space representation of the trigonometric interpolant is
 
@@ -1164,7 +1164,7 @@ Here we approximate $f'(x_j)$, $j = 0, \ldots, n-1$ using (i) differentiation ma
 (*@\HLJLnf{scatter!}@*)(*@\HLJLp{(}@*)(*@\HLJLn{nv}@*)(*@\HLJLp{,}@*)(*@\HLJLn{errsfft}@*)(*@\HLJLp{;}@*)(*@\HLJLn{yscale}@*)(*@\HLJLoB{=:}@*)(*@\HLJLn{log10}@*)(*@\HLJLp{,}@*)(*@\HLJLn{label}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}Error:}@*) (*@\HLJLs{differentiation}@*) (*@\HLJLs{via}@*) (*@\HLJLs{FFT"{}}@*)(*@\HLJLp{)}@*)
 \end{lstlisting}
 
-\includegraphics[width=\linewidth]{/figures/Chapter2_13_1.pdf}
+\includegraphics[width=\linewidth]{jl_57uyK5/Chapter2_13_1.pdf}
 
 \subsection{PDE examples}
 Now we have the tools to implement a numerical method for the \emph{advection equation}
@@ -1245,14 +1245,14 @@ Therefore we approximate the solution to the PDE as follows:
 (*@\HLJLnf{contour}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{,}@*)(*@\HLJLn{t}@*)(*@\HLJLp{,}@*)(*@\HLJLn{u}@*)(*@\HLJLp{;}@*)(*@\HLJLn{xlabel}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}x"{}}@*)(*@\HLJLp{,}@*)(*@\HLJLn{ylabel}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}t"{}}@*)(*@\HLJLp{,}@*)(*@\HLJLn{title}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}Approximate}@*) (*@\HLJLs{solution}@*) (*@\HLJLs{to}@*) (*@\HLJLs{the}@*) (*@\HLJLs{advection}@*) (*@\HLJLs{equation"{}}@*)(*@\HLJLp{)}@*)
 \end{lstlisting}
 
-\includegraphics[width=\linewidth]{/figures/Chapter2_15_1.pdf}
+\includegraphics[width=\linewidth]{jl_57uyK5/Chapter2_15_1.pdf}
 
 \begin{lstlisting}
 (*@\HLJLnf{surface}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{,}@*)(*@\HLJLn{t}@*)(*@\HLJLp{,}@*)(*@\HLJLn{u}@*)(*@\HLJLp{;}@*)(*@\HLJLn{seriescolor}@*)(*@\HLJLoB{=:}@*)(*@\HLJLn{redsblues}@*)(*@\HLJLp{,}@*) (*@\HLJLn{camera}@*)(*@\HLJLoB{=}@*)(*@\HLJLp{(}@*)(*@\HLJLni{10}@*)(*@\HLJLp{,}@*)(*@\HLJLni{50}@*)(*@\HLJLp{),}@*)
 (*@\HLJLn{xlabel}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}x"{}}@*)(*@\HLJLp{,}@*)(*@\HLJLn{ylabel}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}t"{}}@*)(*@\HLJLp{,}@*)(*@\HLJLn{title}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}Approximate}@*) (*@\HLJLs{solution}@*) (*@\HLJLs{to}@*) (*@\HLJLs{the}@*) (*@\HLJLs{advection}@*) (*@\HLJLs{equation"{}}@*)(*@\HLJLp{)}@*)
 \end{lstlisting}
 
-\includegraphics[width=\linewidth]{/figures/Chapter2_16_1.pdf}
+\includegraphics[width=\linewidth]{jl_57uyK5/Chapter2_16_1.pdf}
 
 Note the spurious oscillations in the numerical solution (these grow exponentially fast with time).  We shall analyse why this instability occurs later in this module.  Whe shall also see that if we approximate the time derivative with a central difference, then we can take larger time steps while retaining stability. That is, if we use
 
@@ -1295,14 +1295,14 @@ We have $\mathbf{u}^0$, however we also need $\mathbf{u}^1$ to implement the lea
 (*@\HLJLnf{contour}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{,}@*)(*@\HLJLn{t}@*)(*@\HLJLp{,}@*)(*@\HLJLn{u}@*)(*@\HLJLp{;}@*)(*@\HLJLn{xlabel}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}x"{}}@*)(*@\HLJLp{,}@*)(*@\HLJLn{ylabel}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}t"{}}@*)(*@\HLJLp{,}@*)(*@\HLJLn{title}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}Leapfrog}@*) (*@\HLJLs{solution}@*) (*@\HLJLs{to}@*) (*@\HLJLs{the}@*) (*@\HLJLs{advection}@*) (*@\HLJLs{equation"{}}@*)(*@\HLJLp{)}@*)
 \end{lstlisting}
 
-\includegraphics[width=\linewidth]{/figures/Chapter2_18_1.pdf}
+\includegraphics[width=\linewidth]{jl_57uyK5/Chapter2_18_1.pdf}
 
 \begin{lstlisting}
 (*@\HLJLnf{surface}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{,}@*)(*@\HLJLn{t}@*)(*@\HLJLp{,}@*)(*@\HLJLn{u}@*)(*@\HLJLp{;}@*)(*@\HLJLn{seriescolor}@*)(*@\HLJLoB{=:}@*)(*@\HLJLn{redsblues}@*)(*@\HLJLp{,}@*) (*@\HLJLn{camera}@*)(*@\HLJLoB{=}@*)(*@\HLJLp{(}@*)(*@\HLJLni{10}@*)(*@\HLJLp{,}@*)(*@\HLJLni{50}@*)(*@\HLJLp{),}@*)
 (*@\HLJLn{xlabel}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}x"{}}@*)(*@\HLJLp{,}@*)(*@\HLJLn{ylabel}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}t"{}}@*)(*@\HLJLp{,}@*)(*@\HLJLn{title}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}Leapfrog}@*) (*@\HLJLs{solution}@*) (*@\HLJLs{to}@*) (*@\HLJLs{the}@*) (*@\HLJLs{advection}@*) (*@\HLJLs{equation"{}}@*)(*@\HLJLp{)}@*)
 \end{lstlisting}
 
-\includegraphics[width=\linewidth]{/figures/Chapter2_19_1.pdf}
+\includegraphics[width=\linewidth]{jl_57uyK5/Chapter2_19_1.pdf}
 
 Let's consider now the advection equation with a variable coefficient:
 
@@ -1360,14 +1360,14 @@ As before, we'll use 10 steps of the forward difference method with a step size 
 (*@\HLJLnf{contour}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{,}@*)(*@\HLJLn{t}@*)(*@\HLJLp{,}@*)(*@\HLJLn{u}@*)(*@\HLJLp{;}@*)(*@\HLJLn{xlabel}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}x"{}}@*)(*@\HLJLp{,}@*)(*@\HLJLn{ylabel}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}t"{}}@*)(*@\HLJLp{,}@*)(*@\HLJLn{title}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}Leapfrog}@*) (*@\HLJLs{sln}@*) (*@\HLJLs{to}@*) (*@\HLJLs{the}@*) (*@\HLJLs{variable}@*) (*@\HLJLs{coefficient}@*) (*@\HLJLs{advection}@*) (*@\HLJLs{eqn"{}}@*)(*@\HLJLp{)}@*)
 \end{lstlisting}
 
-\includegraphics[width=\linewidth]{/figures/Chapter2_21_1.pdf}
+\includegraphics[width=\linewidth]{jl_57uyK5/Chapter2_21_1.pdf}
 
 \begin{lstlisting}
 (*@\HLJLnf{surface}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{,}@*)(*@\HLJLn{t}@*)(*@\HLJLp{,}@*)(*@\HLJLn{u}@*)(*@\HLJLp{;}@*)(*@\HLJLn{seriescolor}@*)(*@\HLJLoB{=:}@*)(*@\HLJLn{redsblues}@*)(*@\HLJLp{,}@*) (*@\HLJLn{camera}@*)(*@\HLJLoB{=}@*)(*@\HLJLp{(}@*)(*@\HLJLni{10}@*)(*@\HLJLp{,}@*)(*@\HLJLni{50}@*)(*@\HLJLp{),}@*)
 (*@\HLJLn{xlabel}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}x"{}}@*)(*@\HLJLp{,}@*)(*@\HLJLn{ylabel}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}t"{}}@*)(*@\HLJLp{,}@*)(*@\HLJLn{title}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}Leapfrog}@*) (*@\HLJLs{sln}@*) (*@\HLJLs{to}@*) (*@\HLJLs{the}@*) (*@\HLJLs{variable}@*) (*@\HLJLs{coefficient}@*) (*@\HLJLs{advection}@*) (*@\HLJLs{eqn"{}}@*)(*@\HLJLp{)}@*)
 \end{lstlisting}
 
-\includegraphics[width=\linewidth]{/figures/Chapter2_22_1.pdf}
+\includegraphics[width=\linewidth]{jl_57uyK5/Chapter2_22_1.pdf}
 
 \subsection{Convergence of trigonometric interpolants}
 What happens if we approximate a function that is not periodic with the periodic trigonometric interpolant
@@ -1387,7 +1387,7 @@ p_n(x) = \sum_{k=-m}^{m}\tilde{c}^n_k{\rm e}^{{\rm i}kx}?
 (*@\HLJLnf{plot!}@*)(*@\HLJLp{(}@*)(*@\HLJLn{xx}@*) (*@\HLJLoB{.-}@*) (*@\HLJLni{2}@*)(*@\HLJLn{\ensuremath{\pi}}@*)(*@\HLJLp{,}@*)(*@\HLJLn{f\ensuremath{\_1}}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{xx}@*)(*@\HLJLp{);}@*)(*@\HLJLn{lw}@*)(*@\HLJLoB{=}@*)(*@\HLJLni{3}@*)(*@\HLJLp{,}@*)(*@\HLJLn{lc}@*)(*@\HLJLoB{=:}@*)(*@\HLJLn{blue}@*)(*@\HLJLp{,}@*)(*@\HLJLn{legend}@*)(*@\HLJLoB{=}@*)(*@\HLJLkc{false}@*)(*@\HLJLp{)}@*)
 \end{lstlisting}
 
-\includegraphics[width=\linewidth]{/figures/Chapter2_23_1.pdf}
+\includegraphics[width=\linewidth]{jl_57uyK5/Chapter2_23_1.pdf}
 
 Formally, we define the periodic extension of $f$ as follows:
 
@@ -1405,7 +1405,7 @@ Let's check this:
 (*@\HLJLnf{plot}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{,}@*)(*@\HLJLn{f\ensuremath{\_p}}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{);}@*)(*@\HLJLn{lw}@*)(*@\HLJLoB{=}@*)(*@\HLJLni{3}@*)(*@\HLJLp{,}@*)(*@\HLJLn{lc}@*)(*@\HLJLoB{=:}@*)(*@\HLJLn{blue}@*)(*@\HLJLp{,}@*)(*@\HLJLn{legend}@*)(*@\HLJLoB{=}@*)(*@\HLJLkc{false}@*)(*@\HLJLp{)}@*)
 \end{lstlisting}
 
-\includegraphics[width=\linewidth]{/figures/Chapter2_24_1.pdf}
+\includegraphics[width=\linewidth]{jl_57uyK5/Chapter2_24_1.pdf}
 
 Notice that the periodic extension of $f(x) = {\rm e}^{x-2\pi}$ has jump discontinuities at $x = 2\pi p$, $p \in \mathbb{Z}$, e.g., 
 
@@ -1426,7 +1426,7 @@ Here is the trigonometric interpolant of the periodic extension of $f$:
 (*@\HLJLnf{plot!}@*)(*@\HLJLp{(}@*)(*@\HLJLn{xx}@*)(*@\HLJLp{,}@*)(*@\HLJLn{real}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{p}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{xx}@*)(*@\HLJLp{)),}@*)(*@\HLJLn{lw}@*)(*@\HLJLoB{=}@*)(*@\HLJLnfB{1.5}@*)(*@\HLJLp{,}@*)(*@\HLJLn{lc}@*)(*@\HLJLoB{=:}@*)(*@\HLJLn{red}@*)(*@\HLJLp{)}@*)
 \end{lstlisting}
 
-\includegraphics[width=\linewidth]{/figures/Chapter2_25_1.pdf}
+\includegraphics[width=\linewidth]{jl_57uyK5/Chapter2_25_1.pdf}
 
 The periodic interpolant is clearly not a good approximation to the function.  The oscillations at the endpoints is known as the \emph{Gibbs phenomenon}.  As $n \to \infty$, the amplitude of the oscillations decrease as $\mathcal{O}(n^{-1})$ (very slowly) and the interpolant at $x=0$ and $x =2\pi$ converges to the average of the function values at  $x=0$ and $x =2\pi$:
 
@@ -1602,7 +1602,7 @@ Let's check numerically that the approximate Fourier coefficients decay at their
 (*@\HLJLn{p}@*) (*@\HLJLoB{=}@*)(*@\HLJLnf{plot!}@*)(*@\HLJLp{(}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{m}@*)(*@\HLJLp{,}@*)(*@\HLJLni{2}@*) (*@\HLJLoB{./}@*)(*@\HLJLp{((}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{m}@*)(*@\HLJLp{)}@*)(*@\HLJLoB{.{\textasciicircum}}@*)(*@\HLJLni{3}@*)(*@\HLJLp{),}@*)(*@\HLJLn{label}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}O(1/k\ensuremath{\^3})}@*) (*@\HLJLs{curve"{}}@*)(*@\HLJLp{,}@*)(*@\HLJLn{legend}@*)(*@\HLJLoB{=:}@*)(*@\HLJLn{bottomleft}@*)(*@\HLJLp{)}@*)
 \end{lstlisting}
 
-\includegraphics[width=\linewidth]{/figures/Chapter2_26_1.pdf}
+\includegraphics[width=\linewidth]{jl_57uyK5/Chapter2_26_1.pdf}
 
 \begin{lstlisting}
 (*@\HLJLn{p}@*)
@@ -1611,7 +1611,7 @@ Let's check numerically that the approximate Fourier coefficients decay at their
 (*@\HLJLnf{scatter!}@*)(*@\HLJLp{(}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{m}@*)(*@\HLJLp{,}@*)(*@\HLJLn{abs}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{c\ensuremath{\_4}}@*)(*@\HLJLp{[}@*)(*@\HLJLn{m}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{2}@*)(*@\HLJLoB{:}@*)(*@\HLJLk{end}@*)(*@\HLJLp{]),}@*)(*@\HLJLn{label}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}approx.}@*) (*@\HLJLs{Fourier}@*) (*@\HLJLs{coeffs.}@*) (*@\HLJLs{of}@*) (*@\HLJLs{f\ensuremath{\_4}"{}}@*)(*@\HLJLp{,}@*)(*@\HLJLn{legend}@*)(*@\HLJLoB{=:}@*)(*@\HLJLn{bottomleft}@*)(*@\HLJLp{)}@*)
 \end{lstlisting}
 
-\includegraphics[width=\linewidth]{/figures/Chapter2_27_1.pdf}
+\includegraphics[width=\linewidth]{jl_57uyK5/Chapter2_27_1.pdf}
 
 Functions whose periodic extensions  are analytic on $[0, 2\pi]$ are even smoother than functions in $C^{\infty}[0, 2\pi]$ and consequently their Fourier coefficients decay even faster.
 
@@ -1647,7 +1647,7 @@ Here is an example of the decay of the approximate Fourier coefficients of a fun
 (*@\HLJLnf{scatter!}@*)(*@\HLJLp{(}@*)(*@\HLJLni{0}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{m}@*)(*@\HLJLp{,}@*)(*@\HLJLn{abs}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{c\ensuremath{\_6}}@*)(*@\HLJLp{[}@*)(*@\HLJLn{m}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLk{end}@*)(*@\HLJLp{]),}@*)(*@\HLJLn{label}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}approx.}@*) (*@\HLJLs{Fourier}@*) (*@\HLJLs{coeffs.}@*) (*@\HLJLs{of}@*) (*@\HLJLs{f\ensuremath{\_6}"{}}@*)(*@\HLJLp{)}@*)
 \end{lstlisting}
 
-\includegraphics[width=\linewidth]{/figures/Chapter2_28_1.pdf}
+\includegraphics[width=\linewidth]{jl_57uyK5/Chapter2_28_1.pdf}
 
 Here are the approximate Fourier coefficients of a band-limited function:
 
@@ -1659,7 +1659,7 @@ Here are the approximate Fourier coefficients of a band-limited function:
 (*@\HLJLnf{scatter}@*)(*@\HLJLp{(}@*)(*@\HLJLni{0}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{m}@*)(*@\HLJLp{,}@*)(*@\HLJLn{abs}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{c\ensuremath{\_7}}@*)(*@\HLJLp{[}@*)(*@\HLJLn{m}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLk{end}@*)(*@\HLJLp{]),}@*)(*@\HLJLn{label}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}approx.}@*) (*@\HLJLs{Fourier}@*) (*@\HLJLs{coeffs.}@*) (*@\HLJLs{of}@*) (*@\HLJLs{f\ensuremath{\_7}"{}}@*)(*@\HLJLp{,}@*)(*@\HLJLn{yscale}@*)(*@\HLJLoB{=:}@*)(*@\HLJLn{log10}@*)(*@\HLJLp{)}@*)
 \end{lstlisting}
 
-\includegraphics[width=\linewidth]{/figures/Chapter2_29_1.pdf}
+\includegraphics[width=\linewidth]{jl_57uyK5/Chapter2_29_1.pdf}
 
 
 \end{document}

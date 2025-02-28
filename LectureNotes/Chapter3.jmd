@@ -376,7 +376,7 @@ which allowed us to leverage Fourier series to compute $\tilde{b}_k^n$ and deriv
 
 Recall from the formula for the Lagrange interpolating polynomial that
 $$
-p_{n+1}(x) = \sum_{k = 0}^{n}\ell_k(x)f(x_k), \qquad \ell_k(x) = \prod_{\substack{j=0\\ j \neq k}}^{k}\frac{x-x_j}{x_k-x_j}
+p_{n+1}(x) = \sum_{k = 0}^{n}\ell_k(x)f(x_k), \qquad \ell_k(x) = \prod_{\substack{j=0\\ j \neq k}}^{n}\frac{x-x_j}{x_k-x_j}
 $$
 here we let $x_k$ be the Chebyshev points 
 $$

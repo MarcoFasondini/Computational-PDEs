@@ -391,7 +391,7 @@ f = Fun(x -> exp(x), Chebyshev())
 n = ncoefficients(f) # number of coefficients in the expansion
 fn = f.coefficients  # coefficients
 xfn = X[1:n+1,1:n]*fn  # coefficients of x*f(x) in the Chebyshev basis
-xf = Fun(Chebyshev(),fn) # construct a Chebyshev expansion with the coefficients X*c
+xf = Fun(Chebyshev(),xfn) # construct a Chebyshev expansion with the coefficients X*c
 x = 0.1
 xf(x) - x*f(x)
 ```
@@ -628,7 +628,7 @@ T_n(x) = \sum_{k=0}^{n} c_k^{(n)} C_k^{(1)}(x),
 $$
 and note that $\left(\mathcal{S}_0\right)_{k,n} = c_k^{(n)}$. However, since
 $$
-c_k^{(n)} = \langle  T_n,  C^{(1)}_k \rangle_{1} = \langle  T_n,  (1-x^2)C^{(1)}_k \rangle_{0} = 0
+c_k^{(n)} = \frac{\langle  T_n,  C^{(1)}_k \rangle_{1}}{\left\| C^{(1)}_k \right\|^2} = \frac{\langle  T_n,  (1-x^2)C^{(1)}_k \rangle_{0}}{\left\| C^{(1)}_k \right\|^2} = 0
 $$
 for $k \leq n-3$, the result follows.  $\blacksquare$
 
@@ -1076,9 +1076,9 @@ A = [B₋₁;   # u(-1)
      B₁ ;   # u(1)
      L]   # u'' - x*u
 
-u = A \ [1.0;0.0;0.0]
+u = A \ [1.0,0.0,0.0]
 @show ncoefficients(u)
-@show norm(u'' - Fun(x)*u )
+@show norm(u'' - Fun()*u )
 plot(u; legend=false)
 ```
 

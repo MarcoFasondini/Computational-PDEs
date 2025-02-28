@@ -1,0 +1,328 @@
+
+# Chapter 5: Exercises Solutions
+
+Consider the following finite difference method for the diffusion equation
+$$
+-\frac{1}{2}\mu u^{i+1}_{j-1} + (1 + \mu)u^{i+1}_j -\frac{1}{2}\mu u^{i+1}_{j+1} = 
+\frac{1}{2}\mu u^{i}_{j-1} + (1 - \mu)u^{i}_j +\frac{1}{2}\mu u^{i}_{j+1} 
+$$
+where $\mu = \tau/h^2$.
+
+1. Show that the method has a second-order local truncation error. That is, let $\tilde{u}^i_j = u(x_j,t_i)$, where $x_j = jh$, $t_i = i\tau$, show that the method can be expressed as
+$$
+\frac{u^{i+1}_j - u^i_j}{\tau} = \frac{1}{2}\left( \frac{u^{i+1}_{j+1} - 2u^{i+1}_{j} + u^{i+1}_{j-1}}{h^2} + \frac{u^{i}_{j+1} - 2u^{i}_{j} + u^{i}_{j-1}}{h^2}   \right)
+$$
+   and then show that for $\tau, h \to 0$ (assuming all the relevant partial derivatives are bounded),
+$$
+\begin{eqnarray*}
+&& \frac{\tilde{u}^{i+1}_j - \tilde{u}^i_j}{\tau} - \frac{1}{2}\left( \frac{\tilde{u}^{i+1}_{j+1} - 2\tilde{u}^{i+1}_{j} + \tilde{u}^{i+1}_{j-1}}{h^2} + \frac{\tilde{u}^{i}_{j+1} - 2\tilde{u}^{i}_{j} + \tilde{u}^{i}_{j-1}}{h^2}   \right) = \mathcal{O}(\tau^2) + \mathcal{O}(h^2).
+\end{eqnarray*}
+$$
+   Hint: use Taylor's theorem to expand the exact solution about $(x,t) = (x_j,t_{i+1/2})$, where $t_{i+1/2} = (i + 1/2)\tau = t_i + \tau/2$.
+
+**Solution** The method can be expressed as
+
+$$
+\frac{u^{i+1}_j - u^i_j}{\tau} = \frac{1}{2}\left( \frac{u^{i+1}_{j+1} - 2u^{i+1}_{j} + u^{i+1}_{j-1}}{h^2} + \frac{u^{i}_{j+1} - 2u^{i}_{j} + u^{i}_{j-1}}{h^2}   \right).
+$$
+
+Using Taylor's theorem to expand the solution about $(x_j, t_{i+1/2})$, we have that as $\tau \to 0$,
+$$
+\begin{eqnarray*}
+\tilde{u}^{i+1}_j  &=& u(x_{j},t_{i+1}) \\
+                 &=& u(x_j,t_{i+1/2}+\tau/2) \\
+                 &=& u(x_j,t_{i+1/2}) + \frac{\tau}{2}u_t(x_j,t_{i+1/2}) + \frac{\tau^2}{8}u_{tt}(x_j,t_{i+1/2}) + \mathcal{O}(\tau^3)
+\end{eqnarray*}
+$$
+and similarly
+$$
+\begin{eqnarray*}
+\tilde{u}^{i}_j  &=& u(x_{j},t_{i})\\
+                 &=& u(x_j,t_{i+1/2}-\tau/2) \\
+                 &=& u(x_j,t_{i+1/2}) - \frac{\tau}{2}u_t(x_j,t_{i+1/2}) + \frac{\tau^2}{8}u_{tt}(x_j,t_{i+1/2}) + \mathcal{O}(\tau^3)
+\end{eqnarray*}
+$$
+
+Therefore,
+$$
+\frac{\tilde{u}^{i+1}_j - \tilde{u}^i_j}{\tau} = u_t(x_j,t_{i+1/2}) + \mathcal{O}(\tau^2)
+$$
+
+We have shown in the lecture notes (using Taylor's theorem) that
+$$
+\frac{\tilde{u}^{i}_{j+1} - 2\tilde{u}^{i}_{j} + \tilde{u}^{i}_{j-1}}{h^2} = u_{xx}(x_j,t_i) + \mathcal{O}(h^2),
+$$
+therefore, using Taylor's theorem again, but in the time variable,
+$$
+\begin{eqnarray*}
+\frac{\tilde{u}^{i}_{j+1} - 2\tilde{u}^{i}_{j} + \tilde{u}^{i}_{j-1}}{h^2} &=& u_{xx}(x_j,t_i) + \mathcal{O}(h^2)  \\
+&=&  u_{xx}(x_j,t_{i+1/2}-\tau/2) + \mathcal{O}(h^2) \\
+&=&  u_{xx}(x_j,t_{i+1/2}) - \frac{\tau}{2}u_{txx}(x_j,t_{i+1/2}) +  \mathcal{O}(\tau^2) + \mathcal{O}(h^2).
+\end{eqnarray*}
+$$
+
+Similarly,
+$$
+\begin{eqnarray*}
+\frac{\tilde{u}^{i+1}_{j+1} - 2\tilde{u}^{i+1}_{j} + \tilde{u}^{i+1}_{j-1}}{h^2} &=& u_{xx}(x_j,t_{i+1}) + \mathcal{O}(h^2)  \\
+&=&  u_{xx}(x_j,t_{i+1/2}+\tau/2) + \mathcal{O}(h^2) \\
+&=&  u_{xx}(x_j,t_{i+1/2}) + \frac{\tau}{2}u_{txx}(x_j,t_{i+1/2}) +  \mathcal{O}(\tau^2) + \mathcal{O}(h^2)
+\end{eqnarray*}
+$$
+
+and hence
+$$
+\begin{eqnarray*}
+&& \frac{\tilde{u}^{i+1}_j - \tilde{u}^i_j}{\tau} - \frac{1}{2}\left( \frac{\tilde{u}^{i+1}_{j+1} - 2\tilde{u}^{i+1}_{j} + \tilde{u}^{i+1}_{j-1}}{h^2} + \frac{\tilde{u}^{i}_{j+1} - 2\tilde{u}^{i}_{j} + \tilde{u}^{i}_{j-1}}{h^2}   \right) \\
+&& =  u_t(x_j,t_{i+1/2}) - u_{xx}(x_j,t_{i+1/2})  +  \mathcal{O}(\tau^2) + \mathcal{O}(h^2) \\
+&& = \mathcal{O}(\tau^2) + \mathcal{O}(h^2)
+\end{eqnarray*}
+$$
+
+2. Use the Von Neumann method to show that the method is unconditionally stable.
+
+**Solution** Setting $u^{i}_j = \lambda^i {\rm e}^{{\rm i}kx_j}$ in
+$$
+-\frac{1}{2}\mu u^{i+1}_{j-1} + (1 + \mu)u^{i+1}_j -\frac{1}{2}\mu u^{i+1}_{j+1} = 
+\frac{1}{2}\mu u^{i}_{j-1} + (1 - \mu)u^{i}_j +\frac{1}{2}\mu u^{i}_{j+1} 
+$$
+we find that
+$$
+\lambda\left[1 - \frac{\mu}{2}\left({\rm e}^{-{\rm i}kh} - 2 +  {\rm e}^{{\rm i}kh} \right)    \right] = 1 + \frac{\mu}{2}\left({\rm e}^{-{\rm i}kh} - 2 +  {\rm e}^{{\rm i}kh} \right)  
+$$
+and since $\left({\rm e}^{-{\rm i}kh} - 2 +  {\rm e}^{{\rm i}kh} \right) = \left({\rm e}^{-{\rm i}kh/2} -  {\rm e}^{{\rm i}kh/2} \right)^2 = -4\sin^2(kh/2)$, it follows that
+$$
+\lambda = \frac{1 - 2\mu\sin^2(kh/2)}{1 + 2\mu\sin^2(kh/2)}
+$$
+Since $\vert 1 - 2\mu\sin^2(kh/2) \vert \leq \vert 1 + 2\mu\sin^2(kh/2)\vert$ for $\mu > 0$, $k \in \mathbb{Z}$ and $h > 0$, it follows that $\vert \lambda \vert \leq 1$ for these same parameter values and therefore the method is unconditionally stable.
+
+3. Suppose the finite difference method is used to approximate the solution to the diffusion equation $u_t = u_{xx}$ for $(x, t) \in (0,1) \times (0,T)$ subject to $u(0,t) = \varphi_0(t)$, $u(1,t) = \varphi_1(t)$ for $t \in [0, T]$ and $u(x,0) = f(x)$ for $x \in [0, 1]$.  Let $u(x_j,t_i) \approx u^i_j$, where $x_j = jh$, $h = 1/(n_x + 1)$, $j = 0, \ldots, n_x+1$, $t_i = i\tau$, $\tau = \mu h^2$ and set
+$$
+\mathbf{u}^i = \begin{bmatrix}
+u^{i}_{1} \\
+\vdots \\
+u^{i}_{n_x}
+\end{bmatrix} \in \mathbb{R}^{n_x}.
+$$
+   The finite difference method can be expressed as
+$$
+L\mathbf{u}^{i+1} = R\mathbf{u}^{i} + \mathbf{k}^{i},
+$$
+   where $L, R \in \mathbb{R}^{n_x \times n_x}$ and $\mathbf{k}^{i} \in \mathbb{R}^{n_x}$.  Give the matrices $L$ and $R$ and the vector $\mathbf{k}^{i}$.
+
+**Solution**
+$$
+\begin{eqnarray*}
+&&
+\underbrace{\begin{bmatrix}
+1 + \mu & -\mu/2 & & & \\
+-\mu/2  & 1+\mu & -\mu/2  & & \\
+      & \ddots & \ddots & \ddots & \\
+      &        & -\mu/2    & 1+ \mu & -\mu/2 \\
+      &        &        &-\mu/2      & 1+\mu
+\end{bmatrix}}_{L}
+\underbrace{\begin{bmatrix}
+u^{i+1}_{1} \\
+\vdots \\
+\vdots \\
+\vdots \\
+u^{i+1}_{n_x}
+\end{bmatrix}}_{\mathbf{u}^{i+1}} = \\
+&& 
+\underbrace{\begin{bmatrix}
+1 - \mu & \mu/2 & & & \\
+\mu/2  & 1-\mu & \mu/2  & & \\
+      & \ddots & \ddots & \ddots & \\
+      &        & \mu/2    & 1- \mu & \mu/2 \\
+      &        &        &\mu/2      & 1-\mu
+\end{bmatrix}}_{R}
+\underbrace{\begin{bmatrix}
+u^{i}_{1} \\
+\vdots \\
+\vdots \\
+\vdots \\
+u^{i}_{n_x}
+\end{bmatrix}}_{\mathbf{u}^i}
++
+\underbrace{\begin{bmatrix}
+\mu(\varphi_0(t_i) + \varphi_0(t_{i+1}))/2 \\
+0 \\
+\vdots \\
+0 \\
+\mu(\varphi_1(t_i) + \varphi_1(t_{i+1}))/2
+\end{bmatrix}}_{\mathbf{k}^i}
+\end{eqnarray*}
+$$
+
+4.  What are the eigenvalues of the matrix $A := L^{-1}R$? Find a bound on the spectral radius of $A$. 
+    Hint: consider the eigendecomposition (spectral factorisation) of $L$ and $R$.
+
+**Solution** The matrices $L$ and $R$ are TST (Tridiagonal, symmetric, Toeplitz); from the notes we know that an $n_x \times n_x$ TST matrix with $\alpha$ on the main diagonal and $\beta$ on the super and subdiagonals have eigenvalues 
+
+$$
+\lambda_j = \alpha + 2\beta\cos\left( \frac{\pi j}{n_x+1}  \right), \qquad j = 1, \ldots, n_x.
+$$
+
+Therefore, for $j = 1, \ldots, n_x$, the eigenvalues of $L$ are
+$$
+\lambda_j^{L} = 1 + \mu - \mu \cos\left(\pi x_j  \right) =  1 + \mu - \mu\left(1 - 2\sin^2\left(\pi x_j /2 \right)\right) = 1 + 2\mu\sin^2(\pi x_j/2)
+$$
+and those of $R$ are
+
+$$
+\lambda_j^{R} = 1 - \mu + \mu \cos\left(\pi x_j  \right) =  1 - \mu + \mu\left(1 - 2\sin^2\left(\pi x_j /2 \right)\right) = 1 - 2\mu\sin^2(\pi x_j/2)
+$$
+
+Let
+$$
+\Lambda^{L} = \begin{bmatrix}
+\lambda_1^{L} & & & \\
+& \lambda_2^{L} & & \\
+ & & \ddots &  \\
+&  & & \lambda_{n_x}^{L}
+\end{bmatrix}, \qquad
+\Lambda^{R} = \begin{bmatrix}
+\lambda_1^{R} & & & \\
+& \lambda_2^{R} & & \\
+ & & \ddots &  \\
+&  & & \lambda_{n_x}^{R}
+\end{bmatrix},
+$$
+then we know from the notes that
+
+$$
+L = Q\Lambda^{L}Q^{\top}, \qquad R = Q\Lambda^{R}Q^{\top}
+$$
+where
+$$
+Q = \left[\mathbf{q}_1 |  \mathbf{q}_2 | \cdots | \mathbf{q}_{n_x}  \right] \in \mathbb{R}^{n_x \times n_x},
+$$
+is an orthogonal matrix and the entries of the eigenvectors $\mathbf{q}_j \in \mathbb{R}^{n_x}$ are
+$$
+q_{j,\ell} = \sqrt{\frac{2}{n_x+1}}\sin\left(\frac{\pi j \ell}{n_x+1}   \right), \qquad \ell = 1, \ldots, n_x.
+$$
+
+Therefore, we have that
+$$
+A = L^{-1}R = Q\left( \Lambda^{L}  \right)^{-1}\Lambda^{R}Q^{\top}
+$$
+which implies the eigenvalues of $A$ are
+
+$$
+\sigma(A) = \left\lbrace \frac{\lambda_j^{R}}{\lambda_j^{L}}, j = 1, \ldots, n_x    \right\rbrace
+$$
+and since $\vert \lambda_j^{R} \vert \leq \vert \lambda_j^{L} \vert$ for $\mu > 0$, $j = 1, \ldots, n_x$, the spectral radius of $A$ is bounded by $1$, i.e., $\rho(A) \leq 1$.
+
+5. Let 
+$$
+u(x,0) = f(x) = \sin \frac{1}{2}\pi x + \frac{1}{2}\sin 2\pi x, \qquad 0 \leq x \leq 1, 
+$$
+   and
+$$
+u(0,t) = \varphi_0(t) = 0, \qquad  u(1,t) = \varphi_1(t) = {\rm e}^{-\pi^2 t/4}, \qquad t \geq 0,
+$$
+   then the exact solution to the diffusion equation is
+$$
+u(x,t) = {\rm e}^{-\pi^2 t/4}\sin \frac{1}{2}\pi x + \frac{1}{2}{\rm e}^{-4\pi^2 t}\sin 2\pi x, \qquad 0 \leq x \leq 1, \qquad t \geq 0.
+$$
+   Using the method in question 3 and the backward Euler method, approximate the exact solution for $T = 1$, $\mu = n_x$ and plot the maximum error of the two methods for $n_x = 2^k$, $k = 4, 5, \ldots, 12$.  Comment on your results.
+
+```julia
+using Plots, LinearAlgebra
+```
+
+```julia
+function BackwardEuler(f,ϕ0,ϕ1,nx,μ,T)
+    
+    x = range(0,1,nx + 2)
+    h = 1/(nx+1)
+    τ = μ*h^2
+    t = 0:τ:T
+    nt = length(t)-1
+    B = SymTridiagonal(fill((1 + 2μ),nx),fill(-μ,nx-1))
+    u = zeros(nt+1,nx+2)
+    u[:,1] = ϕ0.(t)
+    u[:,nx+2] = ϕ1.(t)
+    u[1,2:nx+1] = f.(x[2:nx+1])
+
+    for i = 1:nt
+        b = u[i,2:nx+1] 
+        b[1] += μ*ϕ0(t[i+1])
+        b[nx] += μ*ϕ1(t[i+1])
+        u[i+1,2:nx+1] = B\b  
+    end
+    
+    u, x, t
+end
+```
+
+```julia
+function CrankNick(f,ϕ0,ϕ1,nx,μ,T)
+    
+    x = range(0,1,nx + 2)
+    h = 1/(nx+1)
+    τ = μ*h^2
+    t = 0:τ:T
+    nt = length(t)-1
+    L = SymTridiagonal(fill((1 + μ),nx),fill(-μ/2,nx-1))
+    R = SymTridiagonal(fill((1 - μ),nx),fill(μ/2,nx-1))
+    u = zeros(nt+1,nx+2)
+    u[:,1] = ϕ0.(t)
+    u[:,nx+2] = ϕ1.(t)
+    u[1,2:nx+1] = f.(x[2:nx+1])
+
+    for i = 1:nt
+        b = R*u[i,2:nx+1] 
+        b[1] += μ*(ϕ0(t[i]) + ϕ0(t[i+1]))/2
+        b[nx] += μ*(ϕ1(t[i]) + ϕ1(t[i+1]))/2
+        u[i+1,2:nx+1] = L\b
+    end
+    
+    u, x, t
+end
+```
+
+```julia
+f = x -> sin(π*x/2) + 0.5*sin(2π*x)
+ϕ1 = t -> exp(-π^2*t/4)
+ϕ0 = t -> 0
+T = 1
+ue = (x,t) -> exp(-π^2*t/4)*sin(π*x/2) + 0.5*exp(-4*π^2*t)*sin(2π*x);
+```
+
+```julia
+cerr = []
+berr = []
+nv = 2 .^(4:12)
+for nx = nv
+    global cerr, berr
+    u,x,t = @time CrankNick(f,ϕ0,ϕ1,nx,Float64(nx),T)
+    nt = length(t) -1
+    xx = x' .* ones(nt+1)
+    tt = ones(nx+2)' .* t
+    error = abs.(ue.(xx,tt) - u) 
+    cerr = push!(cerr,maximum(error))
+    u,~,~ = @time BackwardEuler(f,ϕ0,ϕ1,nx,Float64(nx),T)
+    error = abs.(ue.(xx,tt) - u) 
+    berr = push!(berr,maximum(error))
+end
+```
+
+```julia
+plot(nv,cerr;yscale=:log10,xscale=:log10,label="Crank-Nicolson",xlabel="nₓ")
+plot!(nv,berr;yscale=:log10,xscale=:log10,label="Backward Euler",ylabel="max error")
+```
+
+For the Crank-Nicolson method, we estimate the slope of the curve as follows:
+
+```julia
+log(cerr[end]/cerr[end-4])/log(nv[end]/nv[end-4])
+```
+
+For the backward Euler method, the slope is approximately
+
+```julia
+log(berr[end]/berr[end-3])/log(nv[end]/nv[end-3])
+```
+
+Hence, for the Crank-Nicolson method, the error decays as $\mathcal{O}(n_x^{-2})$ and for the backward Euler method, the error decays as $\mathcal{O}(n_x^{-1})$ as $n_x \to \infty$.

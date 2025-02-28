@@ -141,6 +141,7 @@
 \def\E{ {\rm e} }
 \def\C{ {\mathbb C} }
 \def\R{ {\mathbb R} }
+\def\bbR{ {\mathbb R} }
 \def\H{ {\mathbb H} }
 \def\Z{ {\mathbb Z} }
 \def\CC{ {\cal C} }
@@ -285,15 +286,13 @@ Here we
 \item[4. ] Discuss the sources / reading list
 
 \end{itemize}
-\newpage
 \subsection{Computational methods for PDEs}
-The purpose of this module is to introduce you to the analysis and implementation of computational methods for partial differential equations.  We shall study \textbf{finite difference} methods, \textbf{spectral collocation} methods, the \textbf{ultraspherical spectral} method and, time permitting, the \textbf{finite element} method.  \\
-\\
+The purpose of this module is to introduce you to the analysis and implementation of computational methods for partial differential equations.  We shall study \textbf{finite difference} methods, \textbf{spectral collocation} methods, the \textbf{ultraspherical spectral} method and, time permitting, the \textbf{finite element} method.  
 
 A broader perspective: A quote from \emph{An Applied Mathematician's Apology} by L.N. Trefethen, 2022:
 
 ... the language of the laws of nature, partial differential equations or PDEs. When Maxwell discovered that light and radio waves are one, it was because of a PDE. When Einstein predicted gravitational waves, it was because     of a PDE. Chemistry is built on Schrodinger's equation, fluid mechanics on the Navier-Stokes equations, and civil engineering on the equations of elasticity.
-\newpage
+
 A few important PDEs (there are many variations!)
 
 \begin{itemize}
@@ -324,7 +323,6 @@ A parabolic equation
   u_{tt} - \nabla^2 u &= f 
 \end{align*}
 Wave equation: a hyperbolic equation
-\newpage
 
 \begin{itemize}
 \item Navier's equations : small-strain elasticity 
@@ -341,16 +339,16 @@ Wave equation: a hyperbolic equation
 \mathbf{u}_t + (\mathbf{u} \cdot \nabla)\mathbf{u} = \nu \nabla^2 \mathbf{u} - \nabla p, \quad \nabla \cdot \mathbf{u} = 0
 \]
 Numerical solutions to the (quasilinear) Navier-Stokes equations have been computed for decades (for example, these equations are used for weather prediction), however the mathematical analysis of these PDEs is still not settled (see the Wiki page on \href{https://en.wikipedia.org/wiki/Navier%E2%80%93Stokes_existence_and_smoothness}{Navier-Stokes existence and smoothness}): the Clay Mathematics Institute in May 2000 made this problem one of its seven Millennium Prize problems in mathematics. It offered a US\$1,000,000 prize to the first person providing a solution for a specific statement of the problem:
-\\
 
 Prove or give a counter-example of the following statement:
-\\
 
 In three space dimensions and time, given an initial velocity field, there exists a vector velocity and a scalar pressure field, which are both smooth and globally defined, that solve the Navier-Stokes equations.
-\newpage
+
 \begin{itemize}
 \item Reaction-Diffusion systems; example, Brusselator: simple model for an autocatalytic reaction (arises also in enzymatic reactions, plasma and laser physics)
+
 \end{itemize}
+
 \begin{align*}
 u_t &= B + u^2 v - (A+1) u + \alpha \nabla^2 u \\ 
 v_t &= Au  - u^2 v + \alpha \nabla^2 v
@@ -394,7 +392,6 @@ c_t = \Delta \big( c^3 - c - \gamma \Delta c \big)
 m_n \ddot{r_n} = - \nabla E(r_1, \dots, r_N)
 \]
 used \href{https://www.youtube.com/watch?v=zRUFzJrDtq0}{here} to model water turing into ice.
-\newpage
 
 \begin{itemize}
 \item \href{https://www.youtube.com/watch?v=u8Kfn2o7epQ}{Nonlinear elasticity}
@@ -427,7 +424,6 @@ used \href{https://www.youtube.com/watch?v=zRUFzJrDtq0}{here} to model water tur
 \item \href{https://www.youtube.com/watch?v=vOFcHqImXJ8}{Another Navier-Stokes simulation}
 
 \end{itemize}
-\newpage
 \subsubsection{Reality $\rightarrow$ Model$\rightarrow$ Simulation $\rightarrow$ Prediction}
 \begin{itemize}
 \item Mathematical models of "real-world" processes (physics, chemistry, life sciences, engineering, ...) more often than not take the form of a system of ordinary or partial differential equations, integral equations, or closely related models. (sometimes stochastic, on networks, etc, but this is beyond the scope of this module) 
@@ -452,16 +448,19 @@ used \href{https://www.youtube.com/watch?v=zRUFzJrDtq0}{here} to model water tur
 
 
 \item long-time behaviour? 
+
+
+\item inverse and control problems
+
 \end{itemize}
 \end{itemize}
-\newpage
 \subsection{Module admin}
 See the \href{https://blackboard.le.ac.uk/}{Blackboard page} of this module
-\newpage
+
 \subsection{Programming / coding}
 All the code in the lecture notes are in the \href{https://julialang.org/}{Julia programming language}. You are free to use whichever programming language you prefer (e.g., Matlab or Python) and Matlab code will be available on Blackboard.
 
-If you prefer to do your coding in Matlab and need to refresh your memory, have a look at this \href{https://matlabacademy.mathworks.com/details/matlab-onramp/gettingstarted}{MathWorks tutorial} (you may need to create a mathworks account with your student email address to access it).  For those using Matlab, to perform some of the numerical experiments in this module, you will find it helpful to use the Matlab package called \href{https://www.chebfun.org/}{Chebfun} (see Chapter 1: Exercise 2).  In Julia, the counterpart of Chebfun is \href{https://github.com/JuliaApproximation/ApproxFun.jl}{ApproxFun.jl}. 
+If you prefer to do your coding in Matlab and need to refresh your memory, have a look at this \href{https://matlabacademy.mathworks.com/details/matlab-onramp/gettingstarted}{MathWorks tutorial} (you may need to create a mathworks account with your student email address to access it).  For those using Matlab, to perform some of the numerical experiments in this module, you will find it helpful to use the Matlab package called \href{https://www.chebfun.org/}{Chebfun} (see Chapter 1: Exercise 2).  In Julia, the counterpart of Chebfun is \href{https://github.com/JuliaApproximation/ApproxFun.jl}{ApproxFun.jl}. 
 
 \begin{itemize}
 \item If you have no programming background at all, the module is doable but will be hard. 
@@ -470,7 +469,6 @@ If you prefer to do your coding in Matlab and need to refresh your memory, have 
 \item If you have only minimal background, then please ask questions during lectures, or come to office hours.
 
 \end{itemize}
-\newpage
 Back to Julia: it is a modern, compiled, high-level, open-source language developed at MIT. It is becoming increasingly important in high-performance computing and AI and it is used by Astrazeneca, Moderna and Pfizer in drug development and clinical trial accelleration, IBM for medical diagnosis, MIT for robot locomotion, and elsewhere.
 
 Julia is a relatively young programming language, which aims to combine 
@@ -515,13 +513,16 @@ I used the following sources for writing the lecture notes (please ask me for re
 \item[7.  ] \href{https://github.com/cortner/math405_2022}{Christoph Ortner's notes on Numerical Methods for Differential Equations} (2022)
 
 
-\item[8.  ] \href{https://people.maths.ox.ac.uk/trefethen/spectral.html}{\emph{Spectral Methods in Matlab}} (2000), by L.N. Trefethen
+\item[8.  ] \href{https://people.maths.ox.ac.uk/trefethen/pdetext.html}{\emph{Finite Difference and Spectral Methods for Ordinary and Partial Differential Equations}} (1996), by L.N. Trefethen
 
 
-\item[9.  ] \href{https://people.maths.ox.ac.uk/trefethen/ATAP/}{\emph{Approximation Theory and Approximation Practice}} (2019), by L.N. Trefethen
+\item[9.  ] \href{https://people.maths.ox.ac.uk/trefethen/spectral.html}{\emph{Spectral Methods in Matlab}} (2000), by L.N. Trefethen
 
 
-\item[10. ] \href{https://le.ac.uk/library}{A MATLAB differentiation matrix suite} (2000), by J.A.C.  Weideman and S.C. Reddy,  \emph{ACM Transactions on Mathematical Software} (TOMS), 26(4), pp.465-519.
+\item[10. ] \href{https://people.maths.ox.ac.uk/trefethen/ATAP/}{\emph{Approximation Theory and Approximation Practice}} (2019), by L.N. Trefethen
+
+
+\item[11. ] \href{https://le.ac.uk/library}{A MATLAB differentiation matrix suite} (2000), by J.A.C.  Weideman and S.C. Reddy,  \emph{ACM Transactions on Mathematical Software} (TOMS), 26(4), pp.465-519.
 
 \end{itemize}
 

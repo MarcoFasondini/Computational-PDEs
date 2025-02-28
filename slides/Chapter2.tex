@@ -141,6 +141,7 @@
 \def\E{ {\rm e} }
 \def\C{ {\mathbb C} }
 \def\R{ {\mathbb R} }
+\def\bbR{ {\mathbb R} }
 \def\H{ {\mathbb H} }
 \def\Z{ {\mathbb Z} }
 \def\CC{ {\cal C} }
@@ -289,7 +290,6 @@ Here we discuss
 \item[6. ] The accuracy of trigonometric interpolation and differentiation
 
 \end{itemize}
-\newpage
 \subsection{Fourier series}
 We assume that $f$ is $2\pi$-periodic and its Fourier series converges on $x \in [0, 2\pi)$, i.e.,
 
@@ -351,7 +351,7 @@ c_k &=& \frac{1}{2\pi}\int_{0}^{2\pi} f(x) \mathrm{e}^{-\mathrm{i}k x} \mathrm{d
     &:=& \tilde{c}^n_k
 \end{eqnarray*}
 Here we used the fact that $g(x) = \frac{f(x)\mathrm{e}^{-\mathrm{i}k x}}{2\pi}$ is a $2\pi$-periodic function (since $f(x)$ is assumed to be $2\pi$-periodic), hence it follows that $g(x_0) = g(x_0 + 2\pi) = g(x_n)$.
-\newpage
+
 \textbf{Lemma (discrete orthogonality of Fourier modes)} For $x_j = jh = \frac{2\pi j}{n}$, we have
 
 \[
@@ -373,7 +373,6 @@ I_n\left[\frac{\mathrm{e}^{\mathrm{i}(k-\ell)x}}{2\pi}\right] = \frac{1}{n}\sum_
 \[
 \sum_{j = 0}^{n-1} \mathrm{e}^{\mathrm{i}kx_j} = \sum_{j = 0}^{n-1} \mathrm{e}^{2\pi\mathrm{i}kj/n} = \sum_{j = 0}^{n-1} \mathrm{e}^{2\pi\mathrm{i}pj} = \sum_{j = 0}^{n-1} 1 = n.
 \]
-\newpage
 Case 2: $k \neq np$, $p \in \mathbb{Z}$, then
 
 \[
@@ -463,7 +462,7 @@ We express this as
 \tilde{\mathbf{c}} = \frac{1}{\sqrt{n}}Q_{n}\mathbf{f}
 \]
 where $Q_n$ is the \emph{Discrete Fourier Transform} (DFT) matrix.
-\newpage
+
 \textbf{Definition (DFT)} The \emph{Discrete Fourier Transform (DFT)} matrix is defined as:
 
 
@@ -488,7 +487,7 @@ Q_n^\ensuremath{\star} &= {1 \over \sqrt{n}} \begin{bmatrix}
 \end{bmatrix} 
 \end{align*}
 \textbf{Proposition (DFT is Unitary)} $Q_n$ is unitary: $Q_n^\ensuremath{\star} Q_n = Q_n Q_n^\ensuremath{\star} = I$.
-\newpage
+
 \textbf{Proof}
 
 \[
@@ -505,7 +504,7 @@ Q_n Q_n^\ensuremath{\star}  = \frac{1}{2\pi}\begin{bmatrix} I_n[1] & I_n[{\rm e}
 In the previous chapter we learnt about the importance of polynomial interpolants in approximation methods (which includes methods for differential equations).  For periodic functions, trigonometric interpolants (interpolants consisting of trigonometric functions (e.g., sines and cosines) as opposed to polynomials) are equally important for approximation methods.
 
 \textbf{Note:} For the rest of this chapter, we let $n$ be an odd positive integer and set $n = 2m + 1$.
-\newpage
+
 \textbf{Proposition (trigonometric interpolant)} Suppose $n$ is odd with $n = 2m+1$, then 
 
 \[
@@ -630,7 +629,6 @@ Putting everything together, we have
 \[
 \blacksquare
 \]
-\newpage
 Let's check the formula $V = \sqrt{n}\,Q_n^* P^{\top}$ in code
 
 
@@ -645,7 +643,7 @@ Let's check the formula $V = \sqrt{n}\,Q_n^* P^{\top}$ in code
 \begin{lstlisting}
 true
 \end{lstlisting}
-\newpage
+
 
 \begin{lstlisting}
 (*@\HLJLn{P}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{sparse}@*)(*@\HLJLp{(}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{n}@*)(*@\HLJLp{,}@*) (*@\HLJLp{[}@*)(*@\HLJLn{m}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{2}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{n}@*)(*@\HLJLp{;}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{m}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{],}@*) (*@\HLJLnf{fill}@*)(*@\HLJLp{(}@*)(*@\HLJLni{1}@*)(*@\HLJLp{,}@*)(*@\HLJLn{n}@*)(*@\HLJLp{))}@*)
@@ -786,7 +784,7 @@ The magic of the FFT is because its complexity is $\mathcal{O}(n \log n)$ (almos
 \end{lstlisting}
 
 \begin{lstlisting}
-0.259920 seconds (141.28 k allocations: 60.850 MiB, 23.77(*@{{\%}}@*) compilation ti
+0.307078 seconds (169.73 k allocations: 61.902 MiB, 20.98(*@{{\%}}@*) compilation ti
 me)
 \end{lstlisting}
 
@@ -1617,12 +1615,12 @@ Let's check numerically that the approximate Fourier coefficients decay at their
 (*@\HLJLn{f\ensuremath{\_2}}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{x}@*) (*@\HLJLoB{->}@*) (*@\HLJLnf{abs}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{sin}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{))}@*)
 (*@\HLJLn{c\ensuremath{\_2}}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{fftshift}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{fft}@*)(*@\HLJLp{(}@*)(*@\HLJLn{f\ensuremath{\_2}}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{)))}@*)(*@\HLJLoB{/}@*)(*@\HLJLn{n}@*)
 (*@\HLJLnf{scatter!}@*)(*@\HLJLp{(}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{m}@*)(*@\HLJLp{,}@*)(*@\HLJLn{abs}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{c\ensuremath{\_2}}@*)(*@\HLJLp{[}@*)(*@\HLJLn{m}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{2}@*)(*@\HLJLoB{:}@*)(*@\HLJLk{end}@*)(*@\HLJLp{]),}@*)(*@\HLJLn{label}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}approx.}@*) (*@\HLJLs{Fourier}@*) (*@\HLJLs{coeffs.}@*) (*@\HLJLs{of}@*) (*@\HLJLs{f\ensuremath{\_2}"{}}@*)(*@\HLJLp{)}@*)
-(*@\HLJLnf{plot!}@*)(*@\HLJLp{(}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{m}@*)(*@\HLJLp{,}@*)(*@\HLJLni{1}@*) (*@\HLJLoB{./}@*)(*@\HLJLp{((}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{m}@*)(*@\HLJLp{)}@*)(*@\HLJLoB{.{\textasciicircum}}@*)(*@\HLJLni{2}@*)(*@\HLJLp{),}@*)(*@\HLJLn{label}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}O(1/k\ensuremath)}@*) (*@\HLJLs{curve"{}}@*)(*@\HLJLp{)}@*)
+(*@\HLJLnf{plot!}@*)(*@\HLJLp{(}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{m}@*)(*@\HLJLp{,}@*)(*@\HLJLni{1}@*) (*@\HLJLoB{./}@*)(*@\HLJLp{((}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{m}@*)(*@\HLJLp{)}@*)(*@\HLJLoB{.{\textasciicircum}}@*)(*@\HLJLni{2}@*)(*@\HLJLp{),}@*)(*@\HLJLn{label}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}O(1/k\ensuremath{\^2})}@*) (*@\HLJLs{curve"{}}@*)(*@\HLJLp{)}@*)
 
 (*@\HLJLn{f\ensuremath{\_3}}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{x}@*) (*@\HLJLoB{->}@*) (*@\HLJLnf{sin}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{)}@*)(*@\HLJLoB{*}@*)(*@\HLJLnf{abs}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{sin}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{))}@*)
 (*@\HLJLn{c\ensuremath{\_3}}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{fftshift}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{fft}@*)(*@\HLJLp{(}@*)(*@\HLJLn{f\ensuremath{\_3}}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{)))}@*)(*@\HLJLoB{/}@*)(*@\HLJLn{n}@*)
 (*@\HLJLnf{scatter!}@*)(*@\HLJLp{(}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{m}@*)(*@\HLJLp{,}@*)(*@\HLJLn{abs}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{c\ensuremath{\_3}}@*)(*@\HLJLp{[}@*)(*@\HLJLn{m}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{2}@*)(*@\HLJLoB{:}@*)(*@\HLJLk{end}@*)(*@\HLJLp{]),}@*)(*@\HLJLn{label}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}approx.}@*) (*@\HLJLs{Fourier}@*) (*@\HLJLs{coeffs.}@*) (*@\HLJLs{of}@*) (*@\HLJLs{f\ensuremath{\_3}"{}}@*)(*@\HLJLp{)}@*)
-(*@\HLJLn{p}@*) (*@\HLJLoB{=}@*)(*@\HLJLnf{plot!}@*)(*@\HLJLp{(}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{m}@*)(*@\HLJLp{,}@*)(*@\HLJLni{2}@*) (*@\HLJLoB{./}@*)(*@\HLJLp{((}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{m}@*)(*@\HLJLp{)}@*)(*@\HLJLoB{.{\textasciicircum}}@*)(*@\HLJLni{3}@*)(*@\HLJLp{),}@*)(*@\HLJLn{label}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}O(1/k\ensuremath)}@*) (*@\HLJLs{curve"{}}@*)(*@\HLJLp{,}@*)(*@\HLJLn{legend}@*)(*@\HLJLoB{=:}@*)(*@\HLJLn{bottomleft}@*)(*@\HLJLp{)}@*)
+(*@\HLJLn{p}@*) (*@\HLJLoB{=}@*)(*@\HLJLnf{plot!}@*)(*@\HLJLp{(}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{m}@*)(*@\HLJLp{,}@*)(*@\HLJLni{2}@*) (*@\HLJLoB{./}@*)(*@\HLJLp{((}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{m}@*)(*@\HLJLp{)}@*)(*@\HLJLoB{.{\textasciicircum}}@*)(*@\HLJLni{3}@*)(*@\HLJLp{),}@*)(*@\HLJLn{label}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}O(1/k\ensuremath{\^3})}@*) (*@\HLJLs{curve"{}}@*)(*@\HLJLp{,}@*)(*@\HLJLn{legend}@*)(*@\HLJLoB{=:}@*)(*@\HLJLn{bottomleft}@*)(*@\HLJLp{)}@*)
 \end{lstlisting}
 
 \includegraphics[width=\linewidth]{/figures/Chapter2_26_1.pdf}

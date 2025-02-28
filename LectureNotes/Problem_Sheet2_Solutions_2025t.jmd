@@ -1,0 +1,198 @@
+
+# Problem sheet 2: Solutions
+
+The (well-posed) convection-diffusion equation is 
+$$
+\frac{\partial u}{\partial t} = \frac{\partial^2 u}{\partial x^2} - b \frac{\partial u}{\partial x}, \qquad 0 \leq x \leq 1, \: 0 \leq t \leq T, T > 0,
+$$
+where $b > 0$ is given (a constant) and the boundary conditions are $u(0,t) = \varphi_0(t)$ and $u(1,t) = \varphi_1(t)$ for $t \in [0, T]$.  Let 
+$$
+v'_j = \frac{1}{h^2}\left(v_{j-1} - 2v_j + v_{j+1}   \right) - \frac{b}{2h}\left(v_{j+1}  - v_{j-1}   \right), \qquad j =  1, 2,  \ldots, n_x,
+$$
+where $h = \displaystyle{\frac{1}{n_x + 1}}$ and $v_j = v_j(t)$ be a semi-discrete method for the convection-diffusion equation.
+
+1. **[5 marks]** Prove that the semi-discrete method is second-order accurate.  That is, let $\widetilde{v}_j(t) =  u(x_j,t)$ and show that (assuming all the relevant partial derivatives are bounded on $(x,t) \in [0, 1]\times [0, T]$),
+$$
+\widetilde{v}'_j - \frac{1}{h^2}\left(\widetilde{v}_{j-1} - 2\widetilde{v}_j + \widetilde{v}_{j+1}   \right) + \frac{b}{2h}\left(\widetilde{v}_{j+1}  - \widetilde{v}_{j-1}   \right) = \mathcal{O}\left(h^2 \right), \qquad h \to 0.
+$$
+**Solution**  Using Taylor's theorem (see Chapter 1), there exists a $\xi_+ \in (x_j, x_j + h)$  such that
+$$
+\begin{eqnarray*}
+\widetilde{v}_{j + 1} &=& u(x_{j+1},t) \\
+&=&u(x_j + h,t) \\
+&=& u(x_j,t) +  hu_x(x_j,t) + \frac{h^2}{2}u_{xx}(x_j,t) + \frac{h^3}{6}u_{xxx}(x_j,t) + \frac{h^4}{24}u_{xxxx} (\xi_+,t) \\
+&=& \widetilde{v}_{j} +  hu_x(x_j,t) + \frac{h^2}{2}u_{xx}(x_j,t) + \frac{h^3}{6}u_{xxx}(x_j,t) + \frac{h^4}{24}u_{xxxx} (\xi_+,t).
+\end{eqnarray*}
+$$
+Similarly, by replacing $h$ with $-h$ in the equations above,  there exists a $\xi_- \in (x_j - h, x_j)$  such that
+$$
+\begin{eqnarray*}
+\widetilde{v}_{j - 1} &=& u(x_{j-1},t) \\
+&=&u(x_j - h,t) \\
+&=& u(x_j,t) -  hu_x(x_j,t) + \frac{h^2}{2}u_{xx}(x_j,t) - \frac{h^3}{6}u_{xxx}(x_j,t) + \frac{h^4}{24}u_{xxxx} (\xi_-,t) \\
+&=& \widetilde{v}_{j} -  hu_x(x_j,t) + \frac{h^2}{2}u_{xx}(x_j,t) - \frac{h^3}{6}u_{xxx}(x_j,t) + \frac{h^4}{24}u_{xxxx} (\xi_-,t).
+\end{eqnarray*}
+$$
+Hence, it follows that
+$$
+\begin{equation*}
+\frac{1}{h^2}\left(\widetilde{v}_{j-1} - 2\widetilde{v}_j + \widetilde{v}_{j+1}   \right) = u_{xx}(x_j,t) + \frac{h^2}{24}\left(u_{xxxx} (\xi_+,t) + u_{xxxx} (\xi_-,t)  \right)
+\end{equation*}
+$$
+and we conclude that (since we assume that $u_{xxxx}$ is bounded)
+$$
+\begin{equation}
+\frac{1}{h^2}\left(\widetilde{v}_{j-1} - 2\widetilde{v}_j + \widetilde{v}_{j+1}   \right) = u_{xx}(x_j,t) + \mathcal{O}\left(h^2\right), \qquad h \to 0. \qquad (\star)
+\end{equation}
+$$
+Also, it follows that
+$$
+\begin{equation*}
+\frac{1}{2h}\left(\widetilde{v}_{j+1} - \widetilde{v}_{j-1}   \right) = u_{x}(x_j,t) + \frac{h^2}{6}u_{xxx} (x_j,t) + \frac{h^3}{48}\left(u_{xxxx} (\xi_+,t) - u_{xxxx} (\xi_-,t)  \right)
+\end{equation*}
+$$
+and we conclude that (since we assume that $u_{xxx}$ and $u_{xxxx}$ are bounded)
+$$
+\begin{equation}
+\frac{1}{2h}\left(\widetilde{v}_{j+1} - \widetilde{v}_{j-1}   \right) = u_{x}(x_j,t) + \mathcal{O}\left(h^2\right), \qquad h \to 0. \qquad (\diamond)
+\end{equation}
+$$
+Using $(\star)$ and $(\diamond)$ and the advection-diffusion equation, it follows that as $h \to 0$,
+$$
+\begin{eqnarray*}
+&& \widetilde{v}'_j - \frac{1}{h^2}\left(\widetilde{v}_{j-1} - 2\widetilde{v}_j + \widetilde{v}_{j+1}   \right) + \frac{b}{2h}\left(\widetilde{v}_{j+1}  - \widetilde{v}_{j-1}   \right) \\
+&& = \underbrace{u_t(x_j,t) - u_{xx}(x_j,t) + bu_{x}(x_j,t)}_{=\: 0} +  \mathcal{O}\left(h^2\right) \\
+&& = \mathcal{O}\left(h^2\right).
+\end{eqnarray*}
+$$
+
+2. **[2 marks]** Is the semi-discrete method consistent?  Motivate your answer.
+    
+    **Solution** Yes, since the method is second-order, the local error tends to zero as $h \to 0$ and therefore the method is consistent.
+    
+3. **[6 marks]** Use the von Neumann method to determine whether the semi-discrete method is stable.
+    
+    **Solution** 
+Substituting
+$$
+v_j(t) = v_j = \lambda(t)\mathrm{e}^{{\mathrm{i}}kx_j} = \lambda \mathrm{e}^{{\mathrm{i}}kx_j},
+$$
+where $x_j = jh$ and $k \in \mathbb{Z}$, into the semi-discrete method and using the fact that $v_{j+1} = \lambda \mathrm{e}^{{\mathrm{i}}kx_{j+1}} = \lambda \mathrm{e}^{{\mathrm{i}}k(x_{j}+h)} = \mathrm{e}^{{\mathrm{i}}kh}v_j$, we find that
+$$
+\begin{eqnarray*}
+v_j' &=& \frac{1}{h^2}\left(\mathrm{e}^{{-\mathrm{i}}kh} - 2 + \mathrm{e}^{{\mathrm{i}}kh}   \right)v_j - \frac{b}{2h}\left(\mathrm{e}^{{\mathrm{i}}kh}  - \mathrm{e}^{-{\mathrm{i}}kh}   \right)v_j \\
+&=& \frac{1}{h^2}\left(2\cos(kh) - 2   \right)v_j - \frac{b}{2h}\left( 2\mathrm{i}\sin(kh)   \right)v_j \\
+&=& -\frac{2}{h^2}\left(1 - \cos(kh)   \right)v_j - \frac{b\mathrm{i}}{h} \sin(kh)  v_j \\
+&=& -\left[\frac{4}{h^2}\sin^2(kh/2) + \frac{b\mathrm{i}}{h} \sin(kh)\right]  v_j \\
+& \Longrightarrow & \lambda' = -\left[\frac{4}{h^2}\sin^2(kh/2) + \frac{b\mathrm{i}}{h} \sin(kh)\right] \lambda \\
+& \Longrightarrow & \lambda(t) = \exp\left( -\left[\frac{4}{h^2}\sin^2(kh/2) + \frac{b\mathrm{i}}{h} \sin(kh)\right] t  \right)\lambda(0).
+\end{eqnarray*}
+$$
+Since, as $h \to 0$,
+$$
+\begin{equation*}
+\frac{4}{h^2}\sin^2(kh/2) = k^2 + \mathcal{O}\left(h^2\right), \qquad \frac{1}{h} \sin(kh) = k + \mathcal{O}\left(h^2\right),
+\end{equation*}
+$$
+we have that for $t \in [0, T]$,
+$$
+\begin{eqnarray*}
+\lim_{h \to 0}\left\vert  \lambda(t)  \right\vert &=& \lim_{h \to 0}\left\vert  \exp\left( -\left[\frac{4}{h^2}\sin^2(kh/2) + \frac{b\mathrm{i}}{h} \sin(kh)\right] t  \right)\lambda(0)  \right\vert \\
+&=& \lim_{h \to 0}  \exp\left( -\frac{4}{h^2}\sin^2(kh/2) t  \right)\left\vert\lambda(0)  \right\vert \\
+&=& \mathrm{e}^{-k^2t}\left\vert\lambda(0)  \right\vert\\
+& \leq & \left\vert\lambda(0)  \right\vert \\
+& < & \infty
+\end{eqnarray*}
+$$
+hence the method is stable.
+
+4. **[2 marks]** Is the semi-discrete method convergent?
+
+    **Solution** Yes, since the advection-diffusion equation is well-posed and the semi-discrete method is consistent and stable, it is convergent by the Lax equivalence theorem.
+
+5. **[5 marks]** Show that the semi-discrete method can be expressed as the following system of ordinary differential equations (ODEs):
+$$
+\mathbf{v}' = A\mathbf{v} + \mathbf{h}
+$$
+with $\mathbf{v}, \mathbf{h} \in \mathbb{R}^{n_x}$, $A \in \mathbb{R}^{n_x \times n_x}$ where
+$$
+A = \frac{1}{h^2}\begin{bmatrix}
+-2 & 1 - \frac{bh}{2} & & & \\
+1 + \frac{bh}{2}  & -2 & 1 - \frac{bh}{2}  & & \\
+      & \ddots & \ddots & \ddots & \\
+      &        & 1 + \frac{bh}{2}    & -2 & 1 - \frac{bh}{2} \\
+      &        &        &1 + \frac{bh}{2}      & -2
+\end{bmatrix}, \quad
+\mathbf{h} = \frac{1}{h^2}\left[\begin{array}{c} 
+{} \left(1 + \frac{bh}{2}\right)\varphi_0(t)\\
+0 \\
+\vdots \\
+0 \\
+\left(1 - \frac{bh}{2}\right)\varphi_1(t)
+\end{array}
+\right]
+$$
+**Solution** Rewriting the semi-discrete method
+$$
+\begin{eqnarray*}
+v'_j &=& \frac{1}{h^2}\left(v_{j-1} - 2v_j + v_{j+1}   \right) - \frac{b}{2h}\left(v_{j+1}  - v_{j-1}   \right) \\
+&=& \frac{1}{h^2}\left[ \left(1 + \frac{bh}{2}\right)v_{j-1} - 2v_j +  \left(1 - \frac{bh}{2}\right)v_{j+1}  \right],\qquad j = 1, \ldots, n_x,
+\end{eqnarray*}
+$$
+it follows that
+$$
+\begin{equation*}
+\mathbf{v}' = A\mathbf{v} + \mathbf{h}
+\end{equation*}
+$$
+where
+$$
+\begin{equation*}
+\mathbf{v} = \left(\begin{array}{c}
+v_1\\
+v_2 \\
+\vdots \\
+v_{n_x}
+\end{array}
+\right), \quad A = \frac{1}{h^2}\begin{bmatrix}
+-2 & 1 - \frac{bh}{2} & & & \\
+1 + \frac{bh}{2}  & -2 & 1 - \frac{bh}{2}  & & \\
+      & \ddots & \ddots & \ddots & \\
+      &        & 1 + \frac{bh}{2}    & -2 & 1 - \frac{bh}{2} \\
+      &        &        &1 + \frac{bh}{2}      & -2
+\end{bmatrix}, \quad
+\mathbf{h} = \frac{1}{h^2}\left(\begin{array}{c} 
+\left(1 + \frac{bh}{2}\right)\varphi_0(t)\\
+0 \\
+\vdots \\
+0 \\
+\left(1 - \frac{bh}{2}\right)\varphi_1(t)
+\end{array}
+\right)
+\end{equation*}
+$$
+
+6. **[10 marks]** Let $n_x = 300$, $T = 0.003$, $b = 100$, $\varphi_0(t) = 0 = \varphi_1(t)$ and $u(x,0) = \mathrm{e}^{-300(x-0.3)^2}$, then solve the ODE system in question 5 with an error tolerance of $10^{-4}$ using any ODE solver that's available in your programming language of choice.  Plot the solution at $t = 0$ and $t = T$ on the same set of axes.
+
+    **Solution**
+
+```julia
+using LinearAlgebra, Plots, OrdinaryDiffEq
+
+nx = 300
+x = range(0,1,nx+2)
+f = x -> exp(-300*(x-0.3).^2)
+h = 1/(nx+1)
+T = 0.003
+b = 100
+A = Tridiagonal(fill(1+b*h/2,nx-1),fill(-2.0,nx),fill(1-b*h/2,nx-1))/h^2
+F = (v,p,t) -> A*v
+x = range(0,1,nx + 2)
+prob = ODEProblem(F, f.(x[2:end-1]), (0.0, T))
+#soln =  solve(prob, RK4(),abstol=1e-4)
+#soln =  solve(prob, Rodas4(),abstol=1e-4);
+soln =  solve(prob, Rodas4P(),abstol=1e-4)
+@show nt = length(soln.t)
+plot(x[2:nx+1],soln.u[nt],label = "t = 0.003")
+plot!(x[2:nx+1],soln.u[1],label = "t = 0")
+```

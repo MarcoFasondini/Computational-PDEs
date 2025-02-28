@@ -1,0 +1,12 @@
+
+# Problem sheet 2
+
+The (well-posed) convection-diffusion equation is 
+$$
+\frac{\partial u}{\partial t} = \frac{\partial^2 u}{\partial x^2} - b \frac{\partial u}{\partial x}, \qquad 0 \leq x \leq 1, \: 0 \leq t \leq T, T > 0,
+$$
+where $b > 0$ is given (a constant) and the boundary conditions are $u(0,t) = \varphi_0(t)$ and $u(1,t) = \varphi_1(t)$ for $t \in [0, T]$.  Let 
+$$
+v'_j = \frac{1}{h^2}\left(v_{j-1} - 2v_j + v_{j+1}   \right) - \frac{b}{2h}\left(v_{j+1}  - v_{j-1}   \right), \qquad j =  1, 2,  \ldots, n_x,
+$$
+where $h = \displaystyle{\frac{1}{n_x + 1}}$ and $v_j = v_j(t)$ be a semi-discrete method for the convection-diffusion equation.
