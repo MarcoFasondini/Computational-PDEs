@@ -1,0 +1,489 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[a4paper,text={16.5cm,25.2cm},centering]{geometry}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage{microtype}
+\usepackage{hyperref}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1.2ex}
+
+\hypersetup
+       {   pdfauthor = { Marco Fasondini },
+           pdftitle={ foo },
+           colorlinks=TRUE,
+           linkcolor=black,
+           citecolor=blue,
+           urlcolor=blue
+       }
+
+
+
+
+\usepackage{upquote}
+\usepackage{listings}
+\usepackage{xcolor}
+\lstset{
+    basicstyle=\ttfamily\footnotesize,
+    upquote=true,
+    breaklines=true,
+    breakindent=0pt,
+    keepspaces=true,
+    showspaces=false,
+    columns=fullflexible,
+    showtabs=false,
+    showstringspaces=false,
+    escapeinside={(*@}{@*)},
+    extendedchars=true,
+}
+\newcommand{\HLJLt}[1]{#1}
+\newcommand{\HLJLw}[1]{#1}
+\newcommand{\HLJLe}[1]{#1}
+\newcommand{\HLJLeB}[1]{#1}
+\newcommand{\HLJLo}[1]{#1}
+\newcommand{\HLJLk}[1]{\textcolor[RGB]{148,91,176}{\textbf{#1}}}
+\newcommand{\HLJLkc}[1]{\textcolor[RGB]{59,151,46}{\textit{#1}}}
+\newcommand{\HLJLkd}[1]{\textcolor[RGB]{214,102,97}{\textit{#1}}}
+\newcommand{\HLJLkn}[1]{\textcolor[RGB]{148,91,176}{\textbf{#1}}}
+\newcommand{\HLJLkp}[1]{\textcolor[RGB]{148,91,176}{\textbf{#1}}}
+\newcommand{\HLJLkr}[1]{\textcolor[RGB]{148,91,176}{\textbf{#1}}}
+\newcommand{\HLJLkt}[1]{\textcolor[RGB]{148,91,176}{\textbf{#1}}}
+\newcommand{\HLJLn}[1]{#1}
+\newcommand{\HLJLna}[1]{#1}
+\newcommand{\HLJLnb}[1]{#1}
+\newcommand{\HLJLnbp}[1]{#1}
+\newcommand{\HLJLnc}[1]{#1}
+\newcommand{\HLJLncB}[1]{#1}
+\newcommand{\HLJLnd}[1]{\textcolor[RGB]{214,102,97}{#1}}
+\newcommand{\HLJLne}[1]{#1}
+\newcommand{\HLJLneB}[1]{#1}
+\newcommand{\HLJLnf}[1]{\textcolor[RGB]{66,102,213}{#1}}
+\newcommand{\HLJLnfm}[1]{\textcolor[RGB]{66,102,213}{#1}}
+\newcommand{\HLJLnp}[1]{#1}
+\newcommand{\HLJLnl}[1]{#1}
+\newcommand{\HLJLnn}[1]{#1}
+\newcommand{\HLJLno}[1]{#1}
+\newcommand{\HLJLnt}[1]{#1}
+\newcommand{\HLJLnv}[1]{#1}
+\newcommand{\HLJLnvc}[1]{#1}
+\newcommand{\HLJLnvg}[1]{#1}
+\newcommand{\HLJLnvi}[1]{#1}
+\newcommand{\HLJLnvm}[1]{#1}
+\newcommand{\HLJLl}[1]{#1}
+\newcommand{\HLJLld}[1]{\textcolor[RGB]{148,91,176}{\textit{#1}}}
+\newcommand{\HLJLs}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsa}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsb}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsc}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsd}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsdB}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsdC}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLse}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLsh}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsi}[1]{#1}
+\newcommand{\HLJLso}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLsr}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLss}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLssB}[1]{\textcolor[RGB]{201,61,57}{#1}}
+\newcommand{\HLJLnB}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLnbB}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLnfB}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLnh}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLni}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLnil}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLnoB}[1]{\textcolor[RGB]{59,151,46}{#1}}
+\newcommand{\HLJLoB}[1]{\textcolor[RGB]{102,102,102}{\textbf{#1}}}
+\newcommand{\HLJLow}[1]{\textcolor[RGB]{102,102,102}{\textbf{#1}}}
+\newcommand{\HLJLp}[1]{#1}
+\newcommand{\HLJLc}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLch}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLcm}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLcp}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLcpB}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLcs}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLcsB}[1]{\textcolor[RGB]{153,153,119}{\textit{#1}}}
+\newcommand{\HLJLg}[1]{#1}
+\newcommand{\HLJLgd}[1]{#1}
+\newcommand{\HLJLge}[1]{#1}
+\newcommand{\HLJLgeB}[1]{#1}
+\newcommand{\HLJLgh}[1]{#1}
+\newcommand{\HLJLgi}[1]{#1}
+\newcommand{\HLJLgo}[1]{#1}
+\newcommand{\HLJLgp}[1]{#1}
+\newcommand{\HLJLgs}[1]{#1}
+\newcommand{\HLJLgsB}[1]{#1}
+\newcommand{\HLJLgt}[1]{#1}
+
+
+
+\def\qqand{\qquad\hbox{and}\qquad}
+\def\qqfor{\qquad\hbox{for}\qquad}
+\def\qqas{\qquad\hbox{as}\qquad}
+\def\half{ {1 \over 2} }
+\def\D{ {\rm d} }
+\def\I{ {\rm i} }
+\def\E{ {\rm e} }
+\def\C{ {\mathbb C} }
+\def\R{ {\mathbb R} }
+\def\bbR{ {\mathbb R} }
+\def\H{ {\mathbb H} }
+\def\Z{ {\mathbb Z} }
+\def\CC{ {\cal C} }
+\def\FF{ {\cal F} }
+\def\HH{ {\cal H} }
+\def\LL{ {\cal L} }
+\def\vc#1{ {\mathbf #1} }
+\def\bbC{ {\mathbb C} }
+
+
+
+\def\fR{ f_{\rm R} }
+\def\fL{ f_{\rm L} }
+
+\def\qqqquad{\qquad\qquad}
+\def\qqwhere{\qquad\hbox{where}\qquad}
+\def\Res_#1{\underset{#1}{\rm Res}\,}
+\def\sech{ {\rm sech}\, }
+\def\acos{ {\rm acos}\, }
+\def\asin{ {\rm asin}\, }
+\def\atan{ {\rm atan}\, }
+\def\Ei{ {\rm Ei}\, }
+\def\upepsilon{\varepsilon}
+
+
+\def\Xint#1{ \mathchoice
+   {\XXint\displaystyle\textstyle{#1} }%
+   {\XXint\textstyle\scriptstyle{#1} }%
+   {\XXint\scriptstyle\scriptscriptstyle{#1} }%
+   {\XXint\scriptscriptstyle\scriptscriptstyle{#1} }%
+   \!\int}
+\def\XXint#1#2#3{ {\setbox0=\hbox{$#1{#2#3}{\int}$}
+     \vcenter{\hbox{$#2#3$}}\kern-.5\wd0} }
+\def\ddashint{\Xint=}
+\def\dashint{\Xint-}
+% \def\dashint
+\def\infdashint{\dashint_{-\infty}^\infty}
+
+
+
+
+\def\addtab#1={#1\;&=}
+\def\ccr{\\\addtab}
+\def\ip<#1>{\left\langle{#1}\right\rangle}
+\def\dx{\D x}
+\def\dt{\D t}
+\def\dz{\D z}
+\def\ds{\D s}
+
+\def\rR{ {\rm R} }
+\def\rL{ {\rm L} }
+
+\def\norm#1{\left\| #1 \right\|}
+
+\def\pr(#1){\left({#1}\right)}
+\def\br[#1]{\left[{#1}\right]}
+
+\def\abs#1{\left|{#1}\right|}
+\def\fpr(#1){\!\pr({#1})}
+
+\def\sopmatrix#1{ \begin{pmatrix}#1\end{pmatrix} }
+
+\def\endash{–}
+\def\emdash{—}
+\def\mdblksquare{\blacksquare}
+\def\lgblksquare{\blacksquare}
+\def\scre{\E}
+\def\mapengine#1,#2.{\mapfunction{#1}\ifx\void#2\else\mapengine #2.\fi }
+
+\def\map[#1]{\mapengine #1,\void.}
+
+\def\mapenginesep_#1#2,#3.{\mapfunction{#2}\ifx\void#3\else#1\mapengine #3.\fi }
+
+\def\mapsep_#1[#2]{\mapenginesep_{#1}#2,\void.}
+
+
+\def\vcbr[#1]{\pr(#1)}
+
+
+\def\bvect[#1,#2]{
+{
+\def\dots{\cdots}
+\def\mapfunction##1{\ | \  ##1}
+	\sopmatrix{
+		 \,#1\map[#2]\,
+	}
+}
+}
+
+
+
+\def\vect[#1]{
+{\def\dots{\ldots}
+	\vcbr[{#1}]
+} }
+
+\def\vectt[#1]{
+{\def\dots{\ldots}
+	\vect[{#1}]^{\top}
+} }
+
+\def\Vectt[#1]{
+{
+\def\mapfunction##1{##1 \cr}
+\def\dots{\vdots}
+	\begin{pmatrix}
+		\map[#1]
+	\end{pmatrix}
+} }
+
+\def\addtab#1={#1\;&=}
+\def\ccr{\\\addtab}
+
+\def\questionequals{= \!\!\!\!\!\!{\scriptstyle ? \atop }\,\,\,}
+
+\def\Ei{\rm Ei\,}
+
+\begin{document}
+
+\section{Problem Sheet 1 Solutions}
+\begin{itemize}
+\item[1. ] \textbf{[5 marks]} What are the Fourier coefficients $c_k$ of $\sin^4 x$?
+
+\end{itemize}
+
+\begin{eqnarray*}
+(\sin x)^4 &=& \left({\exp({\rm i} x) - \exp(-{\rm i} x) \over 2 {\rm i}}\right)^4 \\
+&=& \left({\exp(2{\rm i} x) -2 + \exp(-2{\rm i} x) \over -4}\right)^2 \\
+&=& {\exp(4{\rm i} x) -4\exp(2{\rm i} x) +6 -4 \exp(-2{\rm i} x)+\exp(-4{\rm i} x) \over 16}
+\end{eqnarray*}
+hence, $c_{-4} = c_{4} = 1/16$, $c_{-2} = c_2 = -1/4$, $c_0 = 3/8$ and $c_k = 0$ otherwise.
+
+\begin{itemize}
+\item[2. ] \textbf{[5 marks]} Show for $0 \leq k,\ell \leq n-1$
+
+\end{itemize}
+\[
+{1 \over n} \sum_{j=1}^n \cos k \theta_j \cos \ell \theta_j = \begin{cases} 1 & k = \ell = 0 \\
+                                                  1/2 & k = \ell \\
+                                                  0 & \hbox{otherwise}
+                                                  \end{cases}
+\]
+for $\theta_j = \pi (j-1/2)/n$. Hint:     You may consider replacing $\cos$ with     complex exponentials:
+
+\[
+\cos \theta = {{\rm e}^{{\rm i}\theta} + {\rm e}^{-{\rm i}\theta} \over 2}.
+\]
+We have,
+
+
+\begin{align*}
+\frac{1}{n}\sum_{j=1}^n \cos(k\theta_j)\cos(l\theta_j) &= \frac{1}{4n}\sum_{j=1}^n\left( e^{i(k+l)\theta_j} + e^{-i(k+l)\theta_j} + e^{i(k-l)\theta_j} + e^{-i(k-l)\theta_j}\right) \\
+&=	\frac{1}{4n}\sum_{j=1}^n \left( e^{ia_{kl}\theta_j} + e^{-ia_{kl}\theta_j} + e^{ib_{kl}\theta_j} + e^{-ib_{kl}\theta_j}\right),
+\end{align*}
+where we have defined $a_{kl} = k+l$ and $b_{kl} = k-l$. Now consider, for $a \in \mathbb{Z}$, a $\neq 2kn$ for some $k \in \mathbb{Z}$,
+
+
+\begin{align*}
+	\sum_{j=1}^n e^{ia\theta_j} &=\sum_{j=1}^n e^{ia\pi(j-\frac{1}{2})/n} \\
+	&=e^{-ia\pi/2n}\sum_{j=1}^n e^{iaj\pi/n} \\
+	&=e^{-ia\pi/2n}\sum_{j=1}^n (e^{ia\pi/n})^j \\
+	&=e^{-ia\pi/2n} e^{ia\pi/n}\frac{(e^{ia\pi /n})^n - 1}{e^{ia\pi/n} - 1} \\
+	&= e^{ia\pi/2n} \frac{e^{ia\pi} - 1 }{e^{ia\pi / n} - 1},
+\end{align*}
+where our assumptions on $a$ ensure that we are not dividing by $0$. Then we have, for $a$ as above,
+
+
+\begin{align*}
+	\sum_{j=1}^n \left(e^{ia\theta_j} + e^{-ia\theta_j}\right) &= e^{ia\pi/2n} \frac{e^{ia\pi} - 1 }{e^{ia\pi / n} - 1} + e^{-ia\pi/2n} \frac{e^{-ia\pi} - 1 }{e^{-ia\pi / n} - 1} \\
+	&= e^{ia\pi/2n} \frac{e^{ia\pi} - 1 }{e^{ia\pi / n} - 1} + e^{-ia\pi/2n} \cdot\frac{e^{ia\pi/n}}{e^{ia\pi/n}}\cdot \frac{e^{-ia\pi} - 1 }{e^{-ia\pi / n} - 1} \\
+	&= e^{ia\pi/2n} \frac{e^{ia\pi} - 1 }{e^{ia\pi / n} - 1} + e^{ia\pi/2n}\frac{e^{-ia\pi} - 1}{1 - e^{ia\pi/n}} \\
+	&=e^{ia\pi/2n} \frac{e^{ia\pi} - 1 }{e^{ia\pi / n} - 1} - e^{ia\pi/2n}\frac{e^{-ia\pi} - 1}{e^{ia\pi/n} - 1} \\
+	&= \frac{e^{ia\pi/2n}}{e^{ia\pi/n-1}}\left(e^{ia\pi} - 1 - e^{-ia\pi} + 1 \right) \\
+	&= \frac{e^{ia\pi/2n}}{e^{ia\pi/n-1}}\frac{1}{2i}\sin(a\pi),
+\end{align*}
+which is $0$ for $a$ an integer.
+
+Now, when $k = l = 0$, we have $a_{kl} = b_{kl} = 0$, and,
+
+\[
+\frac{1}{n}\sum_{j=1}^n \cos(k\theta_j)\cos(l\theta_j) = \frac{1}{4n}\sum_{j=1}^n (1 + 1 + 1 + 1) = 1.
+\]
+When $k = l \neq 0$, we have $0 < a_{kl} = 2k < 2n$, and $b_{kl} = 0$. Hence,
+
+
+\begin{align*}
+	\frac{1}{n}\sum_{j=1}^n \cos(k\theta_j)\cos(l\theta_j) &= \frac{1}{4n}\sum_{j=1}^n (e^{ia_{kl}\theta_j} + e^{-ia_{kl}\theta_j} + 1 + 1) \\
+	&= \frac{1}{4n}\left[ \sum_{j=1}^n\left( e^{ia_{kl}\theta_j} + e^{-ia_{kl}\theta_j}\right) +2n\right] \\
+	&= \frac{1}{2},
+\end{align*}
+since $a_{kl}$ meets the conditions for the sum considered above.
+
+When $k \neq l$, we have, $-2n < a_{kl}, b_{kl} <  2n$ and $a_{kl}, b_{kl} \neq 0$, hence,
+
+
+\begin{align*}
+	\frac{1}{n}\sum_{j=1}^n \cos(k\theta_j)\cos(l\theta_j) &= \frac{1}{4n}\sum_{j=1}^n (e^{ia_{kl}\theta_j} + e^{-ia_{kl}\theta_j} + e^{ib_{kl}\theta_j} + e^{-ib_{kl}\theta_j}) \\
+	&= \frac{1}{4n} \left[\sum_{j=1}^n (e^{ia_{kl}\theta_j} + e^{-ia_{kl}\theta_j})  + \sum_{j=1}^n (e^{ib_{kl}\theta_j} + e^{-ib_{kl}\theta_j} )\right] \\
+	&= 0.
+\end{align*}
+\begin{itemize}
+\item[3. ] \textbf{[5 marks]} Consider the Discrete Cosine Transform (DCT)
+
+\end{itemize}
+\[
+C_n := \begin{bmatrix}
+\sqrt{1/n} \\
+ & \sqrt{2/n} \\ 
+ && \ddots \\
+ &&& \sqrt{2/n}
+ \end{bmatrix}
+\begin{bmatrix}
+    1 & \cdots & 1\\
+    \cos \theta_1 & \cdots & \cos \theta_n \\
+    \vdots & \ddots & \vdots \\
+    \cos (n-1)\theta_1 & \cdots & \cos (n-1)\theta_n
+\end{bmatrix}
+\]
+for $\theta_j = \pi(j-1/2)/n$. Prove that $C_n$ is orthogonal: $C_n^{\top} C_n = C_n C_n^{\top} = I$. Hint: $C_n C_n^{\top} = I$ might be easier to show than $C_n^{\top} C_n = I$ using the previous problem.
+
+The components of $C$ without the diagonal matrix, which we may call $\hat{C}$ are
+
+\[
+\hat{C}_{ij} = \cos((j-1)\ensuremath{\theta}_{i-1}),
+\]
+where $\ensuremath{\theta}_j = \ensuremath{\pi}(j-1/2)/n$. Recalling that the elements of matrix multiplication are given by
+
+\[
+(ab)_{ij} := \sum_{k=1}^n a_{ik} b_{kj}
+\]
+we find that
+
+\[
+(\hat{C}_n \hat{C}_n^\ensuremath{\top})_{ij} = \sum_{k=1}^n \cos((i-1)\ensuremath{\theta}_{k-1}) \cos((k-1)\ensuremath{\theta}_{j-1}).
+\]
+By using the previous problem and the terms on the diagonal matrices which ensure that the $1/2$ terms become $1$ we know how to compute all of these entries and find that it is the identity.
+
+Here is a computer-based demonstration:
+
+
+\begin{lstlisting}
+(*@\HLJLk{using}@*) (*@\HLJLn{LinearAlgebra}@*)(*@\HLJLp{,}@*) (*@\HLJLn{Plots}@*)(*@\HLJLp{,}@*) (*@\HLJLn{FFTW}@*)
+(*@\HLJLn{n}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{5}@*)
+(*@\HLJLn{\ensuremath{\theta}}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{range}@*)(*@\HLJLp{(}@*)(*@\HLJLn{\ensuremath{\pi}}@*)(*@\HLJLoB{/}@*)(*@\HLJLp{(}@*)(*@\HLJLni{2}@*)(*@\HLJLn{n}@*)(*@\HLJLp{);}@*) (*@\HLJLn{step}@*)(*@\HLJLoB{=}@*)(*@\HLJLn{\ensuremath{\pi}}@*)(*@\HLJLoB{/}@*)(*@\HLJLn{n}@*)(*@\HLJLp{,}@*) (*@\HLJLn{length}@*)(*@\HLJLoB{=}@*)(*@\HLJLn{n}@*)(*@\HLJLp{)}@*) (*@\HLJLcs{{\#}}@*) (*@\HLJLcs{n}@*) (*@\HLJLcs{evenly}@*) (*@\HLJLcs{spaced}@*) (*@\HLJLcs{points}@*) (*@\HLJLcs{starting}@*) (*@\HLJLcs{at}@*) (*@\HLJLcs{\ensuremath{\pi}/(2n)}@*) (*@\HLJLcs{with}@*) (*@\HLJLcs{step}@*) (*@\HLJLcs{size}@*) (*@\HLJLcs{\ensuremath{\pi}/n}@*)
+(*@\HLJLn{C}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{Diagonal}@*)(*@\HLJLp{([}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{/}@*)(*@\HLJLnf{sqrt}@*)(*@\HLJLp{(}@*)(*@\HLJLn{n}@*)(*@\HLJLp{);}@*) (*@\HLJLnf{fill}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{sqrt}@*)(*@\HLJLp{(}@*)(*@\HLJLni{2}@*)(*@\HLJLoB{/}@*)(*@\HLJLn{n}@*)(*@\HLJLp{),}@*) (*@\HLJLn{n}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)(*@\HLJLp{)])}@*) (*@\HLJLoB{*}@*) (*@\HLJLp{[}@*)(*@\HLJLnf{cos}@*)(*@\HLJLp{((}@*)(*@\HLJLn{k}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)(*@\HLJLp{)}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{\ensuremath{\theta}}@*)(*@\HLJLp{[}@*)(*@\HLJLn{j}@*)(*@\HLJLp{])}@*) (*@\HLJLk{for}@*) (*@\HLJLn{k}@*)(*@\HLJLoB{=}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{n}@*)(*@\HLJLp{,}@*) (*@\HLJLn{j}@*)(*@\HLJLoB{=}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{n}@*)(*@\HLJLp{]}@*)
+(*@\HLJLn{C}@*)(*@\HLJLoB{{\textquotesingle}}@*)(*@\HLJLn{C}@*)
+\end{lstlisting}
+
+\begin{lstlisting}
+5(*@\ensuremath{\times}@*)5 Matrix(*@{{\{}}@*)Float64(*@{{\}}}@*):
+  1.0          -4.85266e-18  -2.82901e-17   1.68455e-17   3.95658e-17
+ -4.85266e-18   1.0           4.68569e-17  -6.18283e-17   4.0019e-17
+ -2.82901e-17   4.68569e-17   1.0           6.05122e-18  -1.76076e-16
+  1.68455e-17  -6.18283e-17   6.05122e-18   1.0           1.03351e-16
+  3.95658e-17   4.0019e-17   -1.76076e-16   1.03351e-16   1.0
+\end{lstlisting}
+
+
+\begin{itemize}
+\item[4. ] \textbf{[10 marks]}  Consider the variable-coefficient advection equation
+
+\end{itemize}
+\[
+   u_t + c(x)u_x = 0, \qquad c(x) = \frac{1}{5} + \sin^2(x-1), \qquad x \in [0, 2\pi), \qquad t \in [0, T],
+\]
+with $u(x,0) = f(x) = {\rm e}^{-100(x-1)^2}$, which we approximate with the leapfrog method
+
+\[
+\mathbf{u}^{i+1} = \mathbf{u}^{i-1} - 2\tau \mathcal{F}^{-1}\left\lbrace {\rm i}(-m\!:\!m)\cdot\mathcal{F}\lbrace \mathbf{u}^{i} \rbrace\right\rbrace, \qquad i = 0, \ldots, n_t-1.
+\]
+Note that one needs $\mathbf{u}^{-1}$ to initialise the leapfrog method.  Let the entries of $\mathbf{u}^{-1}$ be $u^{-1}_j = f(x_j + \tau/5)$, $j = 0, \ldots, n_x-1$.  The exact solution is periodic in time, i.e.,
+
+\[
+   u(x,t+T) = u(x,t)
+\]
+where
+
+\[
+   T = \int_{0}^{2\pi}\frac{1}{c(x)}{\rm d}x = 12.8254983016186\ldots
+\]
+Compute $T$ using the Trapezoidal rule and confirm that you get the value stated above.  Then compute
+
+\[
+   e(n_x) = \max_{j = 0, \ldots, n_x-1} \vert u^{0}_j - u^{n_t}_{j} \vert
+\]
+where $n_t = 8n_x$ and $\tau n_t = T$  and plot $e(n_x)$ for $n_x = 2^k + 1$, with $k = 5, 6, \ldots, 10$.  Comment on the behaviour of $e(n_x)$.
+
+As discussed in the notes, the trapezoidal rule approximation to an integral is
+
+\[
+\int_{a}^{b} g(x)\,{\rm d}x \approx \frac{h}{2}\left(g(x_0) + 2g(x_1) + 2g(x_2) + \cdots + 2g(x_{n-1}) + g(x_{n})    \right).
+\]
+To compute $T$, we set $a = 0$, $b = 2\pi$ and $g(x) = 1/c(x)$ and note that since $c(x)$ is $2\pi$-periodic, $g(x_0) = g(x_n)$, hence
+
+\[
+\int_0^{2\pi}\frac{1}{c(x)}\,{\rm d}x \approx \frac{2\pi}{n}\sum_{j=0}^{n-1}\frac{1}{c(x_j)}
+\]
+
+\begin{lstlisting}
+(*@\HLJLn{c}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{x}@*) (*@\HLJLoB{->}@*) (*@\HLJLnfB{0.2}@*) (*@\HLJLoB{+}@*) (*@\HLJLnf{sin}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*) (*@\HLJLoB{-}@*) (*@\HLJLni{1}@*)(*@\HLJLp{)}@*)(*@\HLJLoB{{\textasciicircum}}@*)(*@\HLJLni{2}@*)
+(*@\HLJLn{n}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{80}@*)
+(*@\HLJLn{xx}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{range}@*)(*@\HLJLp{(}@*)(*@\HLJLni{0}@*)(*@\HLJLp{,}@*)(*@\HLJLni{2}@*)(*@\HLJLn{\ensuremath{\pi}}@*)(*@\HLJLp{;}@*)(*@\HLJLn{length}@*)(*@\HLJLoB{=}@*)(*@\HLJLn{n}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{)[}@*)(*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLk{end}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)(*@\HLJLp{]}@*)
+(*@\HLJLn{T}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{2}@*)(*@\HLJLn{\ensuremath{\pi}}@*)(*@\HLJLoB{/}@*)(*@\HLJLn{n}@*)(*@\HLJLoB{*}@*)(*@\HLJLnf{sum}@*)(*@\HLJLp{(}@*)(*@\HLJLni{1}@*) (*@\HLJLoB{./}@*)(*@\HLJLn{c}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{xx}@*)(*@\HLJLp{))}@*)
+\end{lstlisting}
+
+\begin{lstlisting}
+12.825498301618637
+\end{lstlisting}
+
+
+\begin{lstlisting}
+(*@\HLJLn{c}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{x}@*) (*@\HLJLoB{->}@*) (*@\HLJLnfB{0.2}@*) (*@\HLJLoB{+}@*) (*@\HLJLnf{sin}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*) (*@\HLJLoB{-}@*) (*@\HLJLni{1}@*)(*@\HLJLp{)}@*)(*@\HLJLoB{{\textasciicircum}}@*)(*@\HLJLni{2}@*)
+(*@\HLJLn{f}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{x}@*) (*@\HLJLoB{->}@*) (*@\HLJLnf{exp}@*)(*@\HLJLp{(}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{100}@*)(*@\HLJLoB{*}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)(*@\HLJLp{)}@*)(*@\HLJLoB{{\textasciicircum}}@*)(*@\HLJLni{2}@*)(*@\HLJLp{)}@*)
+(*@\HLJLn{nxv}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{2}@*) (*@\HLJLoB{.{\textasciicircum}}@*)(*@\HLJLp{(}@*)(*@\HLJLni{5}@*)(*@\HLJLoB{:}@*)(*@\HLJLni{10}@*)(*@\HLJLp{)}@*) (*@\HLJLoB{.+}@*) (*@\HLJLni{1}@*)
+(*@\HLJLn{maxerr}@*) (*@\HLJLoB{=}@*) (*@\HLJLp{[]}@*)
+(*@\HLJLk{for}@*) (*@\HLJLn{n\ensuremath{\_x}}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{nxv}@*) 
+    (*@\HLJLn{m}@*) (*@\HLJLoB{=}@*) (*@\HLJLp{(}@*)(*@\HLJLn{n\ensuremath{\_x}}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)(*@\HLJLp{)}@*)(*@\HLJLoB{\ensuremath{\div}}@*)(*@\HLJLni{2}@*)
+    (*@\HLJLn{h}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{2}@*)(*@\HLJLn{\ensuremath{\pi}}@*)(*@\HLJLoB{/}@*)(*@\HLJLn{n\ensuremath{\_x}}@*)
+    (*@\HLJLn{x}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{h}@*)(*@\HLJLoB{*}@*)(*@\HLJLp{(}@*)(*@\HLJLni{0}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{n\ensuremath{\_x}}@*)(*@\HLJLoB{-}@*)(*@\HLJLni{1}@*)(*@\HLJLp{)}@*)
+    (*@\HLJLn{tv}@*) (*@\HLJLoB{=}@*) (*@\HLJLnf{range}@*)(*@\HLJLp{(}@*)(*@\HLJLni{0}@*)(*@\HLJLp{,}@*)(*@\HLJLn{T}@*)(*@\HLJLp{;}@*)(*@\HLJLn{length}@*)(*@\HLJLoB{=}@*)(*@\HLJLni{8}@*)(*@\HLJLn{n\ensuremath{\_x}}@*)(*@\HLJLoB{+}@*)(*@\HLJLni{1}@*)(*@\HLJLp{)}@*)
+    (*@\HLJLn{\ensuremath{\tau}}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{tv}@*)(*@\HLJLp{[}@*)(*@\HLJLni{2}@*)(*@\HLJLp{]}@*)(*@\HLJLoB{-}@*)(*@\HLJLn{tv}@*)(*@\HLJLp{[}@*)(*@\HLJLni{1}@*)(*@\HLJLp{]}@*)
+    (*@\HLJLn{u}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{f}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{)}@*)
+    (*@\HLJLn{uold}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{f}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*) (*@\HLJLoB{.+}@*) (*@\HLJLnfB{0.2}@*)(*@\HLJLn{\ensuremath{\tau}}@*)(*@\HLJLp{)}@*)
+    (*@\HLJLnd{@time}@*) (*@\HLJLk{begin}@*)
+    (*@\HLJLk{for}@*) (*@\HLJLn{n}@*) (*@\HLJLoB{=}@*) (*@\HLJLni{1}@*)(*@\HLJLoB{:}@*)(*@\HLJLni{8}@*)(*@\HLJLn{n\ensuremath{\_x}}@*)
+        (*@\HLJLn{unew}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{real}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{uold}@*) (*@\HLJLoB{-}@*) (*@\HLJLni{2}@*)(*@\HLJLn{\ensuremath{\tau}}@*)(*@\HLJLoB{*}@*)(*@\HLJLn{c}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{)}@*)(*@\HLJLoB{.*}@*)(*@\HLJLnf{ifft}@*)(*@\HLJLp{(}@*)(*@\HLJLnf{ifftshift}@*)(*@\HLJLp{(}@*)(*@\HLJLn{im}@*)(*@\HLJLoB{*}@*)(*@\HLJLp{(}@*)(*@\HLJLoB{-}@*)(*@\HLJLn{m}@*)(*@\HLJLoB{:}@*)(*@\HLJLn{m}@*)(*@\HLJLp{))}@*)(*@\HLJLoB{.*}@*)(*@\HLJLnf{fft}@*)(*@\HLJLp{(}@*)(*@\HLJLn{u}@*)(*@\HLJLp{)))}@*)
+        (*@\HLJLn{uold}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{u}@*)
+        (*@\HLJLn{u}@*) (*@\HLJLoB{=}@*) (*@\HLJLn{unew}@*)
+    (*@\HLJLk{end}@*)
+    (*@\HLJLk{end}@*)
+    (*@\HLJLkd{global}@*) (*@\HLJLn{maxerr}@*)
+    (*@\HLJLn{maxerr}@*) (*@\HLJLoB{=}@*) (*@\HLJLp{[}@*)(*@\HLJLn{maxerr}@*)(*@\HLJLp{;}@*)(*@\HLJLnf{norm}@*)(*@\HLJLp{(}@*)(*@\HLJLn{u}@*)(*@\HLJLoB{-}@*)(*@\HLJLn{f}@*)(*@\HLJLoB{.}@*)(*@\HLJLp{(}@*)(*@\HLJLn{x}@*)(*@\HLJLp{),}@*)(*@\HLJLn{Inf}@*)(*@\HLJLp{)]}@*)
+(*@\HLJLk{end}@*)
+\end{lstlisting}
+
+\begin{lstlisting}
+0.096903 seconds (159.31 k allocations: 9.735 MiB, 61.45(*@{{\%}}@*) compilation tim
+e)
+  0.126623 seconds (38.50 k allocations: 6.919 MiB)
+  0.151179 seconds (77.41 k allocations: 22.644 MiB)
+  0.765419 seconds (155.24 k allocations: 80.015 MiB, 6.99(*@{{\%}}@*) gc time)
+  1.672286 seconds (310.88 k allocations: 295.999 MiB, 3.96(*@{{\%}}@*) gc time)
+  5.037372 seconds (679.58 k allocations: 1.105 GiB, 3.22(*@{{\%}}@*) gc time)
+\end{lstlisting}
+
+
+\begin{lstlisting}
+(*@\HLJLnf{scatter}@*)(*@\HLJLp{(}@*)(*@\HLJLn{nxv}@*)(*@\HLJLp{,}@*)(*@\HLJLn{maxerr}@*)(*@\HLJLp{;}@*)(*@\HLJLn{yscale}@*)(*@\HLJLoB{=:}@*)(*@\HLJLn{log10}@*)(*@\HLJLp{,}@*)(*@\HLJLn{xscale}@*)(*@\HLJLoB{=:}@*)(*@\HLJLn{log10}@*)(*@\HLJLp{,}@*)(*@\HLJLn{legend}@*)(*@\HLJLoB{=}@*)(*@\HLJLkc{false}@*)(*@\HLJLp{,}@*)
+(*@\HLJLn{xlabel}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}n\ensuremath{\_x}"{}}@*)(*@\HLJLp{,}@*)(*@\HLJLn{ylabel}@*)(*@\HLJLoB{=}@*)(*@\HLJLs{"{}e(n\ensuremath{\_x})"{}}@*)(*@\HLJLp{)}@*)
+(*@\HLJLnf{plot!}@*)(*@\HLJLp{(}@*)(*@\HLJLn{nxv}@*)(*@\HLJLp{,}@*)(*@\HLJLni{170}@*) (*@\HLJLoB{./}@*)(*@\HLJLn{nxv}@*)(*@\HLJLoB{.{\textasciicircum}}@*)(*@\HLJLni{2}@*)(*@\HLJLp{)}@*)
+\end{lstlisting}
+
+\includegraphics[width=\linewidth]{/figures/ProblemSheet1Solutions_4_1.pdf}
+
+The plot indicates that $e(n_x) = \mathcal{O}(n_x^{-2})$, $n_x \to \infty$.
+
+
+
+\end{document}
