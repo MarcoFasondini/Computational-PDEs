@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.13)  25 JUL 2025 13:36
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.13)  25 JUL 2025 13:51
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -426,7 +426,7 @@ File: l3backend-pdftex.def 2024-05-08 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count307
 \l__pdf_internal_box=\box57
 )
-No file Resit_coursework_2025_solutions.aux.
+(./Resit_coursework_2025_solutions.aux)
 \openout1 = `Resit_coursework_2025_solutions.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 248.
@@ -447,6 +447,7 @@ LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 248.
 LaTeX Font Info:    ... okay on input line 248.
 LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 248.
 LaTeX Font Info:    ... okay on input line 248.
+
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
@@ -528,13 +529,14 @@ File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman
 (RS)
 )
 Package hyperref Info: Link coloring ON on input line 248.
+
+(./Resit_coursework_2025_solutions.out) (./Resit_coursework_2025_solutions.out)
 \@outlinefile=\write3
 \openout3 = `Resit_coursework_2025_solutions.out'.
 
 \c@lstlisting=\count314
 LaTeX Font Info:    Trying to load font information for OML+lmm on input line 2
 52.
-
 (/usr/local/texlive/2025/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
@@ -637,26 +639,44 @@ LaTeX Font Warning: Font shape `OMS/lmtt/m/n' undefined
 l/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}]
 
 [4]
-
-LaTeX Warning: File `/figures/ProblemSheet1Solutions_4_1.pdf' not found on inpu
-t line 483.
-
-
-! Package pdftex.def Error: File `/figures/ProblemSheet1Solutions_4_1.pdf' not 
-found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.483 ...{/figures/ProblemSheet1Solutions_4_1.pdf}
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
+</Users/mf341/Documents/GitHub/Computational-PDEs/output/figures/ProblemSheet1S
+olutions_4_1.png, id=85, 731.73375pt x 489.83pt>
+File: /Users/mf341/Documents/GitHub/Computational-PDEs/output/figures/ProblemSh
+eet1Solutions_4_1.png Graphic file (type png)
+<use /Users/mf341/Documents/GitHub/Computational-PDEs/output/figures/ProblemShe
+et1Solutions_4_1.png>
+Package pdftex.def Info: /Users/mf341/Documents/GitHub/Computational-PDEs/outpu
+t/figures/ProblemSheet1Solutions_4_1.png  used on input line 483.
+(pdftex.def)             Requested size: 469.47046pt x 314.26744pt.
 
 
+[5 </Users/mf341/Documents/GitHub/Computational-PDEs/output/figures/ProblemShee
+t1Solutions_4_1.png>]
 
-[5] (./Resit_coursework_2025_solutions.aux)
+[6]
+
+[7]
+Overfull \hbox (23.90318pt too wide) detected at line 671
+\OT1/lmr/bx/n/12 v \OT1/lmr/m/n/12 = [] \OML/lmm/m/it/12 ;  A \OT1/lmr/m/n/12 =
+ [] [] \OML/lmm/m/it/12 ;  \OT1/lmr/bx/n/12 h \OT1/lmr/m/n/12 = [] []
+ []
+
+
+
+[8]
+<jl_nS6THr/Problem_Sheet2_Solutions_2025t_1_1.pdf, id=119, 578.16pt x 385.44pt>
+
+File: jl_nS6THr/Problem_Sheet2_Solutions_2025t_1_1.pdf Graphic file (type pdf)
+<use jl_nS6THr/Problem_Sheet2_Solutions_2025t_1_1.pdf>
+Package pdftex.def Info: jl_nS6THr/Problem_Sheet2_Solutions_2025t_1_1.pdf  used
+ on input line 704.
+(pdftex.def)             Requested size: 469.47046pt x 312.98102pt.
+
+
+[9]
+
+[10 <./jl_nS6THr/Problem_Sheet2_Solutions_2025t_1_1.pdf>]
+(./Resit_coursework_2025_solutions.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
@@ -665,25 +685,18 @@ L3 programming layer <2025-01-18>
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
-
-Package rerunfilecheck Warning: File `Resit_coursework_2025_solutions.out' has 
-changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `Resit_coursework_2025_solutions.out
-':
-(rerunfilecheck)             Before: <no file>
-(rerunfilecheck)             After:  E3DC8EDCA1D7BEE7466A746FDA19E7D9;177.
+Package rerunfilecheck Info: File `Resit_coursework_2025_solutions.out' has not
+ changed.
+(rerunfilecheck)             Checksum: 53A4416D139F2DF27B9CA5ABF592C74C;179.
  ) 
 Here is how much of TeX's memory you used:
- 14876 strings out of 473190
- 227750 string characters out of 5715800
- 762641 words of memory out of 5000000
- 37800 multiletter control sequences out of 15000+600000
- 615633 words of font info for 125 fonts, out of 8000000 for 9000
+ 14920 strings out of 473190
+ 228371 string characters out of 5715800
+ 762634 words of memory out of 5000000
+ 37792 multiletter control sequences out of 15000+600000
+ 616425 words of font info for 134 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,11n,79p,1028b,1961s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,13n,79p,1028b,1961s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb
 ></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/loc
 al/texlive/2025/texmf-dist/fonts/type1/public/lm/lmex10.pfb></usr/local/texlive
@@ -697,13 +710,13 @@ ve/2025/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></usr/local/texlive/2025/te
 xmf-dist/fonts/type1/public/lm/lmsy8.pfb></usr/local/texlive/2025/texmf-dist/fo
 nts/type1/public/lm/lmtk10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/
 public/lm/lmtt10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/
-lmtt12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmtti10.pf
-b></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm1
-0.pfb>
-Output written on Resit_coursework_2025_solutions.pdf (5 pages, 260011 bytes).
+lmtti10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/sym
+bols/msbm10.pfb>
+Output written on Resit_coursework_2025_solutions.pdf (10 pages, 306559 bytes).
+
 PDF statistics:
- 193 PDF objects out of 1000 (max. 8388607)
- 149 compressed objects within 2 object streams
- 62 named destinations out of 1000 (max. 500000)
- 32257 words of extra memory for PDF output out of 35830 (max. 10000000)
+ 247 PDF objects out of 1000 (max. 8388607)
+ 197 compressed objects within 2 object streams
+ 90 named destinations out of 1000 (max. 500000)
+ 32275 words of extra memory for PDF output out of 35830 (max. 10000000)
 
